@@ -76,9 +76,10 @@ class _CupsState extends State<Cups> {
                               Row(
                                 children: <Widget>[
                                   Text(
-                                   " الفائز ${provider.trophiesBoxesModelList[index].winnerCount} ".toString().tr,
+                                   " الفائز  ".toString().tr,
                                     style: TextStyle(color: Colors.black),
-                                  )
+                                  ),
+                                  Text("${provider.trophiesBoxesModelList[index].winnerCount}",style: TextStyle(color: Colors.green),)
                                 ],
                               ),
                               Padding(
@@ -101,9 +102,10 @@ class _CupsState extends State<Cups> {
                               Row(
                                 children: <Widget>[
                                   Text(
-                                    " الوصيف ${provider.trophiesBoxesModelList[index].runnerCount} ".toString(),
+                                    " الوصيف ".toString(),
                                     style: TextStyle(color: Colors.black),
-                                  )
+                                  ),
+                                  Text("${provider.trophiesBoxesModelList[index].runnerCount}",style: TextStyle(color: Colors.red),)
                                 ],
                               ),
                               Padding(

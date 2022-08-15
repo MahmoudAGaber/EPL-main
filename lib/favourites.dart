@@ -42,11 +42,14 @@ class _FavouritesState extends State<Favourites> with SingleTickerProviderStateM
               )
             ],
           ),),
+        /*
         drawer: Drawer(
           child: More(),
         ),
+
+         */
         body:Padding(
-          padding: const EdgeInsets.all(5.0),
+          padding: const EdgeInsets.all(8.0),
           child: ListView(
             shrinkWrap: true,
             children: [

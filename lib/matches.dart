@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'EachLeague/eachLeague.dart';
 import 'Playrers/players.dart';
@@ -39,6 +40,7 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
   TextStyle content = TextStyle(
     fontSize: 14,
   );
+  final GlobalKey<ScaffoldState> _key = GlobalKey(); // Creat
 
   bool isSwitched = false;
   bool liveMatches = false;
@@ -102,48 +104,63 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.white),
           elevation: 0.0,
-          title: Padding(
-            padding: const EdgeInsets.only(right: 0),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  'EPLWORLD',
-                  style: TextStyle(color: Colors.white),
-                )
-              ],
+          centerTitle: false,
+          title: Transform(
+            transform:  Matrix4.translationValues(-125.0, 0.0, 0.0),
+            child: Container(
+              child: Text(
+                'EPL WORLD',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ),
-          actions: <Widget>[
-            Consumer<MatchesViewModel>(
-              builder: (context, provider, child) {
-                return Row(
-                  children: <Widget>[
-                    IconButton(
-                      padding: EdgeInsets.zero,
-                      icon: Icon(
-                        Icons.calendar_today,
-                        size: 22,
-                        color: Colors.white,
+          leadingWidth: 150,
+          leading: SizedBox(
+            width: 200,
+            height: 200,
+            child: Consumer<MatchesViewModel>(
+                builder: (context, provider, child) {
+                  return Row(
+                    children: <Widget>[
+                      IconButton(
+                        padding: EdgeInsets.zero,
+                        icon: Icon(
+                          Icons.menu,
+                          size: 28,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          Scaffold.of(context).openDrawer();
+                        },
                       ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/clanderbar');
-                      },
-                    ),
-                    IconButton(
-                      padding: EdgeInsets.zero,
-                      icon: Icon(
-                        Icons.search,
-                        size: 22,
-                        color: Colors.white,
+                      IconButton(
+                        padding: EdgeInsets.zero,
+                        icon: Icon(
+                          Icons.search,
+                          size: 28,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                        },
                       ),
-                      onPressed: () {
-                      },
-                    ),
-                  ],
-                );
-              },
-            )
-          ],
+                      IconButton(
+                        padding: EdgeInsets.zero,
+                        icon: Icon(
+                          Icons.calendar_today,
+                          size: 22,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/clanderbar');
+                        },
+                      ),
+
+
+                    ],
+                  );
+                },
+              ),
+          ),
           backgroundColor: Theme.of(context).primaryColor,
           bottom: tabController == null
               ? PreferredSize(
@@ -164,9 +181,12 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
                 ),
         ),
         backgroundColor: Colors.grey[200],
+
         drawer: Drawer(
           child: More(),
         ),
+
+
         body: tabController == null
             ? Container()
             : TabBarView(controller: tabController, children:
@@ -191,19 +211,19 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
 
         today = DateFormat.MMMEd('AR_SA').format(now.subtract(new Duration(days: 0)));
         yesterday = DateFormat.MMMEd('AR_SA').format(now.subtract(new Duration(days: 1)));
-        oneDayAgo = DateFormat.MMMEd('AR_SA').format(now.subtract(new Duration(days: 2)));
-        twoDaysAgo = DateFormat.MMMEd('AR_SA').format(now.subtract(new Duration(days: 3)));
+        oneDayAgo = DateFormat('E d','AR_SA').format(now.subtract(new Duration(days: 2)));
+        twoDaysAgo = DateFormat('E d','AR_SA').format(now.subtract(new Duration(days: 3)));
         tomorrow = DateFormat.MMMEd('AR_SA').format(now.add(new Duration(days: 1)));
-        oneDayThen = DateFormat.MMMEd('AR_SA').format(now.add(new Duration(days: 2)));
-        twoDaysThen = DateFormat.MMMEd('AR_SA').format(now.add(new Duration(days: 3)));
-        threeDayThen = DateFormat.MMMEd('AR_SA').format(now.add(new Duration(days: 4)));
-        fourDayThen = DateFormat.MMMEd('AR_SA').format(now.add(new Duration(days: 5)));
-        fiveDayThen = DateFormat.MMMEd('AR_SA').format(now.add(new Duration(days: 6)));
+        oneDayThen = DateFormat('E d','AR_SA').format(now.add(new Duration(days: 2)));
+        twoDaysThen = DateFormat('E d','AR_SA').format(now.add(new Duration(days: 3)));
+        threeDayThen = DateFormat('E d','AR_SA').format(now.add(new Duration(days: 4)));
+        fourDayThen = DateFormat('E d','AR_SA').format(now.add(new Duration(days: 5)));
+        fiveDayThen = DateFormat('E d','AR_SA').format(now.add(new Duration(days: 6)));
 
         tabName=[
           twoDaysAgo,
           oneDayAgo,
-          timeNow.toString()== DateFormat.MMMEd('AR_SA').format(now).toString()?"الامس":yesterday,
+          timeNow.toString()== DateFormat.MMMEd('AR_SA').format(now).toString()?"امس":yesterday,
           timeNow.toString()== DateFormat.MMMEd('AR_SA').format(now).toString()?"اليوم":today,
           timeNow.toString()== DateFormat.MMMEd('AR_SA').format(now).toString()?"غدا":tomorrow,
           oneDayThen,

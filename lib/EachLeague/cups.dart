@@ -42,7 +42,7 @@ class _CupsState extends State<Cups> {
             return Column(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(top: 5, right: 5, left: 5),
+                  padding: const EdgeInsets.only(top: 4, right: 8, left: 8,bottom: 4),
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     child: Card(

@@ -48,21 +48,55 @@ class _LeaguesState extends State<Leagues> with SingleTickerProviderStateMixin {
                 padding: const EdgeInsets.only(right: 0),
                 child: Row(
                   children:<Widget>[
-                    Text('البطولات',style: TextStyle(color: Colors.white),)
+                    Text('بطولات',style: TextStyle(color: Colors.white),)
                   ],),
               )
           ),
+          /*
           drawer: Drawer(
             child: More(),
           ),
+          
+           */
           body: Padding(
-            padding: const EdgeInsets.only(left: 4,right: 4,top: 2,bottom: 2),
+            padding: const EdgeInsets.all(8),
             child: Consumer<LeaguesViewModel>(
               builder: (context,provider,child){
                 return provider.loadingLeagues
                     ?Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),)
                     :ListView(
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8)
+                        ),
+                        child: Container(
+                          height: 60,
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(color: Colors.white)
+                                ),
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                filled: true,
+                                fillColor: Colors.white,
+                                prefixIcon: Padding(
+                                  padding: const EdgeInsets.only(bottom: 4),
+                                  child: Icon(Icons.search,color: Colors.grey,),
+                                ),
+                                hintText: "ابحث عن البطولة",
+                                hintStyle: TextStyle(color: Colors.grey)
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Card(

@@ -49,146 +49,134 @@ class _VideoTeamState extends State<VideoTeam> {
                       scrollDirection: Axis.vertical,
                       itemCount: provider.videoModelList.length,
                       itemBuilder: (BuildContext context, index) {
-                        return Column(
-                            children: <Widget>[
-                              /*
-                              index==provider.videoModelList.length
-                                  ?Center(child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: SpinKitThreeBounce(color: Theme.of(context).primaryColor,size: 25,),
-                              ))
-                              :
-                               */
-                                  GestureDetector(
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder:(context)=>webView(url: "https://www.eplworld.com${provider.videoModelList[index].url}",)));
-                                },
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 4,bottom: 4),
+                          child: Column(
+                              children: <Widget>[
+                                /*
+                                index==provider.videoModelList.length
+                                    ?Center(child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: SpinKitThreeBounce(color: Theme.of(context).primaryColor,size: 25,),
+                                ))
+                                :
+                                 */
+                                    GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder:(context)=>webView(url: "https://www.eplworld.com${provider.videoModelList[index].url}",)));
+                                  },
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
 
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: <Widget>[
-                                      Container(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      children: <Widget>[
+                                        Container(
 
-                                        child: Padding(
-                                          padding:
-                                          const EdgeInsets.only(left: 5),
+                                          child: Padding(
+                                            padding:
+                                            const EdgeInsets.only(left: 5),
 
-                                          child: Column(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              Card(
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.all(
-                                                          Radius.circular(10))),
-                                                  child: Container(
-                                                    height: 100,
-                                                    child: Row(
-                                                      children: <Widget>[
-                                                        Container(
-                                                          height: 100,
-                                                          width: MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                              0.6,
-                                                          child: Padding(
-                                                            padding:
-                                                            const EdgeInsets.only(left: 15,right: 15),
-                                                            child: Column(
-                                                              mainAxisAlignment:
-                                                              MainAxisAlignment.center,
-                                                              children: <Widget>[
-                                                                Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                                  children: <Widget>[
-                                                                    Expanded(
-                                                                        child: Text(provider.videoModelList[index].title.tr,overflow: TextOverflow.clip,))
-                                                                  ],
-                                                                ),
-                                                                SizedBox(
-                                                                  height: 5,
-                                                                ),
-                                                                FittedBox(
-                                                                  child: Row(
-                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                Card(
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.all(
+                                                            Radius.circular(10))),
+                                                    child: Container(
+                                                      height: 100,
+                                                      child: Row(
+                                                        children: <Widget>[
+                                                          Container(
+                                                              height: 100,
+                                                              width: MediaQuery.of(context).size.width * 0.338,
+                                                              decoration: BoxDecoration(
+                                                                  color: Colors.grey[200],
+                                                                  borderRadius: BorderRadius.all(Radius.circular(10))),
+                                                              child: Stack(
+                                                                children: <Widget>[
+                                                                  ClipRRect(
+                                                                    borderRadius: BorderRadius.only(topRight: Radius.circular(10),bottomRight: Radius.circular(10)),
+                                                                    child: Container(
+                                                                        height: 100,
+                                                                        width: MediaQuery.of(context).size.width * 0.338,
+                                                                        child: Image.network(provider.videoModelList[index].imgJPG,
+                                                                          fit: BoxFit.cover ,)),
+                                                                  ),
+                                                                  Positioned(
+                                                                      top: 35,
+                                                                      right: 50,
+                                                                      child: Icon(Icons.play_arrow,color: Colors.white,size: 35,) )
+                                                                ],
+                                                              )),
+                                                          Container(
+                                                            height: 100,
+                                                            width: MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                                0.6,
+                                                            child: Padding(
+                                                              padding:
+                                                              const EdgeInsets.only(left: 15,right: 15),
+                                                              child: Column(
+                                                                mainAxisAlignment:
+                                                                MainAxisAlignment.center,
+                                                                children: <Widget>[
+                                                                  Row(
                                                                     mainAxisAlignment: MainAxisAlignment.start,
                                                                     children: <Widget>[
-                                                                      Icon(
-                                                                        MdiIcons.soccer,
-                                                                        size: 15.0,
-                                                                      ),
-                                                                      SizedBox(width: 5,),
-                                                                      Text(
-                                                                        provider.videoModelList[index].username,
-                                                                        style: TextStyle(
-                                                                            fontSize: 12,
-                                                                            fontWeight: FontWeight.w600,
-                                                                            color: Colors.black),
-                                                                      ),
-                                                                      SizedBox(width: 5,),
-                                                                      Text(
-                                                                        "${provider.videoModelList[index].date} - ${provider.videoModelList[index].since}".tr,
-                                                                        style: TextStyle(
-                                                                            fontSize: 12,
-                                                                            fontWeight: FontWeight.w400,
-                                                                            color: Colors.grey),
-                                                                      ),
+                                                                      Expanded(
+                                                                          child: Text(provider.videoModelList[index].title.tr,overflow: TextOverflow.clip,))
                                                                     ],
                                                                   ),
-                                                                ),
-                                                              ],
+                                                                  SizedBox(
+                                                                    height: 5,
+                                                                  ),
+                                                                  FittedBox(
+                                                                    child: Row(
+                                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                                      children: <Widget>[
+                                                                        Text(
+                                                                          provider.videoModelList[index].username,
+                                                                          style: TextStyle(
+                                                                              fontSize: 12,
+                                                                              fontWeight: FontWeight.w600,
+                                                                              color: Colors.grey),
+                                                                        ),
+                                                                        SizedBox(width: 5,),
+                                                                        Text(
+                                                                          "${provider.videoModelList[index].date} - ${provider.videoModelList[index].since}".tr,
+                                                                          style: TextStyle(
+                                                                              fontSize: 12,
+                                                                              fontWeight: FontWeight.w400,
+                                                                              color: Colors.grey),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                        Container(
-                                                            height: 100,
-                                                            width: MediaQuery.of(context).size.width * 0.338,
-                                                            decoration: BoxDecoration(
-                                                                color: Colors.grey[200],
-                                                                borderRadius: BorderRadius.all(Radius.circular(10))),
-                                                            child: Stack(
-                                                              children: <Widget>[
-                                                                ClipRRect(
-                                                                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                                  child: Container(
-                                                                      height: 100,
-                                                                      width: MediaQuery.of(context).size.width * 0.338,
-                                                                      child: Image.network(provider.videoModelList[index].imgJPG,
-                                                                        fit: BoxFit.cover ,)),
-                                                                ),
-                                                                Positioned(
-                                                                    top: 40,
-                                                                    right: 55,
-                                                                    child: Container(
-                                                                      height: 30,
-                                                                      width: 30,
-                                                                      decoration: BoxDecoration(
-                                                                          borderRadius: BorderRadius.circular(50),
-                                                                          border: Border.all(
-                                                                              width: 3,
-                                                                              color: Colors.grey.withOpacity(.7)
-                                                                          )
-                                                                      ),
-                                                                      child:Icon(Icons.play_arrow,color: Colors.grey.withOpacity(.7),) ,
-                                                                    ) )
-                                                              ],
-                                                            ))
-                                                      ],
-                                                    ),
-                                                  )),
-                                            ],
+
+                                                        ],
+                                                      ),
+                                                    )),
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
 
-                            ]);
+                              ]),
+                        );
                       });
             },
           ),

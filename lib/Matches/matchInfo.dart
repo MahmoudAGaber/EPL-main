@@ -28,8 +28,8 @@ class matchInfo extends StatefulWidget {
 
 class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
 
-  static const TextStyle tapbar = TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.white);
-  TextStyle head = TextStyle(fontSize: 16, color: Colors.white);
+  static const TextStyle tapbar = TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.black);
+  TextStyle head = TextStyle(fontSize: 16, color: Colors.black);
 
 
   TabController tabController;
@@ -60,19 +60,19 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
         Directionality(
             textDirection: TextDirection.rtl,
             child: SliverAppBar(
-                iconTheme: IconThemeData(color: Colors.white),
-                backgroundColor: Theme.of(context).primaryColor,
+                iconTheme: IconThemeData(color: Colors.black),
                 elevation: 0.0,
                 actions: <Widget>[
                   Row(
                     children: <Widget>[
                       IconButton(
-                          icon: Icon(Icons.more_vert, color: Colors.white),
+                          icon: Icon(Icons.more_vert, color: Colors.black),
                           onPressed: null),
                     ],
                   )
                 ],
                 expandedHeight: 120.0,
+                backgroundColor: Colors.white,
                 pinned: true,
                 floating: true,
                 snap: true,
@@ -92,12 +92,12 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
                                 IconButton(
                                     icon: Icon(
                                       Icons.notifications_none,
-                                      color: Colors.white,
+                                      color: Colors.black,
                                     ),
                                     onPressed: null),
                                 IconButton(
                                     icon:
-                                        Icon(Icons.share, color: Colors.white),
+                                        Icon(Icons.star_border, color: Colors.black,),
                                     onPressed: null),
                               ],
                             ),
@@ -138,7 +138,7 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
                                         .split('،')
                                         .first
                                         .tr,
-                                    style: TextStyle(fontSize: 18),
+                                    style: TextStyle(fontSize: 18,color: Colors.black),
                                   )
                                 ],
                               ),
@@ -178,11 +178,9 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
                 child: Consumer<EachMatchViewModel>(
                   builder: (context, provider, child) {
                     return provider.msnModel == null
-                        ? Container(
-                            color: Theme.of(context).primaryColor,
-                          )
+                        ? Container()
                         : Container(
-                            color: Theme.of(context).primaryColor,
+                           color: Colors.white,
                             child: Row(
                               children: <Widget>[
                                 Container(
@@ -193,7 +191,7 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
                                       child: Text(
                                         provider.msnModel.homeTeamName.tr,
                                         style: TextStyle(
-                                            color: Colors.white,
+                                            color: Colors.black,
                                             fontSize: 20,
                                             fontWeight: FontWeight.w500),
                                       ),
@@ -218,7 +216,7 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
                                       child: Text(
                                         provider.msnModel.awayTeamName.tr,
                                         style: TextStyle(
-                                            color: Colors.white,
+                                            color: Colors.black,
                                             fontSize: 20,
                                             fontWeight: FontWeight.w500),
                                       ),
@@ -242,18 +240,21 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
                       child:Consumer<EachMatchViewModel>(
                         builder: (context,provider,child){
                           return Container(
-                            color: Theme.of(context).primaryColor,
-                            child: TabBar(
-                                indicatorColor: Colors.white,
-                                isScrollable: true,
-                                onTap: (index){
-                                  _selectedIndex = index;
-                                  tabController.animateTo(_selectedIndex);
-                                },
-                                controller: tabController,
-                                tabs: List.generate(tabName(provider).length, (index) => tabName(provider)[index]).toList()
+                            color: Colors.white,
+                            child: Container(
+                                  child: TabBar(
+                                      indicatorColor: Theme.of(context).primaryColor,
+                                      labelColor: Theme.of(context).primaryColor,
+                                      isScrollable: true,
+                                      onTap: (index){
+                                        _selectedIndex = index;
+                                        tabController.animateTo(_selectedIndex);
+                                      },
+                                      controller: tabController,
+                                      tabs: List.generate(tabName(provider).length, (index) => tabName(provider)[index]).toList()
 
-                            ),
+                                  ),
+                                ),
                           );
                         },
                       )
@@ -285,7 +286,7 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
 
     return Tab(
       child: Text(
-        "احداث المبارة".tr,
+        "معاينة ".tr,
         style: tapbar,
       ),
     );
@@ -305,7 +306,7 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
 
     return Tab(
       child: Text(
-        "المواجهات السابقة".tr,
+        "المواجة ".tr,
         style: tapbar,
       ),
     );

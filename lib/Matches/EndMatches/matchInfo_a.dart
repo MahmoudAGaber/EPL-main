@@ -43,7 +43,7 @@ class _matchInfo_aState extends State<matchInfo_a>
   TextStyle number = TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
 
   static const TextStyle tapbar =
-  TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.white);
+  TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.black);
   TextStyle head = TextStyle(
       fontSize: 16, color: Colors.white
   );
@@ -180,10 +180,8 @@ class _matchInfo_aState extends State<matchInfo_a>
         Directionality(
           textDirection: TextDirection.rtl,
           child: SliverAppBar(
-              iconTheme: IconThemeData(color: Colors.white),
-              backgroundColor: Theme
-                  .of(context)
-                  .primaryColor,
+              iconTheme: IconThemeData(color: Colors.black),
+              backgroundColor: Colors.white,
               elevation: 0.0,
               actions: <Widget>[
                 Row(
@@ -191,7 +189,7 @@ class _matchInfo_aState extends State<matchInfo_a>
                     IconButton(
                         icon: Icon(
                           Icons.more_vert,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         onPressed: null),
                   ],
@@ -214,11 +212,11 @@ class _matchInfo_aState extends State<matchInfo_a>
                             IconButton(
                                 icon: Icon(
                                   Icons.notifications_none,
-                                  color: Colors.white,
+                                  color: Colors.black,
                                 ),
                                 onPressed: null),
                             IconButton(
-                                icon: Icon(Icons.share, color: Colors.white),
+                                icon: Icon(Icons.star_border, color: Colors.black),
                                 onPressed: null),
                           ],
                         ),
@@ -259,7 +257,7 @@ class _matchInfo_aState extends State<matchInfo_a>
                                 "${provider.msnModel
                                     .homeTeamScores} - ${provider.msnModel
                                     .awayTeamScores}",
-                                style: TextStyle(fontSize: 18),
+                                style: TextStyle(fontSize: 18,color: Colors.black),
                               )
                             ],
                           ),
@@ -302,13 +300,9 @@ class _matchInfo_aState extends State<matchInfo_a>
                 child: Consumer<EachMatchViewModel>(
                   builder: (context, provider, child) {
                     return provider.msnModel == null
-                        ? Container(color: Theme
-                        .of(context)
-                        .primaryColor,)
+                        ? Container(color:Colors.white,)
                         : Container(
-                      color: Theme
-                          .of(context)
-                          .primaryColor,
+                      color: Colors.white,
                       child: Row(
                         children: <Widget>[
                           Column(
@@ -323,7 +317,7 @@ class _matchInfo_aState extends State<matchInfo_a>
                                   child: Text(
                                     provider.msnModel.homeTeamName.tr,
                                     style: TextStyle(
-                                        color: Colors.white,
+                                        color: Colors.black,
                                         fontSize: 20,
                                         fontWeight: FontWeight.w500),
                                   ),
@@ -345,7 +339,7 @@ class _matchInfo_aState extends State<matchInfo_a>
                                         ? provider.msnModel.matchTime.toString()
                                         : "انتهت",
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 16),
+                                        color: Colors.black, fontSize: 16),
                                   ),
                                 ),
                               ),
@@ -364,7 +358,7 @@ class _matchInfo_aState extends State<matchInfo_a>
                                   child: Text(
                                     provider.msnModel.awayTeamName.tr,
                                     style: TextStyle(
-                                        color: Colors.white,
+                                        color: Colors.black,
                                         fontSize: 20,
                                         fontWeight: FontWeight.w500),
                                   ),
@@ -390,9 +384,9 @@ class _matchInfo_aState extends State<matchInfo_a>
                   child:Consumer<EachMatchViewModel>(
                     builder: (context,provider,child){
                       return Container(
-                        color: Theme.of(context).primaryColor,
+                        color: Colors.white,
                         child: TabBar(
-                            indicatorColor: Colors.white,
+                            indicatorColor: Theme.of(context).primaryColor,
                             isScrollable: true,
                             onTap: (index){
                               _selectedIndex = index;

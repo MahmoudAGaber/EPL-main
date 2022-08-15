@@ -40,214 +40,207 @@ class _tranferTeamState extends State<tranferTeam> {
              padding: const EdgeInsets.only(top: 20),
              child: Center(child: NoData(),),
            )
-               : ListView(
+               : Padding(
+                 padding: const EdgeInsets.all(8.0),
+                 child: ListView(
              shrinkWrap: true,
              scrollDirection: Axis.vertical,
              physics: ClampingScrollPhysics(),
              children: <Widget>[
-               Padding(
-                 padding: const EdgeInsets.only(right: 15, top: 10, bottom: 10),
-                 child: Container(
-                   width: MediaQuery
-                       .of(context)
-                       .size
-                       .width,
-                   child: Text("أبرز التحويلات".tr),
-                 ),
-               ),
-               ListView.builder(
-                   physics: ClampingScrollPhysics(),
-                   shrinkWrap: true,
-                   scrollDirection: Axis.vertical,
-                   itemCount: provider.transferBoxesModelList.length,
-                   itemBuilder: (BuildContext context, index) {
-                     return Padding(
-                       padding: const EdgeInsets.only(left: 8, right: 8),
-                       child: Card(
-                         shape: RoundedRectangleBorder(
-                             borderRadius: BorderRadius.all(
-                                 Radius.circular(10))),
-                         child: Padding(
-                           padding: const EdgeInsets.all(10.0),
-                           child: Column(
-                             children: <Widget>[
-                               GestureDetector(
-                                   onTap: () {
-                                     Navigator.pushNamed(context, '/players');
-                                   },
-                                   child: Stack(
-                                     children: [
-                                       Container(
-                                         height: 70,
-                                         width: 70,
-                                         decoration: BoxDecoration(
-                                           borderRadius:
-                                           BorderRadius.all(
-                                               Radius.circular(50)),),
-                                         child: Padding(
-                                           padding:
-                                           const EdgeInsets.only(bottom: 20),
-                                           child: ClipRRect(
-                                               borderRadius:
-                                               BorderRadius.all(
-                                                   Radius.circular(50)),
-                                               child: Image.network(
-                                                   "https://www.eplworld.com${provider
-                                                       .transferBoxesModelList[index]
-                                                       .mainIMG}")),
-                                         ),
-                                       ),
-                                       Positioned(
-                                         bottom: 0,
-                                         right: 0,
-                                         child: Container(
+                 ListView.builder(
+                     physics: ClampingScrollPhysics(),
+                     shrinkWrap: true,
+                     scrollDirection: Axis.vertical,
+                     itemCount: provider.transferBoxesModelList.length,
+                     itemBuilder: (BuildContext context, index) {
+                       return Padding(
+                         padding: const EdgeInsets.only(top: 4,bottom: 4),
+                         child: Card(
+                           shape: RoundedRectangleBorder(
+                               borderRadius: BorderRadius.all(
+                                   Radius.circular(10))),
+                           child: Padding(
+                             padding: const EdgeInsets.all(10.0),
+                             child: Column(
+                               children: <Widget>[
+                                 GestureDetector(
+                                     onTap: () {
+                                       Navigator.pushNamed(context, '/players');
+                                     },
+                                     child: Stack(
+                                       children: [
+                                         Container(
+                                           height: 70,
                                            width: 70,
                                            decoration: BoxDecoration(
-                                               borderRadius: BorderRadius
-                                                   .circular(10),
-                                               color: Colors.grey[200]
-                                           ),
+                                             borderRadius:
+                                             BorderRadius.all(
+                                                 Radius.circular(50)),),
                                            child: Padding(
-                                             padding: const EdgeInsets.only(
-                                                 right: 5, left: 5),
-                                             child: Center(child: Text(provider
-                                                 .transferBoxesModelList[index]
-                                                 .position)),
+                                             padding:
+                                             const EdgeInsets.only(bottom: 20),
+                                             child: ClipRRect(
+                                                 borderRadius:
+                                                 BorderRadius.all(
+                                                     Radius.circular(50)),
+                                                 child: Image.network(
+                                                     "https://www.eplworld.com${provider
+                                                         .transferBoxesModelList[index]
+                                                         .mainIMG}")),
                                            ),
                                          ),
-                                       )
-                                     ],
-                                   )
-                               ),
-                               Text(provider.transferBoxesModelList[index].name
-                                   .tr, style: TextStyle(fontSize: 15)),
-                               SizedBox(
-                                 height: 5,
-                               ),
-                               Row(
-                                 mainAxisAlignment: MainAxisAlignment.center,
-                                 children: <Widget>[
-                                   Text(provider.transferBoxesModelList[index]
-                                       .fromName.tr,
-                                     style: TextStyle(fontSize: 14),),
-                                   SizedBox(width: 5,),
-                                   Container(
-                                       width: MediaQuery
-                                           .of(context)
-                                           .size
-                                           .width *
-                                           0.24,
-                                       child: Padding(
-                                         padding: const EdgeInsets.only(
-                                             bottom: 1),
-                                         child: Row(
-                                           mainAxisAlignment:
-                                           MainAxisAlignment.spaceBetween,
-                                           children: <Widget>[
-                                             GestureDetector(
-                                               onTap: () {
-                                                 Navigator.push(context,
-                                                     MaterialPageRoute(
-                                                         builder: (context) =>
-                                                             ChangeNotifierProvider<
-                                                                 EachTeamViewModel>(
-                                                                 create: (_) =>
-                                                                     EachTeamViewModel(),
-                                                                 child: EachTeam(
-                                                                   url: provider
-                                                                       .transferBoxesModelList[index]
-                                                                       .fromURL,))));
-                                               },
-                                               child: Container(
-                                                 width: 30,
-                                                 height: 30,
-                                                 child:
-                                                 Image.network(
-                                                     "https://www.eplworld.com${provider
-                                                         .transferBoxesModelList[index]
-                                                         .fromLogo}"),
-                                               ),
+                                         Positioned(
+                                           bottom: 0,
+                                           right: 0,
+                                           child: Container(
+                                             width: 70,
+                                             decoration: BoxDecoration(
+                                                 borderRadius: BorderRadius
+                                                     .circular(10),
+                                                 color: Colors.grey[200]
                                              ),
-                                             Container(
-                                                 width: 20,
-                                                 height: 20,
-                                                 decoration: BoxDecoration(
-                                                     color: Colors.green,
-                                                     borderRadius:
-                                                     BorderRadius.all(
-                                                         Radius.circular(
-                                                             100))),
-                                                 child: Icon(
-                                                   Icons.arrow_back,
-                                                   size: 15,
-                                                   color: Colors.white,
-                                                 )),
-                                             GestureDetector(
-                                               onTap: () {
-                                                 Navigator.push(context,
-                                                     MaterialPageRoute(
-                                                         builder: (context) =>
-                                                             ChangeNotifierProvider<
-                                                                 EachTeamViewModel>(
-                                                                 create: (_) =>
-                                                                     EachTeamViewModel(),
-                                                                 child: EachTeam(
-                                                                   url: provider
-                                                                       .transferBoxesModelList[index]
-                                                                       .toURL,))));
-                                               },
-                                               child: Container(
-                                                 width: 30,
-                                                 height: 30,
-                                                 child:
-                                                 Image.network(
-                                                     "https://www.eplworld.com${provider
-                                                         .transferBoxesModelList[index]
-                                                         .toLogo}"),
-                                               ),
+                                             child: Padding(
+                                               padding: const EdgeInsets.only(
+                                                   right: 5, left: 5),
+                                               child: Center(child: Text(provider
+                                                   .transferBoxesModelList[index]
+                                                   .position)),
                                              ),
-                                           ],
-                                         ),
-                                       )),
-                                   SizedBox(width: 5,),
-                                   Text(provider.transferBoxesModelList[index]
-                                       .toName.tr,
-                                     style: TextStyle(fontSize: 14),),
-                                 ],
-                               ),
-                               SizedBox(
-                                 height: 5,
-                               ),
-                               Row(
-                                 mainAxisAlignment: MainAxisAlignment.center,
-                                 children: [
-                                   Text(
-                                     provider.transferBoxesModelList[index]
-                                         .quickDetails.freeTransfer.tr,
-                                     style: _textStyle,
-                                   ),
-                                   Padding(
-                                     padding: const EdgeInsets.only(
-                                         left: 10, right: 10),
-                                     child: Text('-'),
-                                   )
-                                   ,
-                                   Text(
-                                     provider.transferBoxesModelList[index].date
-                                         .tr,
-                                     style: _textStyle,
-                                   ),
-                                 ],
-                               )
+                                           ),
+                                         )
+                                       ],
+                                     )
+                                 ),
+                                 Text(provider.transferBoxesModelList[index].name
+                                     .tr, style: TextStyle(fontSize: 15)),
+                                 SizedBox(
+                                   height: 5,
+                                 ),
+                                 Row(
+                                   mainAxisAlignment: MainAxisAlignment.center,
+                                   children: <Widget>[
+                                     Text(provider.transferBoxesModelList[index]
+                                         .fromName.tr,
+                                       style: TextStyle(fontSize: 14),),
+                                     SizedBox(width: 5,),
+                                     Container(
+                                         width: MediaQuery
+                                             .of(context)
+                                             .size
+                                             .width *
+                                             0.24,
+                                         child: Padding(
+                                           padding: const EdgeInsets.only(
+                                               bottom: 1),
+                                           child: Row(
+                                             mainAxisAlignment:
+                                             MainAxisAlignment.spaceBetween,
+                                             children: <Widget>[
+                                               GestureDetector(
+                                                 onTap: () {
+                                                   Navigator.push(context,
+                                                       MaterialPageRoute(
+                                                           builder: (context) =>
+                                                               ChangeNotifierProvider<
+                                                                   EachTeamViewModel>(
+                                                                   create: (_) =>
+                                                                       EachTeamViewModel(),
+                                                                   child: EachTeam(
+                                                                     url: provider
+                                                                         .transferBoxesModelList[index]
+                                                                         .fromURL,))));
+                                                 },
+                                                 child: Container(
+                                                   width: 30,
+                                                   height: 30,
+                                                   child:
+                                                   Image.network(
+                                                       "https://www.eplworld.com${provider
+                                                           .transferBoxesModelList[index]
+                                                           .fromLogo}"),
+                                                 ),
+                                               ),
+                                               Container(
+                                                   width: 20,
+                                                   height: 20,
+                                                   decoration: BoxDecoration(
+                                                       color: Colors.green,
+                                                       borderRadius:
+                                                       BorderRadius.all(
+                                                           Radius.circular(
+                                                               100))),
+                                                   child: Icon(
+                                                     Icons.arrow_back,
+                                                     size: 15,
+                                                     color: Colors.white,
+                                                   )),
+                                               GestureDetector(
+                                                 onTap: () {
+                                                   Navigator.push(context,
+                                                       MaterialPageRoute(
+                                                           builder: (context) =>
+                                                               ChangeNotifierProvider<
+                                                                   EachTeamViewModel>(
+                                                                   create: (_) =>
+                                                                       EachTeamViewModel(),
+                                                                   child: EachTeam(
+                                                                     url: provider
+                                                                         .transferBoxesModelList[index]
+                                                                         .toURL,))));
+                                                 },
+                                                 child: Container(
+                                                   width: 30,
+                                                   height: 30,
+                                                   child:
+                                                   Image.network(
+                                                       "https://www.eplworld.com${provider
+                                                           .transferBoxesModelList[index]
+                                                           .toLogo}"),
+                                                 ),
+                                               ),
+                                             ],
+                                           ),
+                                         )),
+                                     SizedBox(width: 5,),
+                                     Text(provider.transferBoxesModelList[index]
+                                         .toName.tr,
+                                       style: TextStyle(fontSize: 14),),
+                                   ],
+                                 ),
+                                 SizedBox(
+                                   height: 5,
+                                 ),
+                                 Row(
+                                   mainAxisAlignment: MainAxisAlignment.center,
+                                   children: [
+                                     Text(
+                                       provider.transferBoxesModelList[index]
+                                           .quickDetails.freeTransfer.tr,
+                                       style: _textStyle,
+                                     ),
+                                     Padding(
+                                       padding: const EdgeInsets.only(
+                                           left: 10, right: 10),
+                                       child: Text('-'),
+                                     )
+                                     ,
+                                     Text(
+                                       provider.transferBoxesModelList[index].date
+                                           .tr,
+                                       style: _textStyle,
+                                     ),
+                                   ],
+                                 )
 
-                             ],
+                               ],
+                             ),
                            ),
                          ),
-                       ),
-                     );
-                   })
+                       );
+                     })
              ],
-           );
+           ),
+               );
          },
        ),
      );
