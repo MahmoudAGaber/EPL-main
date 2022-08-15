@@ -1,0 +1,112 @@
+Flutter crash report.
+Please report a bug at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter --no-color build ios --simulator
+
+## exception
+
+ProcessException: ProcessException: Process exited abnormally:
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -list
+
+User defaults from command line:
+    IDEPackageSupportUseBuiltinSCM = YES
+
+
+xcodebuild: error: Could not resolve package dependencies:
+  Packages are not supported when using legacy build locations, but the current project has them enabled.
+  Command: xcrun xcodebuild -list
+
+```
+#0      RunResult.throwException (package:flutter_tools/src/base/process.dart:124:5)
+#1      _DefaultProcessUtils.run (package:flutter_tools/src/base/process.dart:276:19)
+<asynchronous suspension>
+#2      XcodeProjectInterpreter.getInfo (package:flutter_tools/src/ios/xcodeproj.dart:470:30)
+<asynchronous suspension>
+#3      IosProject.projectInfo (package:flutter_tools/src/project.dart:619:29)
+<asynchronous suspension>
+#4      IosProject.buildSettingsForBuildInfo (package:flutter_tools/src/project.dart:601:35)
+<asynchronous suspension>
+#5      IosProject._parseProductBundleIdentifier (package:flutter_tools/src/project.dart:543:50)
+<asynchronous suspension>
+#6      IosProject.productBundleIdentifier (package:flutter_tools/src/project.dart:520:41)
+<asynchronous suspension>
+#7      BuildableIOSApp.fromProject (package:flutter_tools/src/ios/application_package.dart:118:36)
+<asynchronous suspension>
+#8      FlutterApplicationPackageFactory.getPackageForPlatform (package:flutter_tools/src/flutter_application_package.dart:83:15)
+<asynchronous suspension>
+#9      _BuildIOSSubCommand.buildableIOSApp (package:flutter_tools/src/commands/build_ios.dart:212:26)
+<asynchronous suspension>
+#10     _BuildIOSSubCommand.runCommand (package:flutter_tools/src/commands/build_ios.dart:244:33)
+<asynchronous suspension>
+#11     FlutterCommand.run.<anonymous closure> (package:flutter_tools/src/runner/flutter_command.dart:1043:27)
+<asynchronous suspension>
+#12     AppContext.run.<anonymous closure> (package:flutter_tools/src/base/context.dart:150:19)
+<asynchronous suspension>
+#13     CommandRunner.runCommand (package:args/command_runner.dart:196:13)
+<asynchronous suspension>
+#14     FlutterCommandRunner.runCommand.<anonymous closure> (package:flutter_tools/src/runner/flutter_command_runner.dart:284:9)
+<asynchronous suspension>
+#15     AppContext.run.<anonymous closure> (package:flutter_tools/src/base/context.dart:150:19)
+<asynchronous suspension>
+#16     FlutterCommandRunner.runCommand (package:flutter_tools/src/runner/flutter_command_runner.dart:232:5)
+<asynchronous suspension>
+#17     run.<anonymous closure>.<anonymous closure> (package:flutter_tools/runner.dart:62:9)
+<asynchronous suspension>
+#18     AppContext.run.<anonymous closure> (package:flutter_tools/src/base/context.dart:150:19)
+<asynchronous suspension>
+#19     main (package:flutter_tools/executable.dart:91:3)
+<asynchronous suspension>
+```
+
+## flutter doctor
+
+```
+[✓] Flutter (Channel stable, 2.2.3, on macOS 11.2.2 20D80 darwin-x64, locale en)
+    • Flutter version 2.2.3 at /Users/muhammedshawky/Flutter/flutter
+    • Framework revision f4abaa0735 (1 year, 1 month ago), 2021-07-01 12:46:11 -0700
+    • Engine revision 241c87ad80
+    • Dart version 2.13.4
+
+[✓] Android toolchain - develop for Android devices (Android SDK version 30.0.3)
+    • Android SDK at /Users/muhammedshawky/Library/Android/sdk
+    • Platform android-32, build-tools 30.0.3
+    • Java binary at: /Library/Java/JavaVirtualMachines/jdk-11.0.12.jdk/Contents/Home/bin/java
+    • Java version Java(TM) SE Runtime Environment 18.9 (build 11.0.12+8-LTS-237)
+    • All Android licenses accepted.
+
+[✓] Xcode - develop for iOS and macOS
+    • Xcode at /Applications/Xcode.app/Contents/Developer
+    • Xcode 12.5, Build version 12E262
+    • CocoaPods version 1.10.2
+
+[✓] Chrome - develop for the web
+    • Chrome at /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+
+[!] Android Studio (version 2020.3)
+    • Android Studio at /Applications/Android Studio.app/Contents
+    • Flutter plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/9212-flutter
+    • Dart plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/6351-dart
+    ✗ Unable to find bundled Java version.
+    • Try updating or re-installing Android Studio.
+
+[✓] IntelliJ IDEA Community Edition (version 2019.2.1)
+    • IntelliJ at /Applications/IntelliJ IDEA CE.app
+    • Flutter plugin version 43.0.2
+    • Dart plugin version 192.8052
+
+[✓] VS Code (version 1.67.2)
+    • VS Code at /Applications/Visual Studio Code.app/Contents
+    • Flutter extension version 3.40.0
+
+[✓] Connected device (2 available)
+    • Redmi Note 7 (mobile) • de31ca2d • android-arm64  • Android 10 (API 29)
+    • Chrome (web)          • chrome   • web-javascript • Google Chrome 95.0.4638.69
+    ! Error: iPhone is not connected. Xcode will continue when iPhone is connected. (code -13)
+
+! Doctor found issues in 1 category.
+```

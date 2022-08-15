@@ -1,0 +1,119 @@
+{
+  "project_info": {
+    "project_number": "275983307794",
+    "firebase_url": "https://eplworld-77e97-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "eplworld-77e97",
+    "storage_bucket": "eplworld-77e97.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:275983307794:android:519c39169b95e256a634cb",
+        "android_client_info": {
+          "package_name": "com.epl.football"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "275983307794-k533b3rhgiug22cgbs49fo37394al42r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRaFQgiwMacdf3shEz5QPlK7Mz9ljRdpQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "275983307794-k533b3rhgiug22cgbs49fo37394al42r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "275983307794-1jedio2kfmoal75h139eucs5kglarh7d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.epl.football"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:275983307794:android:39b97a9fe3855e7ba634cb",
+        "android_client_info": {
+          "package_name": "com.example.pushnotification"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "275983307794-k533b3rhgiug22cgbs49fo37394al42r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRaFQgiwMacdf3shEz5QPlK7Mz9ljRdpQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "275983307794-k533b3rhgiug22cgbs49fo37394al42r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "275983307794-1jedio2kfmoal75h139eucs5kglarh7d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.epl.football"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:275983307794:android:3f29e0690d3a568aa634cb",
+        "android_client_info": {
+          "package_name": "io.flutter.plugins.firebase.messaging.example"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "275983307794-k533b3rhgiug22cgbs49fo37394al42r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRaFQgiwMacdf3shEz5QPlK7Mz9ljRdpQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "275983307794-k533b3rhgiug22cgbs49fo37394al42r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "275983307794-1jedio2kfmoal75h139eucs5kglarh7d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.epl.football"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
