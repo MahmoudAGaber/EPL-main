@@ -95,6 +95,7 @@ class _favouritePlayerState extends State<favouritePlayer> {
                                     "البحث عن الفرق،المقابلات،اللاعبين،الاخبار،البطولات"
                                         .tr,
                                 hintStyle: TextStyle(
+                                  fontFamily: 'Vazirmatn',
                                   fontSize: 16,
                                 ),
                               ),

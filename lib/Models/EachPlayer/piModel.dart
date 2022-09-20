@@ -1,5 +1,7 @@
 import 'package:arseli/Models/EachPlayer/StatsModel.dart';
 
+import 'Career.dart';
+
 class PiModel{
   dynamic uid;
   String id;
@@ -9,6 +11,7 @@ class PiModel{
   String firstName;
   String gender;
   String height;
+  String foot;
   String lastUpdated;
   String lastName;
   String matchName;
@@ -33,7 +36,7 @@ class PiModel{
   int age;
   String nationalityLogo;
   StatsModel Stats;
-  List career;
+  List<CareerModel> career;
 
   PiModel(
      { this.uid,
@@ -43,6 +46,7 @@ class PiModel{
       this.dateOfBirth,
       this.firstName,
       this.gender,
+       this.foot,
        this.height,
       this.lastUpdated,
       this.lastName,
@@ -79,6 +83,7 @@ class PiModel{
       dateOfBirth: json['dateOfBirth'],
       firstName: json['firstName'],
       gender: json['gender'],
+      foot: json['foot'],
       height: json['height'] == null ? '':json['height'],
       lastUpdated: json['lastUpdated'],
       lastName: json['lastName'],
@@ -104,7 +109,7 @@ class PiModel{
       age: json['age'],
       nationalityLogo: json['nationalityLogo'],
       Stats: StatsModel.json(json['Stats']?? Map()),
-      career: json['career'],
+      career: CareerModel.listFromJson(json['career']??Map()),
     );
   }
 }

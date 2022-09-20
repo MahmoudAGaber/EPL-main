@@ -7,11 +7,13 @@ class allDetaials extends StatefulWidget {
   _allDetaialsState createState() => _allDetaialsState();
 }
 
-TextStyle content = TextStyle(fontSize: 14);
-TextStyle content2 = TextStyle(fontSize: 12, color: Colors.grey);
-TextStyle number = TextStyle(fontSize: 18, fontWeight: FontWeight.w500);
+TextStyle content = TextStyle(fontFamily: 'Vazirmatn', fontSize: 14);
+TextStyle content2 =
+    TextStyle(fontFamily: 'Vazirmatn', fontSize: 12, color: Colors.grey);
+TextStyle number = TextStyle(
+    fontFamily: 'Vazirmatn', fontSize: 18, fontWeight: FontWeight.w500);
 
-TextStyle _textStyletitle = TextStyle(fontSize: 18);
+TextStyle _textStyletitle = TextStyle(fontFamily: 'Vazirmatn', fontSize: 18);
 
 class _allDetaialsState extends State<allDetaials> {
   int i = 1;
@@ -171,7 +173,9 @@ class _allDetaialsState extends State<allDetaials> {
                                 children: <Widget>[
                                   Text(
                                     value,
-                                    style: TextStyle(fontSize: 13.5),
+                                    style: TextStyle(
+                                        fontFamily: 'Vazirmatn',
+                                        fontSize: 13.5),
                                   )
                                 ],
                               )),

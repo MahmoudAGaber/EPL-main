@@ -11,15 +11,16 @@ import 'package:provider/provider.dart';
 class EachPlayer extends StatefulWidget {
   String url;
   String teamImg;
-  EachPlayer({this.url,this.teamImg});
+  EachPlayer({this.url, this.teamImg});
   @override
   _EachPlayerState createState() => _EachPlayerState();
 }
 
 class _EachPlayerState extends State<EachPlayer> with TickerProviderStateMixin {
-  static const TextStyle tapbar =
-      TextStyle(fontSize: 13, fontWeight: FontWeight.w500);
+  static const TextStyle tapbar = TextStyle(
+      fontFamily: 'Vazirmatn', fontSize: 13, fontWeight: FontWeight.w500);
   TextStyle head = TextStyle(
+    fontFamily: 'Vazirmatn',
     fontSize: 16,
   );
 
@@ -34,13 +35,13 @@ class _EachPlayerState extends State<EachPlayer> with TickerProviderStateMixin {
 
   EachplayerViewModel eachplayerViewModel;
   @override
-  void initState(){
+  void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      eachplayerViewModel = Provider.of(context,listen: false);
-       eachplayerViewModel.getHeaderProfile(widget.url,context);
+      eachplayerViewModel = Provider.of(context, listen: false);
+      eachplayerViewModel.getHeaderProfile(widget.url, context);
     });
 
-    tabController = new TabController(length: 2, vsync: this);
+    tabController = new TabController(length: 3, vsync: this);
     tabController.addListener(() {
       setState(() {
         _selectedIndex = tabController.index;
@@ -100,71 +101,86 @@ class _EachPlayerState extends State<EachPlayer> with TickerProviderStateMixin {
             floating: true,
             snap: true,
             flexibleSpace: Consumer<EachplayerViewModel>(
-              builder: (context,provider,child){
+              builder: (context, provider, child) {
                 return provider.loadingHeader
-                    ? Center(child: Container(),)
-                    :FlexibleSpaceBar(
-                  background: Container(
-                    child: Stack(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(right: 25, top: 60),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  Container(
-                                      height: 55,
-                                      width: 55,
-                                      child: ClipRRect(
-                                          borderRadius:
-                                          BorderRadius.all(Radius.circular(100)),
-                                          child:provider.headerProfileModel==null?CircularProgressIndicator():Image.network(
-                                            "https://www.eplworld.com${provider.headerProfileModel.logo}",
-                                          ))),
-                                ],
-                              ),
-                            ),
-                            Positioned(
-                                top: 93,
-                                right: 95,
+                    ? Center(
+                        child: Container(),
+                      )
+                    : FlexibleSpaceBar(
+                        background: Container(
+                          child: Stack(
+                            children: <Widget>[
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 25, top: 60),
                                 child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
-                                    widget.teamImg==null
-                                        ?Container()
-                                        :Container(
-                                      height: 25,
-                                      width: 25,
-                                      child: Image.network( "https://www.eplworld.com${widget.teamImg}"),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      provider.headerProfileModel.belongsTo.isBlank?"":
-                                      provider.headerProfileModel.belongsTo.tr,
-                                      style: TextStyle(color: Colors.white),
-                                    )
+                                    Container(
+                                        height: 55,
+                                        width: 55,
+                                        child: ClipRRect(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(100)),
+                                            child: provider
+                                                        .headerProfileModel ==
+                                                    null
+                                                ? CircularProgressIndicator()
+                                                : Image.network(
+                                                    "https://www.eplworld.com${provider.headerProfileModel.logo}",
+                                                  ))),
                                   ],
-                                ))
+                                ),
+                              ),
+                              Positioned(
+                                  top: 93,
+                                  right: 95,
+                                  child: Row(
+                                    children: <Widget>[
+                                      widget.teamImg == null
+                                          ? Container()
+                                          : Container(
+                                              height: 25,
+                                              width: 25,
+                                              child: Image.network(
+                                                  "https://www.eplworld.com${widget.teamImg}"),
+                                            ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        provider.headerProfileModel.belongsTo
+                                                .isBlank
+                                            ? ""
+                                            : provider.headerProfileModel
+                                                .belongsTo.tr,
+                                        style: TextStyle(
+                                            fontFamily: 'Vazirmatn',
+                                            color: Colors.white),
+                                      )
+                                    ],
+                                  ))
+                            ],
+                          ),
+                        ),
+                        titlePadding:
+                            EdgeInsets.only(top: 5.0, bottom: 20.0, right: 100),
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: <Widget>[
+                                Text(
+                                  provider.headerProfileModel.name.tr,
+                                  style: TextStyle(
+                                      fontFamily: 'Vazirmatn', fontSize: 18),
+                                )
+                              ],
+                            ),
                           ],
                         ),
-                  ),
-                  titlePadding: EdgeInsets.only(top: 5.0, bottom: 20.0,right: 100),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Text(
-                            provider.headerProfileModel.name.tr,
-                            style: TextStyle(fontSize: 18),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                );
+                      );
               },
             ),
           ),
@@ -172,7 +188,7 @@ class _EachPlayerState extends State<EachPlayer> with TickerProviderStateMixin {
         Directionality(
           textDirection: TextDirection.rtl,
           child: DefaultTabController(
-            length: 2,
+            length: 3,
             child: SliverPersistentHeader(
               pinned: true,
               delegate: _SliverAppBarDelegate(TabBar(
@@ -192,9 +208,10 @@ class _EachPlayerState extends State<EachPlayer> with TickerProviderStateMixin {
                       ),
                     ),
                     /*
+
                     Tab(
                       child: Text(
-                        "المباريات".tr,
+                        "احصائيات".tr,
                         style: tapbar,
                       ),
                     ),
@@ -202,7 +219,13 @@ class _EachPlayerState extends State<EachPlayer> with TickerProviderStateMixin {
                      */
                     Tab(
                       child: Text(
-                        "احصائيات".tr,
+                        "المهنه".tr,
+                        style: tapbar,
+                      ),
+                    ),
+                    Tab(
+                      child: Text(
+                        "المباريات".tr,
                         style: tapbar,
                       ),
                     ),
@@ -229,10 +252,14 @@ class _EachPlayerState extends State<EachPlayer> with TickerProviderStateMixin {
           child: NestedScrollView(
             headerSliverBuilder: _sliverBuilder,
             body: new TabBarView(controller: tabController, children: [
-              ListView(children: <Widget>[profile(url:widget.url,teamImg:widget.teamImg)]),
+              ListView(children: <Widget>[
+                profile(url: widget.url, teamImg: widget.teamImg)
+              ]),
               //ListView(children: <Widget>[playerMatches()]),
-              ListView(children: <Widget>[playerStatistics(url:widget.url)]),
-             // ListView(children: <Widget>[playerTransference()]),
+              ListView(children: <Widget>[playerStatistics(url: widget.url)]),
+              ListView(children: <Widget>[playerMatches(url: widget.url)]),
+
+              // ListView(children: <Widget>[playerTransference()]),
             ]),
           ),
         ),

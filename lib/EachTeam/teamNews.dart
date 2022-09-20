@@ -44,123 +44,103 @@ class _TeamNewsState extends State<TeamNews> {
                   child: CircularProgressIndicator(
                       backgroundColor: Theme.of(context).primaryColor),
                 ))
-            : ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                itemCount: provider.newsModelList.length,
-                itemBuilder: (BuildContext context, index) {
-                  return Column(
-                    children: <Widget>[
-                      /*
-                      index == provider.newsModelList.length
-                          ? Center(
-                              child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: SpinKitThreeBounce(
-                                color: Theme.of(context).primaryColor,
-                                size: 25,
-                              ),
-                            ))
-                            :
-                       */
-                           Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => webView(
-                                                url:
-                                                    "https://www.eplworld.com${provider.newsModelList[index].url}",
-                                              )));
-                                },
-                                child: Column(
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: new Column(
-                                        children: <Widget>[
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              Container(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.95,
-                                                height: 200,
-                                                child: new ClipRRect(
-                                                  child: Image.network(
-                                                    provider
-                                                        .newsModelList[index]
-                                                        .imageJPG,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          16.0),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 10.0,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 15, right: 15),
-                                            child: Text(
-                                              provider
-                                                  .newsModelList[index].title,
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 12, right: 15),
-                                            child: Row(
-                                              children: <Widget>[
-                                                Icon(
-                                                  MdiIcons.soccer,
-                                                  size: 15.0,
-                                                ),
-                                                Text(
-                                                  provider.newsModelList[index]
-                                                      .username,
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: Colors.grey),
-                                                ),
-                                                Text(
-                                                  "${provider.newsModelList[index].date} - ${provider.newsModelList[index].time}"
-                                                      .tr,
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: Colors.grey),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
+            : Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: provider.newsModelList.length,
+                  itemBuilder: (BuildContext context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 3,top: 3),
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)
+                        ),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => webView(
+                                            url:
+                                                "https://www.eplworld.com${provider.newsModelList[index].url}",
+                                          )));
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 0.32,
+                                  height: 100,
+                                  child: new ClipRRect(
+                                    child: Image.network(
+                                      provider.newsModelList[index].imageJPG,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    borderRadius:BorderRadius.only(topRight: Radius.circular(8),bottomRight: Radius.circular(8)),
+                                  ),
                                 ),
-                              ),
-                            )
-                    ],
-                  );
-                },
-              );
+                                Container(
+                                  height: 100,
+                                  width: MediaQuery.of(context).size.width*.57,
+                                  child: Column(
+                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            provider.newsModelList[index].title,
+                                            style: TextStyle(fontFamily: 'Vazirmatn', fontSize: 14, fontWeight: FontWeight.w500),
+                                            overflow: TextOverflow.clip ,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                              provider.newsModelList[index].username,
+                                              style: TextStyle(
+                                                  fontFamily: 'Vazirmatn',
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.grey),
+                                            ),
+                                            SizedBox(width: 4,),
+                                            Text(
+                                              " ${provider.newsModelList[index].date} - ${provider.newsModelList[index].time} ".tr,
+                                              style: TextStyle(
+                                                  fontFamily: 'Vazirmatn',
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.grey),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+
+
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+            );
       },
     );
   }

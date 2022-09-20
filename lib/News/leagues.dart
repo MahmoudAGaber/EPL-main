@@ -6,8 +6,10 @@ class leagues extends StatefulWidget {
   _leaguesState createState() => _leaguesState();
 }
 
-TextStyle _textStyle = TextStyle(color: Colors.grey, fontSize: 19);
-TextStyle _textStyle1 = TextStyle(color: Colors.green[600], fontSize: 15);
+TextStyle _textStyle =
+    TextStyle(fontFamily: 'Vazirmatn', color: Colors.grey, fontSize: 19);
+TextStyle _textStyle1 =
+    TextStyle(fontFamily: 'Vazirmatn', color: Colors.green[600], fontSize: 15);
 
 class _leaguesState extends State<leagues> {
   @override

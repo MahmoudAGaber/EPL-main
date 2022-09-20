@@ -7,10 +7,13 @@ class More extends StatefulWidget {
   _MoreState createState() => _MoreState();
 }
 
-const TextStyle tapbar = TextStyle(fontSize: 13, fontWeight: FontWeight.w500);
-TextStyle _textStyletitle = TextStyle(fontSize: 18,color: Colors.white);
-TextStyle _textStyle = TextStyle(fontSize: 16);
-TextStyle _textStyle1 = TextStyle(color: Colors.grey, fontSize: 14);
+const TextStyle tapbar = TextStyle(
+    fontFamily: 'Vazirmatn', fontSize: 13, fontWeight: FontWeight.w500);
+TextStyle _textStyletitle =
+    TextStyle(fontFamily: 'Vazirmatn', fontSize: 18, color: Colors.white);
+TextStyle _textStyle = TextStyle(fontFamily: 'Vazirmatn', fontSize: 16);
+TextStyle _textStyle1 =
+    TextStyle(fontFamily: 'Vazirmatn', color: Colors.grey, fontSize: 14);
 
 class _MoreState extends State<More> {
   @override
@@ -18,7 +21,14 @@ class _MoreState extends State<More> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        actions:[ IconButton(onPressed: (){Navigator.pop(context);},icon: Icon(Icons.close),)],
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.close),
+          )
+        ],
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Column(
@@ -71,7 +81,9 @@ class _MoreState extends State<More> {
                               ),
                               Text(
                                 "سجل الدخول".tr,
-                                style: TextStyle(color: Colors.green),
+                                style: TextStyle(
+                                    fontFamily: 'Vazirmatn',
+                                    color: Colors.green),
                               )
                             ],
                           )),
@@ -125,7 +137,7 @@ class _MoreState extends State<More> {
                 ),
                 GestureDetector(
                   onTap: () {
-                   // Navigator.pushNamed(context, '/tv');
+                    // Navigator.pushNamed(context, '/tv');
                   },
                   child: Row(
                     children: <Widget>[

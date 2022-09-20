@@ -1,18 +1,20 @@
+import 'dart:ui';
 
 import 'package:arseli/EachTeam/eachTeam.dart';
-import 'package:arseli/Matches/MatchPostion.dart';
 import 'package:arseli/Matches/MatchGPosition.dart';
+import 'package:arseli/Matches/MatchPostion.dart';
 import 'package:arseli/Matches/preConfron.dart';
 import 'package:arseli/Provider/EachMatchViewModel.dart';
 import 'package:arseli/Provider/EachTeamViewModel.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
-import 'dart:ui';
+
 import 'MatchEvent.dart';
+import 'PlayerInjured.dart';
 
 class matchInfo extends StatefulWidget {
   String homeId;
@@ -20,39 +22,89 @@ class matchInfo extends StatefulWidget {
   String url;
   String comName;
 
-  matchInfo({this.url, this.homeId, this.awayId,this.comName});
+  matchInfo({this.url, this.homeId, this.awayId, this.comName});
 
   @override
   _matchInfoState createState() => _matchInfoState();
 }
 
 class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
-
-  static const TextStyle tapbar = TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.black);
-  TextStyle head = TextStyle(fontSize: 16, color: Colors.black);
-
+  static const TextStyle tapbar = TextStyle(
+      fontFamily: 'Vazirmatn',
+      fontSize: 13,
+      fontWeight: FontWeight.w500,
+      color: Colors.white);
+  TextStyle head =
+      TextStyle(fontFamily: 'Vazirmatn', fontSize: 16, color: Colors.black);
 
   TabController tabController;
   int _selectedIndex = 0;
   EachMatchViewModel eachMatchViewModel;
 
+  loadData() {
+    return Future.wait([
+      eachMatchViewModel.getMSN(widget.url, context),
+      eachMatchViewModel.getMatchEvent(widget.url),
+      eachMatchViewModel.getTables(widget.url),
+      eachMatchViewModel.getHTHMatch(widget.url)
+    ]);
+  }
+
+  List<Widget> tabs;
+  List<Widget> tabView;
+
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp)async{
-        eachMatchViewModel = Provider.of(context, listen: false);
-        eachMatchViewModel.getMSN(widget.url,context);
-        await eachMatchViewModel.getMatchEvent(widget.url);
-        eachMatchViewModel.getTables(widget.url);
-        eachMatchViewModel.getHTHMatch(widget.url);
-
-
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      eachMatchViewModel = Provider.of(context, listen: false);
+      await loadData();
+      tabController = TabController(
+          length: getTabView(eachMatchViewModel).length,
+          vsync: this,
+          initialIndex: _selectedIndex);
+      tabs = getTabs(eachMatchViewModel);
+      tabView = getTabView(eachMatchViewModel);
     });
-
 
     super.initState();
   }
 
+  List<bool> notifCheak = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ];
 
+  List<String> notficationString = [
+    "اعدادت التنبيهات",
+    "جميع الاحداث",
+    "أهداف",
+    "ضربة جزاء ضائعة",
+    "بدأت",
+    "استراحة ما بين الشوطين",
+    "نهايت المبارة",
+    "بطاقات حمراء",
+    "تشكيلة",
+    "تذكير بالمبارة",
+  ];
+
+  Map<String, bool> notifState = {
+    "Goal": false,
+    "Missed penalty": false,
+    "Started": false,
+    "Halftime break": false,
+    "End match": false,
+    "Red card": false,
+    "Plan": false,
+    "Game reminder": false,
+  };
   @override
   Widget build(BuildContext context) {
     List<Widget> _sliverBuilder(BuildContext context, bool innerBoxIsScrolled) {
@@ -60,19 +112,19 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
         Directionality(
             textDirection: TextDirection.rtl,
             child: SliverAppBar(
-                iconTheme: IconThemeData(color: Colors.black),
+                iconTheme: IconThemeData(color: Colors.white),
                 elevation: 0.0,
                 actions: <Widget>[
                   Row(
                     children: <Widget>[
                       IconButton(
-                          icon: Icon(Icons.more_vert, color: Colors.black),
+                          icon: Icon(Icons.more_vert, color: Colors.white),
                           onPressed: null),
                     ],
                   )
                 ],
-                expandedHeight: 120.0,
-                backgroundColor: Colors.white,
+                expandedHeight: 130.0,
+                backgroundColor: Theme.of(context).primaryColor,
                 pinned: true,
                 floating: true,
                 snap: true,
@@ -92,12 +144,181 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
                                 IconButton(
                                     icon: Icon(
                                       Icons.notifications_none,
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
-                                    onPressed: null),
+                                    onPressed: () {
+                                      showCupertinoModalBottomSheet(
+                                          context: context,
+                                          builder:
+                                              (context) => StatefulBuilder(
+                                                      builder:
+                                                          (context, setState) {
+                                                    return Container(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              1.3,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              double.infinity,
+                                                      child: Scaffold(
+                                                        body: Container(
+                                                          height: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              1.3,
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              double.infinity,
+                                                          child:
+                                                              ListView.builder(
+                                                                  itemCount: 10,
+                                                                  itemBuilder:
+                                                                      (context,
+                                                                          ind) {
+                                                                    return Column(
+                                                                      children: [
+                                                                        ind == 0
+                                                                            ? Container(
+                                                                                decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 2, color: Colors.grey[100]))),
+                                                                                height: 50,
+                                                                                width: MediaQuery.of(context).size.width * double.infinity,
+                                                                                child: Column(
+                                                                                  children: [
+                                                                                    Padding(
+                                                                                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                                                                      child: Row(
+                                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                        children: [
+                                                                                          Text("${notficationString[ind]}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                                                                                          ElevatedButton(
+                                                                                            onPressed: () {
+                                                                                              print(widget.awayId);
+                                                                                            },
+                                                                                            child: Text("انتهى",
+                                                                                                style: TextStyle(
+                                                                                                  color: Color(0xfff77109B),
+                                                                                                  fontWeight: FontWeight.bold,
+                                                                                                  fontSize: 16,
+                                                                                                )),
+                                                                                            style: ElevatedButton.styleFrom(
+                                                                                              primary: Colors.white,
+                                                                                              elevation: 0.0,
+                                                                                              shadowColor: Colors.transparent,
+                                                                                            ),
+                                                                                          )
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              )
+                                                                            : ind == 1
+                                                                                ? Container(
+                                                                                    decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 2, color: Colors.grey[100]))),
+                                                                                    height: 45,
+                                                                                    child: Row(
+                                                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                                                      children: [
+                                                                                        Container(
+                                                                                          height: 40,
+                                                                                          width: 40,
+                                                                                          child: Checkbox(
+                                                                                              shape: CircleBorder(),
+                                                                                              activeColor: Color(0xfff77109B),
+                                                                                              splashRadius: 20,
+                                                                                              value: notifCheak[ind],
+                                                                                              onChanged: (onChange) {
+                                                                                                setState(() {
+                                                                                                  notifCheak[1] = !notifCheak[1];
+                                                                                                  if (notifCheak[1] == true) {
+                                                                                                    notifCheak[2] = true;
+                                                                                                    notifCheak[3] = true;
+                                                                                                    notifCheak[4] = true;
+                                                                                                    notifCheak[5] = true;
+                                                                                                    notifCheak[6] = true;
+                                                                                                    notifCheak[7] = true;
+                                                                                                    notifCheak[8] = true;
+                                                                                                    notifCheak[9] = true;
+                                                                                                  } else {
+                                                                                                    notifCheak[2] = false;
+                                                                                                    notifCheak[3] = false;
+                                                                                                    notifCheak[4] = false;
+                                                                                                    notifCheak[5] = false;
+                                                                                                    notifCheak[6] = false;
+                                                                                                    notifCheak[7] = false;
+                                                                                                    notifCheak[8] = false;
+                                                                                                    notifCheak[9] = false;
+                                                                                                  }
+                                                                                                });
+                                                                                              }),
+                                                                                        ),
+                                                                                        Text("${notficationString[ind]}", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                                                                                      ],
+                                                                                    ),
+                                                                                  )
+                                                                                : Container(
+                                                                                    decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 2, color: Colors.grey[100]))),
+                                                                                    height: 45,
+                                                                                    child: Row(
+                                                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                                                      children: [
+                                                                                        Container(
+                                                                                          height: 40,
+                                                                                          width: 40,
+                                                                                          child: Checkbox(
+                                                                                              shape: CircleBorder(),
+                                                                                              activeColor: Color(0xfff77109B),
+                                                                                              splashRadius: 20,
+                                                                                              value: notifCheak[ind],
+                                                                                              onChanged: (onChange) {
+                                                                                                setState(() {
+                                                                                                  notifCheak[ind] = !notifCheak[ind];
+
+                                                                                                  // if (selected ==
+                                                                                                  //     true) {
+                                                                                                  //   for (var i = 0;
+                                                                                                  //       i < 8;
+                                                                                                  //       i++) {}
+                                                                                                  // } else {}
+                                                                                                });
+                                                                                              }),
+                                                                                        ),
+                                                                                        Padding(
+                                                                                          padding: const EdgeInsets.all(8.0),
+                                                                                          child: Container(
+                                                                                            decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(50)),
+                                                                                            height: 20,
+                                                                                            width: 20,
+                                                                                            child: Padding(
+                                                                                              padding: const EdgeInsets.all(3),
+                                                                                              child: Image.asset("assets/soccer-ball.png"),
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                        Text("${notficationString[ind]}", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                                                                      ],
+                                                                                    ),
+                                                                                  ),
+                                                                      ],
+                                                                    );
+                                                                  }),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }));
+                                    }),
                                 IconButton(
-                                    icon:
-                                        Icon(Icons.star_border, color: Colors.black,),
+                                    icon: Icon(
+                                      Icons.star_border,
+                                      color: Colors.white,
+                                    ),
                                     onPressed: null),
                               ],
                             ),
@@ -112,15 +333,19 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
                                 children: <Widget>[
                                   InkWell(
                                     onTap: () {
-                                      Navigator.push(context,
+                                      Navigator.push(
+                                          context,
                                           MaterialPageRoute(
-                                              builder:(context)=>  ChangeNotifierProvider<EachTeamViewModel>(
-                                                  create: (_) => EachTeamViewModel(),
-                                                  child: EachTeam(
-                                                    url: provider.msnModel.homeTeamURL,
-                                                    id: widget.homeId,)
-                                              ))
-                                      );
+                                              builder: (context) =>
+                                                  ChangeNotifierProvider<
+                                                          EachTeamViewModel>(
+                                                      create: (_) =>
+                                                          EachTeamViewModel(),
+                                                      child: EachTeam(
+                                                        url: provider.msnModel
+                                                            .homeTeamURL,
+                                                        id: widget.homeId,
+                                                      ))));
                                     },
                                     child: Container(
                                         width: 40,
@@ -138,7 +363,10 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
                                         .split('،')
                                         .first
                                         .tr,
-                                    style: TextStyle(fontSize: 18,color: Colors.black),
+                                    style: TextStyle(
+                                        fontFamily: 'Vazirmatn',
+                                        fontSize: 18,
+                                        color: Colors.white),
                                   )
                                 ],
                               ),
@@ -147,15 +375,19 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
                                 children: <Widget>[
                                   InkWell(
                                     onTap: () {
-                                      Navigator.push(context,
+                                      Navigator.push(
+                                          context,
                                           MaterialPageRoute(
-                                              builder:(context)=>  ChangeNotifierProvider<EachTeamViewModel>(
-                                                  create: (_) => EachTeamViewModel(),
-                                                  child: EachTeam(
-                                                    url: provider.msnModel.awayTeamURL,
-                                                  id: widget.awayId,)
-                                              ))
-                                      );
+                                              builder: (context) =>
+                                                  ChangeNotifierProvider<
+                                                          EachTeamViewModel>(
+                                                      create: (_) =>
+                                                          EachTeamViewModel(),
+                                                      child: EachTeam(
+                                                        url: provider.msnModel
+                                                            .awayTeamURL,
+                                                        id: widget.awayId,
+                                                      ))));
                                     },
                                     child: Container(
                                         width: 40,
@@ -174,56 +406,61 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
           child: SliverPersistentHeader(
             delegate: _SliverAppBarDelegate1(
                 minHeight: 45.0,
-                maxHeight: 45,
+                maxHeight: 50,
                 child: Consumer<EachMatchViewModel>(
                   builder: (context, provider, child) {
                     return provider.msnModel == null
                         ? Container()
                         : Container(
-                           color: Colors.white,
-                            child: Row(
-                              children: <Widget>[
-                                Container(
-                                  width: MediaQuery.of(context).size.width * .5,
-                                  child: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 25),
-                                      child: Text(
-                                        provider.msnModel.homeTeamName.tr,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w500),
+                            color: Theme.of(context).primaryColor,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 15),
+                              child: Row(
+                                children: <Widget>[
+                                  Container(
+                                    width: MediaQuery.of(context).size.width * .5,
+                                    child: Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 25),
+                                        child: Text(
+                                          provider.msnModel.homeTeamName.tr,
+                                          style: TextStyle(
+                                              fontFamily: 'Vazirmatn',
+                                              color: Colors.white,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                /*
-                                Container(
-                                  width: 50,
-                                  child: Text(
-                                   "",
-                                    style: TextStyle(color: Colors.black,),overflow: TextOverflow.ellipsis,
+                                  /*
+                                  Container(
+                                    width: 50,
+                                    child: Text(
+                                     "",
+                                      style: TextStyle(                      fontFamily: 'Vazirmatn',color: Colors.black,),overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
-                                ),
 
-                                 */
-                                Container(
-                                  width: MediaQuery.of(context).size.width * .5,
-                                  child: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(right: 25),
-                                      child: Text(
-                                        provider.msnModel.awayTeamName.tr,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w500),
+                                   */
+                                  Container(
+                                    width: MediaQuery.of(context).size.width * .5,
+                                    child: Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(right: 25),
+                                        child: Text(
+                                          provider.msnModel.awayTeamName.tr,
+                                          style: TextStyle(
+                                              fontFamily: 'Vazirmatn',
+                                              color: Colors.white,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           );
                   },
@@ -231,36 +468,31 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
           ),
         ),
         Directionality(
-          textDirection: TextDirection.rtl,
-              child:SliverPersistentHeader(
-                  pinned: true,
-                  delegate: _SliverAppBarDelegate(
-                      maxHeight: 45,
-                      minHeight: 45,
-                      child:Consumer<EachMatchViewModel>(
-                        builder: (context,provider,child){
-                          return Container(
-                            color: Colors.white,
+            textDirection: TextDirection.rtl,
+            child: SliverPersistentHeader(
+                pinned: true,
+                delegate: _SliverAppBarDelegate(
+                    maxHeight: 60,
+                    minHeight: 45,
+                    child: Consumer<EachMatchViewModel>(
+                      builder: (context, provider, child) {
+                        return Container(
+                            height: 60,
+                            color: Theme.of(context).backgroundColor,
                             child: Container(
-                                  child: TabBar(
-                                      indicatorColor: Theme.of(context).primaryColor,
-                                      labelColor: Theme.of(context).primaryColor,
-                                      isScrollable: true,
-                                      onTap: (index){
-                                        _selectedIndex = index;
-                                        tabController.animateTo(_selectedIndex);
-                                      },
-                                      controller: tabController,
-                                      tabs: List.generate(tabName(provider).length, (index) => tabName(provider)[index]).toList()
-
-                                  ),
-                                ),
-                          );
-                        },
-                      )
-
-                  ))
-        ),
+                                child: TabBar(
+                              indicatorColor: Colors.white,
+                              labelColor: Theme.of(context).primaryColor,
+                              isScrollable: true,
+                              onTap: (index) {
+                                _selectedIndex = index;
+                                tabController.animateTo(_selectedIndex);
+                              },
+                              controller: tabController,
+                              tabs: tabs,
+                            )));
+                      },
+                    )))),
       ];
     }
 
@@ -270,57 +502,69 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
           builder: (context, provider, child) {
             return Scaffold(
                 body: SafeArea(
-                  child: NestedScrollView(
-                    headerSliverBuilder: _sliverBuilder,
-                    body: TabBarView(
-                        controller: tabController =  TabController(length: tabView(provider).length, vsync: this,initialIndex: _selectedIndex),
-                        children:List.generate(tabView(provider).length, (index) => tabView(provider)[index]).toList()),
-                  ),
-                ));
+                    child: this.tabView == null
+                        ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : NestedScrollView(
+                            headerSliverBuilder: _sliverBuilder,
+                            body: TabBarView(
+                              controller: tabController,
+                              children: tabView,
+                            ),
+                          )));
           },
-
         ));
   }
 
-  Widget matchEventName(){
-
+  Widget matchEventName() {
     return Tab(
       child: Text(
         "معاينة ".tr,
         style: tapbar,
       ),
     );
-
   }
-  Widget matchTableName(){
+  Widget matchPlayerInjured() {
+    return Tab(
+      child: Text(
+        "مصاب ".tr,
+        style: tapbar,
+      ),
+    );
+  }
 
+  Widget matchTableName() {
     return Tab(
       child: Text(
         "المراكز".tr,
         style: tapbar,
       ),
     );
-
   }
-  Widget matchHTHName(){
 
+  Widget matchHTHName() {
     return Tab(
       child: Text(
         "المواجة ".tr,
         style: tapbar,
       ),
     );
-
   }
 
-  List<Widget> tabName(EachMatchViewModel provider){
+  List<Widget> getTabs(EachMatchViewModel provider) {
     List<Widget> test = [];
     if (provider.teamFormModel != null) {
       test.add(matchEventName());
     }
+    test.add(matchPlayerInjured());
+
+    /*
     if (provider.tablesModelList != null) {
       test.add(matchTableName());
     }
+
+     */
 
     if (provider.headToHeadModel != null) {
       test.add(matchHTHName());
@@ -328,70 +572,73 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
     return test;
   }
 
-
-
-  Widget matchEvent(){
-
-    return ListView(children: <Widget>[MatchEvents(widget.url)]);
-
+  Widget matchEvent() {
+    return ListView(children: <Widget>[MatchEvents(url:widget.url,homeId:widget.homeId,awayId:widget.awayId)]);
   }
-  Widget matchTable(){
-    return  ListView(children: <Widget>[
+
+  Widget matchTable() {
+    return ListView(children: <Widget>[
       MatchPostions(
-        url:widget.url,
-        awayId:widget.awayId,
-        homeId:widget.homeId,
+        url: widget.url,
+        awayId: widget.awayId,
+        homeId: widget.homeId,
       )
     ]);
-
   }
-  Widget matchGTable(){
-    return  ListView(children: <Widget>[
+
+  Widget matchGTable() {
+    return ListView(children: <Widget>[
       MatchGPosition(
-        url:widget.url,
-        awayId:widget.awayId,
-        homeId:widget.homeId,
+        url: widget.url,
+        awayId: widget.awayId,
+        homeId: widget.homeId,
       )
     ]);
-
   }
-  Widget matchHTH(){
+
+  Widget matchInjured() {
+    return ListView(children: <Widget>[
+      PlayerInjured()
+    ]);
+  }
+
+  Widget matchHTH() {
     //matchesViewModel.getHTHMatch(widget.url);
     // print("FromOutSide${matchesViewModel.headToHeadModel.rows[0].homeTeamName}");
 
-    return  ListView(children: <Widget>[
+    return ListView(children: <Widget>[
       PreConfront(
         url: widget.url,
       )
     ]);
-
-
-
-
   }
 
-  List<Widget> tabView(EachMatchViewModel provider){
+  List<Widget> getTabView(EachMatchViewModel provider) {
     List<Widget> test = [];
-    if(provider.teamFormModel!=null){
+    if (provider.teamFormModel != null) {
       test.add(matchEvent());
     }
-    if(provider.tablesModelList!=null&&provider.tablesModelList[0].list.length==1){
+    test.add(matchInjured());
+
+    /*
+    if (provider.tablesModelList != null &&
+        provider.tablesModelList[0].list.length == 1) {
       test.add(matchTable());
     }
-    if(provider.tablesModelList!=null&&provider.tablesModelList[0].list.length>1){
+
+    if (provider.tablesModelList != null && provider.tablesModelList[0].list.length > 1) {
       test.add(matchGTable());
     }
 
-    if(provider.headToHeadModel!=null){
+
+     */
+    if (provider.headToHeadModel != null) {
       test.add(matchHTH());
     }
 
-
     return test;
   }
-
 }
-
 
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   _SliverAppBarDelegate({
@@ -399,13 +646,17 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
     @required this.maxHeight,
     this.child,
   });
+
   final double minHeight;
   final double maxHeight;
   final Widget child;
+
   @override
   double get minExtent => minHeight;
+
   @override
   double get maxExtent => maxHeight;
+
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -426,13 +677,17 @@ class _SliverAppBarDelegate1 extends SliverPersistentHeaderDelegate {
     @required this.maxHeight,
     this.child,
   });
+
   final double minHeight;
   final double maxHeight;
   final Widget child;
+
   @override
   double get minExtent => minHeight;
+
   @override
   double get maxExtent => maxHeight;
+
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {

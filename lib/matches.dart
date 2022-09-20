@@ -34,12 +34,12 @@ class Matches extends StatefulWidget {
 class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
   MatchesViewModel matchesViewModel;
 
-  TextStyle tapbar =
-      TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Colors.white);
-  TextStyle headline = TextStyle(fontSize: 15, fontWeight: FontWeight.w400);
-  TextStyle content = TextStyle(
-    fontSize: 14,
-  );
+  TextStyle tapbar = TextStyle(
+      fontFamily: 'Vazirmatn',
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      color: Colors.white);
+
   final GlobalKey<ScaffoldState> _key = GlobalKey(); // Creat
 
   bool isSwitched = false;
@@ -72,8 +72,8 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
   var fourDayThenD = '';
   var fiveDayThenD = '';
 
-  List<String> tabView=[];
-  List<String> tabName=[];
+  List<String> tabView = [];
+  List<String> tabName = [];
 
   SearchViewModel searchViewModel;
   @override
@@ -92,7 +92,6 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
     });
   }
 
-
   @override
   void dispose() {
     // tabController.dispose();
@@ -106,11 +105,11 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
           elevation: 0.0,
           centerTitle: false,
           title: Transform(
-            transform:  Matrix4.translationValues(-125.0, 0.0, 0.0),
+            transform: Matrix4.translationValues(-125.0, 0.0, 0.0),
             child: Container(
               child: Text(
                 'EPL WORLD',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(fontFamily: 'Vazirmatn', color: Colors.white),
               ),
             ),
           ),
@@ -119,113 +118,134 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
             width: 200,
             height: 200,
             child: Consumer<MatchesViewModel>(
-                builder: (context, provider, child) {
-                  return Row(
-                    children: <Widget>[
-                      IconButton(
-                        padding: EdgeInsets.zero,
-                        icon: Icon(
-                          Icons.menu,
-                          size: 28,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                          Scaffold.of(context).openDrawer();
-                        },
+              builder: (context, provider, child) {
+                return Row(
+                  children: <Widget>[
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: Icon(
+                        Icons.menu,
+                        size: 28,
+                        color: Colors.white,
                       ),
-                      IconButton(
-                        padding: EdgeInsets.zero,
-                        icon: Icon(
-                          Icons.search,
-                          size: 28,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                        },
+                      onPressed: () {
+                        Scaffold.of(context).openDrawer();
+                      },
+                    ),
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: Icon(
+                        Icons.search,
+                        size: 28,
+                        color: Colors.white,
                       ),
-                      IconButton(
-                        padding: EdgeInsets.zero,
-                        icon: Icon(
-                          Icons.calendar_today,
-                          size: 22,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/clanderbar');
-                        },
+                      onPressed: () {},
+                    ),
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: Icon(
+                        Icons.calendar_today,
+                        size: 22,
+                        color: Colors.white,
                       ),
-
-
-                    ],
-                  );
-                },
-              ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/clanderbar');
+                      },
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
           backgroundColor: Theme.of(context).primaryColor,
           bottom: tabController == null
               ? PreferredSize(
-                  preferredSize: Size.fromHeight(50), child: Container())
-              : TabBar(
-                  isScrollable: true,
-                  controller: tabController,
-                  labelColor: Colors.white,
-                  indicatorColor: Colors.white,
-                  labelStyle: tapbar,
-                  tabs: List.generate(10, (index){
-                    return Tab(
-                        child: Text(
-                        tabName[index].tr,
-                        style: tapbar,
-                    ));
-                  })
+                  preferredSize: Size.fromHeight(50),
+              child: Container())
+              : PreferredSize(
+            preferredSize: const Size.fromHeight(75),
+                child: DefaultTabController(
+            length:10 ,
+                  child: Container(
+                    height: 60,
+                    color: Theme.of(context).backgroundColor,
+                    child: TabBar(
+                        isScrollable: true,
+                        controller: tabController,
+                        labelColor: Colors.white,
+                        indicatorColor: Colors.white,
+                        labelStyle: tapbar,
+                        tabs: List.generate(10, (index) {
+                          return Tab(
+                              child: Text(
+                            tabName[index].tr,
+                            style: tapbar,
+                          ));
+                        })),
+                  ),
                 ),
+              ),
         ),
         backgroundColor: Colors.grey[200],
-
         drawer: Drawer(
           child: More(),
         ),
-
-
         body: tabController == null
             ? Container()
-            : TabBarView(controller: tabController, children:
-            List.generate(10, (index){
-              return ChangeNotifierProvider<MatchesViewModel>(
-                  create: (_) => MatchesViewModel(),
-                  child: TodayMatches(
-                    date: tabView[index],
-                  ));
-            })
-              ));
-
+            : TabBarView(
+                controller: tabController,
+                children: List.generate(10, (index) {
+                  return ChangeNotifierProvider<MatchesViewModel>(
+                      create: (_) => MatchesViewModel(),
+                      child: TodayMatches(
+                        date: tabView[index],
+                      ));
+                })));
   }
 
-  initDate(){
+  initDate() {
     setState(() {
       initializeDateFormatting("AR_SA", null).then((_) {
         DateTime now = new DateTime.now();
-        var timeNow =  DateFormat.MMMEd('AR_SA').format(DateTime.now());
+        var timeNow = DateFormat.MMMEd('AR_SA').format(DateTime.now());
         // DateFormat.MMMEd('AR_SA').format(widget.dateTime??now);
-        widget.dateTime == null?  now = new DateTime.now(): now = widget.dateTime;
+        widget.dateTime == null
+            ? now = new DateTime.now()
+            : now = widget.dateTime;
 
-        today = DateFormat.MMMEd('AR_SA').format(now.subtract(new Duration(days: 0)));
-        yesterday = DateFormat.MMMEd('AR_SA').format(now.subtract(new Duration(days: 1)));
-        oneDayAgo = DateFormat('E d','AR_SA').format(now.subtract(new Duration(days: 2)));
-        twoDaysAgo = DateFormat('E d','AR_SA').format(now.subtract(new Duration(days: 3)));
-        tomorrow = DateFormat.MMMEd('AR_SA').format(now.add(new Duration(days: 1)));
-        oneDayThen = DateFormat('E d','AR_SA').format(now.add(new Duration(days: 2)));
-        twoDaysThen = DateFormat('E d','AR_SA').format(now.add(new Duration(days: 3)));
-        threeDayThen = DateFormat('E d','AR_SA').format(now.add(new Duration(days: 4)));
-        fourDayThen = DateFormat('E d','AR_SA').format(now.add(new Duration(days: 5)));
-        fiveDayThen = DateFormat('E d','AR_SA').format(now.add(new Duration(days: 6)));
+        today = DateFormat.MMMEd('AR_SA')
+            .format(now.subtract(new Duration(days: 0)));
+        yesterday = DateFormat.MMMEd('AR_SA')
+            .format(now.subtract(new Duration(days: 1)));
+        oneDayAgo = DateFormat('E d', 'AR_SA')
+            .format(now.subtract(new Duration(days: 2)));
+        twoDaysAgo = DateFormat('E d', 'AR_SA')
+            .format(now.subtract(new Duration(days: 3)));
+        tomorrow =
+            DateFormat.MMMEd('AR_SA').format(now.add(new Duration(days: 1)));
+        oneDayThen =
+            DateFormat('E d', 'AR_SA').format(now.add(new Duration(days: 2)));
+        twoDaysThen =
+            DateFormat('E d', 'AR_SA').format(now.add(new Duration(days: 3)));
+        threeDayThen =
+            DateFormat('E d', 'AR_SA').format(now.add(new Duration(days: 4)));
+        fourDayThen =
+            DateFormat('E d', 'AR_SA').format(now.add(new Duration(days: 5)));
+        fiveDayThen =
+            DateFormat('E d', 'AR_SA').format(now.add(new Duration(days: 6)));
 
-        tabName=[
+        tabName = [
           twoDaysAgo,
           oneDayAgo,
-          timeNow.toString()== DateFormat.MMMEd('AR_SA').format(now).toString()?"امس":yesterday,
-          timeNow.toString()== DateFormat.MMMEd('AR_SA').format(now).toString()?"اليوم":today,
-          timeNow.toString()== DateFormat.MMMEd('AR_SA').format(now).toString()?"غدا":tomorrow,
+          timeNow.toString() == DateFormat.MMMEd('AR_SA').format(now).toString()
+              ? "امس"
+              : yesterday,
+          timeNow.toString() == DateFormat.MMMEd('AR_SA').format(now).toString()
+              ? "اليوم"
+              : today,
+          timeNow.toString() == DateFormat.MMMEd('AR_SA').format(now).toString()
+              ? "غدا"
+              : tomorrow,
           oneDayThen,
           twoDaysThen,
           threeDayThen,
@@ -238,20 +258,32 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
     setState(() {
       initializeDateFormatting("EN_SA", null).then((_) {
         var now = new DateTime.now();
-        widget.dateTime == null?  now = new DateTime.now(): now = widget.dateTime;
+        widget.dateTime == null
+            ? now = new DateTime.now()
+            : now = widget.dateTime;
 
-        todayD = DateFormat("dd-MM-yyyy", 'EN_SA').format(now.subtract(new Duration(days: 0)));
-        yesterdayD = DateFormat("dd-MM-yyyy", 'EN_SA').format(now.subtract(new Duration(days: 1)));
-        oneDayAgoD = DateFormat("dd-MM-yyyy", 'EN_SA').format(now.subtract(new Duration(days: 2)));
-        twoDaysAgoD = DateFormat("dd-MM-yyyy", 'EN_SA').format(now.subtract(new Duration(days: 3)));
-        tomorrowD = DateFormat("dd-MM-yyyy", 'EN_SA').format(now.add(new Duration(days: 1)));
-        oneDayThenD = DateFormat("dd-MM-yyyy", 'EN_SA').format(now.add(new Duration(days: 2)));
-        twoDaysThenD = DateFormat("dd-MM-yyyy", 'EN_SA').format(now.add(new Duration(days: 3)));
-        threeDayThenD = DateFormat("dd-MM-yyyy", 'EN_SA').format(now.add(new Duration(days: 4)));
-        fourDayThenD = DateFormat("dd-MM-yyyy", 'EN_SA').format(now.add(new Duration(days: 5)));
-        fiveDayThenD = DateFormat("dd-MM-yyyy", 'EN_SA').format(now.add(new Duration(days: 6)));
+        todayD = DateFormat("dd-MM-yyyy", 'EN_SA')
+            .format(now.subtract(new Duration(days: 0)));
+        yesterdayD = DateFormat("dd-MM-yyyy", 'EN_SA')
+            .format(now.subtract(new Duration(days: 1)));
+        oneDayAgoD = DateFormat("dd-MM-yyyy", 'EN_SA')
+            .format(now.subtract(new Duration(days: 2)));
+        twoDaysAgoD = DateFormat("dd-MM-yyyy", 'EN_SA')
+            .format(now.subtract(new Duration(days: 3)));
+        tomorrowD = DateFormat("dd-MM-yyyy", 'EN_SA')
+            .format(now.add(new Duration(days: 1)));
+        oneDayThenD = DateFormat("dd-MM-yyyy", 'EN_SA')
+            .format(now.add(new Duration(days: 2)));
+        twoDaysThenD = DateFormat("dd-MM-yyyy", 'EN_SA')
+            .format(now.add(new Duration(days: 3)));
+        threeDayThenD = DateFormat("dd-MM-yyyy", 'EN_SA')
+            .format(now.add(new Duration(days: 4)));
+        fourDayThenD = DateFormat("dd-MM-yyyy", 'EN_SA')
+            .format(now.add(new Duration(days: 5)));
+        fiveDayThenD = DateFormat("dd-MM-yyyy", 'EN_SA')
+            .format(now.add(new Duration(days: 6)));
 
-        tabView=[
+        tabView = [
           twoDaysAgoD,
           oneDayAgoD,
           yesterdayD,

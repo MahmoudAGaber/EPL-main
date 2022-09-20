@@ -1,4 +1,7 @@
 # This is a generated file; do not edit or check into version control.
+device_info_plus=/home/mag/Downloads/flutter_linux_2.2.3-stable/flutter/.pub-cache/hosted/pub.dartlang.org/device_info_plus-0.7.2/
+device_info_plus_macos=/home/mag/Downloads/flutter_linux_2.2.3-stable/flutter/.pub-cache/hosted/pub.dartlang.org/device_info_plus_macos-0.1.1/
+device_info_plus_web=/home/mag/Downloads/flutter_linux_2.2.3-stable/flutter/.pub-cache/hosted/pub.dartlang.org/device_info_plus_web-0.3.1/
 flutter_local_notifications=/home/mag/Downloads/flutter_linux_2.2.3-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications-4.0.1+2/
 onesignal_flutter=/home/mag/Downloads/flutter_linux_2.2.3-stable/flutter/.pub-cache/hosted/pub.dartlang.org/onesignal_flutter-3.4.1/
 path_provider=/home/mag/Downloads/flutter_linux_2.2.3-stable/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-2.0.4/

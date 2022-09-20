@@ -1,31 +1,53 @@
+import 'package:arseli/Data/local_data_sources/favourite/favourite_team_local_data_source.dart';
+import 'package:arseli/Data/remote_data_sources/teams/teams_remote_data_source.dart';
+import 'package:arseli/EachLeague/eachLeague.dart';
+import 'package:arseli/EachTeam/eachTeam.dart';
+import 'package:arseli/Provider/EachLeagueViewModel.dart';
+import 'package:arseli/Provider/EachTeamViewModel.dart';
+import 'package:arseli/states/team_search_state.dart';
+import 'package:arseli/controllers/ControllerFavorites.dart';
+import 'package:arseli/controllers/search_controller.dart';
+import 'package:arseli/injection.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
-import 'More.dart';
-import 'favourite/favouriteLeague.dart';
-import 'favourite/favouritePlayer.dart';
-import 'favourite/favouriteTeam.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:provider/provider.dart';
+
+import 'Data/repos/team_repo.dart';
 
 class Favourites extends StatefulWidget {
+  final String tag;
+
+  const Favourites({Key key, this.tag}) : super(key: key);
+
   @override
   _FavouritesState createState() => _FavouritesState();
 }
 
-class _FavouritesState extends State<Favourites> with SingleTickerProviderStateMixin {
-
-
+class _FavouritesState extends State<Favourites>
+    with SingleTickerProviderStateMixin {
+  SearchController controller;
+  FavoritesController favouriteController;
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-  }
+    final repo = TeamRepo(
+        TeamsRemoteDataSource(Get.find()),
+        FavouriteTeamLocalDataSource(
+            Injection.getIt.get<GetStorage>(), widget.tag));
+    controller = Get.put(SearchController(repo), tag: widget.tag);
+    Get.put(FavoritesController(repo, widget.tag),
+        permanent: true, tag: widget.tag);
+    favouriteController = Get.find<FavoritesController>(tag: widget.tag);
 
-  @override
-  void dispose() {
-
-    super.dispose();
+/*
+    Get.put(ControllerFavorites(Injection.getIt.get<TeamRepo>()),
+        permanent: true, tag: 'leagues');
+*/
   }
 
   Widget build(BuildContext context) {
@@ -38,143 +60,305 @@ class _FavouritesState extends State<Favourites> with SingleTickerProviderStateM
             children: <Widget>[
               Text(
                 "المفضلة".tr,
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white, fontFamily: 'Vazirmatn'),
               )
             ],
-          ),),
-        /*
-        drawer: Drawer(
-          child: More(),
+          ),
         ),
-
-         */
-        body:Padding(
+        body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListView(
             shrinkWrap: true,
             children: [
               Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text(
+                  'اتابعهم',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Vazirmatn',
+                      color: Colors.black),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Container(
+                  height: 260,
+                  child: Obx(() {
+                    final teams = favouriteController.favouriteTeams.value;
+                    return GridView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: teams.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2),
+                        itemBuilder: (BuildContext context, index) {
+                          final item = teams[index];
+                          return Padding(
+                            padding: const EdgeInsets.all(1.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                if (widget.tag == 'الفرق') {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ChangeNotifierProvider<
+                                                      EachTeamViewModel>(
+                                                  create: (_) =>
+                                                      EachTeamViewModel(),
+                                                  child: EachTeam(
+                                                    url: item
+                                                        .teamBasicDataModel.url,
+                                                  ))));
+                                } else {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ChangeNotifierProvider<
+                                                      EachLeagueViewModel>(
+                                                  create: (_) =>
+                                                      EachLeagueViewModel(),
+                                                  child: EachLeague(
+                                                      url: item
+                                                          .teamBasicDataModel
+                                                          .url))));
+                                }
+                              },
+                              child: Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                          width: 45,
+                                          height: 45,
+                                          child: CachedNetworkImage(
+                                            imageUrl: item.teamBasicDataModel
+                                                .image.hostedFile,
+                                          )),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          item.teamBasicDataModel.text,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontFamily: 'Vazirmatn',
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  )),
+                            ),
+                          );
+                        });
+                  }),
+                ),
+              ),
+              Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: Card(
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)
-                  ),
+                      borderRadius: BorderRadius.circular(8)),
                   child: Container(
                     height: 60,
                     child: TextFormField(
+                      controller: controller.searchTextEditingController,
+/*
+                          onChanged: (inputValue) {
+                            controller.onChanged(inputValue);
+                            return;
+                            if (lastInputValue != inputValue) {
+                              lastInputValue = inputValue;
+                              context
+                                  .read<TeamSearchBloc>()
+                                  .add(TextChanged(text: inputValue));
+                            }
+                          },
+*/
                       decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(color: Colors.white)
-                          ),
+                              borderSide: BorderSide(color: Colors.white)),
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
                           filled: true,
                           fillColor: Colors.white,
                           prefixIcon: Padding(
                             padding: const EdgeInsets.only(bottom: 4),
-                            child: Icon(Icons.search,color: Colors.grey,),
+                            child: Icon(
+                              Icons.search,
+                              color: Colors.grey,
+                            ),
                           ),
                           hintText: "ابحث عن فريق",
-                          hintStyle: TextStyle(color: Colors.grey)
-                      ),
+                          hintStyle: TextStyle(
+                              color: Colors.grey, fontFamily: 'Vazirmatn')),
                     ),
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Text('اتابعهم',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black),),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Container(
-                  height: 260,
-                  child: GridView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 10,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-                      itemBuilder: (BuildContext context,index){
-                        return Padding(
-                          padding: const EdgeInsets.all(1.0),
-                          child: Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8)
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                      width: 45,
-                                      height: 45,
-                                      child: Image.asset('assets/fc.jpg')),
-                                  Text('برشلونة')
-                                ],)
-                          ),
-                        );
-                      }),
+                child: Text(
+                  'مقترحة',
+                  style: TextStyle(
+                      fontFamily: 'Vazirmatn',
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Text('مقترحة',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black),),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: ListView.builder(
-                  physics: ClampingScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: 10,
-                  itemBuilder: (BuildContext context,index){
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 6),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6)
-                        ),
-                        child: Container(
-                          height: 50,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
+              Obx(
+                () {
+                  final state = controller.teamSearchState.value;
+                  print('state');
+                  if (state is SearchStateLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (state is SearchStateSuccess) {
+                    final data = state.data;
+
+                    return ListView.builder(
+                      physics: ClampingScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: data.length,
+                      itemBuilder: (_, index) {
+                        final item = data[index];
+                        final teamBasicDataModel =
+                            data[index].teamBasicDataModel;
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 6),
+                          child: GestureDetector(
+                            onTap: () {
+                              if (widget.tag == 'الفرق') {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ChangeNotifierProvider<
+                                                    EachTeamViewModel>(
+                                                create: (_) =>
+                                                    EachTeamViewModel(),
+                                                child: EachTeam(
+                                                  url: teamBasicDataModel.url,
+                                                ))));
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ChangeNotifierProvider<
+                                                    EachLeagueViewModel>(
+                                                create: (_) =>
+                                                    EachLeagueViewModel(),
+                                                child: EachLeague(
+                                                    url: teamBasicDataModel
+                                                        .url))));
+                              }
+                            },
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(6)),
+                              child: Container(
+                                height: 50,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
                                   child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
-                                          width: 35,
-                                          height: 35,
-                                          child: Image.asset('assets/fc.jpg')
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                                width: 35,
+                                                height: 35,
+                                                child: CachedNetworkImage(
+                                                  imageUrl: teamBasicDataModel
+                                                      .image.hostedFile,
+                                                )),
+                                            SizedBox(
+                                              width: 4,
+                                            ),
+                                            Text(
+                                              teamBasicDataModel.text,
+                                              style: TextStyle(
+                                                fontFamily: 'Vazirmatn',
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                      SizedBox(width: 4,),
-                                      Text('برشلونة')
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 20),
+                                        child: Builder(builder: (contextt) {
+                                          return InkWell(
+                                            onTap: () {
+                                              favouriteController
+                                                  .toggleFavourite(index);
+/*
+                                                  context
+                                                      .read<TeamSearchBloc>()
+                                                      .add(ToggleFavourite(
+                                                          index));
+*/
+                                            },
+                                            child: Container(
+                                              width: 45,
+                                              height: 20,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.grey[200],
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15)),
+                                              child: Center(
+                                                  child: Text(
+                                                item.isFavourite
+                                                    ? 'الغاء'
+                                                    : 'تابع',
+                                                style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .primaryColor,
+                                                    fontFamily: 'Vazirmatn',
+                                                    fontSize: 12,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
+                                            ),
+                                          );
+                                        }),
+                                      )
                                     ],
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 20),
-                                  child: Container(
-                                    width: 45,
-                                    height: 20,
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey[200],
-                                        borderRadius: BorderRadius.circular(15)
-                                    ),
-                                    child: Center(child: Text('تابع',style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 12,fontWeight: FontWeight.bold),)),
-                                  ),
-                                )
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     );
-                  },
-                ),
+                  }
+                  if (state is SearchStateError) {
+                    return Center(
+                      child: Text('لا يوجد نتائج'),
+                    );
+                  }
+                  return Center(
+                    child: Text('ابدأ بالبحث الآن'),
+                  );
+                },
+              ),
+              SizedBox(
+                height: 400,
               )
             ],
           ),
@@ -197,7 +381,7 @@ class _FavouritesState extends State<Favourites> with SingleTickerProviderStateM
                   children: <Widget>[
                     Padding(
                       padding:
-                      const EdgeInsets.only(top: 5, right: 10, left: 10),
+                          const EdgeInsets.only(top: 5, right: 10, left: 10),
                       child: Row(
                         children: <Widget>[
                           IconButton(
@@ -218,9 +402,10 @@ class _FavouritesState extends State<Favourites> with SingleTickerProviderStateM
                               textCapitalization: TextCapitalization.sentences,
                               decoration: InputDecoration.collapsed(
                                 hintText:
-                                "البحث عن الفرق،المقابلات،اللاعبين،الاخبار،البطولات"
-                                    .tr,
+                                    "البحث عن الفرق،المقابلات،اللاعبين،الاخبار،البطولات"
+                                        .tr,
                                 hintStyle: TextStyle(
+                                  fontFamily: 'Vazirmatn',
                                   fontSize: 16,
                                 ),
                               ),
@@ -240,7 +425,7 @@ class _FavouritesState extends State<Favourites> with SingleTickerProviderStateM
                                     left: 10, right: 10, bottom: 10),
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Container(
                                       child: Row(
@@ -249,7 +434,7 @@ class _FavouritesState extends State<Favourites> with SingleTickerProviderStateM
                                             height: 30,
                                             width: 30,
                                             child:
-                                            Image.asset("assets/541.jpg"),
+                                                Image.asset("assets/541.jpg"),
                                           ),
                                           SizedBox(
                                             width: 10,
@@ -287,7 +472,7 @@ class _FavouritesState extends State<Favourites> with SingleTickerProviderStateM
                   children: <Widget>[
                     Padding(
                       padding:
-                      const EdgeInsets.only(top: 5, right: 10, left: 10),
+                          const EdgeInsets.only(top: 5, right: 10, left: 10),
                       child: Row(
                         children: <Widget>[
                           IconButton(
@@ -307,9 +492,10 @@ class _FavouritesState extends State<Favourites> with SingleTickerProviderStateM
                               textCapitalization: TextCapitalization.sentences,
                               decoration: InputDecoration.collapsed(
                                 hintText:
-                                "البحث عن الفرق،المقابلات،اللاعبين،الاخبار،البطولات"
-                                    .tr,
+                                    "البحث عن الفرق،المقابلات،اللاعبين،الاخبار،البطولات"
+                                        .tr,
                                 hintStyle: TextStyle(
+                                  fontFamily: 'Vazirmatn',
                                   fontSize: 16,
                                 ),
                               ),
@@ -329,7 +515,7 @@ class _FavouritesState extends State<Favourites> with SingleTickerProviderStateM
                                     left: 10, right: 10, bottom: 10),
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Container(
                                       height: 30,
@@ -347,13 +533,13 @@ class _FavouritesState extends State<Favourites> with SingleTickerProviderStateM
                                     ),
                                     Container(
                                         child: Row(
-                                          children: <Widget>[
-                                            Text("مارسيلو".tr),
-                                            IconButton(
-                                                icon: Icon(Icons.star_border),
-                                                onPressed: null)
-                                          ],
-                                        ))
+                                      children: <Widget>[
+                                        Text("مارسيلو".tr),
+                                        IconButton(
+                                            icon: Icon(Icons.star_border),
+                                            onPressed: null)
+                                      ],
+                                    ))
                                   ],
                                 ),
                               ),
@@ -380,7 +566,7 @@ class _FavouritesState extends State<Favourites> with SingleTickerProviderStateM
                   children: <Widget>[
                     Padding(
                       padding:
-                      const EdgeInsets.only(top: 5, right: 10, left: 10),
+                          const EdgeInsets.only(top: 5, right: 10, left: 10),
                       child: Row(
                         children: <Widget>[
                           IconButton(
@@ -400,9 +586,10 @@ class _FavouritesState extends State<Favourites> with SingleTickerProviderStateM
                               textCapitalization: TextCapitalization.sentences,
                               decoration: InputDecoration.collapsed(
                                 hintText:
-                                "البحث عن الفرق،المقابلات،اللاعبين،الاخبار،البطولات"
-                                    .tr,
+                                    "البحث عن الفرق،المقابلات،اللاعبين،الاخبار،البطولات"
+                                        .tr,
                                 hintStyle: TextStyle(
+                                  fontFamily: 'Vazirmatn',
                                   fontSize: 16,
                                 ),
                               ),
@@ -422,7 +609,7 @@ class _FavouritesState extends State<Favourites> with SingleTickerProviderStateM
                                     left: 10, right: 10, bottom: 10),
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Container(
                                       child: Row(
@@ -518,6 +705,7 @@ class _FavouritesState extends State<Favourites> with SingleTickerProviderStateM
 
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   final TabBar _tabBar;
+
   _SliverAppBarDelegate(this._tabBar);
 
   @override
@@ -540,3 +728,433 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
     return false;
   }
 }
+// import 'package:arseli/Provider/EachLeagueViewModel.dart';
+// import 'package:arseli/Provider/LeaguesViewModel.dart';
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_svg/svg.dart';
+// import 'package:provider/provider.dart';
+
+// import 'EachLeague/eachLeague.dart';
+
+// class Leagues extends StatefulWidget {
+//   @override
+//   _LeaguesState createState() => _LeaguesState();
+// }
+
+// TextStyle content = TextStyle(fontFamily: 'Vazirmatn', fontSize: 14);
+// TextStyle _textStyletitle = TextStyle(fontFamily: 'Vazirmatn', fontSize: 20);
+
+// class _LeaguesState extends State<Leagues> with SingleTickerProviderStateMixin {
+//   LeaguesViewModel leaguesViewModel;
+//   TabController tabController;
+
+//   @override
+//   void initState() {
+//     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+//       leaguesViewModel = Provider.of(context, listen: false);
+//       leaguesViewModel.getDataLeagues();
+//     });
+//     super.initState();
+//     tabController = new TabController(length: 3, vsync: this);
+//   }
+
+//   @override
+//   bool isSwitched = false;
+
+//   void dispose() {
+//     tabController.dispose();
+//     super.dispose();
+//   }
+
+//   Widget build(BuildContext context) {
+//     return Directionality(
+//         textDirection: TextDirection.rtl,
+//         child: Scaffold(
+//           appBar: AppBar(
+//               iconTheme: IconThemeData(color: Colors.white),
+//               backgroundColor: Theme.of(context).primaryColor,
+//               title: Padding(
+//                 padding: const EdgeInsets.only(right: 0),
+//                 child: Row(
+//                   children: <Widget>[
+//                     Text(
+//                       'بطولات',
+//                       style: TextStyle(
+//                           fontFamily: 'Vazirmatn', color: Colors.white),
+//                     )
+//                   ],
+//                 ),
+//               )),
+//           body: Padding(
+//             padding: const EdgeInsets.all(8),
+//             child: Consumer<LeaguesViewModel>(
+//               builder: (context, provider, child) {
+//                 return provider.loadingLeagues
+//                     ? Center(
+//                         child: CircularProgressIndicator(
+//                           color: Theme.of(context).primaryColor,
+//                         ),
+//                       )
+//                     : ListView(
+//                         children: [
+//                           Padding(
+//                             padding: const EdgeInsets.only(top: 10),
+//                             child: Card(
+//                               shape: RoundedRectangleBorder(
+//                                   borderRadius: BorderRadius.circular(8)),
+//                               child: Container(
+//                                 height: 60,
+//                                 child: TextFormField(
+//                                   decoration: InputDecoration(
+//                                       border: InputBorder.none,
+//                                       focusedBorder: InputBorder.none,
+//                                       enabledBorder: OutlineInputBorder(
+//                                           borderRadius:
+//                                               BorderRadius.circular(8),
+//                                           borderSide:
+//                                               BorderSide(color: Colors.white)),
+//                                       errorBorder: InputBorder.none,
+//                                       disabledBorder: InputBorder.none,
+//                                       filled: true,
+//                                       fillColor: Colors.white,
+//                                       prefixIcon: Padding(
+//                                         padding:
+//                                             const EdgeInsets.only(bottom: 4),
+//                                         child: Icon(
+//                                           Icons.search,
+//                                           color: Colors.grey,
+//                                         ),
+//                                       ),
+//                                       hintText: "ابحث عن البطولة",
+//                                       hintStyle: TextStyle(
+//                                           fontFamily: 'Vazirmatn',
+//                                           color: Colors.grey)),
+//                                 ),
+//                               ),
+//                             ),
+//                           ),
+//                           Padding(
+//                             padding: const EdgeInsets.only(top: 10),
+//                             child: Card(
+//                               elevation: 2,
+//                               shape: RoundedRectangleBorder(
+//                                   borderRadius: BorderRadius.circular(10)),
+//                               child: Column(
+//                                 crossAxisAlignment: CrossAxisAlignment.start,
+//                                 children: [
+//                                   Padding(
+//                                       padding: const EdgeInsets.only(
+//                                           right: 15, left: 15, top: 10),
+//                                       child: Row(
+//                                         mainAxisAlignment:
+//                                             MainAxisAlignment.spaceBetween,
+//                                         children: [
+//                                           Text(
+//                                             'اتابعهم',
+//                                             style: TextStyle(
+//                                                 fontFamily: 'Vazirmatn',
+//                                                 fontSize: 14,
+//                                                 fontWeight: FontWeight.w600),
+//                                           ),
+//                                           Text(
+//                                             'تعديل',
+//                                             style: TextStyle(
+//                                                 fontFamily: 'Vazirmatn',
+//                                                 fontSize: 13,
+//                                                 fontWeight: FontWeight.w600,
+//                                                 color: Theme.of(context)
+//                                                     .primaryColor),
+//                                           ),
+//                                         ],
+//                                       )),
+//                                   Divider(),
+//                                   ListView.builder(
+//                                     physics: ClampingScrollPhysics(),
+//                                     shrinkWrap: true,
+//                                     scrollDirection: Axis.vertical,
+//                                     itemCount: 5,
+//                                     itemBuilder: (widget, index) {
+//                                       return GestureDetector(
+//                                         child: Padding(
+//                                           padding: const EdgeInsets.all(10.0),
+//                                           child: Row(
+//                                             children: [
+//                                               Container(
+//                                                   width: 35,
+//                                                   height: 30,
+//                                                   child: ClipRRect(
+//                                                       borderRadius:
+//                                                           BorderRadius.circular(
+//                                                               50),
+//                                                       child: Image.asset(
+//                                                           "assets/12.jpg"))),
+//                                               SizedBox(
+//                                                 width: 10,
+//                                               ),
+//                                               Text(
+//                                                 'الدوري الاسباني',
+//                                                 style: TextStyle(
+//                                                     fontFamily: 'Vazirmatn',
+//                                                     fontSize: 16),
+//                                               ),
+//                                             ],
+//                                           ),
+//                                         ),
+//                                       );
+//                                     },
+//                                     padding: EdgeInsets.symmetric(vertical: 5),
+//                                   ),
+//                                 ],
+//                               ),
+//                             ),
+//                           ),
+//                           Card(
+//                             elevation: 2,
+//                             shape: RoundedRectangleBorder(
+//                                 borderRadius: BorderRadius.circular(10)),
+//                             child: Column(
+//                               crossAxisAlignment: CrossAxisAlignment.start,
+//                               children: [
+//                                 Padding(
+//                                     padding: const EdgeInsets.only(
+//                                         right: 15, left: 15, top: 10),
+//                                     child: Row(
+//                                       mainAxisAlignment:
+//                                           MainAxisAlignment.spaceBetween,
+//                                       children: [
+//                                         Text(
+//                                           'مقترحة',
+//                                           style: TextStyle(
+//                                               fontFamily: 'Vazirmatn',
+//                                               fontSize: 14,
+//                                               fontWeight: FontWeight.w600),
+//                                         ),
+//                                         Icon(
+//                                           Icons.clear,
+//                                           color: Colors.grey,
+//                                           size: 20,
+//                                         )
+//                                       ],
+//                                     )),
+//                                 Divider(),
+//                                 ListView.builder(
+//                                   physics: ClampingScrollPhysics(),
+//                                   shrinkWrap: true,
+//                                   scrollDirection: Axis.vertical,
+//                                   itemCount: 5,
+//                                   itemBuilder: (widget, index) {
+//                                     return GestureDetector(
+//                                       child: Padding(
+//                                         padding: const EdgeInsets.all(10.0),
+//                                         child: Row(
+//                                           mainAxisAlignment:
+//                                               MainAxisAlignment.spaceBetween,
+//                                           children: [
+//                                             Row(
+//                                               children: [
+//                                                 Container(
+//                                                     width: 35,
+//                                                     height: 30,
+//                                                     child: ClipRRect(
+//                                                         borderRadius:
+//                                                             BorderRadius
+//                                                                 .circular(50),
+//                                                         child: Image.asset(
+//                                                             "assets/12.jpg"))),
+//                                                 SizedBox(
+//                                                   width: 10,
+//                                                 ),
+//                                                 Text(
+//                                                   'الدوري الاسباني',
+//                                                   style: TextStyle(
+//                                                       fontFamily: 'Vazirmatn',
+//                                                       fontSize: 16),
+//                                                 ),
+//                                               ],
+//                                             ),
+//                                             Padding(
+//                                               padding: const EdgeInsets.only(
+//                                                   left: 10),
+//                                               child: Container(
+//                                                 width: 45,
+//                                                 height: 20,
+//                                                 decoration: BoxDecoration(
+//                                                     color: Colors.grey[200],
+//                                                     borderRadius:
+//                                                         BorderRadius.circular(
+//                                                             15)),
+//                                                 child: Center(
+//                                                     child: Text(
+//                                                   'متابعة',
+//                                                   style: TextStyle(
+//                                                       fontFamily: 'Vazirmatn',
+//                                                       color: Theme.of(context)
+//                                                           .primaryColor,
+//                                                       fontSize: 12,
+//                                                       fontWeight:
+//                                                           FontWeight.bold),
+//                                                 )),
+//                                               ),
+//                                             )
+//                                           ],
+//                                         ),
+//                                       ),
+//                                     );
+//                                   },
+//                                   padding: EdgeInsets.symmetric(vertical: 5),
+//                                 ),
+//                               ],
+//                             ),
+//                           ),
+//                           Padding(
+//                             padding: const EdgeInsets.only(top: 10, bottom: 8),
+//                             child: ListView.builder(
+//                                 physics: BouncingScrollPhysics(),
+//                                 itemCount: provider.responseModelLeagues.length,
+//                                 shrinkWrap: true,
+//                                 itemBuilder: (context, index) {
+//                                   return Card(
+//                                     elevation: 2,
+//                                     shape: RoundedRectangleBorder(
+//                                         borderRadius:
+//                                             BorderRadius.circular(10)),
+//                                     child: Theme(
+//                                       data: Theme.of(context).copyWith(
+//                                           dividerColor: Colors.transparent),
+//                                       child: ExpansionTile(
+//                                         initiallyExpanded: true,
+//                                         title: GestureDetector(
+//                                           onTap: () {},
+//                                           child: Row(
+//                                             children: [
+//                                               Container(
+//                                                   width: 30,
+//                                                   height: 30,
+//                                                   child: provider
+//                                                           .responseModelLeagues[
+//                                                               index]
+//                                                           .countryImage
+//                                                           .endsWith('svg')
+//                                                       ? ClipRRect(
+//                                                           borderRadius:
+//                                                               BorderRadius
+//                                                                   .circular(50),
+//                                                           child: SvgPicture
+//                                                               .network(
+//                                                             "https://www.eplworld.com/${provider.responseModelLeagues[index].countryImage}",
+//                                                             semanticsLabel:
+//                                                                 'Acme Logo',
+//                                                             fit: BoxFit.cover,
+//                                                           ))
+//                                                       : Image.network(
+//                                                           "https://www.eplworld.com${provider.responseModelLeagues[index].countryImage}")),
+//                                               SizedBox(
+//                                                 width: 15,
+//                                               ),
+//                                               Text(
+//                                                 provider
+//                                                     .responseModelLeagues[index]
+//                                                     .name,
+//                                                 style: TextStyle(
+//                                                     fontFamily: 'Vazirmatn',
+//                                                     fontSize: 16,
+//                                                     fontWeight:
+//                                                         FontWeight.w400),
+//                                               ),
+//                                             ],
+//                                           ),
+//                                         ),
+//                                         children: [
+//                                           ListView.builder(
+//                                             physics: ClampingScrollPhysics(),
+//                                             shrinkWrap: true,
+//                                             scrollDirection: Axis.vertical,
+//                                             itemCount: provider
+//                                                 .responseModelLeagues[index]
+//                                                 .Tournaments
+//                                                 .length,
+//                                             itemBuilder: (widget, indexx) {
+//                                               return GestureDetector(
+//                                                 onTap: () {
+//                                                   Navigator.push(
+//                                                       context,
+//                                                       MaterialPageRoute(
+//                                                           builder: (context) =>
+//                                                               ChangeNotifierProvider<
+//                                                                       EachLeagueViewModel>(
+//                                                                   create: (_) =>
+//                                                                       EachLeagueViewModel(),
+//                                                                   child:
+//                                                                       EachLeague(
+//                                                                     url:
+//                                                                         "/tournaments/${provider.responseModelLeagues[index].Tournaments[indexx].url}",
+//                                                                   ))));
+//                                                 },
+//                                                 child: Padding(
+//                                                   padding: const EdgeInsets.all(
+//                                                       10.0),
+//                                                   child: Row(
+//                                                     children: [
+//                                                       Container(
+//                                                           width: 35,
+//                                                           height: 30,
+//                                                           child: provider
+//                                                                   .responseModelLeagues[
+//                                                                       index]
+//                                                                   .Tournaments[
+//                                                                       indexx]
+//                                                                   .LogoImage
+//                                                                   .endsWith(
+//                                                                       'svg')
+//                                                               ? ClipRRect(
+//                                                                   borderRadius:
+//                                                                       BorderRadius
+//                                                                           .circular(
+//                                                                               50),
+//                                                                   child: SvgPicture
+//                                                                       .network(
+//                                                                     "https://www.eplworld.com/${provider.responseModelLeagues[index].Tournaments[indexx].LogoImage}",
+//                                                                     semanticsLabel:
+//                                                                         'Acme Logo',
+//                                                                     fit: BoxFit
+//                                                                         .cover,
+//                                                                   ))
+//                                                               : Image.network(
+//                                                                   "https://www.eplworld.com${provider.responseModelLeagues[index].Tournaments[indexx].LogoImage}")),
+//                                                       SizedBox(
+//                                                         width: 10,
+//                                                       ),
+//                                                       Text(
+//                                                         provider
+//                                                             .responseModelLeagues[
+//                                                                 index]
+//                                                             .Tournaments[indexx]
+//                                                             .name,
+//                                                         style: TextStyle(
+//                                                             fontFamily:
+//                                                                 'Vazirmatn',
+//                                                             fontSize: 16),
+//                                                       ),
+//                                                     ],
+//                                                   ),
+//                                                 ),
+//                                               );
+//                                             },
+//                                             padding: EdgeInsets.symmetric(
+//                                                 vertical: 5),
+//                                           )
+//                                         ],
+//                                       ),
+//                                     ),
+//                                   );
+//                                 }),
+//                           )
+//                         ],
+//                       );
+//               },
+//             ),
+//           ),
+//         ));
+//   }
+// }

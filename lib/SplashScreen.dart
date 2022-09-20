@@ -1,11 +1,18 @@
 import 'dart:async';
 import 'dart:ffi';
+import 'dart:io';
+import 'package:arseli/Models/token.dart';
+import 'package:arseli/Provider/TokenViewModel.dart';
 import 'package:arseli/main.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'home.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,10 +23,10 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   static final String oneSignalAppId = '141280ca-d653-4400-a580-0064de00194e';
   Future<Void> initPlatformState() async {
-
     OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
     OneSignal.shared.setAppId(oneSignalAppId);
-    await OneSignal.shared.promptUserForPushNotificationPermission(fallbackToSettings: true);
+    await OneSignal.shared
+        .promptUserForPushNotificationPermission(fallbackToSettings: true);
     OneSignal.shared.promptLocationPermission().then((dynamic accepted) {
       print('Accepted permission: $accepted ');
     });
@@ -27,6 +34,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    getToken();
+
     // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     //   RemoteNotification notification = message.notification;
     //   AndroidNotification android = message.notification?.android;
@@ -76,6 +85,50 @@ class _SplashScreenState extends State<SplashScreen> {
     });
     initPlatformState();
     super.initState();
+  }
+
+  Token token = Token();
+  final String defaultLocale = Platform.localeName;
+  getToken() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      token.id = androidInfo.id;
+      token.deviceName = androidInfo.device;
+      token.appVersion = androidInfo.version.release;
+      token.deviceType = "Android";
+      token.deviceModel = androidInfo.model;
+      token.systemVersion = Platform.operatingSystemVersion;
+      token.defaultLocale = defaultLocale;
+      token.timeZone = DateTime.now().timeZoneName;
+      token.oneSignalToken = "";
+
+      if (token.id != null) {
+        saveToken(token);
+      }
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+
+      token.id = iosInfo.identifierForVendor;
+      token.deviceName = iosInfo.name;
+      token.appVersion = iosInfo.systemVersion;
+      token.deviceType = "IOS";
+      token.deviceModel = iosInfo.model;
+      token.systemVersion = Platform.operatingSystemVersion;
+      token.defaultLocale = defaultLocale;
+      token.timeZone = DateTime.now().timeZoneName;
+      token.oneSignalToken = "";
+      if (token.id != null) {
+        saveToken(token);
+      }
+    }
+  }
+
+  saveToken(Token token) async {
+    var prefs = await SharedPreferences.getInstance();
+    var userPref = prefs.setString("DeviceID", token.id);
+    var res = await Provider.of<TokenViewModel>(context, listen: false)
+        .sendToken(token);
   }
 
   void ShowNotification() {

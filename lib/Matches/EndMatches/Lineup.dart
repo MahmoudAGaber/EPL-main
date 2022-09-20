@@ -22,18 +22,29 @@ class Lineup extends StatefulWidget {
 
 class _LineupState extends State<Lineup> {
   int no = 1;
-  TextStyle _textStyle = TextStyle(color: Colors.grey[500], fontSize: 13);
-  TextStyle _textStyle1 = TextStyle(fontSize: 17);
-  TextStyle _textStyle2 = TextStyle(color: Colors.grey[500], fontSize: 15);
-  TextStyle _textStyle3 =
-      TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20);
-  TextStyle _textStyle4 =
-      TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 15);
-  TextStyle content = TextStyle(fontSize: 13.5);
-  TextStyle content2 = TextStyle(fontSize: 13.5, color: Colors.grey);
-  TextStyle content3 = TextStyle(fontSize: 12);
-  TextStyle content4 = TextStyle(fontSize: 12, color: Colors.grey);
-  TextStyle number = TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
+  TextStyle _textStyle =
+      TextStyle(fontFamily: 'Vazirmatn', color: Colors.grey[500], fontSize: 13);
+  TextStyle _textStyle1 = TextStyle(fontFamily: 'Vazirmatn', fontSize: 17);
+  TextStyle _textStyle2 =
+      TextStyle(fontFamily: 'Vazirmatn', color: Colors.grey[500], fontSize: 15);
+  TextStyle _textStyle3 = TextStyle(
+      fontFamily: 'Vazirmatn',
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+      fontSize: 20);
+  TextStyle _textStyle4 = TextStyle(
+      fontFamily: 'Vazirmatn',
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+      fontSize: 15);
+  TextStyle content = TextStyle(fontFamily: 'Vazirmatn', fontSize: 13.5);
+  TextStyle content2 =
+      TextStyle(fontFamily: 'Vazirmatn', fontSize: 13.5, color: Colors.grey);
+  TextStyle content3 = TextStyle(fontFamily: 'Vazirmatn', fontSize: 12);
+  TextStyle content4 =
+      TextStyle(fontFamily: 'Vazirmatn', fontSize: 12, color: Colors.grey);
+  TextStyle number = TextStyle(
+      fontFamily: 'Vazirmatn', fontSize: 18, fontWeight: FontWeight.w400);
 
   EachMatchViewModel eachMatchViewModel;
 
@@ -70,6 +81,7 @@ class _LineupState extends State<Lineup> {
                                 Text(
                                   provider.lineupsModel.home.teamName,
                                   style: TextStyle(
+                                    fontFamily: 'Vazirmatn',
                                     color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.w800,
@@ -80,6 +92,7 @@ class _LineupState extends State<Lineup> {
                                 ),
                                 Text(provider.lineupsModel.home.formation,
                                     style: TextStyle(
+                                      fontFamily: 'Vazirmatn',
                                       color: Colors.white60,
                                       fontSize: 15,
                                       fontWeight: FontWeight.w600,
@@ -112,36 +125,47 @@ class _LineupState extends State<Lineup> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: List.generate(
-                                            GoalKeeper(widget.matchID,'home').length,
-                                            (index) =>
-                                                GoalKeeper(widget.matchID,'home')[index])),
+                                            GoalKeeper(widget.matchID, 'home')
+                                                .length,
+                                            (index) => GoalKeeper(
+                                                widget.matchID,
+                                                'home')[index])),
                                     SingleChildScrollView(
                                       child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceEvenly,
                                           children: List.generate(
-                                              Defender(widget.matchID,provider, 'home').length,
+                                              Defender(widget.matchID, provider,
+                                                      'home')
+                                                  .length,
                                               (index) => Flexible(
-                                                child: Defender(widget.matchID,
-                                                    provider, 'home')[index],
-                                              ))),
+                                                    child: Defender(
+                                                        widget.matchID,
+                                                        provider,
+                                                        'home')[index],
+                                                  ))),
                                     ),
                                     SingleChildScrollView(
                                       child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceEvenly,
                                           children: List.generate(
-                                              CenterPlayer(widget.matchID,provider, 'home')
+                                              CenterPlayer(widget.matchID,
+                                                      provider, 'home')
                                                   .length,
                                               (index) => Flexible(
-                                                  child:CenterPlayer(widget.matchID,
-                                                  provider, 'home')[index]))),
+                                                  child: CenterPlayer(
+                                                      widget.matchID,
+                                                      provider,
+                                                      'home')[index]))),
                                     ),
                                     Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: List.generate(
-                                            Attack(widget.matchID,provider, 'home').length,
+                                            Attack(widget.matchID, provider,
+                                                    'home')
+                                                .length,
                                             (index) => Attack(widget.matchID,
                                                 provider, 'home')[index])),
                                     provider.lineupsModel.home.formation
@@ -153,10 +177,13 @@ class _LineupState extends State<Lineup> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: List.generate(
-                                                AttackStricker(widget.matchID,provider, 'home')
+                                                AttackStricker(widget.matchID,
+                                                        provider, 'home')
                                                     .length,
-                                                (index) => AttackStricker(widget.matchID,
-                                                    provider, 'home')[index])),
+                                                (index) => AttackStricker(
+                                                    widget.matchID,
+                                                    provider,
+                                                    'home')[index])),
                                   ],
                                 )
                                 /*
@@ -269,10 +296,13 @@ class _LineupState extends State<Lineup> {
                                                     MainAxisAlignment
                                                         .spaceEvenly,
                                                 children: List.generate(
-                                                    AttackStricker(widget.matchID,
-                                                            provider, 'away')
+                                                    AttackStricker(
+                                                            widget.matchID,
+                                                            provider,
+                                                            'away')
                                                         .length,
-                                                    (index) => AttackStricker(widget.matchID,
+                                                    (index) => AttackStricker(
+                                                        widget.matchID,
                                                         provider,
                                                         'away')[index]))),
                                     Expanded(
@@ -280,7 +310,9 @@ class _LineupState extends State<Lineup> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceEvenly,
                                           children: List.generate(
-                                              Attack(widget.matchID,provider, 'away').length,
+                                              Attack(widget.matchID, provider,
+                                                      'away')
+                                                  .length,
                                               (index) => Attack(widget.matchID,
                                                   provider, 'away')[index])),
                                     ),
@@ -289,28 +321,36 @@ class _LineupState extends State<Lineup> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceEvenly,
                                           children: List.generate(
-                                              CenterPlayer(widget.matchID,provider, 'away')
+                                              CenterPlayer(widget.matchID,
+                                                      provider, 'away')
                                                   .length,
-                                              (index) => CenterPlayer(widget.matchID,
-                                                  provider, 'away')[index])),
+                                              (index) => CenterPlayer(
+                                                  widget.matchID,
+                                                  provider,
+                                                  'away')[index])),
                                     ),
                                     Expanded(
                                         child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: List.generate(
-                                                Defender(widget.matchID,provider, 'away')
+                                                Defender(widget.matchID,
+                                                        provider, 'away')
                                                     .length,
-                                                (index) => Defender(widget.matchID,
-                                                    provider, 'away')[index]))),
+                                                (index) => Defender(
+                                                    widget.matchID,
+                                                    provider,
+                                                    'away')[index]))),
                                     Expanded(
                                       child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: List.generate(
-                                              GoalKeeper(widget.matchID,'away').length,
-                                              (index) =>
-                                                  GoalKeeper(widget.matchID,'away')[index])),
+                                              GoalKeeper(widget.matchID, 'away')
+                                                  .length,
+                                              (index) => GoalKeeper(
+                                                  widget.matchID,
+                                                  'away')[index])),
                                     ),
                                   ],
                                 )
@@ -384,6 +424,7 @@ class _LineupState extends State<Lineup> {
                                 Text(
                                   provider.lineupsModel.away.teamName,
                                   style: TextStyle(
+                                    fontFamily: 'Vazirmatn',
                                     color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.w800,
@@ -394,6 +435,7 @@ class _LineupState extends State<Lineup> {
                                 ),
                                 Text(provider.lineupsModel.away.formation,
                                     style: TextStyle(
+                                      fontFamily: 'Vazirmatn',
                                       color: Colors.white70,
                                       fontSize: 15,
                                       fontWeight: FontWeight.w600,
@@ -409,7 +451,8 @@ class _LineupState extends State<Lineup> {
                           children: <Widget>[
                             Text(
                               "مدرب",
-                              style: TextStyle(fontSize: 17),
+                              style: TextStyle(
+                                  fontFamily: 'Vazirmatn', fontSize: 17),
                             ),
                           ],
                         ),
@@ -457,8 +500,7 @@ class _LineupState extends State<Lineup> {
                                         Container(
                                             child: Center(
                                           child: Text(
-                                            provider.lineupsModel.home.players
-                                                .coach.name,
+                                            provider.lineupsModel.home.players.coach.name,
                                             overflow: TextOverflow.visible,
                                           ),
                                         ))
@@ -510,7 +552,8 @@ class _LineupState extends State<Lineup> {
                           children: <Widget>[
                             Text(
                               "مقاعد الاحتياط ",
-                              style: TextStyle(fontSize: 17),
+                              style: TextStyle(
+                                  fontFamily: 'Vazirmatn', fontSize: 17),
                             ),
                           ],
                         ),
@@ -544,18 +587,18 @@ class _LineupState extends State<Lineup> {
                                               onTap: () => {
                                                 eachMatchViewModel
                                                     .getPlayerInfo(
-                                                    widget.matchID,
-                                                    provider
-                                                        .lineupsModel
-                                                        .home
-                                                        .players
-                                                        .outField[index]
-                                                        .id)
+                                                        widget.matchID,
+                                                        provider
+                                                            .lineupsModel
+                                                            .home
+                                                            .players
+                                                            .outField[index]
+                                                            .id)
                                                     .then((value) => {
-                                                  if (value != null)
-                                                    showPlayerInfo(
-                                                        context, value)
-                                                })
+                                                          if (value != null)
+                                                            showPlayerInfo(
+                                                                context, value)
+                                                        })
                                               },
                                               child: Padding(
                                                 padding:
@@ -637,7 +680,7 @@ class _LineupState extends State<Lineup> {
                                                                               children: [
                                                                                 Text(
                                                                                   provider.lineupsModel.home.players.outField[index].events[indexx].time.toString(),
-                                                                                  style: TextStyle(color: Colors.green),
+                                                                                  style: TextStyle(fontFamily: 'Vazirmatn', color: Colors.green),
                                                                                 ),
                                                                                 Container(
                                                                                   decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(8)),
@@ -684,7 +727,7 @@ class _LineupState extends State<Lineup> {
                                                                             child:
                                                                                 Padding(
                                                                               padding: const EdgeInsets.only(left: 3, right: 3),
-                                                                              child: Center(child: Text(provider.lineupsModel.home.players.outField[index].rating, style: TextStyle(color: Colors.white))),
+                                                                              child: Center(child: Text(provider.lineupsModel.home.players.outField[index].rating, style: TextStyle(fontFamily: 'Vazirmatn', color: Colors.white))),
                                                                             ),
                                                                           ),
                                                                         ],
@@ -825,21 +868,21 @@ class _LineupState extends State<Lineup> {
                                           itemBuilder:
                                               (BuildContext context, index) {
                                             return InkWell(
-                                              onTap: ()=>{
+                                              onTap: () => {
                                                 eachMatchViewModel
                                                     .getPlayerInfo(
-                                                    widget.matchID,
-                                                    provider
-                                                        .lineupsModel
-                                                        .home
-                                                        .players
-                                                        .outField[index]
-                                                        .id)
+                                                        widget.matchID,
+                                                        provider
+                                                            .lineupsModel
+                                                            .home
+                                                            .players
+                                                            .outField[index]
+                                                            .id)
                                                     .then((value) => {
-                                                  if (value != null)
-                                                    showPlayerInfo(
-                                                        context, value)
-                                                })
+                                                          if (value != null)
+                                                            showPlayerInfo(
+                                                                context, value)
+                                                        })
                                               },
                                               child: Padding(
                                                 padding:
@@ -850,7 +893,8 @@ class _LineupState extends State<Lineup> {
                                                     children: <Widget>[
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsets.only(
+                                                            const EdgeInsets
+                                                                    .only(
                                                                 right: 10),
                                                         child: Stack(
                                                           children: [
@@ -868,12 +912,15 @@ class _LineupState extends State<Lineup> {
                                                                 padding:
                                                                     const EdgeInsets
                                                                             .only(
-                                                                        left: 12,
-                                                                        right: 12,
+                                                                        left:
+                                                                            12,
+                                                                        right:
+                                                                            12,
                                                                         top: 25,
                                                                         bottom:
                                                                             25),
-                                                                child: ClipRRect(
+                                                                child:
+                                                                    ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .all(
@@ -890,28 +937,22 @@ class _LineupState extends State<Lineup> {
                                                             Positioned(
                                                                 top: 0,
                                                                 left: 0,
-                                                                child: Container(
+                                                                child:
+                                                                    Container(
                                                                   width: 40,
                                                                   height: 50,
                                                                   child: ListView
                                                                       .builder(
                                                                     physics:
                                                                         NeverScrollableScrollPhysics(),
-                                                                    itemCount: provider
-                                                                                .lineupsModel
-                                                                                .away
-                                                                                .players
-                                                                                .outField[
-                                                                                    index]
-                                                                                .events ==
+                                                                    itemCount: provider.lineupsModel.away.players.outField[index].events ==
                                                                             null
                                                                         ? 0
                                                                         : provider
                                                                             .lineupsModel
                                                                             .away
                                                                             .players
-                                                                            .outField[
-                                                                                index]
+                                                                            .outField[index]
                                                                             .events
                                                                             .length,
                                                                     itemBuilder:
@@ -923,7 +964,7 @@ class _LineupState extends State<Lineup> {
                                                                               children: [
                                                                                 Text(
                                                                                   provider.lineupsModel.away.players.outField[index].events[indexx].time.toString(),
-                                                                                  style: TextStyle(color: Colors.green),
+                                                                                  style: TextStyle(fontFamily: 'Vazirmatn', color: Colors.green),
                                                                                 ),
                                                                                 Container(
                                                                                   decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(8)),
@@ -955,7 +996,8 @@ class _LineupState extends State<Lineup> {
                                                                     child:
                                                                         Container(
                                                                       width: 33,
-                                                                      height: 23,
+                                                                      height:
+                                                                          23,
                                                                       child:
                                                                           Column(
                                                                         children: [
@@ -964,15 +1006,12 @@ class _LineupState extends State<Lineup> {
                                                                                 33,
                                                                             height:
                                                                                 23,
-                                                                            decoration: BoxDecoration(
-                                                                                color: Colors.orange,
-                                                                                borderRadius: BorderRadius.circular(8)),
+                                                                            decoration:
+                                                                                BoxDecoration(color: Colors.orange, borderRadius: BorderRadius.circular(8)),
                                                                             child:
                                                                                 Padding(
-                                                                              padding:
-                                                                                  const EdgeInsets.only(left: 3, right: 3),
-                                                                              child:
-                                                                                  Center(child: Text(provider.lineupsModel.away.players.outField[index].rating, style: TextStyle(color: Colors.white))),
+                                                                              padding: const EdgeInsets.only(left: 3, right: 3),
+                                                                              child: Center(child: Text(provider.lineupsModel.away.players.outField[index].rating, style: TextStyle(fontFamily: 'Vazirmatn', color: Colors.white))),
                                                                             ),
                                                                           ),
                                                                         ],
@@ -985,27 +1024,18 @@ class _LineupState extends State<Lineup> {
                                                             Positioned(
                                                                 bottom: 15,
                                                                 right: 0,
-                                                                child: Container(
+                                                                child:
+                                                                    Container(
                                                                   width: 25,
                                                                   height: 25,
                                                                   child: ListView
                                                                       .builder(
                                                                           physics:
                                                                               NeverScrollableScrollPhysics(),
-                                                                          itemCount: provider.lineupsModel.away.players.outField[index].events ==
-                                                                                  null
+                                                                          itemCount: provider.lineupsModel.away.players.outField[index].events == null
                                                                               ? 0
-                                                                              : provider
-                                                                                  .lineupsModel
-                                                                                  .away
-                                                                                  .players
-                                                                                  .outField[
-                                                                                      index]
-                                                                                  .events
-                                                                                  .length,
-                                                                          itemBuilder:
-                                                                              (context,
-                                                                                  indexx) {
+                                                                              : provider.lineupsModel.away.players.outField[index].events.length,
+                                                                          itemBuilder: (context, indexx) {
                                                                             return provider.lineupsModel.away.players.outField[index].events[indexx].type == 'goal'
                                                                                 ? Column(
                                                                                     children: [
@@ -1021,27 +1051,18 @@ class _LineupState extends State<Lineup> {
                                                             Positioned(
                                                                 bottom: 17,
                                                                 left: 15,
-                                                                child: Container(
+                                                                child:
+                                                                    Container(
                                                                   width: 16,
                                                                   height: 23,
                                                                   child: ListView
                                                                       .builder(
                                                                           physics:
                                                                               NeverScrollableScrollPhysics(),
-                                                                          itemCount: provider.lineupsModel.away.players.outField[index].events ==
-                                                                                  null
+                                                                          itemCount: provider.lineupsModel.away.players.outField[index].events == null
                                                                               ? 0
-                                                                              : provider
-                                                                                  .lineupsModel
-                                                                                  .away
-                                                                                  .players
-                                                                                  .outField[
-                                                                                      index]
-                                                                                  .events
-                                                                                  .length,
-                                                                          itemBuilder:
-                                                                              (context,
-                                                                                  indexx) {
+                                                                              : provider.lineupsModel.away.players.outField[index].events.length,
+                                                                          itemBuilder: (context, indexx) {
                                                                             return provider.lineupsModel.away.players.outField[index].events[indexx].type == 'yellowCard'
                                                                                 ? Column(
                                                                                     children: [
@@ -1093,12 +1114,10 @@ class _LineupState extends State<Lineup> {
                                                                             .lineupsModel
                                                                             .away
                                                                             .players
-                                                                            .outField[
-                                                                                index]
+                                                                            .outField[index]
                                                                             .name,
                                                                         overflow:
-                                                                            TextOverflow
-                                                                                .visible,
+                                                                            TextOverflow.visible,
                                                                       ),
                                                                     ],
                                                                   ),
@@ -1160,7 +1179,9 @@ class _LineupState extends State<Lineup> {
                                       ),
                                       Text(
                                         "بطاقة صفراء",
-                                        style: TextStyle(fontSize: 12),
+                                        style: TextStyle(
+                                            fontFamily: 'Vazirmatn',
+                                            fontSize: 12),
                                       )
                                     ],
                                   ),
@@ -1179,7 +1200,9 @@ class _LineupState extends State<Lineup> {
                                       ),
                                       Text(
                                         "بطاقة حمراء",
-                                        style: TextStyle(fontSize: 12),
+                                        style: TextStyle(
+                                            fontFamily: 'Vazirmatn',
+                                            fontSize: 12),
                                       )
                                     ],
                                   ),
@@ -1221,7 +1244,9 @@ class _LineupState extends State<Lineup> {
                                       ),
                                       Text(
                                         "الاصفر الثاني",
-                                        style: TextStyle(fontSize: 12),
+                                        style: TextStyle(
+                                            fontFamily: 'Vazirmatn',
+                                            fontSize: 12),
                                       )
                                     ],
                                   ),
@@ -1236,7 +1261,9 @@ class _LineupState extends State<Lineup> {
                                       ),
                                       Text(
                                         "مصاب",
-                                        style: TextStyle(fontSize: 12),
+                                        style: TextStyle(
+                                            fontFamily: 'Vazirmatn',
+                                            fontSize: 12),
                                       )
                                     ],
                                   ),
@@ -1251,7 +1278,9 @@ class _LineupState extends State<Lineup> {
                                       ),
                                       Text(
                                         "الواجب الدولي ",
-                                        style: TextStyle(fontSize: 12),
+                                        style: TextStyle(
+                                            fontFamily: 'Vazirmatn',
+                                            fontSize: 12),
                                       )
                                     ],
                                   )
@@ -1303,7 +1332,7 @@ class _LineupState extends State<Lineup> {
             ),
             Text(
               _textIcons,
-              style: TextStyle(fontSize: 12),
+              style: TextStyle(fontFamily: 'Vazirmatn', fontSize: 12),
             )
           ],
         ),
@@ -1312,50 +1341,52 @@ class _LineupState extends State<Lineup> {
   }
 }
 
-List<Widget> GoalKeeper(String matchId,type) {
+List<Widget> GoalKeeper(String matchId, type) {
   List<Widget> test = [];
-  type == 'away' ? test.add(PlayerAway(matchId,0)) : test.add(PlayerHome(matchId,0));
+  type == 'away'
+      ? test.add(PlayerAway(matchId, 0))
+      : test.add(PlayerHome(matchId, 0));
   return test;
 }
 
-List<Widget> Defender(String matchId,EachMatchViewModel provider, type) {
+List<Widget> Defender(String matchId, EachMatchViewModel provider, type) {
   List<Widget> test = [];
   if (type == "away") {
     int no = int.parse(provider.lineupsModel.away.formation.split('-').first);
     for (int i = 1; i <= no; i++) {
-      test.add(PlayerAway(matchId,i));
+      test.add(PlayerAway(matchId, i));
     }
   } else {
     int no = int.parse(provider.lineupsModel.home.formation.split('-').first);
     for (int i = 1; i <= no; i++) {
-      test.add(PlayerHome(matchId,i));
+      test.add(PlayerHome(matchId, i));
     }
   }
 
   return test;
 }
 
-List<Widget> CenterPlayer(String matchId,EachMatchViewModel provider, type) {
+List<Widget> CenterPlayer(String matchId, EachMatchViewModel provider, type) {
   List<Widget> test = [];
   if (type == 'away') {
     int start =
         int.parse(provider.lineupsModel.away.formation.split('-').first);
     int no = int.parse(provider.lineupsModel.away.formation.split('-')[1]);
     for (int i = start + 1; i <= no + start; i++) {
-      test.add(PlayerAway(matchId,i));
+      test.add(PlayerAway(matchId, i));
     }
   } else {
     int start =
         int.parse(provider.lineupsModel.home.formation.split('-').first);
     int no = int.parse(provider.lineupsModel.home.formation.split('-')[1]);
     for (int i = start + 1; i <= no + start; i++) {
-      test.add(PlayerHome(matchId,i));
+      test.add(PlayerHome(matchId, i));
     }
   }
   return test;
 }
 
-List<Widget> Attack(String matchId,EachMatchViewModel provider, type) {
+List<Widget> Attack(String matchId, EachMatchViewModel provider, type) {
   List<Widget> test = [];
   if (type == 'away') {
     int start =
@@ -1363,7 +1394,7 @@ List<Widget> Attack(String matchId,EachMatchViewModel provider, type) {
     int middle = int.parse(provider.lineupsModel.away.formation.split('-')[1]);
     int no = int.parse(provider.lineupsModel.away.formation.split('-')[2]);
     for (int i = start + middle + 1; i <= no + middle + start; i++) {
-      test.add(PlayerAway(matchId,i));
+      test.add(PlayerAway(matchId, i));
     }
   } else {
     int start =
@@ -1371,14 +1402,14 @@ List<Widget> Attack(String matchId,EachMatchViewModel provider, type) {
     int middle = int.parse(provider.lineupsModel.home.formation.split('-')[1]);
     int no = int.parse(provider.lineupsModel.home.formation.split('-')[2]);
     for (int i = start + middle + 1; i <= no + middle + start; i++) {
-      test.add(PlayerHome(matchId,i));
+      test.add(PlayerHome(matchId, i));
     }
   }
 
   return test;
 }
 
-List<Widget> AttackStricker(String matchId,EachMatchViewModel provider, type) {
+List<Widget> AttackStricker(String matchId, EachMatchViewModel provider, type) {
   List<Widget> test = [];
   if (type == 'away') {
     int start =
@@ -1389,7 +1420,7 @@ List<Widget> AttackStricker(String matchId,EachMatchViewModel provider, type) {
     for (int i = start + middle + middle2 + 1;
         i <= no + middle + middle2 + start;
         i++) {
-      test.add(PlayerAway(matchId,i));
+      test.add(PlayerAway(matchId, i));
     }
   } else {
     int start =
@@ -1400,27 +1431,22 @@ List<Widget> AttackStricker(String matchId,EachMatchViewModel provider, type) {
     for (int i = start + middle + middle2 + 1;
         i <= no + middle + middle2 + start;
         i++) {
-      test.add(PlayerHome(matchId,i));
+      test.add(PlayerHome(matchId, i));
     }
   }
 
   return test;
 }
 
-Widget PlayerHome(String matchId,index) {
+Widget PlayerHome(String matchId, index) {
   return Consumer<EachMatchViewModel>(builder: (context, provider, child) {
     return InkWell(
-      onTap: ()=>{
+      onTap: () => {
         provider
             .getPlayerInfo(
-            matchId,
-            provider.lineupsModel.away.players.inField[index]
-                .id)
-            .then((value) => {
-          if (value != null)
-            showPlayerInfo(
-                context, value)
-        })
+                matchId, provider.lineupsModel.away.players.inField[index].id)
+            .then(
+                (value) => {if (value != null) showPlayerInfo(context, value)})
       },
       child: Container(
         decoration: BoxDecoration(
@@ -1471,8 +1497,8 @@ Widget PlayerHome(String matchId,index) {
                             : provider.lineupsModel.home.players.inField[index]
                                 .events.length,
                         itemBuilder: (context, indexx) {
-                          return provider.lineupsModel.home.players.inField[index]
-                                      .events[indexx].type ==
+                          return provider.lineupsModel.home.players
+                                      .inField[index].events[indexx].type ==
                                   'substitute'
                               ? Column(
                                   children: [
@@ -1480,12 +1506,15 @@ Widget PlayerHome(String matchId,index) {
                                       provider.lineupsModel.home.players
                                           .inField[index].events[indexx].time
                                           .toString(),
-                                      style: TextStyle(color: Colors.white),
+                                      style: TextStyle(
+                                          fontFamily: 'Vazirmatn',
+                                          color: Colors.white),
                                     ),
                                     Container(
                                       decoration: BoxDecoration(
                                           color: Colors.red,
-                                          borderRadius: BorderRadius.circular(4)),
+                                          borderRadius:
+                                              BorderRadius.circular(4)),
                                       child: Center(
                                           child: Icon(
                                         Icons.arrow_forward,
@@ -1520,7 +1549,9 @@ Widget PlayerHome(String matchId,index) {
                                         provider.lineupsModel.home.players
                                             .inField[index].rating,
                                         style: TextStyle(
-                                            color: Colors.white, fontSize: 12))),
+                                            fontFamily: 'Vazirmatn',
+                                            color: Colors.white,
+                                            fontSize: 12))),
                               ),
                             ],
                           ),
@@ -1542,8 +1573,8 @@ Widget PlayerHome(String matchId,index) {
                                       .inField[index].events ==
                                   null
                               ? 0
-                              : provider.lineupsModel.home.players.inField[index]
-                                  .events.length,
+                              : provider.lineupsModel.home.players
+                                  .inField[index].events.length,
                           itemBuilder: (context, indexx) {
                             return provider.lineupsModel.home.players
                                         .inField[index].events[indexx].type ==
@@ -1575,8 +1606,8 @@ Widget PlayerHome(String matchId,index) {
                                       .inField[index].events ==
                                   null
                               ? 0
-                              : provider.lineupsModel.home.players.inField[index]
-                                  .events.length,
+                              : provider.lineupsModel.home.players
+                                  .inField[index].events.length,
                           itemBuilder: (context, indexx) {
                             return provider.lineupsModel.home.players
                                         .inField[index].events[indexx].type ==
@@ -1619,7 +1650,9 @@ Widget PlayerHome(String matchId,index) {
                               Expanded(
                                 child: Text(
                                   "${provider.lineupsModel.home.players.inField[index].number} ",
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(
+                                      fontFamily: 'Vazirmatn',
+                                      color: Colors.white),
                                 ),
                               ),
                             ],
@@ -1637,7 +1670,9 @@ Widget PlayerHome(String matchId,index) {
                                 child: Text(
                                     "${provider.lineupsModel.home.players.inField[index].name} ",
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 13.5),
+                                        fontFamily: 'Vazirmatn',
+                                        color: Colors.white,
+                                        fontSize: 13.5),
                                     overflow: TextOverflow.visible),
                               ),
                             ],
@@ -1654,20 +1689,15 @@ Widget PlayerHome(String matchId,index) {
   });
 }
 
-Widget PlayerAway(matchId,index) {
+Widget PlayerAway(matchId, index) {
   return Consumer<EachMatchViewModel>(builder: (context, provider, child) {
     return InkWell(
-      onTap: ()=>{
+      onTap: () => {
         provider
             .getPlayerInfo(
-            matchId,
-            provider.lineupsModel.away.players.inField[index]
-                .id)
-            .then((value) => {
-          if (value != null)
-            showPlayerInfo(
-                context, value)
-        })
+                matchId, provider.lineupsModel.away.players.inField[index].id)
+            .then(
+                (value) => {if (value != null) showPlayerInfo(context, value)})
       },
       child: Container(
         decoration: BoxDecoration(
@@ -1718,8 +1748,8 @@ Widget PlayerAway(matchId,index) {
                             : provider.lineupsModel.away.players.inField[index]
                                 .events.length,
                         itemBuilder: (context, indexx) {
-                          return provider.lineupsModel.away.players.inField[index]
-                                      .events[indexx].type ==
+                          return provider.lineupsModel.away.players
+                                      .inField[index].events[indexx].type ==
                                   'substitute'
                               ? Column(
                                   children: [
@@ -1727,12 +1757,15 @@ Widget PlayerAway(matchId,index) {
                                       provider.lineupsModel.away.players
                                           .inField[index].events[indexx].time
                                           .toString(),
-                                      style: TextStyle(color: Colors.white),
+                                      style: TextStyle(
+                                          fontFamily: 'Vazirmatn',
+                                          color: Colors.white),
                                     ),
                                     Container(
                                       decoration: BoxDecoration(
                                           color: Colors.red,
-                                          borderRadius: BorderRadius.circular(4)),
+                                          borderRadius:
+                                              BorderRadius.circular(4)),
                                       child: Center(
                                           child: Icon(
                                         Icons.arrow_forward,
@@ -1767,7 +1800,9 @@ Widget PlayerAway(matchId,index) {
                                         provider.lineupsModel.away.players
                                             .inField[index].rating,
                                         style: TextStyle(
-                                            color: Colors.white, fontSize: 12))),
+                                            fontFamily: 'Vazirmatn',
+                                            color: Colors.white,
+                                            fontSize: 12))),
                               ),
                             ],
                           ),
@@ -1789,8 +1824,8 @@ Widget PlayerAway(matchId,index) {
                                       .inField[index].events ==
                                   null
                               ? 0
-                              : provider.lineupsModel.away.players.inField[index]
-                                  .events.length,
+                              : provider.lineupsModel.away.players
+                                  .inField[index].events.length,
                           itemBuilder: (context, indexx) {
                             return provider.lineupsModel.away.players
                                         .inField[index].events[indexx].type ==
@@ -1822,8 +1857,8 @@ Widget PlayerAway(matchId,index) {
                                       .inField[index].events ==
                                   null
                               ? 0
-                              : provider.lineupsModel.away.players.inField[index]
-                                  .events.length,
+                              : provider.lineupsModel.away.players
+                                  .inField[index].events.length,
                           itemBuilder: (context, indexx) {
                             return provider.lineupsModel.away.players
                                         .inField[index].events[indexx].type ==
@@ -1866,7 +1901,9 @@ Widget PlayerAway(matchId,index) {
                               Expanded(
                                 child: Text(
                                   "${provider.lineupsModel.away.players.inField[index].number} ",
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(
+                                      fontFamily: 'Vazirmatn',
+                                      color: Colors.white),
                                 ),
                               ),
                             ],
@@ -1884,7 +1921,9 @@ Widget PlayerAway(matchId,index) {
                                 child: Text(
                                     "${provider.lineupsModel.away.players.inField[index].name} ",
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 13.5),
+                                        fontFamily: 'Vazirmatn',
+                                        color: Colors.white,
+                                        fontSize: 13.5),
                                     overflow: TextOverflow.visible),
                               ),
                             ],

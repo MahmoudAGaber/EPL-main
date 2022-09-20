@@ -18,4 +18,6 @@ class StatsModel{
       assists: json['assists']??0,
     );
   }
+
+
 }

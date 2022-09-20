@@ -8,7 +8,8 @@ class transferCenter extends StatefulWidget {
   _transferCenterState createState() => _transferCenterState();
 }
 
-const TextStyle _textStyle = TextStyle(color: Colors.black54, fontSize: 13);
+const TextStyle _textStyle =
+    TextStyle(fontFamily: 'Vazirmatn', color: Colors.black54, fontSize: 13);
 
 class _transferCenterState extends State<transferCenter> {
   @override

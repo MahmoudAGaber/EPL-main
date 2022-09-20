@@ -6,6 +6,8 @@ import 'package:arseli/Oops.dart';
 import 'package:arseli/Provider/EachMatchViewModel.dart';
 import 'package:arseli/Provider/MatchesViewModel.dart';
 import 'package:arseli/Provider/EachLeagueViewModel.dart';
+import 'package:arseli/Provider/ThemeProvider.dart';
+import 'package:arseli/Themes/Colors.dart';
 import 'package:arseli/utils/Global.dart';
 import 'package:arseli/utils/SocketUtils.dart';
 import 'package:arseli/utils/Socket_Response.dart';
@@ -15,6 +17,8 @@ import 'package:provider/provider.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../../main.dart';
 import '../matchInfo.dart';
+import 'package:intl/intl.dart';
+import 'dart:ui'as ui;
 
 class TodayMatches extends StatefulWidget {
   String date;
@@ -33,17 +37,22 @@ class ColorConstants {
   static const kGravishBlueColor = Color(0xFF9BA1D2);
 }
 
-class _TodayMatchesState extends State<TodayMatches>
-    with AutomaticKeepAliveClientMixin {
-  TextStyle tapbar =
-      TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Colors.black);
-  TextStyle headline = TextStyle(fontSize: 15, fontWeight: FontWeight.w400);
+class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClientMixin {
+  TextStyle tapbar = TextStyle(
+      fontFamily: 'Vazirmatn',
+      fontSize: 15,
+      fontWeight: FontWeight.w500,
+      color: Colors.black);
+  TextStyle headline = TextStyle(
+      fontFamily: 'Vazirmatn', fontSize: 15, fontWeight: FontWeight.w400);
   TextStyle content = TextStyle(
+    fontFamily: 'Vazirmatn',
     fontSize: 14,
   );
 
   MatchesViewModel matchesViewModel;
   Future<void> getMatches;
+  var today = '';
 
   bool _connectedToSocket;
   String _connectMessage;
@@ -128,462 +137,458 @@ class _TodayMatchesState extends State<TodayMatches>
     super.dispose();
     G.socketUtils.closeConnection();
   }
+  DarkThemeProvider darkThemeProvider;
+  bool isDark = false;
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       matchesViewModel = Provider.of(context, listen: false);
+      darkThemeProvider = Provider.of(context, listen: false);
+      isDark = darkThemeProvider.darkTheme;
 
-        getMatches = matchesViewModel.getMatches(widget.date);
-
+      getMatches = matchesViewModel.getMatches(widget.date);
+      var now = new DateTime.now();
+      today =  DateFormat("dd-MM-yyyy", 'EN_SA').format(now.subtract(new Duration(days: 0)));
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration.zero,(){
+    Future.delayed(Duration.zero, () {
       _connectedToSocket = false;
       _connectMessage = 'Connecting...';
       _connectTosocket();
     });
-    return GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Consumer<MatchesViewModel>(builder: (context, provider, child) {
-          return provider.loadingMatches
-              ? Center(
-                  child: CircularProgressIndicator(
-                  color: Theme.of(context).primaryColor,
-                ))
-              : provider.matchesList.isEmpty
-                  ? Center(
-                      child: NoMatches(),
-                    )
-                  : RefreshIndicator(
-                      onRefresh: () => provider.getMatches(widget.date),
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 4,bottom: 4),
-                        child: ListView.builder(
-                            physics: ClampingScrollPhysics(),
-                            itemCount: provider.matchesList.length,
-                            itemBuilder: (widget, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(left: 8,right: 8,top: 4,bottom: 4),
-                                child: Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(6)),
-                                  elevation: 2,
-                                  child: Theme(
-                                    data: Theme.of(context).copyWith(
-                                        dividerColor: Colors.transparent,
-                                        colorScheme: ColorScheme.dark(
-                                            primary: Colors.black,
-                                            secondary: Colors.black)),
-                                    child: ExpansionTile(
-                                      initiallyExpanded: true,
-                                      title: GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ChangeNotifierProvider<
-                                                              EachLeagueViewModel>(
-                                                          create: (_) =>
-                                                              EachLeagueViewModel(),
-                                                          child: EachLeague(
-                                                            url: provider
-                                                                .matchesList[
-                                                                    index]
-                                                                .comURL,
-                                                          ))));
-                                        },
-                                        child: Stack(
-                                          children: [
-                                            Positioned(
-                                              left: -15,
-                                              bottom: -11,
-
-                                              child: IconButton(
-                                                  onPressed:(){},
-                                                  icon: Icon(Icons.star,color: Theme.of(context).primaryColor,size: 18,)),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(right: 20),
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  Container(
-                                                      width: 23,
-                                                      height: 23,
-                                                      child: provider
-                                                          .matchesList[index].comImg
-                                                          .endsWith('svg')
-                                                          ? SvgPicture.network(
-                                                          "https://www.eplworld.com/${provider.matchesList[index].comImg}",
-                                                          semanticsLabel:
-                                                          'Acme Logo')
-                                                          : Image.network(
-                                                          "https://www.eplworld.com/${provider.matchesList[index].comImg}")),
-                                                  SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Text(
-                                                    provider.matchesList[index].comName,
-                                                    style: content,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-
-
-                                          ],
+    return Scaffold(
+      body: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Consumer<MatchesViewModel>(builder: (context, provider, child) {
+            return provider.loadingMatches
+                ? Center(
+                    child: CircularProgressIndicator(
+                    color: Theme.of(context).primaryColor,
+                  ))
+                : provider.matchesList.isEmpty
+                    ? Center(
+                        child: NoMatches(),
+                      )
+                    : RefreshIndicator(
+                        onRefresh: () => provider.getMatches(widget.date),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 4, bottom: 4),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                               widget.date == today? Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 13, right: 13, top: 15, bottom: 8),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(20)
+                                        ),
+                                        child: Container(
+                                          width: 108,
+                                          height: 35,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20),
+                                          ),
+                                          child: Center(child: Text('تلعب الان',style: Theme.of(context).textTheme.headline1,)),
                                         ),
                                       ),
-                                      children: [
-                                        ListView.builder(
-                                          physics: ClampingScrollPhysics(),
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.vertical,
-                                          itemCount: provider.matchesList[index]
-                                              .subOfMathes.length,
-                                          itemBuilder: (widget, indexx) {
-                                            return GestureDetector(
-                                              onLongPress: () {
-                                                // addDialog();
-                                              },
-                                              onTap: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) => provider
+                                      Card(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(20)
+                                        ),
+                                        child: Container(
+                                          width: 108,
+                                          height: 35,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20),
+                                          ),
+                                          child: Center(child: Text('مباريتي',style: Theme.of(context).textTheme.headline1,)),
+                                        ),
+                                      ),
+                                      Card(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(20)
+                                        ),
+                                        child: Container(
+                                          width: 108,
+                                          height: 35,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20),
+                                          ),
+                                          child: Center(child: Text('الوقت',style: Theme.of(context).textTheme.headline1,)),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ):Container(),
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: ClampingScrollPhysics(),
+                                    itemCount: provider.matchesList.length,
+                                    itemBuilder: (widget, index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8, right: 8, top: 4, bottom: 4),
+                                        child: Card(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(6)),
+                                          elevation: 2,
+                                          child: Theme(
+                                            data: Theme.of(context).copyWith(
+                                                dividerColor: Colors.transparent,
+                                                colorScheme: Theme.of(context).colorScheme),
+                                            child: ExpansionTile(
+                                              initiallyExpanded: true,
+                                              title: GestureDetector(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ChangeNotifierProvider<
+                                                                  EachLeagueViewModel>(
+                                                                  create: (_) =>
+                                                                      EachLeagueViewModel(),
+                                                                  child: EachLeague(
+                                                                    url: provider
                                                                         .matchesList[
-                                                                            index]
-                                                                        .subOfMathes[
-                                                                            indexx]
-                                                                        .status ==
+                                                                    index]
+                                                                        .comURL,
+                                                                  ))));
+                                                },
+                                                child: Stack(
+                                                  children: [
+                                                    Positioned(
+                                                      left: -15,
+                                                      bottom: -11,
+                                                      child: IconButton(
+                                                          onPressed: () {},
+                                                          icon: Icon(
+                                                            Icons.star,
+                                                            color: Color(0xFF862aa6),
+                                                            size: 18,
+                                                          )),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(
+                                                          right: 20),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment.center,
+                                                        children: [
+                                                          Container(
+                                                              width: 23,
+                                                              height: 23,
+                                                              child: provider
+                                                                  .matchesList[
+                                                              index]
+                                                                  .comImg
+                                                                  .endsWith('svg')
+                                                                  ? SvgPicture.network(
+                                                                  "https://www.eplworld.com/${provider.matchesList[index].comImg}",
+                                                                  semanticsLabel:
+                                                                  'Acme Logo')
+                                                                  : Image.network(
+                                                                  "https://www.eplworld.com/${provider.matchesList[index].comImg}")),
+                                                          SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                          Text(
+                                                            provider.matchesList[index].comName, style: content,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              children: [
+                                                Divider(),
+                                                ListView.builder(
+                                                  physics: ClampingScrollPhysics(),
+                                                  shrinkWrap: true,
+                                                  scrollDirection: Axis.vertical,
+                                                  itemCount: provider.matchesList[index]
+                                                      .subOfMathes.length,
+                                                  itemBuilder: (widget, indexx) {
+                                                    return GestureDetector(
+                                                      onLongPress: () {
+                                                        // addDialog();
+                                                      },
+                                                      onTap: () {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (context) => provider
+                                                                    .matchesList[
+                                                                index]
+                                                                    .subOfMathes[
+                                                                indexx]
+                                                                    .status ==
                                                                     "Played" ||
-                                                                provider
+                                                                    provider
                                                                         .matchesList[
-                                                                            index]
+                                                                    index]
                                                                         .subOfMathes[
-                                                                            indexx]
+                                                                    indexx]
                                                                         .status ==
-                                                                    "Playing"
-                                                            ? ChangeNotifierProvider<
-                                                                EachMatchViewModel>(
-                                                                create: (_) =>
-                                                                    EachMatchViewModel(),
-                                                                child:
-                                                                    matchInfo_a(
-                                                                  url: provider
-                                                                      .matchesList[
-                                                                          index]
-                                                                      .subOfMathes[
-                                                                          indexx]
-                                                                      .matchURL,
-                                                                  homeId: provider
-                                                                      .matchesList[
-                                                                          index]
-                                                                      .subOfMathes[
-                                                                          indexx]
-                                                                      .homeID,
-                                                                  awayId: provider
-                                                                      .matchesList[
-                                                                          index]
-                                                                      .subOfMathes[
-                                                                          indexx]
-                                                                      .awayID,
-                                                                  comName: provider
-                                                                      .matchesList[
-                                                                          index]
-                                                                      .comName,
-                                                                ),
-                                                              )
-                                                            : provider
-                                                                        .matchesList[
-                                                                            index]
-                                                                        .subOfMathes[
-                                                                            indexx]
-                                                                        .status ==
-                                                                    "Fixture"
-                                                                ? ChangeNotifierProvider<
+                                                                        "Playing"
+                                                                    ? ChangeNotifierProvider<
                                                                     EachMatchViewModel>(
-                                                                    create: (_) =>
-                                                                        EachMatchViewModel(),
-                                                                    child:
-                                                                        matchInfo(
-                                                                      url: provider
-                                                                          .matchesList[
-                                                                              index]
-                                                                          .subOfMathes[
-                                                                              indexx]
-                                                                          .matchURL,
-                                                                      homeId: provider
-                                                                          .matchesList[
-                                                                              index]
-                                                                          .subOfMathes[
-                                                                              indexx]
-                                                                          .homeID,
-                                                                      awayId: provider
-                                                                          .matchesList[
-                                                                              index]
-                                                                          .subOfMathes[
-                                                                              indexx]
-                                                                          .awayID,
-                                                                      comName: provider
-                                                                          .matchesList[
-                                                                              index]
-                                                                          .comName,
-                                                                    ),
-                                                                  )
-                                                                : Oops()));
-                                              },
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 5,
-                                                            right: 5,
-                                                            bottom: 9,
-                                                            top: 9),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Flexible(
-                                                          flex: 5,
-                                                          child: Container(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  .4,
-                                                              height: 40,
-                                                              child: Stack(
-                                                                children: [
-                                                                  Center(
-                                                                    child: Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .end,
-                                                                      children: [
-                                                                        Text(
-                                                                          provider
-                                                                              .matchesList[index]
-                                                                              .subOfMathes[indexx]
-                                                                              .homeName,
-                                                                          style: TextStyle(
-                                                                              fontSize:
-                                                                                  13,
-                                                                              fontWeight:
-                                                                                  FontWeight.w500),
-                                                                        ),
-                                                                      ],
-                                                                    ),
+                                                                  create: (_) =>
+                                                                      EachMatchViewModel(),
+                                                                  child:
+                                                                  matchInfo_a(
+                                                                    url: provider.matchesList[index].subOfMathes[indexx].matchURL,
+                                                                    homeId: provider.matchesList[index].subOfMathes[indexx].homeID,
+                                                                    awayId: provider.matchesList[index].subOfMathes[indexx].awayID,comName: provider.matchesList[index].comName,
                                                                   ),
-                                                                  Positioned(
-                                                                      right: 10,
-                                                                      top: 7,
-                                                                      child: provider.matchesList[index].subOfMathes[indexx].status ==
-                                                                              "Playing"
-                                                                          ? CircleAvatar(
-                                                                              minRadius:
-                                                                                  13,
-                                                                              backgroundColor:
-                                                                                  Colors.green,
-                                                                              child:
-                                                                                  Padding(
-                                                                                padding: const EdgeInsets.all(4.0),
-                                                                                child: Padding(
-                                                                                  padding: const EdgeInsets.all(2.0),
+                                                                )
+                                                                    : provider.matchesList[index].subOfMathes[indexx].status == "Fixture"
+                                                                    ? ChangeNotifierProvider<
+                                                                    EachMatchViewModel>(
+                                                                  create: (_) =>
+                                                                      EachMatchViewModel(),
+                                                                  child:
+                                                                  matchInfo(
+                                                                    url: provider
+                                                                        .matchesList[
+                                                                    index]
+                                                                        .subOfMathes[
+                                                                    indexx]
+                                                                        .matchURL,
+                                                                    homeId: provider
+                                                                        .matchesList[
+                                                                    index]
+                                                                        .subOfMathes[
+                                                                    indexx]
+                                                                        .homeID,
+                                                                    awayId: provider
+                                                                        .matchesList[
+                                                                    index]
+                                                                        .subOfMathes[
+                                                                    indexx]
+                                                                        .awayID,
+                                                                    comName: provider
+                                                                        .matchesList[
+                                                                    index]
+                                                                        .comName,
+                                                                  ),
+                                                                )
+                                                                    : Oops()));
+                                                      },
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment.center,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                            const EdgeInsets.only(left: 5, right: 8, top: 9),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                              children: [
+                                                                Flexible(
+                                                                  flex: 5,
+                                                                  child: Container(
+                                                                      width: MediaQuery.of(context).size.width * .4,
+                                                                      height: 40,
+                                                                      child: Stack(
+                                                                        children: [
+                                                                          Center(
+                                                                            child: Row(
+                                                                              mainAxisAlignment: MainAxisAlignment.end,
+                                                                              children: [
+                                                                                Flexible(
                                                                                   child: Text(
-                                                                                    provider.matchesList[index].subOfMathes[indexx].matchTime.toString(),
-                                                                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
+                                                                                    provider
+                                                                                        .matchesList[index]
+                                                                                        .subOfMathes[indexx]
+                                                                                        .homeName,
+                                                                                    style: TextStyle(
+                                                                                        fontFamily: 'Vazirmatn',
+                                                                                        fontSize: 13,
+                                                                                        fontWeight: FontWeight.w500),
+                                                                                    overflow: TextOverflow.clip,
+
+                                                                                    textDirection: ui.TextDirection.ltr,
                                                                                   ),
                                                                                 ),
-                                                                              ),
-                                                                            )
-                                                                          : provider.matchesList[index].subOfMathes[indexx].status ==
-                                                                                  "Played"
-                                                                              ? Container(
+
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                          Positioned(
+                                                                              right: 10,
+                                                                              top: 7,
+                                                                              child: provider.matchesList[index].subOfMathes[indexx].status ==
+                                                                                  "Playing"
+                                                                                  ? CircleAvatar(
+                                                                                minRadius: 13,
+                                                                                backgroundColor: Colors.green,
+                                                                                child: Padding(
+                                                                                  padding: const EdgeInsets.all(4.0),
+                                                                                  child: Padding(
+                                                                                    padding: const EdgeInsets.all(2.0),
+                                                                                    child: Text(
+                                                                                      provider.matchesList[index].subOfMathes[indexx].matchTime.toString(),
+                                                                                      style: TextStyle(fontFamily: 'Vazirmatn', fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              )
+                                                                                  : provider.matchesList[index].subOfMathes[indexx].status == "Played"
+                                                                                  ? Container()
+                                                                                  : provider.matchesList[index].subOfMathes[indexx].status == "Fixture"
+                                                                                  ? Container()
+                                                                                  : Container(
                                                                                   decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.all(Radius.circular(100))),
                                                                                   child: Padding(
                                                                                     padding: const EdgeInsets.all(4.0),
                                                                                     child: Icon(
-                                                                                      Icons.timer,
+                                                                                      Icons.date_range,
                                                                                       color: Colors.grey[500],
                                                                                       size: 20,
                                                                                     ),
-                                                                                  ))
-                                                                              : provider.matchesList[index].subOfMathes[indexx].status == "Fixture"
-                                                                                  ? Container()
-                                                                                  : Container(
-                                                                                      decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.all(Radius.circular(100))),
-                                                                                      child: Padding(
-                                                                                        padding: const EdgeInsets.all(4.0),
-                                                                                        child: Icon(
-                                                                                          Icons.date_range,
-                                                                                          color: Colors.grey[500],
-                                                                                          size: 20,
-                                                                                        ),
-                                                                                      ))),
-                                                                ],
-                                                              )),
-                                                        ),
-                                                        Flexible(
-                                                          flex: 5,
-                                                          child: Container(
-                                                            height: 40,
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                .44,
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
+                                                                                  ))),
+                                                                        ],
+                                                                      )),
+                                                                ),
+                                                                Flexible(
+                                                                  flex: 6,
+                                                                  child: Container(
+                                                                    height: 40,
+                                                                    width: MediaQuery.of(context).size.width * .5,
+                                                                    child: Row(
+                                                                      mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                      children: [
+                                                                        Padding(
+                                                                          padding: const EdgeInsets
                                                                               .only(
-                                                                          left:
-                                                                              6),
-                                                                  child:
-                                                                      Container(
-                                                                    width: 33,
-                                                                    height: 28,
-                                                                    child: provider
-                                                                            .matchesList[
-                                                                                index]
-                                                                            .subOfMathes[
-                                                                                indexx]
-                                                                            .homeLogo
-                                                                            .endsWith(
+                                                                              left: 13),
+                                                                          child:
+                                                                          Container(
+                                                                            width: 35,
+                                                                            height: 30,
+                                                                            child: provider
+                                                                                .matchesList[
+                                                                            index]
+                                                                                .subOfMathes[
+                                                                            indexx]
+                                                                                .homeLogo
+                                                                                .endsWith(
                                                                                 'svg')
-                                                                        ? SvgPicture.network(
-                                                                            "https://www.eplworld.com${provider.matchesList[index].subOfMathes[indexx].homeLogo}",
-                                                                            semanticsLabel:
+                                                                                ? SvgPicture.network(
+                                                                                "https://www.eplworld.com${provider.matchesList[index].subOfMathes[indexx].homeLogo}",
+                                                                                semanticsLabel:
                                                                                 'Acme Logo')
-                                                                        : Image.network(
-                                                                            "https://www.eplworld.com${provider.matchesList[index].subOfMathes[indexx].homeLogo}"),
-                                                                  ),
-                                                                ),
-                                                                provider
-                                                                            .matchesList[
-                                                                                index]
-                                                                            .subOfMathes[
-                                                                                indexx]
-                                                                            .status ==
-                                                                        'Fixture'
-                                                                    ? Text(
-                                                                        provider
-                                                                            .matchesList[
-                                                                                index]
-                                                                            .subOfMathes[
-                                                                                indexx]
-                                                                            .time,
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                14,
-                                                                            color:
-                                                                                Colors.black45),
-                                                                      )
-                                                                    : provider.matchesList[index].subOfMathes[indexx]
-                                                                                .status ==
-                                                                            'Postponed'
-                                                                        ? Text(
-                                                                            provider
-                                                                                .matchesList[index]
-                                                                                .subOfMathes[indexx]
-                                                                                .time,
-                                                                            style: TextStyle(
-                                                                                fontSize: 14,
-                                                                                color: Colors.black45,
-                                                                                decoration: TextDecoration.lineThrough),
-                                                                          )
-                                                                        : Text(
-                                                                            "${provider.matchesList[index].subOfMathes[indexx].homeScore} - ${provider.matchesList[index].subOfMathes[indexx].awayScore} ",
-                                                                            style: TextStyle(
-                                                                                fontSize: 14,
-                                                                                color: Colors.black),
+                                                                                : Image.network(
+                                                                                "https://www.eplworld.com${provider.matchesList[index].subOfMathes[indexx].homeLogo}"),
                                                                           ),
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
+                                                                        ),
+                                                                        provider.matchesList[index].subOfMathes[indexx].status == 'Fixture'
+                                                                            ? Text(
+                                                                            provider.matchesList[index].subOfMathes[indexx].time,
+                                                                            style: Theme.of(context).textTheme.headline1
+                                                                        )
+                                                                            : provider.matchesList[index].subOfMathes[indexx].status == 'Postponed'
+                                                                            ? Text(
+                                                                          provider.matchesList[index].subOfMathes[indexx].time,
+                                                                          style: Theme.of(context).textTheme.caption
+                                                                        )
+                                                                            : Padding(
+                                                                          padding: const EdgeInsets.only(top: 8),
+                                                                          child: Text(
+                                                                            "${provider.matchesList[index].subOfMathes[indexx].homeScore} - ${provider.matchesList[index].subOfMathes[indexx].awayScore} ",
+                                                                            style: Theme.of(context).textTheme.headline1
+                                                                          ),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: const EdgeInsets
                                                                               .only(
-                                                                          right:
-                                                                              6),
-                                                                  child:
-                                                                      Container(
-                                                                    width: 33,
-                                                                    height: 28,
-                                                                    child: Image
-                                                                        .network(
-                                                                            "https://www.eplworld.com${provider.matchesList[index].subOfMathes[indexx].awayLogo}"),
+                                                                              right: 13),
+                                                                          child:
+                                                                          Container(
+                                                                            width: 35,
+                                                                            height: 30,
+                                                                            child: Image
+                                                                                .network(
+                                                                                "https://www.eplworld.com${provider.matchesList[index].subOfMathes[indexx].awayLogo}"),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
                                                                   ),
                                                                 ),
+                                                                Flexible(
+                                                                  flex: 5,
+                                                                  child: Container(
+                                                                    height: 40,
+                                                                    width: MediaQuery.of(context).size.width *.39,
+                                                                    child: Row(
+                                                                      mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .start,
+                                                                      children: [
+                                                                        Expanded(
+                                                                          child: Text(provider.matchesList[index].subOfMathes[indexx].awayName,
+                                                                            style: TextStyle(fontFamily: 'Vazirmatn', fontSize: 13, fontWeight: FontWeight.w500),
+                                                                            overflow: TextOverflow.clip,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                )
                                                               ],
                                                             ),
+
                                                           ),
-                                                        ),
-                                                        Flexible(
-                                                          flex: 5,
-                                                          child: Container(
-                                                            height: 40,
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                .4,
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                Text(
-                                                                  provider
-                                                                      .matchesList[
-                                                                          index]
-                                                                      .subOfMathes[
-                                                                          indexx]
-                                                                      .awayName,
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          13,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500),
-                                                                ),
-                                                              ],
+                                                          provider.matchesList[index].subOfMathes[indexx].status == 'Played'
+                                                              ? Container(
+                                                            width: 48,
+                                                            height: 18,
+                                                            decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(8),
+                                                                color: Color(0xFF862aa6),
                                                             ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                          padding:
-                                              EdgeInsets.symmetric(vertical: 5),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }),
-                      ),
-                    );
-        }));
+                                                            child: Center(child: FittedBox(child: Text('انتهت',style: TextStyle(color: Colors.white,fontSize: 12.5),))),
+                                                          )
+                                                              :Container(),
+                                                          Divider()
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
+                                                  padding:
+                                                  EdgeInsets.symmetric(vertical: 5),
+                                                ),
+                                                Text('الترتيب',style: TextStyle(color: Color(0xFF862aa6),fontWeight: FontWeight.bold),),
+                                                SizedBox(height: 5,)
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+          })),
+    );
   }
 
   addDialog() {
@@ -600,21 +605,30 @@ class _TodayMatchesState extends State<TodayMatches>
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Text("الفرق المفضلة",
-                    style: TextStyle(color: Colors.green, fontSize: 13)),
+                    style: TextStyle(
+                        fontFamily: 'Vazirmatn',
+                        color: Colors.green,
+                        fontSize: 13)),
                 Text(
                   "اضافة ريال مدريد",
-                  style: TextStyle(fontSize: 13),
+                  style: TextStyle(fontFamily: 'Vazirmatn', fontSize: 13),
                 ),
                 Text(
                   "اضافة اتليتكو مدريد",
-                  style: TextStyle(fontSize: 13),
+                  style: TextStyle(fontFamily: 'Vazirmatn', fontSize: 13),
                 ),
                 Text(
                   "تشغيل الاشعارات",
-                  style: TextStyle(color: Colors.grey, fontSize: 13),
+                  style: TextStyle(
+                      fontFamily: 'Vazirmatn',
+                      color: Colors.grey,
+                      fontSize: 13),
                 ),
                 Text("اضافة الي تقويم",
-                    style: TextStyle(color: Colors.grey, fontSize: 13)),
+                    style: TextStyle(
+                        fontFamily: 'Vazirmatn',
+                        color: Colors.grey,
+                        fontSize: 13)),
               ],
             ),
           );

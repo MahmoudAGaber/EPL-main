@@ -1,4 +1,6 @@
-class TableModel{
+import 'package:arseli/Models/hosted_file.dart';
+
+class TableModel {
   String tag;
   String id;
   String ocId;
@@ -30,7 +32,7 @@ class TableModel{
       this.colFA,
       this.colN});
 
-  factory TableModel.json(Map json){
+  factory TableModel.json(Map json) {
     return TableModel(
       tag: json['tag'],
       id: json['id'],
@@ -46,11 +48,11 @@ class TableModel{
       colK: json['colK'],
       colFA: json['colFA'],
       colN: json['colN'],
-
     );
   }
 
-  static List<TableModel> listFromJson(List jsonData){
+  static List<TableModel> listFromJson(List jsonData) {
     return jsonData.map((obj) => TableModel.json(obj)).toList();
   }
 }
+

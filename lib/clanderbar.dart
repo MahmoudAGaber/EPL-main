@@ -35,35 +35,67 @@ class _clanderbarState extends State<clanderbar> {
       onDayPressed: (DateTime date, List<Event> events) {
         this.setState(() => _currentDate2 = date);
         events.forEach((event) => print(event.title));
-        Navigator.of(context,rootNavigator: false).push(MaterialPageRoute(builder: (context)=>home(dateTime: date,)));
+        Navigator.of(context, rootNavigator: false).push(MaterialPageRoute(
+            builder: (context) => home(
+                  dateTime: date,
+                )));
       },
 
       daysTextStyle: TextStyle(
-          color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),
+          fontFamily: 'Vazirmatn',
+          color: Colors.black,
+          fontSize: 20,
+          fontWeight: FontWeight.w600),
       headerTextStyle: TextStyle(
-          color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),
+          fontFamily: 'Vazirmatn',
+          color: Colors.black,
+          fontSize: 20,
+          fontWeight: FontWeight.w600),
       inactiveWeekendTextStyle: TextStyle(
-          color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),
+          fontFamily: 'Vazirmatn',
+          color: Colors.black,
+          fontSize: 20,
+          fontWeight: FontWeight.w600),
       markedDateCustomTextStyle: TextStyle(
-          color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),
+          fontFamily: 'Vazirmatn',
+          color: Colors.black,
+          fontSize: 20,
+          fontWeight: FontWeight.w600),
       markedDateMoreCustomTextStyle: TextStyle(
-          color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),
+          fontFamily: 'Vazirmatn',
+          color: Colors.black,
+          fontSize: 20,
+          fontWeight: FontWeight.w600),
       weekdayTextStyle: TextStyle(
+        fontFamily: 'Vazirmatn',
         color: Colors.black87,
         fontSize: 15,
       ),
       selectedDayTextStyle: TextStyle(
-          color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
+          fontFamily: 'Vazirmatn',
+          color: Colors.white,
+          fontSize: 20,
+          fontWeight: FontWeight.w600),
       nextDaysTextStyle: TextStyle(
-          color: Colors.grey, fontSize: 20, fontWeight: FontWeight.w600),
+          fontFamily: 'Vazirmatn',
+          color: Colors.grey,
+          fontSize: 20,
+          fontWeight: FontWeight.w600),
       prevDaysTextStyle: TextStyle(
-          color: Colors.grey, fontSize: 20, fontWeight: FontWeight.w600),
-      todayTextStyle: TextStyle(color: Colors.white,fontSize: 20),
+          fontFamily: 'Vazirmatn',
+          color: Colors.grey,
+          fontSize: 20,
+          fontWeight: FontWeight.w600),
+      todayTextStyle:
+          TextStyle(fontFamily: 'Vazirmatn', color: Colors.white, fontSize: 20),
       iconColor: Colors.black,
       daysHaveCircularBorder: true,
       showOnlyCurrentMonthDate: false,
       weekendTextStyle: TextStyle(
-          color: Colors.black87, fontSize: 20, fontWeight: FontWeight.w600),
+          fontFamily: 'Vazirmatn',
+          color: Colors.black87,
+          fontSize: 20,
+          fontWeight: FontWeight.w600),
 
       weekFormat: false,
 //      firstDayOfWeek: 4,
@@ -76,6 +108,7 @@ class _clanderbarState extends State<clanderbar> {
       maxSelectedDate: _currentDate.add(Duration(days: 360)),
 
       inactiveDaysTextStyle: TextStyle(
+        fontFamily: 'Vazirmatn',
         color: Colors.tealAccent,
         fontSize: 25,
       ),
@@ -96,7 +129,10 @@ class _clanderbarState extends State<clanderbar> {
           appBar: AppBar(
             iconTheme: IconThemeData(color: Colors.white),
             backgroundColor: Theme.of(context).primaryColor,
-            title: Text("اليوم".tr,style: TextStyle(color: Colors.white),),
+            title: Text(
+              "اليوم".tr,
+              style: TextStyle(fontFamily: 'Vazirmatn', color: Colors.white),
+            ),
           ),
           body: SingleChildScrollView(
             child: Column(
@@ -114,10 +150,12 @@ class _clanderbarState extends State<clanderbar> {
                   margin: EdgeInsets.symmetric(horizontal: 16.0),
                   child: Theme(
                       data: Theme.of(context).copyWith(
-                    colorScheme: ColorScheme.light(
-                        primary: Theme.of(context).primaryColor, // header background color
+                          colorScheme: ColorScheme.light(
+                        primary: Theme.of(context)
+                            .primaryColor, // header background color
                         onPrimary: Colors.white, // header text color
-                        onSurface: Colors.black, )),
+                        onSurface: Colors.black,
+                      )),
                       child: _calendarCarouselNoHeader),
                 ), //
               ],

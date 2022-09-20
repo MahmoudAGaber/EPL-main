@@ -9,8 +9,6 @@ import 'package:provider/provider.dart';
 import '../../Provider/EachPlayerViewModel.dart';
 
 void showPlayerInfo(BuildContext context, PlayerInf playerInf) {
-
-
   showGeneralDialog(
     context: context,
     barrierLabel: "Barrier",
@@ -38,9 +36,9 @@ void showPlayerInfo(BuildContext context, PlayerInf playerInf) {
                             height: 45,
                             decoration: BoxDecoration(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(100)),
-                                border: Border.all(
-                                    width: 1, color: Colors.grey)),
+                                    BorderRadius.all(Radius.circular(100)),
+                                border:
+                                    Border.all(width: 1, color: Colors.grey)),
                             child: ClipRRect(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(100),
@@ -49,16 +47,13 @@ void showPlayerInfo(BuildContext context, PlayerInf playerInf) {
                                   "https://www.eplworld.com${playerInf.image}"),
                             ),
                           ),
-                          title:
-                          Text(playerInf.firstName + " " + playerInf.lastName),
-                          subtitle: Text(
-                              playerInf.position == null ? "" : playerInf
-                                  .position),
+                          title: Text(
+                              playerInf.firstName + " " + playerInf.lastName),
+                          subtitle: Text(playerInf.position == null
+                              ? ""
+                              : playerInf.position),
                           trailing: InkWell(
-                              onTap: () =>
-                              {
-                                Navigator.pop(context)
-                              },
+                              onTap: () => {Navigator.pop(context)},
                               child: Icon(Icons.close)))
 
                       // Row(
@@ -79,8 +74,8 @@ void showPlayerInfo(BuildContext context, PlayerInf playerInf) {
                       //           "https://www.eplworld.com/img/players/150/QlDYd8.png"),
                       //     ),
                       //   ), Column(children: [
-                      //     Text("player Name",style: TextStyle(fontSize: 15)),
-                      //     Text("Position",style: TextStyle(fontSize: 12))
+                      //     Text("player Name",style: TextStyle(                      fontFamily: 'Vazirmatn',fontSize: 15)),
+                      //     Text("Position",style: TextStyle(                      fontFamily: 'Vazirmatn',fontSize: 12))
                       //   ],),
                       //
                       //   Expanded(child: Icon(Icons.close))
@@ -100,50 +95,55 @@ void showPlayerInfo(BuildContext context, PlayerInf playerInf) {
                                 alignment: Alignment.centerRight,
                                 child: Text(playerInf.statAPI[index].title,
                                     style: TextStyle(
-                                        fontSize: 20, color: Colors.black)),
+                                        fontFamily: 'Vazirmatn',
+                                        fontSize: 20,
+                                        color: Colors.black)),
                               ),
                               ListView.builder(
                                 itemCount: playerInf.statAPI[index].attr.length,
                                 shrinkWrap: true,
                                 physics: ClampingScrollPhysics(),
                                 itemBuilder: (context, index2) {
-                                  return
-
-                                    Container(
-                                      margin: EdgeInsets.symmetric(
-                                          horizontal: 20, vertical: 5),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment
-                                            .spaceBetween,
-                                        children: [
-                                          Text(
-                                            playerInf.statAPI[index]
-                                                .attr[index2].key,
-                                          ),
-                                          Text(playerInf
-                                              .statAPI[index].attr[index2]
-                                              .value)
-                                        ],),
-                                    );
+                                  return Container(
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 5),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          playerInf
+                                              .statAPI[index].attr[index2].key,
+                                        ),
+                                        Text(playerInf
+                                            .statAPI[index].attr[index2].value)
+                                      ],
+                                    ),
+                                  );
                                 },
                               ),
-                              Container(height: 1,
-                                color: Colors.black12,)
+                              Container(
+                                height: 1,
+                                color: Colors.black12,
+                              )
                             ],
                           );
                         },
                       ),
                       InkWell(
                         onTap: () => {
-
-                        Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ChangeNotifierProvider<EachplayerViewModel>(
-                        create: (_) => EachplayerViewModel(),
-                        child: EachPlayer(
-                        url: playerInf.url,
-                        teamImg:playerInf.image, ),
-                        )))
-                      },
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ChangeNotifierProvider<
+                                          EachplayerViewModel>(
+                                        create: (_) => EachplayerViewModel(),
+                                        child: EachPlayer(
+                                          url: playerInf.url,
+                                          teamImg: playerInf.image,
+                                        ),
+                                      )))
+                        },
                         child: Container(
                           alignment: Alignment.center,
                           height: 30,
@@ -153,8 +153,8 @@ void showPlayerInfo(BuildContext context, PlayerInf playerInf) {
                       )
                     ],
                   )
-                ],)
-          ),
+                ],
+              )),
         ),
       );
     },

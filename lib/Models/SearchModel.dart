@@ -1,12 +1,12 @@
-class SearchResponseModel{
+class SearchResponseModel {
   String text;
   String url;
   String image;
   String category;
-
+//
   SearchResponseModel({this.text, this.url, this.image, this.category});
 
-  factory SearchResponseModel.json(Map json){
+  factory SearchResponseModel.json(Map json) {
     return SearchResponseModel(
       text: json['text'],
       url: json['url'],
@@ -15,7 +15,7 @@ class SearchResponseModel{
     );
   }
 
-  static List<SearchResponseModel>ListFromJson(List listFromJson){
+  static List<SearchResponseModel> ListFromJson(List listFromJson) {
     return listFromJson.map((e) => SearchResponseModel.json(e)).toList();
   }
 }

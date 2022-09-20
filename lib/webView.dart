@@ -9,7 +9,7 @@ class webView extends StatefulWidget {
   _webViewState createState() => _webViewState();
 }
 
-TextStyle _textStyletitle = TextStyle(fontSize: 18);
+TextStyle _textStyletitle = TextStyle(fontFamily: 'Vazirmatn', fontSize: 18);
 
 class _webViewState extends State<webView> {
   @override
@@ -17,12 +17,10 @@ class _webViewState extends State<webView> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
-          actionsIconTheme: IconThemeData(
-            color: Colors.white
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).primaryColor,
+            actionsIconTheme: IconThemeData(color: Colors.white),
           ),
-        ),
           body: WebView(
             initialUrl: "${widget.url}?r=mobile",
             javascriptMode: JavascriptMode.unrestricted,

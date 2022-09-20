@@ -8,8 +8,10 @@ class playerTransference extends StatefulWidget {
   _playerTransferenceState createState() => _playerTransferenceState();
 }
 
-const TextStyle _textStyle = TextStyle(color: Colors.grey, fontSize: 13);
+const TextStyle _textStyle =
+    TextStyle(fontFamily: 'Vazirmatn', color: Colors.grey, fontSize: 13);
 const TextStyle _textStyle1 = TextStyle(
+  fontFamily: 'Vazirmatn',
   color: Colors.grey,
 );
 
@@ -243,7 +245,10 @@ class _playerTransferenceState extends State<playerTransference> {
                     child: Text(
                   "قد يكون عدد الاهداف والمباريات قبل 2006 غير صحيح في بعض الحالات"
                       .tr,
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                  style: TextStyle(
+                      fontFamily: 'Vazirmatn',
+                      fontSize: 12,
+                      color: Colors.grey),
                   overflow: TextOverflow.visible,
                 ))
               ],

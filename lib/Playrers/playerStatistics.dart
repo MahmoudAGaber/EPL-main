@@ -1,7 +1,9 @@
+import 'package:arseli/Provider/EachPlayerViewModel.dart';
 import 'package:arseli/main.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import 'playerStatistics.D.dart';
 
@@ -12,315 +14,195 @@ class playerStatistics extends StatefulWidget {
   _playerStatisticsState createState() => _playerStatisticsState();
 }
 
-const TextStyle _textStyle =
-    TextStyle(color: Colors.grey, fontSize: 15, fontWeight: FontWeight.w500);
+const TextStyle _textStyle = TextStyle(
+    fontFamily: 'Vazirmatn',
+    color: Colors.grey,
+    fontSize: 15,
+    fontWeight: FontWeight.w500);
 
 class _playerStatisticsState extends State<playerStatistics> {
+
+  EachplayerViewModel eachplayerViewModel;
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      eachplayerViewModel = Provider.of(context, listen: false);
+      eachplayerViewModel.getProfile(widget.url);
+    }); //
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 35),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          NoData(),
-        ],
-      ),
-    );
-    /*
-      Column(
-      children: <Widget>[
-        Container(
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: const EdgeInsets.only(right: 130, top: 10, bottom: 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Icon(MdiIcons.scoreboard),
-                Icon(Icons.assignment),
-                Icon(MdiIcons.soccer),
-                Icon(MdiIcons.shoePrint),
-                Container(
-                  height: 20,
-                  width: 15,
-                  decoration: BoxDecoration(
-                      color: Colors.yellow,
-                      borderRadius: BorderRadius.all(Radius.circular(4))),
-                ),
-                Container(
-                  height: 20,
-                  width: 15,
-                  decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.all(Radius.circular(4))),
-                ),
-                Icon(Icons.star)
-              ],
-            ),
-          ),
-        ),
-        Container(
-          color: Colors.grey[200],
-          width: MediaQuery.of(context).size.width,
-          height: 4,
-        ),
-        ListView.builder(
-          physics: ClampingScrollPhysics(),
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: 4,
-          itemBuilder: (BuildContext context, index) {
-            return Column(
-              children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(right: 13),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, '/eachLeague');
-                          },
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                height: 35,
-                                width: 35,
-                                child: Image.asset("assets/12.jpg"),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "اسبانيا - الدوري الاسباني الدرجة الاولي".tr,
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w500),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Divider(
-                        height: 15,
-                      ),
-                      ListView.builder(
-                          physics: ClampingScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: 5,
-                          itemBuilder: (BuildContext context, index) {
-                            return Column(
-                              children: <Widget>[
-                                Directionality(
-                                  textDirection: TextDirection.ltr,
-                                  child: ExpansionTile(
-                                    title: Directionality(
-                                        textDirection: TextDirection.rtl,
-                                        child: Text(
-                                          "2019/2020",
-                                          style: _textStyle,
-                                        )),
-                                    leading: Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.55,
-                                      child: Directionality(
-                                        textDirection: TextDirection.rtl,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: <Widget>[
-                                            Text("15"),
-                                            Text("15"),
-                                            Text("1"),
-                                            Text("2"),
-                                            Text("2"),
-                                            Text("0"),
-                                            Container(
-                                              height: 20,
-                                              width: 40,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.green,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(4))),
-                                              child: Center(
-                                                  child: Text(
-                                                "7.8",
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              )),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    children: <Widget>[
-                                      Directionality(
-                                        textDirection: TextDirection.rtl,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: ListView.builder(
-                                            shrinkWrap: true,
-                                            scrollDirection: Axis.vertical,
-                                            physics: ClampingScrollPhysics(),
-                                            itemCount: playerStatisticsd.length,
-                                            itemBuilder:
-                                                (BuildContext context, index) {
-                                              return Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 18,
-                                                    right: 10,
-                                                    bottom: 10),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: <Widget>[
-                                                    Text(
-                                                        playerStatisticsd[index]
-                                                            .text),
-                                                    Text(
-                                                        playerStatisticsd[index]
-                                                            .no),
-                                                  ],
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  color: Colors.grey[200],
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 4,
-                                ),
-                              ],
-                            );
-                          })
-                    ],
-                  ),
-                ),
-              ],
-            );
-          },
-        ),
-        Container(
-          color: Colors.grey[200],
-          width: MediaQuery.of(context).size.width,
-          height: 350,
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: <Widget>[
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Icon(
-                                MdiIcons.scoreboard,
-                                size: 20,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Icon(
-                                Icons.assignment,
-                                size: 20,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Icon(
-                                MdiIcons.soccer,
-                                size: 20,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Icon(
-                                MdiIcons.shoePrint,
-                                size: 20,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Container(
-                                height: 18,
-                                width: 13,
-                                decoration: BoxDecoration(
-                                    color: Colors.yellow,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4))),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Container(
-                                height: 18,
-                                width: 13,
-                                decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4))),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Icon(
-                                Icons.star,
-                                size: 20,
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Text("المباريات".tr),
-                          Text("بداية المبارة".tr),
-                          Text("اهداف".tr),
-                          Text("صناعة الاهداف".tr),
-                          Text("بطاقات صفراء".tr),
-                          Text("بطاقات حمراء".tr),
-                          Text("تقييم اللاعب".tr),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 60, bottom: 20, right: 10),
-                child: Row(
-                  children: <Widget>[Text("اخر تحديث 1 سبتمبر 2020 8:13 ص".tr)],
-                ),
-              )
-            ],
-          ),
-        ),
-      ],
-    );
+     return Consumer<EachplayerViewModel>(builder: (context, provider, child) {
+       return provider.loadingPlayer
+           ? Padding(
+         padding: const EdgeInsets.only(top: 35),
+         child: Center(
+           child: CircularProgressIndicator(
+             color: Theme
+                 .of(context)
+                 .primaryColor,
+           ),
+         ),
+       )
+           : Padding(
+             padding: const EdgeInsets.all(12),
+             child: ListView(
+         shrinkWrap: true,
+         scrollDirection: Axis.vertical,
+         physics: BouncingScrollPhysics(),
+         children: [
+             Column(
+               mainAxisAlignment: MainAxisAlignment.center,
+               children: [
+                 Container(
+                   width: MediaQuery
+                       .of(context)
+                       .size
+                       .width,
+                   child: Card(
+                     shape: RoundedRectangleBorder(
+                         borderRadius:
+                         BorderRadius.all(Radius.circular(10.0))),
+                     child: Column(
+                       mainAxisAlignment: MainAxisAlignment.start,
+                       crossAxisAlignment: CrossAxisAlignment.start,
+                       children: <Widget>[
+                         Padding(
+                           padding: const EdgeInsets.all(12.0),
+                           child: Text(
+                            'النادي الحالي',
+                             style: TextStyle(
+                                 fontFamily: 'Vazirmatn',
+                                 fontWeight: FontWeight.w500),
+                           ),
+                         ),
+                         Divider(),
+                         Column(
 
-       */
+                           children: [
+                             ListView.builder(
+                                 shrinkWrap: true,
+                                 physics: NeverScrollableScrollPhysics(),
+                                 itemCount: 1,
+                                 itemBuilder: (context, index) {
+                                   return Column(
+                                     children: [
+                                       Padding(
+                                         padding: const EdgeInsets.all(12),
+                                         child: Row(
+                                           children: [
+                                             Container(
+                                               width: 40,
+                                               height: 40,
+                                               child: ClipRRect(
+                                                 borderRadius: BorderRadius.all(
+                                                   Radius.circular(50),
+                                                 ),
+                                                 child: Image.network(
+                                                   "https://www.eplworld.com${provider.piModel.career[index].Logo}",fit: BoxFit.contain,),
+                                               ),
+                                             ),
+                                             SizedBox(width: 12,),
+                                             Column(
+                                               crossAxisAlignment: CrossAxisAlignment.start,
+                                               children: [
+                                                 Text(provider.piModel.career[index].teamName,style: TextStyle(fontSize: 17),),
+                                                 Text(provider.piModel.career[index].startDate,style: TextStyle(fontSize: 13,color: Colors.black54),)
+                                               ],
+                                             )
+                                           ],
+                                         ),
+                                       ),
+                                     ],
+
+                                   );
+                                 })
+                           ],
+                         )
+                       ],
+                     ),
+                   ),
+                 ),
+                 SizedBox(height: 8,),
+                 Container(
+                   width: MediaQuery
+                       .of(context)
+                       .size
+                       .width,
+                   child: Card(
+                     shape: RoundedRectangleBorder(
+                         borderRadius:
+                         BorderRadius.all(Radius.circular(10.0))),
+                     child: Column(
+                       mainAxisAlignment: MainAxisAlignment.start,
+                       crossAxisAlignment: CrossAxisAlignment.start,
+                       children: <Widget>[
+                         Padding(
+                           padding: const EdgeInsets.all(12.0),
+                           child: Text(
+                             provider.piModel.type=='player'?'الانديه التي لعب بها':'مهنة التدريب',
+                             style: TextStyle(
+                                 fontFamily: 'Vazirmatn',
+                                 fontWeight: FontWeight.w500),
+                           ),
+                         ),
+                         Divider(),
+                         Column(
+
+                           children: [
+                             ListView.builder(
+                                 shrinkWrap: true,
+                                 physics: NeverScrollableScrollPhysics(),
+                                 itemCount: provider.piModel.career.length,
+                                 itemBuilder: (context, index) {
+                                   return Column(
+                                     children: [
+                                       Padding(
+                                         padding: const EdgeInsets.all(16),
+                                         child: Row(
+                                           children: [
+                                             Container(
+                                               width: 40,
+                                               height: 40,
+                                               child: ClipRRect(
+                                                 borderRadius: BorderRadius.all(
+                                                   Radius.circular(50),
+                                                 ),
+                                                 child: Image.network(
+                                                   "https://www.eplworld.com${provider.piModel.career[index].Logo}",fit: BoxFit.contain,),
+                                               ),
+                                             ),
+                                             SizedBox(width: 12,),
+                                             Column(
+                                               crossAxisAlignment: CrossAxisAlignment.start,
+                                               children: [
+                                                 Text(provider.piModel.career[index].teamName,style: TextStyle(fontSize: 17),),
+                                                 Text(provider.piModel.career[index].startDate,style: TextStyle(fontSize: 13,color: Colors.black54),)
+                                               ],
+                                             )
+                                           ],
+                                         ),
+                                       ),
+
+                                       Divider()
+                                     ],
+
+                                   );
+                                 })
+                           ],
+                         )
+                       ],
+                     ),
+                   ),
+                 ),
+               ],
+             ),
+         ],
+
+             ),
+           );
+     });
   }
 }

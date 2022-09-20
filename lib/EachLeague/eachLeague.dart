@@ -15,48 +15,41 @@ import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
-
 import 'leagueNews.dart';
 import 'matchsForLeague.dart';
 
 class EachLeague extends StatefulWidget {
   String url;
   String comName;
-  EachLeague({this.url,this.comName});
+  EachLeague({this.url, this.comName});
   @override
   _EachLeagueState createState() => _EachLeagueState();
 }
 
 class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
-
   EachLeagueViewModel oneLeagueViewModel;
   ScrollController _controller = ScrollController();
 
-  TextStyle tapbar = TextStyle(
-      fontSize: 13, color: Colors.white
-  );
-  TextStyle head = TextStyle(
-      fontSize: 16, color: Colors.white
-  );
-
+  TextStyle tapbar =
+      TextStyle(fontFamily: 'Vazirmatn', fontSize: 13, color: Colors.white);
+  TextStyle head =
+      TextStyle(fontFamily: 'Vazirmatn', fontSize: 16, color: Colors.white);
 
   bool chContaier = false;
 
   TabController tabController;
   ScrollController scrollController;
   int _selectedIndex = 0;
-  int page=1;
+  int page = 1;
 
   AnimationController animationController;
   Animation<double> _animation;
 
-  List<Widget>tabNamee=[];
-  List<Widget>tabVieww=[];
-
+  List<Widget> tabNamee = [];
+  List<Widget> tabVieww = [];
 
   bool _connectedToSocket;
   String _connectMessage;
-
 
   _connectTosocket() async {
     G.initSocket();
@@ -82,7 +75,7 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
     setState(() {
       _connectedToSocket = false;
       _connectMessage = 'message each League ';
-      print(_connectMessage+"--> id ==>"+SocketResponse.fromJson(data).id);
+      print(_connectMessage + "--> id ==>" + SocketResponse.fromJson(data).id);
 
       getData();
     });
@@ -92,7 +85,7 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
     setState(() {
       _connectedToSocket = false;
       _connectMessage = 'Connection Error';
-      print(_connectMessage+data.toString());
+      print(_connectMessage + data.toString());
     });
   }
 
@@ -120,12 +113,6 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
     });
   }
 
-
-
-
-
-
-
   @override
   void initState() {
     _connectedToSocket = false;
@@ -144,23 +131,16 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
       oneLeagueViewModel.getTeamsStats('${widget.url}');
 
  */
-     getData();
-
+      getData();
 
       _controller.addListener(() {
         if (_controller.position.pixels ==
             _controller.position.maxScrollExtent) {
           page++;
-          oneLeagueViewModel.getNews(widget.url,'news',page);
+          oneLeagueViewModel.getNews(widget.url, 'news', page);
         }
       });
-
-
-
-
-
     });
-
 
     animationController =
         AnimationController(duration: const Duration(seconds: 1), vsync: this);
@@ -172,21 +152,25 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
     super.initState();
   }
 
-  void getData(){
-      oneLeagueViewModel.getNews('${widget.url}', 'news', 1);
-      oneLeagueViewModel.all(widget.url);
-      oneLeagueViewModel.getTables(widget.url, 'tables',);
-      oneLeagueViewModel.getPlayersStats("${widget.url}");
-      oneLeagueViewModel.getTeamsStats('${widget.url}');
-      oneLeagueViewModel.getTransfers("${widget.url}", 'transfers',);
-      oneLeagueViewModel.getCups("${widget.url}/trophies");
-
-
+  void getData() {
+    oneLeagueViewModel.getNews('${widget.url}', 'news', 1);
+    oneLeagueViewModel.all(widget.url);
+    oneLeagueViewModel.getTables(
+      widget.url,
+      'tables',
+    );
+    oneLeagueViewModel.getPlayersStats("${widget.url}");
+    oneLeagueViewModel.getTeamsStats('${widget.url}');
+    oneLeagueViewModel.getTransfers(
+      "${widget.url}",
+      'transfers',
+    );
+    oneLeagueViewModel.getCups("${widget.url}/trophies");
   }
 
   @override
   void dispose() {
-     //tabController.dispose();
+    //tabController.dispose();
     G.socketUtils.closeConnection();
     super.dispose();
   }
@@ -196,46 +180,47 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
     List<Widget> _sliverBuilder(BuildContext context, bool innerBoxIsScrolled) {
       return <Widget>[
         Directionality(
-                textDirection: TextDirection.rtl,
-                child: SliverAppBar(
-                  iconTheme: IconThemeData(color: Colors.white),
-                  backgroundColor: Theme
-                      .of(context)
-                      .primaryColor,
-                  elevation: 0.0,
-                  actions: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        IconButton(
-                            icon: Icon(
-                              Icons.notifications_none,
-                              color: Colors.white,
-                            ),
-                            onPressed: null),
-                        IconButton(
-                            icon: Icon(Icons.star, color: Colors.white),
-                            onPressed: null),
-                      ],
-                    )
-                  ],
-                  expandedHeight: 120.0,
-                  pinned: true,
-                  floating: true,
-                  snap: true,
-                  flexibleSpace: Consumer<EachLeagueViewModel>(
-                    builder: (context, provider, child) {
-                     // tabNamee = tabName(provider);
-                      //tabVieww = tabView(provider);
-                      //tabController = new TabController(length: tabVieww.length, vsync: this, initialIndex: _selectedIndex);
-                      //provider.toggleLoading(false);
-                      return provider.loadingMatches
-                          ? Center(child: Container(),)
-                          : FlexibleSpaceBar(
+          textDirection: TextDirection.rtl,
+          child: SliverAppBar(
+            iconTheme: IconThemeData(color: Colors.white),
+            backgroundColor: Theme.of(context).primaryColor,
+            elevation: 0.0,
+            actions: <Widget>[
+              Row(
+                children: <Widget>[
+                  IconButton(
+                      icon: Icon(
+                        Icons.notifications_none,
+                        color: Colors.white,
+                      ),
+                      onPressed: null),
+                  IconButton(
+                      icon: Icon(Icons.star, color: Colors.white),
+                      onPressed: null),
+                ],
+              )
+            ],
+            expandedHeight: 120.0,
+            pinned: true,
+            floating: true,
+            snap: true,
+            flexibleSpace: Consumer<EachLeagueViewModel>(
+              builder: (context, provider, child) {
+                // tabNamee = tabName(provider);
+                //tabVieww = tabView(provider);
+                //tabController = new TabController(length: tabVieww.length, vsync: this, initialIndex: _selectedIndex);
+                //provider.toggleLoading(false);
+                return provider.loadingMatches
+                    ? Center(
+                        child: Container(),
+                      )
+                    : FlexibleSpaceBar(
                         background: Container(
                           child: Stack(
                             children: <Widget>[
                               Padding(
-                                padding: const EdgeInsets.only(right: 25, top: 60),
+                                padding:
+                                    const EdgeInsets.only(right: 25, top: 60),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
@@ -243,8 +228,7 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
                                         height: 60,
                                         width: 55,
                                         child: Image.network(
-                                            "https://www.eplworld.com${provider
-                                                .headerProfileModel.logo}")),
+                                            "https://www.eplworld.com${provider.headerProfileModel.logo}")),
                                   ],
                                 ),
                               ),
@@ -254,8 +238,11 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
                                   child: Row(
                                     children: <Widget>[
                                       Text(
-                                        provider.headerProfileModel.belongsTo.tr,
-                                        style: TextStyle(color: Colors.white),
+                                        provider
+                                            .headerProfileModel.belongsTo.tr,
+                                        style: TextStyle(
+                                            fontFamily: 'Vazirmatn',
+                                            color: Colors.white),
                                       )
                                     ],
                                   ))
@@ -263,7 +250,8 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
                           ),
                         ),
                         //centerTitle: true,
-                        titlePadding: EdgeInsets.only(top: 1.0, bottom: 20.0,left: 4,right: 100),
+                        titlePadding: EdgeInsets.only(
+                            top: 1.0, bottom: 20.0, left: 4, right: 100),
                         title: FittedBox(
                           child: Container(
                             child: Row(
@@ -286,63 +274,77 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
                           ),
                         ),
                       );
-                    },
-                  ),
-                ),
-              ),
+              },
+            ),
+          ),
+        ),
         Directionality(
-                  textDirection: TextDirection.rtl,
-                  child:SliverPersistentHeader(
-                      pinned: true,
-                      delegate: _SliverAppBarDelegate(
-                          maxHeight: 45,
-                          minHeight: 45,
-                          child:Selector<EachLeagueViewModel,bool>(
-                            selector: (context,modelProvider)=>modelProvider.loadingMatches,
-                            builder: (context,loading,child){
-                              return loading?Container()
-                                  :Container(
+            textDirection: TextDirection.rtl,
+            child: SliverPersistentHeader(
+                pinned: true,
+                delegate: _SliverAppBarDelegate(
+                    maxHeight: 45,
+                    minHeight: 45,
+                    child: Selector<EachLeagueViewModel, bool>(
+                      selector: (context, modelProvider) =>
+                          modelProvider.loadingMatches,
+                      builder: (context, loading, child) {
+                        return loading
+                            ? Container()
+                            : Container(
                                 color: Theme.of(context).primaryColor,
                                 child: DefaultTabController(
                                   length: tabName(oneLeagueViewModel).length,
                                   child: TabBar(
                                       indicatorColor: Colors.white,
                                       isScrollable: true,
-                                      onTap: (index){
+                                      onTap: (index) {
                                         _selectedIndex = index;
                                         tabController.animateTo(_selectedIndex);
                                       },
-                                      controller:  tabController,
-                                      tabs: List.generate(tabName(oneLeagueViewModel).length, (index) => tabName(oneLeagueViewModel)[index]).toList()
-                                  ),
+                                      controller: tabController,
+                                      tabs: List.generate(
+                                          tabName(oneLeagueViewModel).length,
+                                          (index) =>
+                                              tabName(oneLeagueViewModel)[
+                                                  index]).toList()),
                                 ),
                               );
-                            },
-                          )
-                      ))
-              ),
+                      },
+                    )))),
       ];
     }
 
     return new Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-            body: SafeArea(
-              child: NestedScrollView(
-                controller: _controller,
-                physics: ClampingScrollPhysics(),
-                headerSliverBuilder: _sliverBuilder,
-                body: Selector<EachLeagueViewModel,bool>(
-                  selector: (context,modelProvider)=>modelProvider.loadingMatches,
-                builder: (context,loading,child) {
+        body: SafeArea(
+          child: NestedScrollView(
+            controller: _controller,
+            physics: ClampingScrollPhysics(),
+            headerSliverBuilder: _sliverBuilder,
+            body: Selector<EachLeagueViewModel, bool>(
+                selector: (context, modelProvider) =>
+                    modelProvider.loadingMatches,
+                builder: (context, loading, child) {
                   return loading
-                          ?Center(child: CircularProgressIndicator(backgroundColor: Theme.of(context).primaryColor,),)
-                          :TabBarView(
-                    controller: tabController = new TabController(length: tabView(oneLeagueViewModel).length, vsync: this, initialIndex: _selectedIndex),
-                    children:List.generate(tabView(oneLeagueViewModel).length, (index) => tabView(oneLeagueViewModel)[index]).toList());
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            backgroundColor: Theme.of(context).primaryColor,
+                          ),
+                        )
+                      : TabBarView(
+                          controller: tabController = new TabController(
+                              length: tabView(oneLeagueViewModel).length,
+                              vsync: this,
+                              initialIndex: _selectedIndex),
+                          children: List.generate(
+                                  tabView(oneLeagueViewModel).length,
+                                  (index) => tabView(oneLeagueViewModel)[index])
+                              .toList());
                 }),
-              ),
-            ),
+          ),
+        ),
       ),
     );
   }
@@ -410,47 +412,39 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
     );
   }
 
-
   List<Widget> tabName(EachLeagueViewModel provider) {
     List<Widget> test = [];
 
-      if (provider.tablesModelList != null) {
-        test.add(PositionN());
-      }
+    if (provider.tablesModelList != null) {
+      test.add(PositionN());
+    }
 
+    if (provider.recentMatcheBox != null) {
+      test.add(matchesN());
+    }
 
-      if (provider.recentMatcheBox != null) {
-        test.add(matchesN());
-      }
+    if (provider.newsModelList != null) {
+      test.add(NewsN());
+    }
 
+    if (provider.playersModel != null) {
+      test.add(playersStatsN());
+    }
 
+    if (provider.teamsModel != null) {
+      test.add(teamsStatsN());
+    }
 
-      if (provider.newsModelList != null) {
-        test.add(NewsN());
-      }
+    if (provider.transferBoxesModelList != null) {
+      test.add(transferN());
+    }
 
-
-      if (provider.playersModel != null) {
-        test.add(playersStatsN());
-      }
-
-
-      if (provider.teamsModel != null) {
-        test.add(teamsStatsN());
-      }
-
-      if (provider.transferBoxesModelList != null) {
-        test.add(transferN());
-      }
-
-
-      if (provider.trophiesBoxesModelList != null) {
-        test.add(cupsN());
-      }
+    if (provider.trophiesBoxesModelList != null) {
+      test.add(cupsN());
+    }
 
     return test;
   }
-
 
   /*
   List<Widget> tabName(OneLeagueViewModel provider) {
@@ -469,11 +463,19 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
    */
 
   Widget position() {
-    return ListView(children: <Widget>[Postions(url: widget.url,)]);
+    return ListView(children: <Widget>[
+      Postions(
+        url: widget.url,
+      )
+    ]);
   }
 
   Widget positionGTable() {
-    return ListView(children: <Widget>[MatchGPosition(url: widget.url,)]);
+    return ListView(children: <Widget>[
+      MatchGPosition(
+        url: widget.url,
+      )
+    ]);
   }
 
   Widget matches() {
@@ -481,67 +483,77 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
   }
 
   Widget News() {
-    return ListView(children:<Widget>[ leagueNews(url: widget.url)]);
+    return ListView(children: <Widget>[leagueNews(url: widget.url)]);
   }
 
   Widget playerStats() {
-    return ListView(children: <Widget>[playersStats(url: widget.url,)]);
+    return ListView(children: <Widget>[
+      playersStats(
+        url: widget.url,
+      )
+    ]);
   }
 
   Widget teamStats() {
-    return ListView(children: <Widget>[teamsStats(url:widget.url)]);
+    return ListView(children: <Widget>[teamsStats(url: widget.url)]);
   }
 
   Widget transfers() {
     return ListView(
-      physics: ClampingScrollPhysics(), scrollDirection: Axis.vertical,
-      shrinkWrap: true, children: <Widget>[TransferCenter(url: widget.url)],);
+      physics: ClampingScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      children: <Widget>[TransferCenter(url: widget.url)],
+    );
   }
 
   Widget cups() {
-    return ListView(children: <Widget>[Cups(url: widget.url,)]);
+    return ListView(children: <Widget>[
+      Cups(
+        url: widget.url,
+      )
+    ]);
   }
-
 
   List<Widget> tabView(EachLeagueViewModel provider) {
     List<Widget> test = [];
 
-      if (provider.tablesModelList !=null  && provider.tablesModelList[0].list.length == 1) {
-        test.add(position());
-      }
+    if (provider.tablesModelList != null &&
+        provider.tablesModelList[0].list.length == 1) {
+      test.add(position());
+    }
 
-      if (provider.tablesModelList != null && provider.tablesModelList[0].list.length > 1) {
-        test.add(positionGTable());
-      }
+    if (provider.tablesModelList != null &&
+        provider.tablesModelList[0].list.length > 1) {
+      test.add(positionGTable());
+    }
 
-      if (provider.recentMatcheBox !=null ) {
-        test.add(matches());
-      }
+    if (provider.recentMatcheBox != null) {
+      test.add(matches());
+    }
 
+    if (provider.newsModelList != null) {
+      test.add(News());
+    }
 
-      if (provider.newsModelList != null) {
-        test.add(News());
-      }
+    if (provider.playersModel != null) {
+      test.add(playerStats());
+    }
 
-      if (provider.playersModel != null) {
-        test.add(playerStats());
-      }
+    if (provider.teamsModel != null) {
+      test.add(teamStats());
+    }
 
-      if (provider.teamsModel != null) {
-        test.add(teamStats());
-      }
+    if (provider.transferBoxesModelList != null) {
+      test.add(transfers());
+    }
 
-      if (provider.transferBoxesModelList != null) {
-        test.add(transfers());
-      }
-
-      if (provider.trophiesBoxesModelList != null) {
-        test.add(cups());
-      }
+    if (provider.trophiesBoxesModelList != null) {
+      test.add(cups());
+    }
 
     return test;
   }
-
 
 /*
   List<Widget> tabView(url) {
@@ -560,7 +572,6 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
  */
 
 }
-
 
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   _SliverAppBarDelegate({
@@ -588,4 +599,3 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
         child != oldDelegate.child;
   }
 }
-

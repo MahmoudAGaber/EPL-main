@@ -8,8 +8,10 @@ class transference extends StatefulWidget {
   _transferenceState createState() => _transferenceState();
 }
 
-const TextStyle _textStyle = TextStyle(color: Colors.grey);
-const TextStyle _textStyle1 = TextStyle(fontSize: 14, color: Colors.grey);
+const TextStyle _textStyle =
+    TextStyle(fontFamily: 'Vazirmatn', color: Colors.grey);
+const TextStyle _textStyle1 =
+    TextStyle(fontFamily: 'Vazirmatn', fontSize: 14, color: Colors.grey);
 
 class _transferenceState extends State<transference> {
   @override
@@ -37,12 +39,15 @@ class _transferenceState extends State<transference> {
                           children: <Widget>[
                             Text(
                               "CENTER".tr,
-                              style: TextStyle(fontSize: 15),
+                              style: TextStyle(
+                                  fontFamily: 'Vazirmatn', fontSize: 15),
                             ),
                             Text(
                               "TRANSFER".tr,
                               style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w900),
+                                  fontFamily: 'Vazirmatn',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w900),
                             ),
                             Icon(MdiIcons.cogTransfer)
                           ],
@@ -229,6 +234,7 @@ class _transferenceState extends State<transference> {
                           Text(
                             "  FotMob",
                             style: TextStyle(
+                                fontFamily: 'Vazirmatn',
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.grey),
@@ -236,6 +242,7 @@ class _transferenceState extends State<transference> {
                           Text(
                             "منذ 6 دقائق".tr,
                             style: TextStyle(
+                                fontFamily: 'Vazirmatn',
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.grey),

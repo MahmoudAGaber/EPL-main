@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
@@ -20,8 +19,7 @@ class Reels extends StatefulWidget {
 }
 
 class _ReelsState extends State<Reels> {
-
-  PageController controller = PageController(initialPage: 0,keepPage: true);
+  PageController controller = PageController(initialPage: 0, keepPage: true);
   //PreloadPageController preloadPageController = PreloadPageController(initialPage: 0,keepPage: true);
   ScrollController _scrollController;
   double _scrollPosition;
@@ -29,10 +27,10 @@ class _ReelsState extends State<Reels> {
   bool change = false;
   int currentPage = 0;
   bool isOnPageTuning = false;
-  int selectedIndex=0;
+  int selectedIndex = 0;
   FileInfo test;
-  List<FileInfo>fileInfoOut=[];
-  selected(index){
+  List<FileInfo> fileInfoOut = [];
+  selected(index) {
     selectedIndex = index;
     return selectedIndex;
   }
@@ -55,21 +53,18 @@ class _ReelsState extends State<Reels> {
 
    */
 
-List<String> videosAss = [
-  "assets/moroccotalksfootball_20220222_002424_0.mp4",
-  "assets/muslera_fc1905_gs_20220222_002301_0.mp4",
-  "assets/ney.reelz_20220222_002351_0.mp4",
-  'assets/psg_20220222_002838_0.mp4',
-  'assets/twelfthplayer12_20220222_002218_0.mp4',
-  "assets/moroccotalksfootball_20220222_002424_0.mp4",
-  "assets/muslera_fc1905_gs_20220222_002301_0.mp4",
-  "assets/ney.reelz_20220222_002351_0.mp4",
-  'assets/psg_20220222_002838_0.mp4',
-  'assets/twelfthplayer12_20220222_002218_0.mp4'
-
-
-
-];
+  List<String> videosAss = [
+    "assets/moroccotalksfootball_20220222_002424_0.mp4",
+    "assets/muslera_fc1905_gs_20220222_002301_0.mp4",
+    "assets/ney.reelz_20220222_002351_0.mp4",
+    'assets/psg_20220222_002838_0.mp4',
+    'assets/twelfthplayer12_20220222_002218_0.mp4',
+    "assets/moroccotalksfootball_20220222_002424_0.mp4",
+    "assets/muslera_fc1905_gs_20220222_002301_0.mp4",
+    "assets/ney.reelz_20220222_002351_0.mp4",
+    'assets/psg_20220222_002838_0.mp4',
+    'assets/twelfthplayer12_20220222_002218_0.mp4'
+  ];
   List<String> videos = [
     "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
     "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
@@ -134,174 +129,242 @@ List<String> videosAss = [
     "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4",
     "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4",
     "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
-
   ];
 
   VideosProvider videosProvider;
 
-
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async{
-      videosProvider = Provider.of(context,listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      videosProvider = Provider.of(context, listen: false);
       _scrollController = ScrollController();
     });
-
 
     //controller.addListener(_scrollListener);
     super.initState();
   }
+
   @override
   void dispose() {
     controller.dispose();
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(toolbarHeight: 0.0,),
+      appBar: AppBar(
+        toolbarHeight: 0.0,
+      ),
       body: Directionality(
-        textDirection: TextDirection.ltr,
-        child:Center(
+          textDirection: TextDirection.ltr,
+          child: Center(
             child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      child: PageView.builder(
-                          controller: controller,
-                          scrollDirection: Axis.vertical,
-                          itemCount: videosAss.length,
-                          itemBuilder: (context,index){
-                            return Stack(
-                              children: [
-                                Container(
-                                  height: MediaQuery.of(context).size.height,
-                                  width: MediaQuery.of(context).size.width,
-                                  color: Colors.green,
-                                  child:VideoApp(url: videosAss[index],play: true,),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20,bottom: 20,right: 10,left: 10),
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: PageView.builder(
+                      controller: controller,
+                      scrollDirection: Axis.vertical,
+                      itemCount: videosAss.length,
+                      itemBuilder: (context, index) {
+                        return Stack(
+                          children: [
+                            Container(
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+                              color: Colors.green,
+                              child: VideoApp(
+                                url: videosAss[index],
+                                play: true,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 20, bottom: 20, right: 10, left: 10),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
                                       children: [
-                                        Row(
-                                          children: [
-                                            Text('Reels',style: TextStyle(fontSize: 21,color: Colors.white),)
-                                          ],
-                                        ),
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    CircleAvatar(
-                                                      minRadius: 17,
-                                                    ),
-                                                    SizedBox(width: 10,),
-                                                    Text('Eplworld_d',style: TextStyle(color: Colors.white,fontSize: 15),)
-                                                  ],
-                                                ),
-                                                SizedBox(height: 8,),
-                                                Text('Eplwrold Football',style: TextStyle(fontSize: 14,color: Colors.white),),
-                                                SizedBox(height: 8,),
-                                                Row(
-                                                  children: [
-                                                    Icon(Icons.assessment,size: 13,color: Colors.white,),
-                                                    SizedBox(width: 5,),
-                                                    Text('Raouf Khelaf_orginal audio',style: TextStyle(fontSize: 13,color: Colors.white),),
-                                                  ],
-                                                )
-
-                                              ],
-                                            ),
-                                            Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              children: [
-                                                Column(
-                                                  children: [
-                                                    Icon(MdiIcons.heartOutline,color: Colors.white,size: 26,),
-                                                    Text('4,898',style: TextStyle(color:Colors.white),)
-                                                  ],
-                                                ),
-                                                SizedBox(height: 20,),
-                                                Column(
-                                                  children: [
-                                                    Icon(MdiIcons.commentOutline,color: Colors.white,size: 26,),
-                                                    Text('9',style: TextStyle(color:Colors.white),)
-                                                  ],
-                                                ),
-                                                SizedBox(height: 20,),
-                                                Column(
-                                                  children: [
-                                                    Transform.rotate(
-                                                        angle: 100,
-                                                        child: Icon(MdiIcons.sendOutline,color: Colors.white,size: 24,)),
-                                                  ],
-                                                ),
-                                                SizedBox(height: 20,),
-                                                Icon(MdiIcons.dotsVertical,color: Colors.white,),
-                                                SizedBox(height: 20,),
-                                                Container(
-                                                  height: 23,width: 23,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          width: 2,
-                                                          color: Colors.white
-                                                      ),
-                                                      borderRadius: BorderRadius.circular(4)
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-
-
-                                          ],
+                                        Text(
+                                          'Reels',
+                                          style: TextStyle(
+                                              fontFamily: 'Vazirmatn',
+                                              fontSize: 21,
+                                              color: Colors.white),
                                         )
                                       ],
                                     ),
-                                  ),
-                                )
-                              ],
-                            );
-                          }),
-                    )
-
-                  ],
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                CircleAvatar(
+                                                  minRadius: 17,
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                  'Eplworld_d',
+                                                  style: TextStyle(
+                                                      fontFamily: 'Vazirmatn',
+                                                      color: Colors.white,
+                                                      fontSize: 15),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 8,
+                                            ),
+                                            Text(
+                                              'Eplwrold Football',
+                                              style: TextStyle(
+                                                  fontFamily: 'Vazirmatn',
+                                                  fontSize: 14,
+                                                  color: Colors.white),
+                                            ),
+                                            SizedBox(
+                                              height: 8,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.assessment,
+                                                  size: 13,
+                                                  color: Colors.white,
+                                                ),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(
+                                                  'Raouf Khelaf_orginal audio',
+                                                  style: TextStyle(
+                                                      fontFamily: 'Vazirmatn',
+                                                      fontSize: 13,
+                                                      color: Colors.white),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Column(
+                                              children: [
+                                                Icon(
+                                                  MdiIcons.heartOutline,
+                                                  color: Colors.white,
+                                                  size: 26,
+                                                ),
+                                                Text(
+                                                  '4,898',
+                                                  style: TextStyle(
+                                                      fontFamily: 'Vazirmatn',
+                                                      color: Colors.white),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Column(
+                                              children: [
+                                                Icon(
+                                                  MdiIcons.commentOutline,
+                                                  color: Colors.white,
+                                                  size: 26,
+                                                ),
+                                                Text(
+                                                  '9',
+                                                  style: TextStyle(
+                                                      fontFamily: 'Vazirmatn',
+                                                      color: Colors.white),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Column(
+                                              children: [
+                                                Transform.rotate(
+                                                    angle: 100,
+                                                    child: Icon(
+                                                      MdiIcons.sendOutline,
+                                                      color: Colors.white,
+                                                      size: 24,
+                                                    )),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Icon(
+                                              MdiIcons.dotsVertical,
+                                              color: Colors.white,
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Container(
+                                              height: 23,
+                                              width: 23,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      width: 2,
+                                                      color: Colors.white),
+                                                  borderRadius:
+                                                      BorderRadius.circular(4)),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        );
+                      }),
+                )
+              ],
             ),
-          )
-      ),
+          )),
     );
   }
 }
 
-
-
 class VideoApp extends StatefulWidget {
   final String url;
   final bool play;
-  VideoApp({this.url,this.play});
+  VideoApp({this.url, this.play});
   @override
   _VideoAppState createState() => _VideoAppState();
 }
 
 class _VideoAppState extends State<VideoApp> {
-
-
   VideoPlayerController _controller;
   Future<void> _initializeVideoPlayerFuture;
 
- // BetterPlayerController betterPlayerController;
-
+  // BetterPlayerController betterPlayerController;
 
   @override
   void initState() {
@@ -315,7 +378,6 @@ class _VideoAppState extends State<VideoApp> {
       _controller.setLooping(true);
       _controller.setVolume(300.0);
     }
-
 
     /*
     BetterPlayerDataSource betterPlayerDataSource = BetterPlayerDataSource(
@@ -359,7 +421,6 @@ class _VideoAppState extends State<VideoApp> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -367,13 +428,11 @@ class _VideoAppState extends State<VideoApp> {
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: _controller.value.isInitialized
-              ?VideoPlayer(_controller)
-              :Container(color:Colors.black)
-      ),
+              ? VideoPlayer(_controller)
+              : Container(color: Colors.black)),
     );
   }
 }
-
 
 class VideosProvider with ChangeNotifier {
   int _currentVideo = 0;
@@ -386,12 +445,8 @@ class VideosProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  set listen(bool listen){
+  set listen(bool listen) {
     _listen = listen;
     notifyListeners();
   }
 }
-
-
-
-

@@ -4,25 +4,34 @@ import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
 
 class playerMatches extends StatefulWidget {
+  String url;
+  playerMatches({this.url});
   @override
   _playerMatchesState createState() => _playerMatchesState();
 }
 
-const TextStyle _textStyle =
-    TextStyle(color: Colors.grey, fontSize: 15, fontWeight: FontWeight.w500);
+const TextStyle _textStyle = TextStyle(
+    fontFamily: 'Vazirmatn',
+    color: Colors.grey,
+    fontSize: 15,
+    fontWeight: FontWeight.w500);
 
-TextStyle head = TextStyle(fontSize: 14, fontWeight: FontWeight.w500);
-TextStyle content = TextStyle(fontSize: 13.5);
-TextStyle content2 = TextStyle(fontSize: 13.5, color: Colors.grey);
-TextStyle content3 = TextStyle(fontSize: 12);
-TextStyle content4 = TextStyle(fontSize: 12, color: Colors.grey);
-TextStyle number = TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
+TextStyle head = TextStyle(
+    fontFamily: 'Vazirmatn', fontSize: 14, fontWeight: FontWeight.w500);
+TextStyle content = TextStyle(fontFamily: 'Vazirmatn', fontSize: 13.5);
+TextStyle content2 =
+    TextStyle(fontFamily: 'Vazirmatn', fontSize: 13.5, color: Colors.grey);
+TextStyle content3 = TextStyle(fontFamily: 'Vazirmatn', fontSize: 12);
+TextStyle content4 =
+    TextStyle(fontFamily: 'Vazirmatn', fontSize: 12, color: Colors.grey);
+TextStyle number = TextStyle(
+    fontFamily: 'Vazirmatn', fontSize: 18, fontWeight: FontWeight.w400);
 
 class _playerMatchesState extends State<playerMatches> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      minimum: EdgeInsets.only(bottom: 8, top: 8),
+      minimum: EdgeInsets.all(12),
       child: ListView.builder(
           physics: ClampingScrollPhysics(),
           shrinkWrap: true,
@@ -30,7 +39,7 @@ class _playerMatchesState extends State<playerMatches> {
           itemCount: 15,
           itemBuilder: (BuildContext context, index) {
             return Padding(
-              padding: const EdgeInsets.only(left: 5, right: 5),
+              padding: const EdgeInsets.only(bottom: 5, top: 5),
               child: GestureDetector(
                 onTap: () {
                   Navigator.pushNamed(context, '/matchInfo_a');
@@ -43,41 +52,35 @@ class _playerMatchesState extends State<playerMatches> {
                       child: Column(
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.only(left: 5, right: 5),
+                            padding: const EdgeInsets.all(8),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Container(
-                                  width: 250,
-                                  child: Row(
-                                    children: <Widget>[
-                                      Container(
-                                        height: 20,
-                                        width: 20,
-                                        child: Image.asset("assets/541.jpg"),
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Expanded(
-                                          child: Text(
-                                        "دوري ابطال اوربا".tr,
-                                        style: content,
-                                        overflow: TextOverflow.visible,
-                                      )),
-                                    ],
-                                  ),
-                                ),
                                 Text(
                                   "2020/08/07",
                                   style: _textStyle,
-                                )
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Container(
+                                      height: 20,
+                                      width: 20,
+                                      child: Image.asset("assets/541.jpg"),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      "دوري ابطال اوربا".tr,
+                                      style: content,
+                                      overflow: TextOverflow.visible,
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           ),
-                          Divider(
-                            height: 20,
-                          ),
+                          Divider(),
                           Padding(
                             padding: const EdgeInsets.only(
                                 left: 70, right: 70, top: 10, bottom: 10),
@@ -108,13 +111,14 @@ class _playerMatchesState extends State<playerMatches> {
                           ),
                           Divider(),
                           Padding(
-                            padding: const EdgeInsets.only(left: 5),
+                            padding: const EdgeInsets.all(8),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 Text(
                                   "د90".tr,
                                   style: TextStyle(
+                                      fontFamily: 'Vazirmatn',
                                       fontWeight: FontWeight.w600,
                                       fontSize: 15),
                                 ),
@@ -138,7 +142,9 @@ class _playerMatchesState extends State<playerMatches> {
                                   child: Center(
                                       child: Text(
                                     "7.8",
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(
+                                        fontFamily: 'Vazirmatn',
+                                        color: Colors.white),
                                   )),
                                 )
                               ],

@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,13 +19,20 @@ class _OopsState extends State<Oops> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 200,
+                width: 200,
                 height: 200,
                 child: Image.asset('assets/EPL-Logo.png')),
-            SizedBox(height: 15,),
+            SizedBox(
+              height: 15,
+            ),
             Center(
               child: Text(
-                "لا توجد بيانات متوفرة", style: TextStyle(fontSize: 22,),),
+                "لا توجد بيانات متوفرة",
+                style: TextStyle(
+                  fontFamily: 'Vazirmatn',
+                  fontSize: 22,
+                ),
+              ),
             )
           ],
         ),

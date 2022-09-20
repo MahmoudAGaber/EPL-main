@@ -9,16 +9,24 @@ class tv extends StatefulWidget {
 }
 
 class _tvState extends State<tv> with SingleTickerProviderStateMixin {
-  TextStyle _textStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.w900);
+  TextStyle _textStyle = TextStyle(
+      fontFamily: 'Vazirmatn', fontSize: 14, fontWeight: FontWeight.w900);
   TextStyle _textStyle1 = TextStyle(
+    fontFamily: 'Vazirmatn',
     fontSize: 14,
     color: Colors.grey,
   );
-  TextStyle _textStyle2 =
-      TextStyle(fontSize: 13, color: Colors.green, fontWeight: FontWeight.w400);
+  TextStyle _textStyle2 = TextStyle(
+      fontFamily: 'Vazirmatn',
+      fontSize: 13,
+      color: Colors.green,
+      fontWeight: FontWeight.w400);
 
-  static const TextStyle tapbar =
-      TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Colors.black);
+  static const TextStyle tapbar = TextStyle(
+      fontFamily: 'Vazirmatn',
+      fontSize: 15,
+      fontWeight: FontWeight.w500,
+      color: Colors.black);
 
   TabController _tabController;
 

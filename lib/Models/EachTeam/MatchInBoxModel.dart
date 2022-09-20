@@ -18,6 +18,10 @@ class MatchInBoxModel{
   String awayTeamLogoAlt;
   String awayTeamLogo;
   String competition;
+  String belongsTo;
+  String belongsToEn;
+  String date;
+  String ID;
   int homeTeamScore;
   int awayTeamScore;
 
@@ -40,6 +44,9 @@ class MatchInBoxModel{
       this.awayTeamNameEn,
       this.awayTeamLogoAlt,
       this.awayTeamLogo,
+        this.belongsTo,
+        this.belongsToEn,
+        this.date,
       this.competition,
       this.homeTeamScore,
       this.awayTeamScore});
@@ -63,6 +70,9 @@ class MatchInBoxModel{
       awayTeamNameEn: json['awayTeamNameEn'],
       awayTeamLogoAlt: json['awayTeamLogoAlt'],
       awayTeamLogo: json['awayTeamLogo'],
+      belongsTo: json['belongsTo'],
+      belongsToEn: json['belongsToEn'],
+      date: json['date'],
       competition: json['competition'],
       homeTeamScore: json['homeTeamScore'],
       awayTeamScore: json['awayTeamScore'],

@@ -8,7 +8,6 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 import '../main.dart';
 
-
 class statisticsForTeam extends StatefulWidget {
   String url;
   statisticsForTeam({this.url});
@@ -17,13 +16,16 @@ class statisticsForTeam extends StatefulWidget {
 }
 
 class _statisticsForTeamState extends State<statisticsForTeam> {
-
-  TextStyle head = TextStyle(fontSize: 14,fontWeight: FontWeight.w500);
-  TextStyle content = TextStyle(fontSize: 13.5);
-  TextStyle content2 = TextStyle(fontSize: 13.5,color: Colors.grey);
-  TextStyle content3 = TextStyle(fontSize: 12);
-  TextStyle content4= TextStyle(fontSize: 12,color: Colors.grey);
-  TextStyle number = TextStyle(fontSize: 20,fontWeight: FontWeight.w400);
+  TextStyle head = TextStyle(
+      fontFamily: 'Vazirmatn', fontSize: 14, fontWeight: FontWeight.w500);
+  TextStyle content = TextStyle(fontFamily: 'Vazirmatn', fontSize: 13.5);
+  TextStyle content2 =
+      TextStyle(fontFamily: 'Vazirmatn', fontSize: 13.5, color: Colors.grey);
+  TextStyle content3 = TextStyle(fontFamily: 'Vazirmatn', fontSize: 12);
+  TextStyle content4 =
+      TextStyle(fontFamily: 'Vazirmatn', fontSize: 12, color: Colors.grey);
+  TextStyle number = TextStyle(
+      fontFamily: 'Vazirmatn', fontSize: 20, fontWeight: FontWeight.w400);
 
   EachTeamViewModel eachTeamViewModel;
   @override
@@ -43,13 +45,9 @@ class _statisticsForTeamState extends State<statisticsForTeam> {
   @override
   Widget build(BuildContext context) {
     return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(child: NoData())
-        ],
-      );
-
-
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [Center(child: NoData())],
+    );
 
     /*
       Column(children: <Widget>[
@@ -80,8 +78,8 @@ class _statisticsForTeamState extends State<statisticsForTeam> {
                   Row(children: <Widget>[Text("متوسط الدوري".tr,style:content4,)],),
                   SizedBox(height: 10,),
                   Row(children: <Widget>[
-                    Text("6.9 ",style: TextStyle(color: Colors.green[600],fontSize: 20),)
-                    ,Text("/ 6.5",style: TextStyle(color: Colors.grey,fontSize: 16),),],),
+                    Text("6.9 ",style: TextStyle(                      fontFamily: 'Vazirmatn',color: Colors.green[600],fontSize: 20),)
+                    ,Text("/ 6.5",style: TextStyle(                      fontFamily: 'Vazirmatn',color: Colors.grey,fontSize: 16),),],),
                 ],),
               )
                 )),
@@ -103,7 +101,7 @@ class _statisticsForTeamState extends State<statisticsForTeam> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(100)),
                       border: Border.all(width: 2,color: Colors.grey),),
-                      child: Center(child: Text("vs".tr,style: TextStyle(color: Colors.grey),)),
+                      child: Center(child: Text("vs".tr,style: TextStyle(                      fontFamily: 'Vazirmatn',color: Colors.grey),)),
                     ),
                     Container(height: 30,width: 30,
                       child: Image.asset("assets/530.jpg"),),
@@ -331,7 +329,7 @@ class _statisticsForTeamState extends State<statisticsForTeam> {
                                             children: <Widget>[
                                               Padding(
                                                 padding: const EdgeInsets.only(top: 10),
-                                                child: Row(children: <Widget>[Text("اهداف".tr,style: TextStyle(color:Colors.white),)],
+                                                child: Row(children: <Widget>[Text("اهداف".tr,style: TextStyle(                      fontFamily: 'Vazirmatn',color:Colors.white),)],
                                                 ),
                                               ),
                                               Divider(thickness: 1.0,height:15,color: Colors.white,),
@@ -342,9 +340,9 @@ class _statisticsForTeamState extends State<statisticsForTeam> {
                                                     padding: const EdgeInsets.only(bottom: 10),
                                                     child: Column(children: <Widget>[
                                                       SizedBox(height: 5,),
-                                                      Text("راموس".tr,style: TextStyle(color: Colors.white),),
+                                                      Text("راموس".tr,style: TextStyle(                      fontFamily: 'Vazirmatn',color: Colors.white),),
                                                       SizedBox(height: 10,),
-                                                      Text("8",style: TextStyle(fontSize: 20,color: Colors.white),),
+                                                      Text("8",style: TextStyle(                      fontFamily: 'Vazirmatn',fontSize: 20,color: Colors.white),),
                                                     ],),
                                                   ),
                                                   Padding(
@@ -399,7 +397,7 @@ class _statisticsForTeamState extends State<statisticsForTeam> {
                                   Divider(height: 15,),
 
                                   Row(children: <Widget>[
-                                    Text("عرض الكل".tr,style: TextStyle(color: Colors.grey,fontSize: 14),)],),
+                                    Text("عرض الكل".tr,style: TextStyle(                      fontFamily: 'Vazirmatn',color: Colors.grey,fontSize: 14),)],),
                                 ],),
                               )
                             ],),
@@ -452,7 +450,7 @@ class _statisticsForTeamState extends State<statisticsForTeam> {
                                             Padding(
                                               padding: const EdgeInsets.only(top: 10,right: 10),
                                               child: Row(children: <Widget>[
-                                              Text("تسديدات علي المرمي لكل مباراة".tr,style: TextStyle(color:Colors.white),)
+                                              Text("تسديدات علي المرمي لكل مباراة".tr,style: TextStyle(                      fontFamily: 'Vazirmatn',color:Colors.white),)
                                               ],
                                               ),
                                             ),
@@ -463,15 +461,15 @@ class _statisticsForTeamState extends State<statisticsForTeam> {
                                                       Container(
                                                         width: MediaQuery.of(context).size.width*0.51,
                                                         child: Row(children: <Widget>[
-                                                          Text("1",style: TextStyle(color: Colors.white)),
+                                                          Text("1",style: TextStyle(                      fontFamily: 'Vazirmatn',color: Colors.white)),
                                                           SizedBox(width: 10,),
                                                           Container(height: 25,width: 25,
                                                           child: Image.asset("assets/541.jpg"),),
                                                           SizedBox(width: 10,),
-                                                          Text("ريال مدريد".tr,style: TextStyle(color: Colors.white))
+                                                          Text("ريال مدريد".tr,style: TextStyle(                      fontFamily: 'Vazirmatn',color: Colors.white))
                                                         ],),
                                                       ),
-                                                      Text("4.4",style: TextStyle(color: Colors.white,fontSize: 20),)
+                                                      Text("4.4",style: TextStyle(                      fontFamily: 'Vazirmatn',color: Colors.white,fontSize: 20),)
                                                     ]
                                                 ),
                                               ]
@@ -518,7 +516,7 @@ class _statisticsForTeamState extends State<statisticsForTeam> {
                                   ),
                                   Divider(height: 10,),
                                   Row(children: <Widget>[
-                                    Text("عرض الكل".tr,style: TextStyle(color: Colors.grey,fontSize: 14),)],),
+                                    Text("عرض الكل".tr,style: TextStyle(                      fontFamily: 'Vazirmatn',color: Colors.grey,fontSize: 14),)],),
                                 ],),
                               )
                             ],),
@@ -571,7 +569,7 @@ class _statisticsForTeamState extends State<statisticsForTeam> {
                                             Padding(
                                               padding: const EdgeInsets.only(top: 10,right: 10),
                                               child: Row(children: <Widget>[
-                                                Text("الاهداف المتلقاة في كل مباراة".tr,style: TextStyle(color:Colors.white),)
+                                                Text("الاهداف المتلقاة في كل مباراة".tr,style: TextStyle(                      fontFamily: 'Vazirmatn',color:Colors.white),)
                                               ],
                                               ),
                                             ),
@@ -582,15 +580,15 @@ class _statisticsForTeamState extends State<statisticsForTeam> {
                                                     Container(
                                                       width: MediaQuery.of(context).size.width*0.51,
                                                       child: Row(children: <Widget>[
-                                                        Text("1",style: TextStyle(color: Colors.white)),
+                                                        Text("1",style: TextStyle(                      fontFamily: 'Vazirmatn',color: Colors.white)),
                                                         SizedBox(width: 10,),
                                                         Container(height: 25,width: 25,
                                                           child: Image.asset("assets/541.jpg"),),
                                                         SizedBox(width: 10,),
-                                                        Text("ريال مدريد".tr,style: TextStyle(color: Colors.white))
+                                                        Text("ريال مدريد".tr,style: TextStyle(                      fontFamily: 'Vazirmatn',color: Colors.white))
                                                       ],),
                                                     ),
-                                                    Text("0.3",style: TextStyle(color: Colors.white,fontSize: 20),)
+                                                    Text("0.3",style: TextStyle(                      fontFamily: 'Vazirmatn',color: Colors.white,fontSize: 20),)
                                                   ]
                                               ),
                                             ]
@@ -637,7 +635,7 @@ class _statisticsForTeamState extends State<statisticsForTeam> {
                                   ),
                                   Divider(height: 15,),
                                   Row(children: <Widget>[
-                                    Text("عرض الكل".tr,style: TextStyle(color: Colors.grey,fontSize: 14),)],),
+                                    Text("عرض الكل".tr,style: TextStyle(                      fontFamily: 'Vazirmatn',color: Colors.grey,fontSize: 14),)],),
                                 ],),
                               )
                             ],),
@@ -690,7 +688,7 @@ class _statisticsForTeamState extends State<statisticsForTeam> {
                                             Padding(
                                               padding: const EdgeInsets.only(top: 10,right: 10),
                                               child: Row(children: <Widget>[
-                                                Text("تمريرات دقيقة لكل مباراة".tr,style: TextStyle(color:Colors.white),)
+                                                Text("تمريرات دقيقة لكل مباراة".tr,style: TextStyle(                      fontFamily: 'Vazirmatn',color:Colors.white),)
                                               ],
                                               ),
                                             ),
@@ -701,15 +699,15 @@ class _statisticsForTeamState extends State<statisticsForTeam> {
                                                     Container(
                                                       width: MediaQuery.of(context).size.width*0.51,
                                                       child: Row(children: <Widget>[
-                                                        Text("1",style: TextStyle(color: Colors.white)),
+                                                        Text("1",style: TextStyle(                      fontFamily: 'Vazirmatn',color: Colors.white)),
                                                         SizedBox(width: 10,),
                                                         Container(height: 25,width: 25,
                                                           child: Image.asset("assets/541.jpg"),),
                                                         SizedBox(width: 10,),
-                                                        Text("ريال مدريد".tr,style: TextStyle(color: Colors.white))
+                                                        Text("ريال مدريد".tr,style: TextStyle(                      fontFamily: 'Vazirmatn',color: Colors.white))
                                                       ],),
                                                     ),
-                                                    Text("4.3",style: TextStyle(color: Colors.white,fontSize: 20),)
+                                                    Text("4.3",style: TextStyle(                      fontFamily: 'Vazirmatn',color: Colors.white,fontSize: 20),)
                                                   ]
                                               ),
                                             ]
@@ -757,7 +755,7 @@ class _statisticsForTeamState extends State<statisticsForTeam> {
                                   Divider(height: 15,),
 
                                   Row(children: <Widget>[
-                                    Text("عرض الكل".tr,style: TextStyle(color: Colors.grey,fontSize: 14),)],),
+                                    Text("عرض الكل".tr,style: TextStyle(                      fontFamily: 'Vazirmatn',color: Colors.grey,fontSize: 14),)],),
                                 ],),
                               )
                             ],),
@@ -788,7 +786,7 @@ class _statisticsForTeamState extends State<statisticsForTeam> {
                 child: Column(mainAxisAlignment:MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                   Row(children: <Widget>[Text("شباك نظيفة".tr)],),
-                  Row(children: <Widget>[Text("18",style: TextStyle(fontSize: 20),)],)
+                  Row(children: <Widget>[Text("18",style: TextStyle(                      fontFamily: 'Vazirmatn',fontSize: 20),)],)
                 ],),
               ),
             ),
@@ -811,13 +809,13 @@ class _statisticsForTeamState extends State<statisticsForTeam> {
                         color: Colors.yellow,
                         borderRadius: BorderRadius.all(Radius.circular(4))
                       ),),
-                      Text("30",style: TextStyle(fontSize: 22),),
+                      Text("30",style: TextStyle(                      fontFamily: 'Vazirmatn',fontSize: 22),),
                       SizedBox(width: 5,),
                       Container(height: 22,width: 16,decoration: BoxDecoration(
                           color: Colors.red,
                           borderRadius: BorderRadius.all(Radius.circular(4))
                       ),),
-                      Text("3",style: TextStyle(fontSize: 22),),
+                      Text("3",style: TextStyle(                      fontFamily: 'Vazirmatn',fontSize: 22),),
 
                     ],),
                   )
