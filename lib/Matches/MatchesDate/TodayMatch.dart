@@ -302,7 +302,8 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                             width: 10,
                                                           ),
                                                           Text(
-                                                            provider.matchesList[index].comName, style: content,
+                                                            provider.matchesList[index].comName,
+                                                            style: Theme.of(context).textTheme.headline2.copyWith(fontSize: 14),
                                                           ),
                                                         ],
                                                       ),
@@ -414,10 +415,7 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                                                         .matchesList[index]
                                                                                         .subOfMathes[indexx]
                                                                                         .homeName,
-                                                                                    style: TextStyle(
-                                                                                        fontFamily: 'Vazirmatn',
-                                                                                        fontSize: 13,
-                                                                                        fontWeight: FontWeight.w500),
+                                                                                    style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
                                                                                     overflow: TextOverflow.clip,
 
                                                                                     textDirection: ui.TextDirection.ltr,
@@ -500,18 +498,18 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                                         provider.matchesList[index].subOfMathes[indexx].status == 'Fixture'
                                                                             ? Text(
                                                                             provider.matchesList[index].subOfMathes[indexx].time,
-                                                                            style: Theme.of(context).textTheme.headline1
+                                                                            style: Theme.of(context).textTheme.bodyText1,
                                                                         )
                                                                             : provider.matchesList[index].subOfMathes[indexx].status == 'Postponed'
                                                                             ? Text(
                                                                           provider.matchesList[index].subOfMathes[indexx].time,
-                                                                          style: Theme.of(context).textTheme.caption
+                                                                          style: Theme.of(context).textTheme.bodyText1
                                                                         )
                                                                             : Padding(
                                                                           padding: const EdgeInsets.only(top: 8),
                                                                           child: Text(
                                                                             "${provider.matchesList[index].subOfMathes[indexx].homeScore} - ${provider.matchesList[index].subOfMathes[indexx].awayScore} ",
-                                                                            style: Theme.of(context).textTheme.headline1
+                                                                            style: Theme.of(context).textTheme.bodyText1,
                                                                           ),
                                                                         ),
                                                                         Padding(
@@ -543,7 +541,7 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                                       children: [
                                                                         Expanded(
                                                                           child: Text(provider.matchesList[index].subOfMathes[indexx].awayName,
-                                                                            style: TextStyle(fontFamily: 'Vazirmatn', fontSize: 13, fontWeight: FontWeight.w500),
+                                                                            style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
                                                                             overflow: TextOverflow.clip,
                                                                           ),
                                                                         ),

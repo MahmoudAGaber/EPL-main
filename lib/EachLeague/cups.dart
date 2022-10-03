@@ -54,33 +54,36 @@ class _CupsState extends State<Cups> {
                               shape: RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10))),
-                              child: Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      provider.trophiesBoxesModelList[index]
-                                          .CalendarYear,
-                                      style: TextStyle(
-                                          fontFamily: 'Vazirmatn',
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 14,bottom: 7,right: 18,left: 18),
+                                    child: Text(
+                                      provider.trophiesBoxesModelList[index].CalendarYear,
+                                      style: Theme.of(context).textTheme.headline2,
                                     ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    Row(children: [
-                                      Container(
-                                        child: ClipRRect(
+                                  ),
+                                  Divider(),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                        children: [
+                                          SizedBox(width: 10,),
+                                          Container(
+                                            child: ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(50),
                                             child: Image.network(
                                               'https://www.eplworld.com${provider.trophiesBoxesModelList[index].winnerLogo}',
                                               fit: BoxFit.fill,
-                                              height: 40,
-                                              width: 40,
+                                              height: 45,
+                                              width: 45,
                                             )),
                                       ),
                                       SizedBox(
@@ -102,22 +105,23 @@ class _CupsState extends State<Cups> {
                                            */
                                           Text(
                                             "الفائز",
-                                            style: TextStyle(
-                                                fontFamily: 'Vazirmatn',
-                                                fontSize: 15,
-                                                color: Colors.black),
+                                            style: Theme.of(context).textTheme.headline2
                                           )
                                         ],
                                       )
                                     ]),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 10,bottom: 10),
-                                      child: Divider(),
-                                    ),
-                                    provider.trophiesBoxesModelList[index]
-                                            .runnerUpName.isEmpty
-                                        ? Container()
-                                        : Row(children: [
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10,bottom: 10),
+                                    child: Divider(),
+                                  ),
+                                  provider.trophiesBoxesModelList[index]
+                                          .runnerUpName.isEmpty
+                                      ? Container()
+                                      : Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(children: [
+                                          SizedBox(width: 10,),
                                             Container(
                                               child: ClipRRect(
                                                   borderRadius:
@@ -125,8 +129,8 @@ class _CupsState extends State<Cups> {
                                                   child: Image.network(
                                                     'https://www.eplworld.com${provider.trophiesBoxesModelList[index].runnerUplogo}',
                                                     fit: BoxFit.cover,
-                                                    height: 40,
-                                                    width: 40,
+                                                    height: 45,
+                                                    width: 45,
                                                   )),
                                             ),
                                             SizedBox(
@@ -150,17 +154,14 @@ class _CupsState extends State<Cups> {
                                                  */
                                                 Text(
                                                   "المركز الثاني",
-                                                  style: TextStyle(
-                                                      fontFamily: 'Vazirmatn',
-                                                      fontSize: 15,
-                                                      color: Colors.black),
+                                                  style: Theme.of(context).textTheme.headline2
                                                 ),
                                               ],
                                             )
                                           ]),
-                                    SizedBox(height: 10,)
-                                  ],
-                                ),
+                                      ),
+                                  SizedBox(height: 10,)
+                                ],
                               ),
                             ),
                           ),

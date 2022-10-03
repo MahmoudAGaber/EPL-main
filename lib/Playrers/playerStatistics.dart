@@ -73,9 +73,7 @@ class _playerStatisticsState extends State<playerStatistics> {
                            padding: const EdgeInsets.all(12.0),
                            child: Text(
                             'النادي الحالي',
-                             style: TextStyle(
-                                 fontFamily: 'Vazirmatn',
-                                 fontWeight: FontWeight.w500),
+                             style: Theme.of(context).textTheme.headline2
                            ),
                          ),
                          Divider(),
@@ -108,8 +106,8 @@ class _playerStatisticsState extends State<playerStatistics> {
                                              Column(
                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                children: [
-                                                 Text(provider.piModel.career[index].teamName,style: TextStyle(fontSize: 17),),
-                                                 Text(provider.piModel.career[index].startDate,style: TextStyle(fontSize: 13,color: Colors.black54),)
+                                                 Text(provider.piModel.career[index].teamName,style: Theme.of(context).textTheme.bodyText1),
+                                                 Text(provider.piModel.career[index].startDate,style: Theme.of(context).textTheme.bodyText2),
                                                ],
                                              )
                                            ],
@@ -143,9 +141,7 @@ class _playerStatisticsState extends State<playerStatistics> {
                            padding: const EdgeInsets.all(12.0),
                            child: Text(
                              provider.piModel.type=='player'?'الانديه التي لعب بها':'مهنة التدريب',
-                             style: TextStyle(
-                                 fontFamily: 'Vazirmatn',
-                                 fontWeight: FontWeight.w500),
+                               style: Theme.of(context).textTheme.headline2
                            ),
                          ),
                          Divider(),
@@ -178,8 +174,8 @@ class _playerStatisticsState extends State<playerStatistics> {
                                              Column(
                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                children: [
-                                                 Text(provider.piModel.career[index].teamName,style: TextStyle(fontSize: 17),),
-                                                 Text(provider.piModel.career[index].startDate,style: TextStyle(fontSize: 13,color: Colors.black54),)
+                                                 Text(provider.piModel.career[index].teamName,style: Theme.of(context).textTheme.bodyText1),
+                                                 Text(provider.piModel.career[index].startDate,style: Theme.of(context).textTheme.bodyText2),
                                                ],
                                              )
                                            ],

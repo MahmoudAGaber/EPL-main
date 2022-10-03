@@ -26,6 +26,11 @@ class PreConfront extends StatefulWidget {
 class _PreConfrontState extends State<PreConfront> {
   EachMatchViewModel eachMatchViewModel;
   bool view = false;
+  double winPerH=0.0;
+  double winPerA=0.0;
+  double drawerPer=0.0;
+  int total;
+
   @override
   void initState() {
     WidgetsBinding.instance
@@ -36,6 +41,19 @@ class _PreConfrontState extends State<PreConfront> {
 
     super.initState();
   }
+
+  /*
+  void per(){
+    int homeWin =  eachMatchViewModel.headToHeadModel.header.homeTeamWins;
+    int awayWin =  eachMatchViewModel.headToHeadModel.header.homeTeamWins;
+    int drawer =  eachMatchViewModel.headToHeadModel.header.homeTeamWins;
+    total = homeWin + awayWin + drawer;
+    winPerH = homeWin/total;
+    winPerA = awayWin/total;
+    drawerPer = drawer/total;
+  }
+
+   */
 
 //todo
   @override
@@ -49,195 +67,223 @@ class _PreConfrontState extends State<PreConfront> {
                 child: NoData(),
               )
             : Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(12.0),
                 child: Column(
                   children: <Widget>[
                     Container(
-                      height: 220.0,
                       child: Card(
                         shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10))),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(13.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  Container(
-                                      width: 50,
-                                      height: 50,
-                                      child: Image.network(
-                                          "https://www.eplworld.com${provider.msnModel.homeTeamLogo}")),
-                                  Text(
-                                    "المباريات السابقة".tr,
-                                    style: TextStyle(
-                                        fontFamily: 'Vazirmatn',
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16),
-                                  ),
-                                  Container(
-                                      width: 50,
-                                      height: 50,
-                                      child: Image.network(
-                                          "https://www.eplworld.com${provider.msnModel.awayTeamLogo}")),
-                                ],
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10,bottom: 10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    Container(
+                                        width: 50,
+                                        height: 50,
+                                        child: Image.network(
+                                            "https://www.eplworld.com${provider.msnModel.homeTeamLogo}")),
+                                    Text(
+                                      "المباريات السابقة".tr,
+                                      style: Theme.of(context).textTheme.headline2
+                                    ),
+                                    Container(
+                                        width: 50,
+                                        height: 50,
+                                        child: Image.network(
+                                            "https://www.eplworld.com${provider.msnModel.awayTeamLogo}")),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 25, right: 15,left: 15,bottom: 25),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: <Widget>[
-                                  Container(
-                                    height: 70,
-                                    width: 70,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        border: Border.all(
-                                            color: Colors.grey[100])),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Center(
-                                              child: Text(
-                                            provider.headToHeadModel.header
-                                                .homeTeamWins
-                                                .toString(),
-                                            style: TextStyle(
+                              /*
+                              Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Container(
+                                  height: 40,
+                                  width: MediaQuery.of(context).size.width*.8,
+                                  color: Colors.yellow,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      Container(
+                                        height: 35,
+                                        width: MediaQuery.of(context).size.width*winPerH,
+                                        color: Colors.red,
+                                      ),
+                                      Container(
+                                        height: 35,
+                                        width: MediaQuery.of(context).size.width*drawerPer,
+                                        color: Colors.grey,
+                                      ),
+                                      Container(
+                                        height: 35,
+                                        width: MediaQuery.of(context).size.width*winPerA,
+                                        color: Colors.blue,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+
+                               */
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 25, right: 15,left: 15,bottom: 25),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: <Widget>[
+                                    Container(
+                                      height: 70,
+                                      width: 70,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(8),
+                                          border: Border.all(
+                                              color: Theme.of(context).colorScheme.onSurface)
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Center(
+                                                child: Text(
+                                              provider.headToHeadModel.header
+                                                  .homeTeamWins
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontFamily: 'Vazirmatn',
+                                                  color: provider.headToHeadModel.header.homeTeamWins >
+                                                          provider.headToHeadModel.header.awayTeamWins
+                                                      ? Colors.blue
+                                                      : Colors.red,
+                                                  fontSize: 12),
+                                            )),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              "انتصار",
+                                              style: TextStyle(
                                                 fontFamily: 'Vazirmatn',
-                                                color: provider
-                                                            .headToHeadModel
-                                                            .header
-                                                            .homeTeamWins >
+                                                fontSize: 17,
+                                                color: provider.headToHeadModel
+                                                            .header.homeTeamWins >
                                                         provider.headToHeadModel
                                                             .header.awayTeamWins
                                                     ? Colors.blue
                                                     : Colors.red,
-                                                fontSize: 12),
-                                          )),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            "انتصار",
-                                            style: TextStyle(
-                                              fontFamily: 'Vazirmatn',
-                                              fontSize: 17,
-                                              color: provider.headToHeadModel
-                                                          .header.homeTeamWins >
-                                                      provider.headToHeadModel
-                                                          .header.awayTeamWins
-                                                  ? Colors.blue
-                                                  : Colors.red,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Container(
-                                    height: 70,
-                                    width: 70,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        border: Border.all(
-                                            color: Colors.grey[100])),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Center(
-                                              child: Text(
-                                            provider
-                                                .headToHeadModel.header.draws
-                                                .toString(),
-                                            style: TextStyle(
-                                                fontFamily: 'Vazirmatn',
-                                                color: Colors.grey,
-                                                fontSize: 14),
-                                          )),
+                                    Container(
+                                      height: 70,
+                                      width: 70,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(8),
+                                          border: Border.all(
+                                              color: Theme.of(context).colorScheme.onSurface)
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Center(
+                                                child: Text(
+                                              provider
+                                                  .headToHeadModel.header.draws
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontFamily: 'Vazirmatn',
+                                                  color: Colors.grey,
+                                                  fontSize: 14),
+                                            )),
 /*
-                                          SizedBox(
-                                            height: 5,
-                                          ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
 */
-                                          Text(
-                                            "تعادل",
-                                            style: TextStyle(
-                                                fontFamily: 'Vazirmatn',
-                                                fontSize: 17,
-                                                color: Colors.grey),
-                                          ),
-                                        ],
+                                            Text(
+                                              "تعادل",
+                                              style: TextStyle(
+                                                  fontFamily: 'Vazirmatn',
+                                                  fontSize: 17,
+                                                  color: Colors.grey),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Container(
-                                    height: 70,
-                                    width: 70,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        border: Border.all(
-                                            color: Colors.grey[100])),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Center(
-                                              child: Text(
-                                            provider.headToHeadModel.header
-                                                .awayTeamWins
-                                                .toString(),
-                                            style: TextStyle(
-                                                fontFamily: 'Vazirmatn',
-                                                color: provider
-                                                            .headToHeadModel
-                                                            .header
-                                                            .awayTeamWins >
-                                                        provider.headToHeadModel
-                                                            .header.homeTeamWins
-                                                    ? Colors.blue
-                                                    : Colors.red,
-                                                fontSize: 14),
-                                          )),
-                                          SizedBox(
-                                            height: 2,
-                                          ),
-                                          Text(
-                                            'انتصار',
-                                            style: TextStyle(
-                                                fontFamily: 'Vazirmatn',
-                                                fontSize: 17,
-                                                color: provider
-                                                            .headToHeadModel
-                                                            .header
-                                                            .awayTeamWins >
-                                                        provider.headToHeadModel
-                                                            .header.homeTeamWins
-                                                    ? Colors.blue
-                                                    : Colors.red),
-                                          ),
-                                        ],
+                                    Container(
+                                      height: 70,
+                                      width: 70,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(8),
+                                          border: Border.all(
+                                              color: Theme.of(context).colorScheme.onSurface)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Center(
+                                                child: Text(
+                                              provider.headToHeadModel.header
+                                                  .awayTeamWins
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontFamily: 'Vazirmatn',
+                                                  color: provider
+                                                              .headToHeadModel
+                                                              .header
+                                                              .awayTeamWins >
+                                                          provider.headToHeadModel
+                                                              .header.homeTeamWins
+                                                      ? Colors.blue
+                                                      : Colors.red,
+                                                  fontSize: 14),
+                                            )),
+                                            SizedBox(
+                                              height: 2,
+                                            ),
+                                            Text(
+                                              'انتصار',
+                                              style: TextStyle(
+                                                  fontFamily: 'Vazirmatn',
+                                                  fontSize: 17,
+                                                  color: provider
+                                                              .headToHeadModel
+                                                              .header
+                                                              .awayTeamWins >
+                                                          provider.headToHeadModel
+                                                              .header.homeTeamWins
+                                                      ? Colors.blue
+                                                      : Colors.red),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -278,13 +324,11 @@ class _PreConfrontState extends State<PreConfront> {
                                             children: <Widget>[
                                               Text(
                                                 provider.headToHeadModel.rows[index].date.tr,
-                                                style: TextStyle(
-                                                    fontFamily: 'Vazirmatn',
-                                                    color: Colors.grey[700]),
+                                                style: Theme.of(context).textTheme.bodyText2,
                                               ),
                                               Row(
                                                 children: [
-                                                  CircleAvatar(radius: 8,),
+                                                  //CircleAvatar(radius: 8,),
                                                   SizedBox(width: 2,),
                                                   Container(
                                                     decoration: BoxDecoration(
@@ -296,10 +340,7 @@ class _PreConfrontState extends State<PreConfront> {
                                                           left: 3, right: 3),
                                                       child: Text(
                                                         provider.headToHeadModel.rows[index].leagueName.tr,
-                                                        style: TextStyle(
-                                                            fontFamily: 'Vazirmatn',
-                                                            fontSize: 10,
-                                                            color: Colors.grey[700]),
+                                                        style: Theme.of(context).textTheme.bodyText2,
                                                       ),
                                                     ),
                                                   )
@@ -337,7 +378,7 @@ class _PreConfrontState extends State<PreConfront> {
                                                   MainAxisAlignment.center,
                                                   children: [
                                                     Flexible(
-                                                      flex: 5,
+                                                      flex: 4,
                                                       child: Container(width: MediaQuery.of(context).size.width * .4,
                                                           height: 40,
                                                           child: Stack(
@@ -351,10 +392,7 @@ class _PreConfrontState extends State<PreConfront> {
                                                                       child: Text(
                                                                         provider.headToHeadModel.rows[index].homeTeamName,
                                                                         textDirection: ui.TextDirection.ltr,
-                                                                        style: TextStyle(
-                                                                            fontFamily: 'Vazirmatn',
-                                                                            fontSize: 13,
-                                                                            fontWeight: FontWeight.w500),
+                                                                        style: Theme.of(context).textTheme.bodyText1,
                                                                         overflow: TextOverflow.clip,
                                                                       ),
                                                                     ),
@@ -390,7 +428,7 @@ class _PreConfrontState extends State<PreConfront> {
                                                     ),
 
                                                     Flexible(
-                                                      flex: 6,
+                                                      flex: 5,
                                                       child: Container(
                                                         height: 40,
                                                         child: Row(
@@ -402,7 +440,7 @@ class _PreConfrontState extends State<PreConfront> {
                                                               padding:
                                                               const EdgeInsets
                                                                   .only(
-                                                                  left: 16),
+                                                                  left: 14),
                                                               child: Container(
                                                                 width: 35,
                                                                 height: 30,
@@ -422,18 +460,13 @@ class _PreConfrontState extends State<PreConfront> {
                                                             ),
                                                             Text(
                                                               "${provider.headToHeadModel.rows[index].homeTeamScore} - ${provider.headToHeadModel.rows[index].awayTeamScore} ",
-                                                              style: TextStyle(
-                                                                  fontFamily:
-                                                                  'Vazirmatn',
-                                                                  fontSize: 14,
-                                                                  color:
-                                                                  Colors.black),
+                                                              style: Theme.of(context).textTheme.bodyText1,
                                                             ),
                                                             Padding(
                                                               padding:
                                                               const EdgeInsets
                                                                   .only(
-                                                                  right: 16),
+                                                                  right: 14),
                                                               child: Container(
                                                                 width: 35,
                                                                 height: 30,
@@ -447,14 +480,11 @@ class _PreConfrontState extends State<PreConfront> {
                                                     ),
 
                                                     Flexible(
-                                                      flex: 5,
+                                                      flex: 4,
                                                       child: Container(
                                                         height: 40,
                                                         width:
-                                                        MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                            .4,
+                                                        MediaQuery.of(context).size.width * .4,
                                                         child: Row(
                                                           mainAxisAlignment:
                                                           MainAxisAlignment
@@ -467,8 +497,7 @@ class _PreConfrontState extends State<PreConfront> {
                                                                     .rows[index]
                                                                     .awayTeamName,
                                                                 textDirection: ui.TextDirection.rtl,
-                                                                style: TextStyle(
-                                                                  fontFamily: 'Vazirmatn', fontSize: 13, fontWeight: FontWeight.w500,),
+                                                                style: Theme.of(context).textTheme.bodyText1,
                                                                 overflow: TextOverflow.clip,
                                                               ),
                                                             ),
@@ -509,7 +538,7 @@ class _PreConfrontState extends State<PreConfront> {
                                       :Row(
                                     children: [
                                        Icon(Icons.arrow_back_ios,color: Theme.of(context).primaryColor,size: 14,),
-                                      Text('مشاهدة الكل',style: TextStyle(color: Theme.of(context).primaryColor),),
+                                      Text('مشاهدة الكل',style: TextStyle(color: Color(0xFF862aa6)),),
                                     ],
 
                             ),
@@ -519,6 +548,7 @@ class _PreConfrontState extends State<PreConfront> {
                         ),
                       ),
                     ),
+                    /*
                     Container(
                       width: MediaQuery.of(context).size.width,
                       child: Card(
@@ -552,7 +582,7 @@ class _PreConfrontState extends State<PreConfront> {
                                           ),
                                         ),
                                       ),
-                                      Text('الموسم حتي الان',style: TextStyle(fontSize: 17),),
+                                      Text('الموسم حتي الان',style: Theme.of(context).textTheme.headline2,),
                                       Container(
                                         width: 65,
                                         height: 65,
@@ -586,9 +616,7 @@ class _PreConfrontState extends State<PreConfront> {
                                     SizedBox(width: 5,),
                                     Text(
                                       provider.matchDetailsModel.leagueName,
-                                      style: TextStyle(
-                                          fontFamily: 'Vazirmatn',
-                                          fontWeight: FontWeight.w500),
+                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 14)
                                     ),
                                   ],
                                 ),
@@ -633,10 +661,7 @@ class _PreConfrontState extends State<PreConfront> {
                                                         bottom: 3),
                                                     child: Text(
                                                       "8",
-                                                      style: TextStyle(
-                                                          fontFamily:
-                                                          'Vazirmatn',
-                                                          fontSize: 16),
+                                                       style:Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 16)
                                                     ),
                                                   ),
                                                 ),
@@ -645,12 +670,7 @@ class _PreConfrontState extends State<PreConfront> {
                                             Container(
                                               child: Text(
                                                 "اماكن الجدول",
-                                                style: TextStyle(
-                                                    fontFamily:
-                                                    'Vazirmatn',
-                                                    fontSize: 16,
-                                                    color:
-                                                    Colors.black54),
+                                                  style:Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 15)
                                               ),
                                             ),
                                             Container(
@@ -673,10 +693,7 @@ class _PreConfrontState extends State<PreConfront> {
                                                         bottom: 3),
                                                     child: Text(
                                                       "6",
-                                                      style: TextStyle(
-                                                          fontFamily:
-                                                          'Vazirmatn',
-                                                          fontSize: 16),
+                                                      style:Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 16)
                                                     ),
                                                   ),
                                                 ),
@@ -692,6 +709,8 @@ class _PreConfrontState extends State<PreConfront> {
                         ),
                       ),
                     ),
+
+                     */
                   ],
                 ),
               );

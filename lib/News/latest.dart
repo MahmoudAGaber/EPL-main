@@ -123,7 +123,7 @@ class _latestState extends State<latest> {
                                             padding: const EdgeInsets.all(7),
                                             child: Row(
                                               children: [
-                                                CircleAvatar(radius: 8,),
+                                                //CircleAvatar(radius: 8,),
                                                 SizedBox(width: 6,),
                                                 Text(
                                                   provider.categoriesList[index].name,
@@ -238,7 +238,7 @@ class _latestState extends State<latest> {
                                                                         const EdgeInsets.only(left: 15, right: 15),
                                                                         child: Text(
                                                                           provider.newsList[index].title,
-                                                                          style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600),
+                                                                          style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 15),
                                                                           overflow: TextOverflow.clip,
                                                                         ),
                                                                       ),
@@ -252,11 +252,11 @@ class _latestState extends State<latest> {
                                                                     SizedBox(width: 5,),
                                                                     Text(
                                                                       provider.newsList[index].username,
-                                                                      style: TextStyle(color: Colors.grey[100],fontSize: 13),
+                                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
                                                                     ),
                                                                     SizedBox(width: 5,),
                                                                     Text("- ${provider.newsList[index].date.tr} - ${provider.newsList[index].time.tr}",
-                                                                      style: TextStyle(color: Colors.grey[100],fontSize: 13),
+                                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
                                                                       overflow: TextOverflow.clip,
                                                                     ),
                                                                   ],

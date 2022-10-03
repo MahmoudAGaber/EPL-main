@@ -41,7 +41,7 @@ class _EachPlayerState extends State<EachPlayer> with TickerProviderStateMixin {
       eachplayerViewModel.getHeaderProfile(widget.url, context);
     });
 
-    tabController = new TabController(length: 3, vsync: this);
+    tabController = new TabController(length: 2, vsync: this);
     tabController.addListener(() {
       setState(() {
         _selectedIndex = tabController.index;
@@ -188,7 +188,7 @@ class _EachPlayerState extends State<EachPlayer> with TickerProviderStateMixin {
         Directionality(
           textDirection: TextDirection.rtl,
           child: DefaultTabController(
-            length: 3,
+            length: 2,
             child: SliverPersistentHeader(
               pinned: true,
               delegate: _SliverAppBarDelegate(TabBar(
@@ -223,12 +223,15 @@ class _EachPlayerState extends State<EachPlayer> with TickerProviderStateMixin {
                         style: tapbar,
                       ),
                     ),
+                    /*
                     Tab(
                       child: Text(
                         "المباريات".tr,
                         style: tapbar,
                       ),
                     ),
+
+                     */
                     /*
                     Tab(
                       child: Text(
@@ -257,7 +260,10 @@ class _EachPlayerState extends State<EachPlayer> with TickerProviderStateMixin {
               ]),
               //ListView(children: <Widget>[playerMatches()]),
               ListView(children: <Widget>[playerStatistics(url: widget.url)]),
+              /*
               ListView(children: <Widget>[playerMatches(url: widget.url)]),
+
+               */
 
               // ListView(children: <Widget>[playerTransference()]),
             ]),

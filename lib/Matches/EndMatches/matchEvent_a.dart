@@ -1,4 +1,6 @@
+import 'package:arseli/EachTeam/eachTeam.dart';
 import 'package:arseli/Provider/EachMatchViewModel.dart';
+import 'package:arseli/Provider/EachTeamViewModel.dart';
 import 'package:arseli/matches.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -17,12 +19,9 @@ class MatchEvent_a extends StatefulWidget {
 }
 
 class _MatchEvent_aState extends State<MatchEvent_a> {
-  TextStyle _textStyle = TextStyle(
-      fontFamily: 'Vazirmatn', fontWeight: FontWeight.w800, fontSize: 16);
-  TextStyle _textStyle1 =
-      TextStyle(fontFamily: 'Vazirmatn', color: Colors.grey, fontSize: 13);
-  TextStyle _textStyle2 =
-      TextStyle(fontFamily: 'Vazirmatn', color: Colors.green);
+  TextStyle _textStyle = TextStyle(fontFamily: 'Vazirmatn', fontWeight: FontWeight.w800, fontSize: 16);
+  TextStyle _textStyle1 = TextStyle(fontFamily: 'Vazirmatn', color: Colors.grey, fontSize: 13);
+  TextStyle _textStyle2 = TextStyle(fontFamily: 'Vazirmatn', color: Colors.green);
   TextStyle _textStyle3 = TextStyle(fontFamily: 'Vazirmatn', color: Colors.red);
 
   TextStyle head = TextStyle(
@@ -72,7 +71,7 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                   ),
                 )
               : Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(12.0),
                 child: Column(children: <Widget>[
                   Card(
                     shape: RoundedRectangleBorder(
@@ -86,15 +85,14 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                         itemCount: provider.eventsModel.length,
                         itemBuilder: (context, index) {
                           return provider.eventsModel[index] != null
-                              ? Event(index,
-                              provider.eventsModel[index].details.name)
+                              ? Event(index, provider.eventsModel[index].details.name)
                               : Container();
                         },
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: 5,
+                    height: 8,
                   ),
                   Column(children: <Widget>[
                     Container(
@@ -103,132 +101,123 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                         shape: RoundedRectangleBorder(
                             borderRadius:
                             BorderRadius.all(Radius.circular(10.0))),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'تفاصيل المباراة',
-                                style: TextStyle(
-                                    fontFamily: 'Vazirmatn',
-                                    fontWeight: FontWeight.w500),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(right: 16,left: 16,top: 12,bottom: 8),
+                              child: Text(
+                                  'تفاصيل المباراة',
+                                  style: Theme.of(context).textTheme.headline2
                               ),
-                              Divider(),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        CircleAvatar(radius: 10,),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
+                            ),
+                            Divider(),
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      // CircleAvatar(radius: 10,),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
                                               'المسابقة',
-                                              style: TextStyle(
-                                                  fontFamily: 'Vazirmatn',
-                                                  fontWeight:
-                                                  FontWeight.w500),
-                                            ),
-                                            Text(
-                                              provider.matchDetailsModel
-                                                  .leagueName.tr,
-                                              style: TextStyle(color: Colors.black54),
-                                              maxLines: 2,
-                                              softWrap: true,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 18,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.access_time,
-                                          size: 22,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
+                                              style: Theme.of(context).textTheme.bodyText1
+                                          ),
+                                          SizedBox(width: 5,),
+                                          Text(
+                                            provider.matchDetailsModel.leagueName.tr,
+                                            style: Theme.of(context).textTheme.bodyText2,
+                                            maxLines: 2,
+                                            softWrap: true,
+                                          )
+
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 18,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.access_time,
+                                        size: 22,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
                                               'ضربة البداية',
-                                              style: TextStyle(
-                                                  fontFamily: 'Vazirmatn',
-                                                  fontWeight:
-                                                  FontWeight.w500),
-                                            ),
-                                            Text(
-                                              provider
-                                                  .matchDetailsModel.date.tr,
-                                              style: TextStyle(color: Colors.black54),
-                                              maxLines: 2,
-                                              softWrap: true,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 18,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.location_on_outlined,
-                                          size: 22,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
+                                              style: Theme.of(context).textTheme.bodyText1
+                                          ),
+                                          Text(
+                                            provider.matchDetailsModel.date.tr,
+                                            style: Theme.of(context).textTheme.bodyText2,
+                                            maxLines: 2,
+                                            softWrap: true,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 18,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.location_on_outlined,
+                                        size: 22,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
                                               'ملعب المباراة',
-                                              style: TextStyle(
-                                                  fontFamily: 'Vazirmatn',
-                                                  fontWeight:
-                                                  FontWeight.w500),
-                                            ),
-                                            Text(
-                                              provider.matchDetailsModel.groundName.tr,
-                                              style: TextStyle(color: Colors.black54),
-                                              maxLines: 2,
-                                              softWrap: true,
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
+                                              style: Theme.of(context).textTheme.bodyText1
+                                          ),
+                                          Text(
+                                            provider.matchDetailsModel.groundName.tr,
+                                            style: Theme.of(context).textTheme.bodyText2,
+                                            maxLines: 2,
+                                            softWrap: true,
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  )
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -237,48 +226,39 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                         : Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Container(
-                        height: 175,
+                        height: 270,
                         width: MediaQuery.of(context).size.width,
                         child: Card(
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(10.0))),
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
                           child: Column(
                             children: <Widget>[
                               Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 15, right: 10, bottom: 10),
+                                padding: const EdgeInsets.only(right: 16,left: 16,top: 12,bottom: 8),
                                 child: Row(
                                   mainAxisAlignment:
                                   MainAxisAlignment.start,
                                   children: <Widget>[
-                                    Text("المواجهات السابقة".tr,
-                                        style: TextStyle(
-                                            fontFamily: 'Vazirmatn',
-                                            fontWeight:
-                                            FontWeight.w600))
+                                    Text("نتائج الفرق".tr,style: Theme.of(context).textTheme.headline2,)
                                   ],
                                 ),
                               ),
                               Divider(),
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(16.0),
                                 child: Container(
-                                    height: 85,
+                                    height: 170,
                                     child: Row(
                                       children: [
                                         Flexible(
-                                          flex: 1,
-                                          child: Container(
-                                            height: 85,
+                                          child:Container(
+                                            height: 190,
                                             child: ListView.builder(
+                                                physics: NeverScrollableScrollPhysics(),
                                                 scrollDirection:
-                                                Axis.horizontal,
-                                                itemCount: provider
-                                                    .teamFormModel
-                                                    .teamFormModel
-                                                    .home
-                                                    .length,
+                                                Axis.vertical,
+                                                itemCount: 4,
                                                 itemBuilder:
                                                     (context, index) {
                                                   return Padding(
@@ -286,11 +266,20 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                                                     const EdgeInsets
                                                         .only(
                                                         left: 3,
-                                                        right: 3,
+                                                        right: 25,
                                                         top: 8,
                                                         bottom: 8),
-                                                    child: Column(
+                                                    child: Row(
                                                       children: [
+                                                        Container(
+                                                          height: 25,
+                                                          width: 26,
+                                                          child: Image.network(
+                                                              "https://www.eplworld.com${provider.msnModel.homeTeamLogo}"),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 10,
+                                                        ),
                                                         Container(
                                                           height: 21,
                                                           width: 21,
@@ -304,13 +293,11 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                                                                   ? Colors.black45
                                                                   : null),
                                                           child: Center(
-                                                              child:
-                                                              Text(
+                                                              child: Text(
                                                                 provider
                                                                     .teamFormModel
                                                                     .teamFormModel
-                                                                    .home[
-                                                                index]
+                                                                    .home[index]
                                                                     .status,
                                                                 style: TextStyle(
                                                                     fontFamily:
@@ -325,26 +312,12 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                                                               )),
                                                         ),
                                                         SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        index == 0
-                                                            ? Container(
-                                                          height:
-                                                          2,
-                                                          width:
-                                                          23,
-                                                          color: Colors
-                                                              .green,
-                                                        )
-                                                            : Container(),
-                                                        SizedBox(
-                                                          height: 5,
+                                                          width: 10,
                                                         ),
                                                         Container(
                                                           height: 25,
                                                           width: 26,
-                                                          child: Image
-                                                              .network(
+                                                          child: Image.network(
                                                               "https://www.eplworld.com${provider.teamFormModel.teamFormModel.home[index].teamLogo}"),
                                                         )
                                                       ],
@@ -353,33 +326,31 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                                                 }),
                                           ),
                                         ),
-                                        SizedBox(
-                                          width: 30,
-                                        ),
                                         Flexible(
-                                          flex: 1,
                                           child: Container(
-                                            height: 85,
+                                            height: 190,
                                             child: ListView.builder(
                                                 scrollDirection:
-                                                Axis.horizontal,
-                                                itemCount: provider
-                                                    .teamFormModel
-                                                    .teamFormModel
-                                                    .away
-                                                    .length,
+                                                Axis.vertical,
+                                                physics: NeverScrollableScrollPhysics(),
+                                                itemCount: 4,
                                                 itemBuilder:
                                                     (context, index) {
                                                   return Padding(
                                                     padding:
-                                                    const EdgeInsets
-                                                        .only(
-                                                        left: 3,
-                                                        right: 3,
-                                                        top: 8,
-                                                        bottom: 8),
-                                                    child: Column(
+                                                    const EdgeInsets.only(left: 25, right: 3, top: 8, bottom: 8),
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.end,
                                                       children: [
+                                                        Container(
+                                                          height: 25,
+                                                          width: 26,
+                                                          child: Image.network(
+                                                              "https://www.eplworld.com${provider.msnModel.awayTeamLogo}"),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 10,
+                                                        ),
                                                         Container(
                                                           height: 21,
                                                           width: 21,
@@ -393,13 +364,11 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                                                                   ? Colors.black45
                                                                   : null),
                                                           child: Center(
-                                                              child:
-                                                              Text(
+                                                              child: Text(
                                                                 provider
                                                                     .teamFormModel
                                                                     .teamFormModel
-                                                                    .away[
-                                                                index]
+                                                                    .away[index]
                                                                     .status,
                                                                 style: TextStyle(
                                                                     fontFamily:
@@ -414,26 +383,12 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                                                               )),
                                                         ),
                                                         SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        index == 0
-                                                            ? Container(
-                                                          height:
-                                                          2,
-                                                          width:
-                                                          23,
-                                                          color: Colors
-                                                              .green,
-                                                        )
-                                                            : Container(),
-                                                        SizedBox(
-                                                          height: 5,
+                                                          width: 10,
                                                         ),
                                                         Container(
                                                           height: 25,
                                                           width: 26,
-                                                          child: Image
-                                                              .network(
+                                                          child: Image.network(
                                                               "https://www.eplworld.com${provider.teamFormModel.teamFormModel.away[index].teamLogo}"),
                                                         )
                                                       ],
@@ -451,288 +406,375 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                       ),
                     )
                   ]),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 8,),
                   provider.tablesModelList == null || provider.tablesModelList[0].list.length > 1
                       ?Container()
                       :Container(
                     width: MediaQuery.of(context).size.width,
                     child: Card(
                       shape: RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(10.0))),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 10,
-                                ),
-                                SizedBox(width: 5,),
-                                InkWell(
-                                  onTap: (){
-                                    print(widget.awayId);
-                                  },
-                                  child: Text(
-                                    provider.matchDetailsModel.leagueName,
-                                    style: TextStyle(
-                                        fontFamily: 'Vazirmatn',
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            Divider(),
-                            Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Row(
-                                      children: <Widget>[
-                                        Container(
-                                          width: MediaQuery.of(context).size.width * 0.38,
-                                          child: Row(
-                                            children: <Widget>[
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Text(
-                                                "المركز",
-                                                style: TextStyle(
-                                                    fontFamily: 'Vazirmatn',
-                                                    color: Colors.grey),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          width: MediaQuery.of(context)
-                                              .size
-                                              .width *
-                                              0.3,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 3, right: 15),
-                                            child: Row(
-                                              children: <Widget>[
-                                                Expanded(
-                                                  child: Text(
-                                                    "ل".tr,
-                                                    style: headline2,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 33,
-                                                ),
-                                                Expanded(
-                                                    child: Text(
-                                                      "ف".tr,
-                                                      style: headline2,
-                                                    )),
-                                                SizedBox(
-                                                  width: 33,
-                                                ),
-                                                Expanded(
-                                                    child: Text(
-                                                      "ت".tr,
-                                                      style: headline2,
-                                                    )),
-                                                SizedBox(
-                                                  width: 28,
-                                                ),
-                                                Expanded(
-                                                    child: Text(
-                                                      "خ".tr,
-                                                      style: headline2,
-                                                    )),
-                                              ],
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                  padding: const EdgeInsets.only(right: 16,left: 16,top: 12,bottom: 8),
+                                  child: Row(
+                                    children: [
+                                      // CircleAvatar(radius: 10,),
+                                      SizedBox(width: 5,),
+                                      Text(
+                                          provider.matchDetailsModel.leagueName.tr,
+                                          style: Theme.of(context).textTheme.headline2
+                                      ),
+                                    ],
+                                  )
+                              ),
+                              Divider(),
+                              Padding(
+                                padding:
+                                const EdgeInsets.only(top: 5.0, bottom: 15.0),
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Row(
+                                    children: <Widget>[
+                                      Container(
+                                        width: MediaQuery.of(context).size.width * 0.41,
+                                        child: Row(
+                                          children: <Widget>[
+                                            SizedBox(
+                                              width: 10,
                                             ),
-                                          ),
+                                            Text(
+                                              "المركز",
+                                              style: TextStyle(
+                                                  fontFamily: 'Vazirmatn',
+                                                  color: Colors.grey),
+                                            ),
+                                          ],
                                         ),
-                                        Container(
-                                          width: MediaQuery.of(context)
-                                              .size
-                                              .width *
-                                              0.21,
+                                      ),
+                                      Container(
+                                        width: MediaQuery.of(context).size.width *
+                                            0.29,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 3, right: 15),
                                           child: Row(
                                             children: <Widget>[
+                                              Expanded(
+                                                child: Text(
+                                                  "ل".tr,
+                                                  style: headline2,
+                                                ),
+                                              ),
                                               SizedBox(
-                                                width: 24,
+                                                width: 25,
                                               ),
-                                              Text(
-                                                "-/+",
-                                                style: headline2,
-                                              ),
+                                              Expanded(
+                                                  child: Text(
+                                                    "ف".tr,
+                                                    style: headline2,
+                                                  )),
                                               SizedBox(
-                                                width: 20,
+                                                width: 25,
                                               ),
-                                              Text(
-                                                "ف أ".tr,
-                                                style: headline2,
+                                              Expanded(
+                                                  child: Text(
+                                                    "ت".tr,
+                                                    style: headline2,
+                                                  )),
+                                              SizedBox(
+                                                width: 30,
                                               ),
+                                              Expanded(
+                                                  child: Text(
+                                                    "خ".tr,
+                                                    style: headline2,
+                                                  )),
                                             ],
                                           ),
-                                        )
-                                      ],
-                                    ),
+                                        ),
+                                      ),
+
+                                      Container(
+                                        width:
+                                        MediaQuery.of(context).size.width * 0.22,
+                                        child: Row(
+                                          children: <Widget>[
+                                            SizedBox(
+                                              width: 25,
+                                            ),
+                                            Text(
+                                              "-/+",
+                                              style: headline2,
+                                            ),
+                                            SizedBox(
+                                              width: 20,
+                                            ),
+                                            Text(
+                                              "ن".tr,
+                                              style: headline2,
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
                                   ),
                                 ),
-                                ListView.builder(
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.vertical,
-                                    physics: ClampingScrollPhysics(),
-                                    itemCount: provider.tablesModelList[0].list[0].tableModel.length,
-                                    itemBuilder: (BuildContext context, index) {
-                                      return
-                                        widget.homeId == provider.tablesModelList[0].list[0].tableModel[index].id
-                                            || widget.awayId == provider.tablesModelList[0].list[0].tableModel[index].id
-                                            ?Container(
+                              ),
+                            ],
+                          ),
+                          ListView.builder(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              physics: ClampingScrollPhysics(),
+                              itemCount: provider
+                                  .tablesModelList[0].list[0].tableModel.length,
+                              itemBuilder: (BuildContext context, index) {
+                                return   widget.homeId == provider.tablesModelList[0].list[0].tableModel[index].id
+                                    || widget.awayId == provider.tablesModelList[0].list[0].tableModel[index].id
+                                    ?Container(
+                                  height: 60,
+                                  child: Stack(
+                                    children: [
+                                      Positioned(
+                                        top: 6,
+                                        right: 1,left: 1,
+                                        child: Container(
+                                          height: 60,
                                           child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
                                               children: <Widget>[
-                                                Padding(
-                                                  padding:
-                                                  const EdgeInsets.only(top: 6, bottom: 6, left: 10, right: 10),
-                                                  child: Container(
-                                                    width: MediaQuery.of(context).size.width,
-                                                    height: 35,
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                      MainAxisAlignment.spaceBetween,
-                                                      children: <Widget>[
-                                                        Container(
-                                                          width: 20,
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                ChangeNotifierProvider<
+                                                                    EachTeamViewModel>(
+                                                                    create: (_) =>
+                                                                        EachTeamViewModel(),
+                                                                    child: EachTeam(
+                                                                      url: provider
+                                                                          .tablesModelList[
+                                                                      0]
+                                                                          .list[0]
+                                                                          .tableModel[index]
+                                                                          .link,
+                                                                      id: provider
+                                                                          .tablesModelList[
+                                                                      0]
+                                                                          .list[0]
+                                                                          .tableModel[index]
+                                                                          .id,
+                                                                    ))));
+                                                  },
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.only(right: 12,left: 12),
+                                                    child: Container(
+                                                      width:
+                                                      MediaQuery.of(context).size.width*0.87,
+                                                      height: 35,
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment.spaceBetween,
+                                                        children: <Widget>[
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment.center,
+                                                            crossAxisAlignment:
+                                                            CrossAxisAlignment.center,
                                                             children: [
-                                                              Text((provider.tablesModelList[0].list[0].tableModel[index].serial)
-                                                                  .toString()),
+                                                              Column(
+                                                                mainAxisAlignment:
+                                                                MainAxisAlignment.center,
+                                                                children: [
+                                                                  Text((provider.tablesModelList[0].list[0].tableModel[index].serial).toString(),
+                                                                    style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),),
+                                                                ],
+                                                              ),
+                                                              SizedBox(width: 3,),
+                                                              Column(
+                                                                mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                                crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                                children: [
+                                                                  Container(
+                                                                    child: Container(
+                                                                        width: 35,
+                                                                        height: 25,
+                                                                        child: Image.network(
+                                                                            'https://www.eplworld.com${provider.tablesModelList[0].list[0].tableModel[index].logo}')),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              SizedBox(
+                                                                width: 10,
+                                                              ),
                                                             ],
                                                           ),
-                                                        ),
-                                                        Column(
-                                                          mainAxisAlignment: MainAxisAlignment.center,
-                                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                                          children: [
-                                                            Container(
-                                                              child: Container(
-                                                                  width: 35,
-                                                                  height: 25,
-                                                                  child: Image.network('https://www.eplworld.com${provider.tablesModelList[0].list[0].tableModel[index].logo}')),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Flexible(
-                                                            flex: 3,
-                                                            child:
-                                                            Row(
+                                                          Flexible(
+                                                              flex: 4,
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                MainAxisAlignment.start,
+                                                                children: [
+                                                                  Column(
+                                                                    mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                    children: [
+                                                                      Text(
+                                                                        provider.tablesModelList[0].list[0].tableModel[index].name,
+                                                                        style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                      )
+                                                                    ],
+                                                                  )
+                                                                ],
+                                                              )),
+                                                          Flexible(
+                                                            flex: 6,
+                                                            child: Row(
                                                               mainAxisAlignment:
-                                                              MainAxisAlignment.start,
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
                                                               children: [
                                                                 Column(
                                                                   mainAxisAlignment:
-                                                                  MainAxisAlignment.center,
+                                                                  MainAxisAlignment
+                                                                      .center,
                                                                   children: [
                                                                     Text(
-                                                                      provider.tablesModelList[0].list[0].tableModel[index].name,
-                                                                      style: content,
+                                                                      provider
+                                                                          .tablesModelList[
+                                                                      0]
+                                                                          .list[0]
+                                                                          .tableModel[index]
+                                                                          .colL
+                                                                          .toString(),
+                                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                Column(
+                                                                  mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                                  children: [
+                                                                    Text(
+                                                                      provider
+                                                                          .tablesModelList[
+                                                                      0]
+                                                                          .list[0]
+                                                                          .tableModel[index]
+                                                                          .colF
+                                                                          .toString(),
+                                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                Column(
+                                                                  mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                                  children: [
+                                                                    Text(
+                                                                      provider
+                                                                          .tablesModelList[
+                                                                      0]
+                                                                          .list[0]
+                                                                          .tableModel[index]
+                                                                          .colT
+                                                                          .toString(),
+                                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                Column(
+                                                                  mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                                  children: [
+                                                                    Text(
+                                                                      provider
+                                                                          .tablesModelList[
+                                                                      0]
+                                                                          .list[0]
+                                                                          .tableModel[index]
+                                                                          .colK
+                                                                          .toString(),
+                                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                Column(
+                                                                  mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                                  children: [
+                                                                    Text(
+                                                                      provider
+                                                                          .tablesModelList[
+                                                                      0]
+                                                                          .list[0]
+                                                                          .tableModel[index]
+                                                                          .colFA,
+                                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                Column(
+                                                                  mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                                  children: [
+                                                                    Text(
+                                                                      provider
+                                                                          .tablesModelList[
+                                                                      0]
+                                                                          .list[0]
+                                                                          .tableModel[index]
+                                                                          .colN
+                                                                          .toString(),
+                                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
                                                                     )
                                                                   ],
-                                                                )
+                                                                ),
                                                               ],
-                                                            )),
-                                                        Flexible(
-                                                          flex: 5,
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                            children: [
-                                                              Column(
-                                                                mainAxisAlignment:
-                                                                MainAxisAlignment.center,
-                                                                children: [
-                                                                  Text(
-                                                                    provider.tablesModelList[0].list[0].tableModel[index].colL.toString(),
-                                                                    style: content,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              Column(
-                                                                mainAxisAlignment:
-                                                                MainAxisAlignment.center,
-                                                                children: [
-                                                                  Text(
-                                                                    provider.tablesModelList[0].list[0].tableModel[index].colF.toString(),
-                                                                    style: content,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              Column(
-                                                                mainAxisAlignment:
-                                                                MainAxisAlignment.center,
-                                                                children: [
-                                                                  Text(
-                                                                    provider.tablesModelList[0].list[0].tableModel[index].colT.toString(),
-                                                                    style: content,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              Column(
-                                                                mainAxisAlignment:
-                                                                MainAxisAlignment.center,
-                                                                children: [
-                                                                  Text(
-                                                                    provider.tablesModelList[0].list[0].tableModel[index].colK.toString(),
-                                                                    style: content,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              Column(
-                                                                mainAxisAlignment:
-                                                                MainAxisAlignment.center,
-                                                                children: [
-                                                                  Text(
-                                                                    provider.tablesModelList[0].list[0].tableModel[index].colFA,
-                                                                    style: content,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              Column(
-                                                                mainAxisAlignment:
-                                                                MainAxisAlignment.center,
-                                                                children: [
-                                                                  Text(
-                                                                    provider.tablesModelList[0].list[0].tableModel[index].colN.toString(),
-                                                                    style: content,
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )
-                                                      ],
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
                                               ]),
-                                        )
-                                            :Container();
-                                    })
-                              ],
-                            ),
-                          ],
-                        ),
+                                        ),
+                                      ),
+                                      Positioned(child: Divider(height: 7,)),
+                                    ],
+                                  ),
+                                )
+                                    :Container();
+                              }),
+
+
+
+                        ],
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 8,),
+                  /*
                   Container(
                     width: MediaQuery.of(context).size.width,
                     child: Card(
@@ -946,6 +988,8 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                     ),
                   ),
 
+                   */
+
                 ]),
               );
         }));
@@ -966,7 +1010,7 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                   Container(
                     child: Text(
                       provider.eventsModel[index].details.time.toString(),
-                      style: _textStyle,
+                      style: Theme.of(context).textTheme.headline2
                     ),
                   ),
                   SizedBox(
@@ -984,8 +1028,7 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          Text(provider
-                              .eventsModel[index].details.belongsToName.tr)
+                          Text(provider.eventsModel[index].details.belongsToName.tr,style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),)
                         ],
                       ),
                       provider.eventsModel[index].details.goalMakerName.isBlank
@@ -994,14 +1037,14 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                               children: <Widget>[
                                 provider.eventsModel[index].linkedTo == 'home'
                                     ? Text(
-                                        "${provider.eventsModel[index].details.goalMakerName} :صانع الهدف"
+                                        " صانع الهدف : ${provider.eventsModel[index].details.goalMakerName}"
                                             .tr,
-                                        style: _textStyle1,
+                                    style:Theme.of(context).textTheme.subtitle2.copyWith(fontSize: 13)
                                       )
                                     : Text(
-                                        " صانع الهدف: ${provider.eventsModel[index].details.goalMakerName}"
+                                        " ${provider.eventsModel[index].details.goalMakerName} صانع الهدف : "
                                             .tr,
-                                        style: _textStyle1,
+                                        style:Theme.of(context).textTheme.subtitle2.copyWith(fontSize: 13)
                                       )
                               ],
                             )
@@ -1028,7 +1071,7 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                   Container(
                     child: Text(
                       provider.eventsModel[index].details.time.toString(),
-                      style: _textStyle,
+                        style: Theme.of(context).textTheme.headline2
                     ),
                   ),
                   SizedBox(
@@ -1111,7 +1154,7 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                   Container(
                     child: Text(
                       provider.eventsModel[index].details.time.toString(),
-                      style: _textStyle,
+                        style: Theme.of(context).textTheme.headline2
                     ),
                   ),
                   SizedBox(
@@ -1124,13 +1167,14 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                   SizedBox(
                     width: 10,
                   ),
-                  Text(provider.eventsModel[index].details.belongsToName.tr),
+                  Text(provider.eventsModel[index].details.belongsToName.tr,
+                      style:Theme.of(context).textTheme.headline2.copyWith(fontSize: 13)),
                   SizedBox(
                     width: 5,
                   ),
                   Text(
                     "(${provider.eventsModel[index].details.outcome})".tr,
-                    style: content2,
+                      style:Theme.of(context).textTheme.subtitle2
                   )
                 ],
               ),
@@ -1160,7 +1204,7 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                     width: 5,
                   ),
                   Text("${provider.eventsModel[index].details.status}".tr,
-                      style: head),
+                      style:Theme.of(context).textTheme.headline2),
                 ],
               ),
             ),
@@ -1183,7 +1227,7 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                     Container(
                       child: Text(
                         provider.eventsModel[index].details.time.toString(),
-                        style: _textStyle,
+                          style: Theme.of(context).textTheme.headline2
                       ),
                     ),
                     SizedBox(
@@ -1199,7 +1243,8 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                     SizedBox(
                       width: 10,
                     ),
-                    Text(provider.eventsModel[index].details.belongsToName.tr)
+                    Text(provider.eventsModel[index].details.belongsToName.tr,
+                        style:Theme.of(context).textTheme.headline2.copyWith(fontSize: 13))
                   ],
                 ),
               ),
@@ -1223,7 +1268,7 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                     Container(
                       child: Text(
                         provider.eventsModel[index].details.time.toString(),
-                        style: _textStyle,
+                          style: Theme.of(context).textTheme.headline2
                       ),
                     ),
                     SizedBox(
@@ -1239,7 +1284,8 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                     SizedBox(
                       width: 10,
                     ),
-                    Text(provider.eventsModel[index].details.belongsToName.tr)
+                    Text(provider.eventsModel[index].details.belongsToName.tr,
+                        style:Theme.of(context).textTheme.headline2.copyWith(fontSize: 13))
                   ],
                 ),
               ),

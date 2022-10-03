@@ -525,6 +525,7 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
       ),
     );
   }
+  /*
   Widget matchPlayerInjured() {
     return Tab(
       child: Text(
@@ -534,6 +535,8 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
     );
   }
 
+
+   */
   Widget matchTableName() {
     return Tab(
       child: Text(
@@ -557,14 +560,14 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
     if (provider.teamFormModel != null) {
       test.add(matchEventName());
     }
-    test.add(matchPlayerInjured());
+    //test.add(matchPlayerInjured());
 
-    /*
+
     if (provider.tablesModelList != null) {
       test.add(matchTableName());
     }
 
-     */
+
 
     if (provider.headToHeadModel != null) {
       test.add(matchHTHName());
@@ -618,9 +621,9 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
     if (provider.teamFormModel != null) {
       test.add(matchEvent());
     }
-    test.add(matchInjured());
+   // test.add(matchInjured());
 
-    /*
+
     if (provider.tablesModelList != null &&
         provider.tablesModelList[0].list.length == 1) {
       test.add(matchTable());
@@ -631,7 +634,7 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
     }
 
 
-     */
+
     if (provider.headToHeadModel != null) {
       test.add(matchHTH());
     }

@@ -43,31 +43,30 @@ class _teamTeamState extends State<teamTeam> {
                       backgroundColor: Theme.of(context).primaryColor),
                 ))
             : Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(12.0),
                 child: Column(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(top: 4, bottom: 4),
+                      padding: const EdgeInsets.only(top: 4,bottom: 4),
                       child: Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(children: <Widget>[
-                            Row(
+                        child: Column(children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8,bottom: 6,left: 16,right: 16),
+                            child: Row(
                               children: <Widget>[
                                 Text(
                                   "المدرب".tr,
-                                  style: TextStyle(
-                                      fontFamily: 'Vazirmatn', fontSize: 17),
+                                    style: Theme.of(context).textTheme.headline2
                                 ),
                               ],
                             ),
-                            Divider(),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            GestureDetector(
+                          ),
+                          Divider(),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10,bottom: 10),
+                            child: GestureDetector(
                               onTap: () {
                                 Navigator.push(
                                     context,
@@ -85,89 +84,93 @@ class _teamTeamState extends State<teamTeam> {
                                               ),
                                             )));
                               },
-                              child: Row(
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: <Widget>[
-                                      Container(
-                                        width: 45,
-                                        height: 45,
-                                        decoration: BoxDecoration(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 8,bottom: 8,left: 16,right: 16),
+                                child: Row(
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: <Widget>[
+                                        Container(
+                                          width: 45,
+                                          height: 45,
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(100)),
+                                              border: Border.all(
+                                                  width: 1, color: Colors.grey)),
+                                          child: ClipRRect(
                                             borderRadius: BorderRadius.all(
-                                                Radius.circular(100)),
-                                            border: Border.all(
-                                                width: 1, color: Colors.grey)),
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(100),
+                                              Radius.circular(100),
+                                            ),
+                                            child: Image.network(
+                                                "https://www.eplworld.com${provider.squadsModel.coach[0].IMGAlt}"),
                                           ),
-                                          child: Image.network(
-                                              "https://www.eplworld.com${provider.squadsModel.coach[0].IMGAlt}"),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: 15,
-                                      ),
-                                      Container(
-                                          child: Container(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Text(
-                                              provider
-                                                  .squadsModel.coach[0].name.tr,
-                                              overflow: TextOverflow.visible,
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                CircleAvatar(
-                                                  maxRadius: 8,
-                                                  child: provider
-                                                          .squadsModel
-                                                          .coach[0]
-                                                          .belongsToLogoAlt
-                                                          .endsWith('svg')
-                                                      ? ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(50),
-                                                          child: SvgPicture.network(
-                                                              "https://www.eplworld.com${provider.squadsModel.coach[0].belongsToLogoAlt}",
-                                                              semanticsLabel:
-                                                                  'Acme Logo'))
-                                                      : Image.network(
-                                                          "https://www.eplworld.com${provider.squadsModel.coach[0].belongsToLogoAlt}"),
-                                                ),
-                                                SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Text(
-                                                  provider.squadsModel.coach[0]
-                                                      .belongsToName.tr,
-                                                  style: _textStyle,
-                                                )
-                                              ],
-                                            )
-                                          ],
+                                        SizedBox(
+                                          width: 15,
                                         ),
-                                      ))
-                                    ],
-                                  ),
-                                ],
+                                        Container(
+                                            child: Container(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Text(
+                                                provider
+                                                    .squadsModel.coach[0].name.tr,
+                                                style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                overflow: TextOverflow.visible,
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  CircleAvatar(
+                                                    maxRadius: 8,
+                                                    child: provider
+                                                            .squadsModel
+                                                            .coach[0]
+                                                            .belongsToLogoAlt
+                                                            .endsWith('svg')
+                                                        ? ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(50),
+                                                            child: SvgPicture.network(
+                                                                "https://www.eplworld.com${provider.squadsModel.coach[0].belongsToLogoAlt}",
+                                                                semanticsLabel:
+                                                                    'Acme Logo'))
+                                                        : Image.network(
+                                                            "https://www.eplworld.com${provider.squadsModel.coach[0].belongsToLogoAlt}"),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 8,
+                                                  ),
+                                                  Text(
+                                                    provider.squadsModel.coach[0]
+                                                        .belongsToName.tr,
+                                                      style: Theme.of(context).textTheme.bodyText2
+                                                  )
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ))
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ]),
-                        ),
+                          ),
+                        ]),
                       ),
                     ),
                     Padding(
@@ -175,24 +178,23 @@ class _teamTeamState extends State<teamTeam> {
                       child: Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            children: [
-                              Row(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8,bottom: 6,left: 16,right: 16),
+                              child: Row(
                                 children: <Widget>[
                                   Text(
                                     "حراس المرمي".tr,
-                                    style: TextStyle(
-                                        fontFamily: 'Vazirmatn', fontSize: 17),
+                                      style: Theme.of(context).textTheme.headline2
                                   ),
                                 ],
                               ),
-                              Divider(),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Container(
+                            ),
+                            Divider(),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 16,left: 16,bottom: 16,top: 12),
+                              child: Container(
                                 child: Row(
                                   children: <Widget>[
                                     Expanded(
@@ -208,9 +210,7 @@ class _teamTeamState extends State<teamTeam> {
                                                   (BuildContext context,
                                                       index) {
                                                 return Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 6, bottom: 6),
+                                                  padding: const EdgeInsets.only(top: 8,bottom: 8),
                                                   child: Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
@@ -278,6 +278,7 @@ class _teamTeamState extends State<teamTeam> {
                                                                       index]
                                                                   .name
                                                                   .tr,
+                                                              style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
                                                               overflow:
                                                                   TextOverflow
                                                                       .visible,
@@ -310,7 +311,7 @@ class _teamTeamState extends State<teamTeam> {
                                                                           "https://www.eplworld.com${provider.squadsModel.Goalkeeper[index].belongsToLogoAlt}"),
                                                                 ),
                                                                 SizedBox(
-                                                                  width: 5,
+                                                                  width: 8,
                                                                 ),
                                                                 Text(
                                                                   provider
@@ -319,8 +320,7 @@ class _teamTeamState extends State<teamTeam> {
                                                                           index]
                                                                       .belongsToName
                                                                       .tr,
-                                                                  style:
-                                                                      _textStyle,
+                                                                    style: Theme.of(context).textTheme.bodyText2
                                                                 )
                                                               ],
                                                             )
@@ -337,8 +337,8 @@ class _teamTeamState extends State<teamTeam> {
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -347,24 +347,23 @@ class _teamTeamState extends State<teamTeam> {
                       child: Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            children: [
-                              Row(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8,bottom: 6,left: 16,right: 16),
+                              child: Row(
                                 children: <Widget>[
                                   Text(
                                     "مدافعين".tr,
-                                    style: TextStyle(
-                                        fontFamily: 'Vazirmatn', fontSize: 17),
+                                      style: Theme.of(context).textTheme.headline2
                                   ),
                                 ],
                               ),
-                              Divider(),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Container(
+                            ),
+                            Divider(),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 16,right: 16,top: 12,bottom: 16),
+                              child: Container(
                                 child: Row(
                                   children: <Widget>[
                                     Expanded(
@@ -382,7 +381,7 @@ class _teamTeamState extends State<teamTeam> {
                                                 return Padding(
                                                   padding:
                                                       const EdgeInsets.only(
-                                                          top: 6, bottom: 6),
+                                                          top: 8, bottom: 8),
                                                   child: Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
@@ -450,6 +449,7 @@ class _teamTeamState extends State<teamTeam> {
                                                                       index]
                                                                   .name
                                                                   .tr,
+                                                              style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
                                                               overflow:
                                                                   TextOverflow
                                                                       .visible,
@@ -482,7 +482,7 @@ class _teamTeamState extends State<teamTeam> {
                                                                           "https://www.eplworld.com${provider.squadsModel.Defender[index].belongsToLogoAlt}"),
                                                                 ),
                                                                 SizedBox(
-                                                                  width: 5,
+                                                                  width: 8,
                                                                 ),
                                                                 Text(
                                                                   provider
@@ -491,8 +491,7 @@ class _teamTeamState extends State<teamTeam> {
                                                                           index]
                                                                       .belongsToName
                                                                       .tr,
-                                                                  style:
-                                                                      _textStyle,
+                                                                    style: Theme.of(context).textTheme.bodyText2
                                                                 )
                                                               ],
                                                             )
@@ -509,8 +508,8 @@ class _teamTeamState extends State<teamTeam> {
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -519,24 +518,23 @@ class _teamTeamState extends State<teamTeam> {
                       child: Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            children: [
-                              Row(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8,bottom: 6,left: 16,right: 16),
+                              child: Row(
                                 children: <Widget>[
                                   Text(
                                     "وسط".tr,
-                                    style: TextStyle(
-                                        fontFamily: 'Vazirmatn', fontSize: 17),
+                                      style: Theme.of(context).textTheme.headline2
                                   ),
                                 ],
                               ),
-                              Divider(),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Container(
+                            ),
+                            Divider(),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 12,bottom: 16,left: 16,right: 16),
+                              child: Container(
                                 child: Row(
                                   children: <Widget>[
                                     Expanded(
@@ -554,7 +552,7 @@ class _teamTeamState extends State<teamTeam> {
                                                 return Padding(
                                                   padding:
                                                       const EdgeInsets.only(
-                                                          top: 6, bottom: 6),
+                                                          top: 8, bottom: 8),
                                                   child: Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
@@ -622,6 +620,7 @@ class _teamTeamState extends State<teamTeam> {
                                                                       index]
                                                                   .name
                                                                   .tr,
+                                                              style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
                                                               overflow:
                                                                   TextOverflow
                                                                       .visible,
@@ -654,7 +653,7 @@ class _teamTeamState extends State<teamTeam> {
                                                                           "https://www.eplworld.com${provider.squadsModel.Midfielder[index].belongsToLogoAlt}"),
                                                                 ),
                                                                 SizedBox(
-                                                                  width: 5,
+                                                                  width: 8,
                                                                 ),
                                                                 Text(
                                                                   provider
@@ -663,8 +662,7 @@ class _teamTeamState extends State<teamTeam> {
                                                                           index]
                                                                       .belongsToName
                                                                       .tr,
-                                                                  style:
-                                                                      _textStyle,
+                                                                    style: Theme.of(context).textTheme.bodyText2
                                                                 )
                                                               ],
                                                             )
@@ -681,171 +679,174 @@ class _teamTeamState extends State<teamTeam> {
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                    Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4,bottom: 4),
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8)),
                         child: Column(
                           children: [
-                            Row(
-                              children: <Widget>[
-                                Text(
-                                  "هجوم".tr,
-                                  style: TextStyle(
-                                      fontFamily: 'Vazirmatn', fontSize: 17),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Container(
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8,bottom: 6,left: 16,right: 16),
                               child: Row(
                                 children: <Widget>[
-                                  Expanded(
-                                    child: Column(
-                                      children: <Widget>[
-                                        ListView.builder(
-                                            physics: ClampingScrollPhysics(),
-                                            shrinkWrap: true,
-                                            scrollDirection: Axis.vertical,
-                                            itemCount: provider
-                                                .squadsModel.Attacker.length,
-                                            itemBuilder:
-                                                (BuildContext context, index) {
-                                              return Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 6, bottom: 6),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    GestureDetector(
-                                                      onTap: () {
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder: (context) =>
-                                                                    ChangeNotifierProvider<
-                                                                        EachplayerViewModel>(
-                                                                      create: (_) =>
-                                                                          EachplayerViewModel(),
-                                                                      child:
-                                                                          EachPlayer(
-                                                                        url: provider
-                                                                            .squadsModel
-                                                                            .Attacker[index]
-                                                                            .link,
-                                                                        teamImg: provider
-                                                                            .headerProfileModel
-                                                                            .logo,
-                                                                      ),
-                                                                    )));
-                                                      },
-                                                      child: Container(
-                                                        width: 45,
-                                                        height: 45,
-                                                        decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            100)),
-                                                            border: Border.all(
-                                                                width: 1,
-                                                                color: Colors
-                                                                    .grey)),
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                            Radius.circular(
-                                                                100),
-                                                          ),
-                                                          child: Image.network(
-                                                              "https://www.eplworld.com${provider.squadsModel.Attacker[index].IMGAlt}"),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 15,
-                                                    ),
-                                                    Container(
-                                                        child: Center(
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: <Widget>[
-                                                          Text(
-                                                            provider
-                                                                .squadsModel
-                                                                .Attacker[index]
-                                                                .name
-                                                                .tr,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .visible,
-                                                          ),
-                                                          SizedBox(
-                                                            height: 5,
-                                                          ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              CircleAvatar(
-                                                                maxRadius: 8,
-                                                                child: provider
-                                                                        .squadsModel
-                                                                        .Attacker[
-                                                                            index]
-                                                                        .belongsToLogoAlt
-                                                                        .endsWith(
-                                                                            'svg')
-                                                                    ? ClipRRect(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                50),
-                                                                        child: SvgPicture.network(
-                                                                            "https://www.eplworld.com${provider.squadsModel.Attacker[index].belongsToLogoAlt}",
-                                                                            semanticsLabel:
-                                                                                'Acme Logo'))
-                                                                    : Image.network(
-                                                                        "https://www.eplworld.com${provider.squadsModel.Attacker[index].belongsToLogoAlt}"),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Text(
-                                                                provider
-                                                                    .squadsModel
-                                                                    .Attacker[
-                                                                        index]
-                                                                    .belongsToName
-                                                                    .tr,
-                                                                style:
-                                                                    _textStyle,
-                                                              )
-                                                            ],
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ))
-                                                  ],
-                                                ),
-                                              );
-                                            }),
-                                      ],
-                                    ),
+                                  Text(
+                                    "هجوم".tr,
+                                    style: Theme.of(context).textTheme.headline2
                                   ),
                                 ],
+                              ),
+                            ),
+                            Divider(),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 12,bottom: 16,right: 16,left: 16),
+                              child: Container(
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Column(
+                                        children: <Widget>[
+                                          ListView.builder(
+                                              physics: ClampingScrollPhysics(),
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.vertical,
+                                              itemCount: provider
+                                                  .squadsModel.Attacker.length,
+                                              itemBuilder:
+                                                  (BuildContext context, index) {
+                                                return Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      top: 8, bottom: 8),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) =>
+                                                                      ChangeNotifierProvider<
+                                                                          EachplayerViewModel>(
+                                                                        create: (_) =>
+                                                                            EachplayerViewModel(),
+                                                                        child:
+                                                                            EachPlayer(
+                                                                          url: provider
+                                                                              .squadsModel
+                                                                              .Attacker[index]
+                                                                              .link,
+                                                                          teamImg: provider
+                                                                              .headerProfileModel
+                                                                              .logo,
+                                                                        ),
+                                                                      )));
+                                                        },
+                                                        child: Container(
+                                                          width: 45,
+                                                          height: 45,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .all(Radius
+                                                                          .circular(
+                                                                              100)),
+                                                              border: Border.all(
+                                                                  width: 1,
+                                                                  color: Colors
+                                                                      .grey)),
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius.all(
+                                                              Radius.circular(
+                                                                  100),
+                                                            ),
+                                                            child: Image.network(
+                                                                "https://www.eplworld.com${provider.squadsModel.Attacker[index].IMGAlt}"),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 15,
+                                                      ),
+                                                      Container(
+                                                          child: Center(
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: <Widget>[
+                                                            Text(
+                                                              provider
+                                                                  .squadsModel
+                                                                  .Attacker[index]
+                                                                  .name
+                                                                  .tr,
+                                                              style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .visible,
+                                                            ),
+                                                            SizedBox(
+                                                              height: 5,
+                                                            ),
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                CircleAvatar(
+                                                                  maxRadius: 8,
+                                                                  child: provider
+                                                                          .squadsModel
+                                                                          .Attacker[
+                                                                              index]
+                                                                          .belongsToLogoAlt
+                                                                          .endsWith(
+                                                                              'svg')
+                                                                      ? ClipRRect(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(
+                                                                                  50),
+                                                                          child: SvgPicture.network(
+                                                                              "https://www.eplworld.com${provider.squadsModel.Attacker[index].belongsToLogoAlt}",
+                                                                              semanticsLabel:
+                                                                                  'Acme Logo'))
+                                                                      : Image.network(
+                                                                          "https://www.eplworld.com${provider.squadsModel.Attacker[index].belongsToLogoAlt}"),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 8,
+                                                                ),
+                                                                Text(
+                                                                  provider
+                                                                      .squadsModel
+                                                                      .Attacker[
+                                                                          index]
+                                                                      .belongsToName
+                                                                      .tr,
+                                                                    style: Theme.of(context).textTheme.bodyText2
+                                                                )
+                                                              ],
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ))
+                                                    ],
+                                                  ),
+                                                );
+                                              }),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],

@@ -58,7 +58,7 @@ class _TransferCenterState extends State<TransferCenter> {
             ),
           )
               : Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(12.0),
             child: ListView(
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
@@ -85,73 +85,87 @@ class _TransferCenterState extends State<TransferCenter> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
-                                          GestureDetector(
-                                              onTap: () {
-                                                Navigator.pushNamed(
-                                                    context, '/players');
-                                              },
-                                              child: Container(
-                                                height: 70,
-                                                width: 70,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                  BorderRadius.all(Radius.circular(50)),
-                                                ),
-                                                child: ClipRRect(
-                                                    borderRadius:
-                                                    BorderRadius.all(
-                                                        Radius.circular(
-                                                            50)),
-                                                    child: Image.network(
-                                                        "https://www.eplworld.com${provider.transferBoxesModelList[index].mainIMG}")),
-                                              )
+                                          Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.pushNamed(
+                                                        context, '/players');
+                                                  },
+                                                  child: Container(
+                                                    height: 70,
+                                                    width: 70,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                      BorderRadius.all(Radius.circular(50)),
+                                                    ),
+                                                    child: ClipRRect(
+                                                        borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                50)),
+                                                        child: Image.network(
+                                                            "https://www.eplworld.com${provider.transferBoxesModelList[index].mainIMG}")),
+                                                  )
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                      SizedBox(width: 10,),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 10),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Container(
+                                          SizedBox(width: 10,),
+
+                                          Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Container(
                                                     decoration: BoxDecoration(
                                                         borderRadius: BorderRadius.circular(4),
                                                         color: Theme.of(context).primaryColor
                                                     ),
-                                                    child:Padding(
-                                                      padding: const EdgeInsets.all(1.0),
-                                                      child: Text('CM',style: TextStyle(color: Colors.white,fontSize: 12),),
-                                                    )
-                                                ),
-                                                SizedBox(width: 5,),
-                                                Text(
-                                                    provider.transferBoxesModelList[index].name.tr,
-                                                    style: TextStyle(fontFamily: 'Vazirmatn', fontSize: 15)),
-                                              ],
-                                            ),
-                                            SizedBox(height: 2,),
-                                            Row(
-                                              children: [
-                                                Text('الجنسيه',style: TextStyle(color: Colors.black54),),
-                                                SizedBox(width: 5,),
-                                                CircleAvatar(radius: 10,)
-                                              ],
-                                            ),
-                                            SizedBox(height: 2,),
-                                            Text('القيمة السوقيه 80 مليون دولار'),
-                                            SizedBox(height: 2,),
-                                          ],
-                                        ),
+                                                    /*
+                                                  child:Padding(
+                                                    padding: const EdgeInsets.all(1.0),
+                                                    child: Text('CM',style: TextStyle(color: Colors.white,fontSize: 12),),
+                                                  )
+
+                                                   */
+                                                  ),
+                                                  SizedBox(width: 5,),
+                                                  Text(
+                                                      provider.transferBoxesModelList[index].name.tr,
+                                                      style: Theme.of(context).textTheme.bodyText1
+                                                  ),
+                                                ],
+                                              ),
+                                              /*
+                                          SizedBox(height: 2,),
+                                          Row(
+                                            children: [
+                                              Text('الجنسيه',style: TextStyle(color: Colors.black54),),
+                                              SizedBox(width: 5,),
+                                              //CircleAvatar(radius: 10,)
+                                            ],
+                                          ),
+
+
+                                          SizedBox(height: 2,),
+                                          Text('القيمة السوقيه 80 مليون دولار'),
+                                          SizedBox(height: 2,),
+
+                                           */
+                                            ],
+                                          ),
+                                        ],
                                       ),
+
                                       Expanded(
                                           child: Text(provider.transferBoxesModelList[index].sdate,
-                                            style: TextStyle(color: Colors.black45),
+                                            style:Theme.of(context).textTheme.subtitle2,
                                             textAlign: TextAlign.left,))
 
                                     ],
@@ -168,11 +182,12 @@ class _TransferCenterState extends State<TransferCenter> {
                                           child: Text(provider.transferBoxesModelList[index].toName.tr,
                                             textDirection: TextDirection.rtl,
                                             textAlign: TextAlign.left,
-                                            style: TextStyle(fontSize: 16),),
+                                            style:Theme.of(context).textTheme.bodyText1,
+                                          )
                                         ),
                                         SizedBox(width: 5,),
                                         Container(
-                                            width: MediaQuery.of(context).size.width * 0.4,
+                                            width: MediaQuery.of(context).size.width * 0.39,
                                             child: Padding(
                                               padding: const EdgeInsets.only(bottom: 1),
                                               child: Column(
@@ -208,18 +223,22 @@ class _TransferCenterState extends State<TransferCenter> {
                                                         padding: const EdgeInsets.only(left: 15,right: 15),
                                                         child: Container(
                                                             width: 40,
-                                                            height: 20,
+                                                            height: 16,
                                                             decoration: BoxDecoration(
-                                                                color: Colors.green,
+                                                                color: Color(0xFF42c713),
                                                                 borderRadius:
                                                                 BorderRadius.all(
                                                                     Radius.circular(
                                                                         100))),
-                                                            child: Icon(
-                                                              Icons.arrow_forward_outlined,
-                                                              size: 15,
-                                                              color: Colors.white,
-                                                            )),
+                                                            child: Padding(
+                                                              padding: const EdgeInsets.all(3.0),
+                                                              child: Container(
+                                                                height: 10,width: 25,
+                                                                  child: RotatedBox(
+                                                                    quarterTurns: 2,
+                                                                      child: Image.asset('assets/arrow.png',fit: BoxFit.contain,))),
+                                                            )
+                                                        ),
                                                       ),
                                                       GestureDetector(
                                                         onTap: () {
@@ -248,7 +267,7 @@ class _TransferCenterState extends State<TransferCenter> {
                                                     ],
                                                   ),
                                                   SizedBox(height: 10,),
-                                                  Text('65 مليون دولار',style: TextStyle(color: Colors.green),)
+                                                 // Text('65 مليون دولار',style: TextStyle(color: Colors.green),)
                                                 ],
                                               ),
                                             )),
@@ -257,15 +276,17 @@ class _TransferCenterState extends State<TransferCenter> {
                                           width: MediaQuery.of(context).size.width * 0.21,
                                           child: Text(provider.transferBoxesModelList[index].fromName.tr,
                                             textDirection: TextDirection.rtl,
-                                            style: TextStyle(fontSize: 16),),
+                                            style:Theme.of(context).textTheme.bodyText1,
                                         ),
+                                        )
                                       ],
                                     ),
                                   ),
                                   Divider(),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text(provider.transferBoxesModelList[index].date,style: TextStyle(color: Colors.black54),),
+                                    child: Text(provider.transferBoxesModelList[index].date,
+                                        style:Theme.of(context).textTheme.bodyText1,),
                                   )
                                 ],
                               ),

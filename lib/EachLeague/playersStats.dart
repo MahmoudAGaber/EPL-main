@@ -28,6 +28,12 @@ class _playersStatsState extends State<playersStats> {
     fontSize: 20,
   );
 
+  List<String> icons = [
+    'assets/matchsIcon.png',
+    'assets/passesIcon.png',
+    'assets/goalsIcon.png'
+  ];
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -68,17 +74,22 @@ class _playersStatsState extends State<playersStats> {
                           child: Column(
                             children: <Widget>[
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(children: <Widget>[
+                                padding: const EdgeInsets.only(top: 12,bottom: 12,left: 16,right: 16),
+                                child: Row(
+                                    children: <Widget>[
+                                  Container(
+                                    height: 18,width: 18,
+                                      child: Image.asset(icons[index])),
+                                  SizedBox(width: 10,),
                                   Text(
                                     provider.statsModel.playersModel[index].title.tr,
-                                    style: TextStyle(color: Theme.of(context).primaryColor,fontWeight: FontWeight.bold),
+                                    style: Theme.of(context).textTheme.headline2
                                   )
                                 ]),
                               ),
                               Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.grey[100],
+                                  color: Theme.of(context).colorScheme.onBackground,
                                 ),
                                 height: 100,
                                 child: Padding(
@@ -87,104 +98,111 @@ class _playersStatsState extends State<playersStats> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: <Widget>[
-                                        Padding(
-                                          padding:
-                                          const EdgeInsets.only(right: 10,left: 10),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment
-                                                .center,
-                                            children: <Widget>[
-                                              GestureDetector(
-                                                onTap: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              ChangeNotifierProvider<
-                                                                  EachplayerViewModel>(
-                                                                create: (_) =>
-                                                                    EachplayerViewModel(),
-                                                                child:
-                                                                EachPlayer(
-                                                                  url: provider.statsModel.playersModel[index].firstModel.URL,
-                                                                  teamImg: provider.statsModel.playersModel[index].firstModel.teamLogo,
-                                                                ),
-                                                              )));
-                                                },
-                                                child: Container(
-                                                    height: 60,
-                                                    width: 60,
-                                                    child: ClipRRect(
-                                                        borderRadius:
-                                                        BorderRadius.circular(
-                                                            50),
-                                                        child: Image
-                                                            .network(
-                                                            "https://www.eplworld.com${provider.statsModel.playersModel[index].firstModel.IMG}"))
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(top: 8,bottom: 12),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              SizedBox(
-                                                height: 8,
-                                              ),
-                                              Text(
-                                                provider.statsModel.playersModel[index].firstModel.name.tr,
-                                                style: content,
-                                              ),
-                                              SizedBox(
-                                                height: 8,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    height: 20,
-                                                    width: 20,
-                                                    child: Image.network("https://www.eplworld.com${provider.statsModel.playersModel[index].firstModel.teamLogo}"),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 5,
-                                                  ),
-                                                  Text(
-                                                    provider
-                                                        .statsModel
-                                                        .playersModel[
-                                                    index]
-                                                        .firstModel
-                                                        .teamName
-                                                        .tr,
-                                                    style: content2,
-                                                  ),
+                                        Row(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                              const EdgeInsets.only(right: 10,left: 10),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment
+                                                    .center,
+                                                children: <Widget>[
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  ChangeNotifierProvider<
+                                                                      EachplayerViewModel>(
+                                                                    create: (_) =>
+                                                                        EachplayerViewModel(),
+                                                                    child:
+                                                                    EachPlayer(
+                                                                      url: provider.statsModel.playersModel[index].firstModel.URL,
+                                                                      teamImg: provider.statsModel.playersModel[index].firstModel.teamLogo,
+                                                                    ),
+                                                                  )));
+                                                    },
+                                                    child: Container(
+                                                        height: 60,
+                                                        width: 60,
+                                                        child: ClipRRect(
+                                                            borderRadius:
+                                                            BorderRadius.circular(
+                                                                50),
+                                                            child: Image
+                                                                .network(
+                                                                "https://www.eplworld.com${provider.statsModel.playersModel[index].firstModel.IMG}"))
+                                                    ),
+                                                  )
                                                 ],
                                               ),
+                                            ),
+                                            SizedBox(width: 10,),
+                                            Padding(
+                                              padding: const EdgeInsets.only(top: 8,bottom: 12),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  SizedBox(
+                                                    height: 8,
+                                                  ),
+                                                  Text(
+                                                    provider.statsModel.playersModel[index].firstModel.name.tr,
+                                                    style: Theme.of(context).textTheme.bodyText1,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 8,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Container(
+                                                        height: 20,
+                                                        width: 20,
+                                                        child: Image.network("https://www.eplworld.com${provider.statsModel.playersModel[index].firstModel.teamLogo}"),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 5,
+                                                      ),
+                                                      Text(
+                                                        provider
+                                                            .statsModel
+                                                            .playersModel[
+                                                        index]
+                                                            .firstModel
+                                                            .teamName
+                                                            .tr,
+                                                        style: Theme.of(context).textTheme.bodyText2,
+                                                      ),
+                                                    ],
+                                                  ),
 
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(width: 10,),
-                                        Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment
-                                              .spaceBetween,
-                                          children: <Widget>[
-                                            Text(
-                                              provider
-                                                  .statsModel
-                                                  .playersModel[
-                                              index]
-                                                  .firstModel
-                                                  .number,
-                                              style: TextStyle(color: Colors.black26,fontSize: 22,fontWeight: FontWeight.w600),
+                                                ],
+                                              ),
                                             ),
                                           ],
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 15),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment
+                                                .spaceBetween,
+                                            children: <Widget>[
+                                              Text(
+                                                provider
+                                                    .statsModel
+                                                    .playersModel[
+                                                index]
+                                                    .firstModel
+                                                    .number,
+                                                style:Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 24),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ]),
                                 ),
@@ -198,9 +216,12 @@ class _playersStatsState extends State<playersStats> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
-                                    Text('2',style: TextStyle(fontSize: 18,color: Colors.black38),),
                                     Row(
                                         children: <Widget>[
+                                          Text('2',style: Theme.of(context).textTheme.subtitle2.copyWith(fontSize: 18)),
+                                          SizedBox(
+                                            width: 15,
+                                          ),
                                           GestureDetector(
                                             onTap: () {
                                               Navigator.push(
@@ -227,8 +248,8 @@ class _playersStatsState extends State<playersStats> {
                                                           )));
                                             },
                                             child: Container(
-                                                height: 30,
-                                                width: 30,
+                                                height: 40,
+                                                width: 40,
                                                 child: ClipRRect(
                                                     borderRadius: BorderRadius
                                                         .all(Radius
@@ -240,49 +261,87 @@ class _playersStatsState extends State<playersStats> {
                                                     ))),
                                           ),
                                           SizedBox(
-                                            width: 5,
+                                            width: 10,
                                           ),
-                                          Text(provider
-                                              .statsModel
-                                              .playersModel[index]
-                                              .secondModel
-                                              .name)
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              SizedBox(
+                                                height: 8,
+                                              ),
+                                              Text(
+                                                provider.statsModel.playersModel[index].secondModel.name.tr,
+                                                style: Theme.of(context).textTheme.bodyText1,
+                                              ),
+                                              SizedBox(
+                                                height: 8,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Container(
+                                                    height: 16,
+                                                    width: 16,
+                                                    child: Image.network("https://www.eplworld.com${provider.statsModel.playersModel[index].secondModel.teamLogo}"),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Text(
+                                                    provider
+                                                        .statsModel
+                                                        .playersModel[
+                                                    index]
+                                                        .firstModel
+                                                        .teamName
+                                                        .tr,
+                                                    style: Theme.of(context).textTheme.bodyText2,
+                                                  ),
+                                                ],
+                                              ),
+
+                                            ],
+                                          ),
+
                                         ]),
                                     SizedBox(width: 25,),
                                     Container(
                                       decoration: BoxDecoration(
-                                          color: Colors.grey[100],
+                                          color: Theme.of(context).colorScheme.onPrimary,
                                           borderRadius: BorderRadius.circular(4)
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.all(3.0),
+
                                         child: Text(
-                                          provider
-                                              .statsModel
-                                              .playersModel[index]
-                                              .secondModel
-                                              .number,
-                                          style: TextStyle(
-                                              fontFamily: 'Vazirmatn',
-                                              fontSize: 15),
+                                            provider
+                                                .statsModel
+                                                .playersModel[index]
+                                                .secondModel
+                                                .number,
+                                            style: Theme.of(context).textTheme.bodyText1
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
+                              Divider(),
                               Padding(
                                 padding: const EdgeInsets.only(
                                     left: 10,
                                     right: 10,
                                     top: 20,
-                                    bottom: 8),
+                                    bottom: 20),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
-                                    Text('3',style: TextStyle(fontSize: 18,color: Colors.black38),),
                                     Row(
                                         children: <Widget>[
+                                          Text('3',style: Theme.of(context).textTheme.subtitle2.copyWith(fontSize: 18)),
+                                          SizedBox(
+                                            width: 15,
+                                          ),
                                           GestureDetector(
                                             onTap: () {
                                               Navigator.push(
@@ -309,8 +368,8 @@ class _playersStatsState extends State<playersStats> {
                                                           )));
                                             },
                                             child: Container(
-                                                height: 30,
-                                                width: 30,
+                                                height: 40,
+                                                width: 40,
                                                 child: ClipRRect(
                                                     borderRadius: BorderRadius
                                                         .all(Radius
@@ -322,31 +381,65 @@ class _playersStatsState extends State<playersStats> {
                                                     ))),
                                           ),
                                           SizedBox(
-                                            width: 5,
+                                            width: 10,
                                           ),
-                                          Text(provider
-                                              .statsModel
-                                              .playersModel[index]
-                                              .thirdModel
-                                              .name)
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              SizedBox(
+                                                height: 8,
+                                              ),
+                                              Text(
+                                                provider.statsModel.playersModel[index].thirdModel.name.tr,
+                                                style: Theme.of(context).textTheme.bodyText1,
+                                              ),
+                                              SizedBox(
+                                                height: 8,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Container(
+                                                    height: 16,
+                                                    width: 16,
+                                                    child: Image.network("https://www.eplworld.com${provider.statsModel.playersModel[index].thirdModel.teamLogo}"),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Text(
+                                                    provider
+                                                        .statsModel
+                                                        .playersModel[
+                                                    index]
+                                                        .firstModel
+                                                        .teamName
+                                                        .tr,
+                                                    style: Theme.of(context).textTheme.bodyText2,
+                                                  ),
+                                                ],
+                                              ),
+
+                                            ],
+                                          ),
+
                                         ]),
                                     SizedBox(width: 25,),
                                     Container(
                                       decoration: BoxDecoration(
-                                        color: Colors.grey[100],
+                                        color: Theme.of(context).colorScheme.onPrimary,
                                         borderRadius: BorderRadius.circular(4)
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.all(3.0),
+
                                         child: Text(
                                           provider
                                               .statsModel
                                               .playersModel[index]
                                               .thirdModel
                                               .number,
-                                          style: TextStyle(
-                                              fontFamily: 'Vazirmatn',
-                                              fontSize: 15),
+                                          style: Theme.of(context).textTheme.bodyText1
                                         ),
                                       ),
                                     ),

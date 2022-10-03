@@ -130,7 +130,7 @@ class _VideosState extends State<Videos> {
                                             padding: const EdgeInsets.all(7),
                                             child: Row(
                                               children: [
-                                                CircleAvatar(radius: 8,),
+                                                //CircleAvatar(radius: 8,),
                                                 SizedBox(width: 5,),
                                                 Text(
                                                   provider.categoriesList[index].name,
@@ -244,18 +244,7 @@ class _VideosState extends State<Videos> {
                                                                   .width *
                                                               0.85,
                                                           child: Text(
-                                                            provider
-                                                                .videosList[
-                                                                    index]
-                                                                .title,
-                                                            style: TextStyle(
-                                                              fontFamily:
-                                                                  'Vazirmatn',
-                                                              fontSize: 15,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                            ),
+                                                            provider.videosList[index].title,style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 14),
                                                           ),
                                                         ),
                                                       ],
@@ -278,15 +267,7 @@ class _VideosState extends State<Videos> {
                                                           provider
                                                               .videosList[index]
                                                               .username,
-                                                          style: TextStyle(
-                                                              fontFamily:
-                                                                  'Vazirmatn',
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color:
-                                                                  Colors.grey),
+                                                          style: Theme.of(context).textTheme.subtitle2.copyWith(fontSize: 13),
                                                         ),
                                                         SizedBox(
                                                           width: 5,
@@ -294,15 +275,7 @@ class _VideosState extends State<Videos> {
                                                         Text(
                                                           "${provider.videosList[index].date} - ${provider.videosList[index].since}"
                                                               .tr,
-                                                          style: TextStyle(
-                                                              fontFamily:
-                                                                  'Vazirmatn',
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color:
-                                                                  Colors.grey),
+                                                          style: Theme.of(context).textTheme.subtitle2.copyWith(fontSize: 13),
                                                         ),
                                                       ],
                                                     ),

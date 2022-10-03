@@ -179,7 +179,10 @@ class _MatchEventsState extends State<MatchEvents> {
                               children: [
                                 Row(
                                   children: [
-                                    CircleAvatar(radius: 10,),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                   // CircleAvatar(radius: 10,),
                                     SizedBox(
                                       width: 10,
                                     ),
@@ -734,6 +737,7 @@ class _MatchEventsState extends State<MatchEvents> {
                     )
                         :Container(),
                   ),
+                  /*
                   SizedBox(height: 5,),
                   Container(
                     width: MediaQuery.of(context).size.width,
@@ -899,7 +903,7 @@ class _MatchEventsState extends State<MatchEvents> {
                                 SizedBox(width: 5,),
                                 Text(
                                   provider.matchDetailsModel.leagueName,
-                                  style: Theme.of(context).textTheme.headline1,),
+                                  style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 14))
                               ],
                             ),
                           ),
@@ -943,7 +947,7 @@ class _MatchEventsState extends State<MatchEvents> {
                                                     bottom: 3),
                                                 child: Text(
                                                   "8",
-                                                  style: Theme.of(context).textTheme.subtitle1,
+                                                    style:Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 16)
                                                 ),
                                               ),
                                             ),
@@ -952,7 +956,7 @@ class _MatchEventsState extends State<MatchEvents> {
                                         Container(
                                           child: Text(
                                             "اهداف",
-                                            style: Theme.of(context).textTheme.subtitle2,
+                                              style:Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 15)
                                           ),
                                         ),
                                         Container(
@@ -975,7 +979,7 @@ class _MatchEventsState extends State<MatchEvents> {
                                                     bottom: 3),
                                                 child: Text(
                                                   "6",
-                                                  style: Theme.of(context).textTheme.subtitle1,
+                                                    style:Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 16)
                                                 ),
                                               ),
                                             ),
@@ -990,6 +994,8 @@ class _MatchEventsState extends State<MatchEvents> {
                       ),
                     ),
                   ),
+
+                   */
                 ]),
               );
       },

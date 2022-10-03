@@ -142,7 +142,7 @@ class _leagueNewsState extends State<leagueNews> {
                                                         const EdgeInsets.only(left: 15, right: 15),
                                                         child: Text(
                                                           provider.newsModelList[index].title,
-                                                          style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600),
+                                                          style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 15),
                                                           overflow: TextOverflow.clip,
                                                         ),
                                                       ),
@@ -156,11 +156,11 @@ class _leagueNewsState extends State<leagueNews> {
                                                     SizedBox(width: 5,),
                                                     Text(
                                                       provider.newsModelList[index].username,
-                                                      style: TextStyle(color: Colors.grey[100],fontSize: 13),
+                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
                                                     ),
                                                     SizedBox(width: 5,),
                                                     Text("- ${provider.newsModelList[index].date.tr} - ${provider.newsModelList[index].time.tr}",
-                                                      style: TextStyle(color: Colors.grey[100],fontSize: 13),
+                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
                                                       overflow: TextOverflow.clip,
                                                     ),
                                                   ],

@@ -140,6 +140,10 @@ flutter:
     - assets/ney.reelz_20220222_002351_0.mp4
     - assets/psg_20220222_002838_0.mp4
     - assets/twelfthplayer12_20220222_002218_0.mp4
+    - assets/goalsIcon.png
+    - assets/matchsIcon.png
+    - assets/passesIcon.png
+    - assets/arrow.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

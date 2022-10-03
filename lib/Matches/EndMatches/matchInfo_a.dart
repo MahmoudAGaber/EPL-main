@@ -53,6 +53,7 @@ class _matchInfo_aState extends State<matchInfo_a>
       TextStyle(fontFamily: 'Vazirmatn', fontSize: 16, color: Colors.white);
 
   bool chContaier = false;
+  double heightOfgoals = 65;
 
   ScrollController _scrollController = new ScrollController();
 
@@ -140,6 +141,18 @@ class _matchInfo_aState extends State<matchInfo_a>
     }
   }
 
+
+  HeightOfGoals(){
+    eachMatchViewModel.eventsModel.forEach((element) {
+      if(element.details.name == 'goal'){
+        heightOfgoals = heightOfgoals + 35;
+      }else
+        {
+          heightOfgoals = heightOfgoals + 0.0;
+        }
+    });
+  }
+
   @override
   void initState() {
     print('initState');
@@ -162,6 +175,7 @@ class _matchInfo_aState extends State<matchInfo_a>
         length: tabView.length,
         vsync: this,
       );
+      HeightOfGoals();
 
       setState(() {});
 
@@ -302,7 +316,7 @@ class _matchInfo_aState extends State<matchInfo_a>
                                                         EachTeamViewModel(),
                                                     child: EachTeam(
                                                       url: provider
-                                                          .msnModel.homeTeamURL,
+                                                          .msnModel.awayTeamURL,
                                                       id: widget.awayId,
                                                     ))));
                                   },
@@ -324,7 +338,7 @@ class _matchInfo_aState extends State<matchInfo_a>
           child: SliverPersistentHeader(
             delegate: _SliverAppBarDelegate1(
                 minHeight: 45.0,
-                maxHeight: 150,
+                maxHeight: heightOfgoals,
                 child: Consumer<EachMatchViewModel>(
                   builder: (context, provider, child) {
                     return provider.msnModel == null
@@ -399,11 +413,14 @@ class _matchInfo_aState extends State<matchInfo_a>
                                           ),
                                         ),
                                       ),
-                                      Container(
-                                        child: Column(
-                                            children:List.generate(provider.eventsModel.length, (index){
-                                              return event(index);
-                                            })),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 5),
+                                        child: Container(
+                                          child: Column(
+                                              children:List.generate(provider.eventsModel.length, (index){
+                                                return event(index);
+                                              })),
+                                        ),
                                       )
                                     ],
                                   ),
@@ -476,22 +493,24 @@ class _matchInfo_aState extends State<matchInfo_a>
               borderRadius: BorderRadius.circular(8)
           ),
           child: Padding(
-            padding: const EdgeInsets.only(top: 2,bottom: 2,right: 3,left: 3),
+            padding: const EdgeInsets.only(top: 1,bottom: 1,right: 10,left: 8),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
                   MdiIcons.soccer,
                   size: 13,
+                  color: Colors.black,
                 ),
                 SizedBox(width: 4,),
                 Container(
                   child: Text(
-                      provider.eventsModel[index].details.time.toString(),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 13)
+                      provider.eventsModel[index].details.time.toString(),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 12)
                   ),
                 ),
                 SizedBox(width: 3,),
-                Text(provider.eventsModel[index].details.belongsToName,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 13),)
+                Text(provider.eventsModel[index].details.belongsToName,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 12),)
               ],
             ),
           ),

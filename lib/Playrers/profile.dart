@@ -65,11 +65,11 @@ class _profileState extends State<profile> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
-                                  CircleAvatar(radius: 10,),
+                                  //CircleAvatar(radius: 10,),
                                   SizedBox(
                                     width: 8,
                                   ),
-                                  Text(provider.piModel.Stats.competitionName)
+                                  Text(provider.piModel.Stats.competitionName,style: Theme.of(context).textTheme.headline2)
                                 ],
                               ),
                             ),
@@ -90,19 +90,19 @@ class _profileState extends State<profile> {
                                           height: 25,
                                           width: 65,
                                           decoration: BoxDecoration(
-                                              color: Colors.grey[100],
+                                              color: Theme.of(context).colorScheme.onPrimary,
                                               borderRadius:
                                               BorderRadius.circular(
                                                   4)),
                                           child: Center(
                                               child: Text(
-                                                  "${provider.piModel.Stats.appearances}"))),
+                                                  "${provider.piModel.Stats.appearances}", style:Theme.of(context).textTheme.bodyText1))),
                                       SizedBox(
                                         height: 15,
                                       ),
                                       Text(
                                         "المباريات".tr,
-                                        style: _textStyle2,
+                                          style:Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 14)
                                       ),
                                     ],
                                   ),
@@ -112,19 +112,19 @@ class _profileState extends State<profile> {
                                           height: 25,
                                           width: 65,
                                           decoration: BoxDecoration(
-                                              color: Colors.grey[100],
+                                              color: Theme.of(context).colorScheme.onPrimary,
                                               borderRadius:
                                               BorderRadius.circular(
                                                   4)),
                                           child: Center(
                                               child: Text(
-                                                  "${provider.piModel.Stats.goals}"))),
+                                                  "${provider.piModel.Stats.goals}", style:Theme.of(context).textTheme.bodyText1))),
                                       SizedBox(
                                         height: 15,
                                       ),
                                       Text(
                                         "اهداف".tr,
-                                        style: _textStyle2,
+                                          style:Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 14)
                                       ),
                                     ],
                                   ),
@@ -134,19 +134,19 @@ class _profileState extends State<profile> {
                                           height: 25,
                                           width: 65,
                                           decoration: BoxDecoration(
-                                              color: Colors.grey[100],
+                                              color: Theme.of(context).colorScheme.onPrimary,
                                               borderRadius:
                                               BorderRadius.circular(
                                                   4)),
                                           child: Center(
                                               child: Text(
-                                                  "${provider.piModel.Stats.assists}"))),
+                                                  "${provider.piModel.Stats.assists}", style:Theme.of(context).textTheme.bodyText1))),
                                       SizedBox(
                                         height: 15,
                                       ),
                                       Text(
                                         "صناعه الاهداف".tr,
-                                        style: _textStyle2,
+                                          style:Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 14)
                                       ),
                                     ],
                                   ),
@@ -163,9 +163,7 @@ class _profileState extends State<profile> {
                                         child: Center(
                                             child: Text(
                                               "${provider.piModel.Stats.rank}",
-                                              style: TextStyle(
-                                                  fontFamily: 'Vazirmatn',
-                                                  color: Colors.white),
+                                                style:Theme.of(context).textTheme.bodyText1
                                             )),
                                       ),
                                       SizedBox(
@@ -173,7 +171,7 @@ class _profileState extends State<profile> {
                                       ),
                                       Text(
                                         "تقييم".tr,
-                                        style: _textStyle2,
+                                          style:Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 14)
                                       ),
                                     ],
                                   ),
@@ -207,13 +205,13 @@ class _profileState extends State<profile> {
                                           height: 25,
                                           width: 70,
                                           decoration: BoxDecoration(
-                                              color: Colors.grey[100],
+                                              color: Theme.of(context).colorScheme.onPrimary,
                                               borderRadius:
                                                   BorderRadius.circular(4)),
                                           child: Center(
                                               child: Text(
                                             provider.piModel.age.toString(),
-                                            style: _textStyle,
+                                                  style:Theme.of(context).textTheme.bodyText1,
                                           ))),
                                       SizedBox(
                                         height: 15,
@@ -221,7 +219,7 @@ class _profileState extends State<profile> {
                                       Center(
                                         child: Text(
                                           provider.piModel.dateOfBirth,
-                                          style: _textStyle2,
+                                            style:Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 14)
                                         ),
                                       ),
                                     ],
@@ -232,7 +230,7 @@ class _profileState extends State<profile> {
                                         height: 25,
                                         width: 70,
                                         decoration: BoxDecoration(
-                                            color: Colors.grey[100],
+                                            color: Theme.of(context).colorScheme.onPrimary,
                                             borderRadius:
                                                 BorderRadius.circular(4)),
                                         child: Center(
@@ -264,7 +262,7 @@ class _profileState extends State<profile> {
                                               ),
                                               Text(
                                                 "${provider.piModel.nationalityLogo.split('.').first.split('/').last}",
-                                                style: _textStyle,
+                                                  style:Theme.of(context).textTheme.bodyText1
                                               ),
                                             ],
                                           ),
@@ -275,7 +273,7 @@ class _profileState extends State<profile> {
                                       ),
                                       Text(
                                         "الجنسية".tr,
-                                        style: _textStyle2,
+                                          style:Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 14)
                                       ),
                                     ],
                                   ),
@@ -285,13 +283,13 @@ class _profileState extends State<profile> {
                                         height: 25,
                                         width: 70,
                                         decoration: BoxDecoration(
-                                            color: Colors.grey[100],
+                                            color: Theme.of(context).colorScheme.onPrimary,
                                             borderRadius:
                                                 BorderRadius.circular(4)),
                                         child: Center(
                                           child: Text(
                                             "${provider.piModel.height} cm ".tr,
-                                            style: _textStyle,
+                                              style:Theme.of(context).textTheme.bodyText1
                                           ),
                                         ),
                                       ),
@@ -300,7 +298,7 @@ class _profileState extends State<profile> {
                                       ),
                                       Text(
                                         "الطول".tr,
-                                        style: _textStyle2,
+                                          style:Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 14)
                                       ),
 
                                     ],
@@ -321,13 +319,13 @@ class _profileState extends State<profile> {
                                           height: 25,
                                           width: 70,
                                           decoration: BoxDecoration(
-                                              color: Colors.grey[100],
+                                              color: Theme.of(context).colorScheme.onPrimary,
                                               borderRadius:
                                               BorderRadius.circular(4)),
                                           child: Center(
                                               child: Text(
                                                 provider.piModel.foot == null?'':provider.piModel.foot.toString(),
-                                                style: _textStyle,
+                                                  style:Theme.of(context).textTheme.bodyText1
                                               ))),
                                       SizedBox(
                                         height: 15,
@@ -335,7 +333,7 @@ class _profileState extends State<profile> {
                                       Center(
                                         child: Text(
                                          "القدم المفضله",
-                                          style: _textStyle2,
+                                            style:Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 14)
                                         ),
                                       ),
                                     ],
@@ -346,7 +344,7 @@ class _profileState extends State<profile> {
                                         height: 25,
                                         width: 70,
                                         decoration: BoxDecoration(
-                                            color: Colors.grey[100],
+                                            color: Theme.of(context).colorScheme.onPrimary,
                                             borderRadius:
                                             BorderRadius.circular(4)),
                                         child: Center(
@@ -359,7 +357,7 @@ class _profileState extends State<profile> {
                                               ),
                                               Text(
                                                 "${provider.piModel.nationalityLogo.split('.').first.split('/').last}",
-                                                style: _textStyle,
+                                                  style:Theme.of(context).textTheme.bodyText1
                                               ),
                                             ],
                                           ),
@@ -370,7 +368,7 @@ class _profileState extends State<profile> {
                                       ),
                                       Text(
                                         "القميص".tr,
-                                        style: _textStyle2,
+                                          style:Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 14)
                                       ),
                                     ],
                                   ),
@@ -380,13 +378,13 @@ class _profileState extends State<profile> {
                                         height: 25,
                                         width: 70,
                                         decoration: BoxDecoration(
-                                            color: Colors.grey[100],
+                                            color: Theme.of(context).colorScheme.onPrimary,
                                             borderRadius:
                                             BorderRadius.circular(4)),
                                         child: Center(
                                           child: Text(
                                             "\$".tr,
-                                            style: _textStyle,
+                                              style:Theme.of(context).textTheme.bodyText1
                                           ),
                                         ),
                                       ),
@@ -395,7 +393,7 @@ class _profileState extends State<profile> {
                                       ),
                                       Text(
                                         "القيمه السوقيه".tr,
-                                        style: _textStyle2,
+                                        style:Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 14)
                                       ),
 
                                     ],
@@ -460,7 +458,7 @@ class _profileState extends State<profile> {
                                   SizedBox(
                                     width: 8,
                                   ),
-                                  Text('المركز')
+                                  Text('المركز',style: Theme.of(context).textTheme.headline2)
                                 ],
                               ),
                             ),
@@ -474,7 +472,7 @@ class _profileState extends State<profile> {
                                     children: [
                                       Container(
                                         height: 70,
-                                        width: 200,
+                                        width: 210,
                                         child: Stack(
                                           children: <Widget>[
                                             Padding(
@@ -484,7 +482,7 @@ class _profileState extends State<profile> {
                                                 height: 70,
                                                 decoration:
                                                 BoxDecoration(
-                                                  color: Colors.grey[100],
+                                                  color: Theme.of(context).colorScheme.onPrimary,
                                                   borderRadius: BorderRadius.all(Radius.circular(50)),
                                                 ),
                                                 child: Padding(
@@ -509,15 +507,15 @@ class _profileState extends State<profile> {
                                                       "https://www.eplworld.com${widget.teamImg}"),
                                                 ),),
                                             Positioned(
-                                                left: 2,bottom: 15,
+                                                left: 0,bottom: 15,
                                                 child:  Column(
                                                   mainAxisAlignment: MainAxisAlignment.start,
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    Text(provider.headerProfileModel.name),
+                                                    Text(provider.headerProfileModel.name,style: Theme.of(context).textTheme.bodyText1),
                                                     Row(
                                                       children: [
-                                                        Text('المركز الاساسي',style: TextStyle(color: Colors.black45,fontSize: 13),),
+                                                        Text('المركز الاساسي',style: Theme.of(context).textTheme.bodyText2),
                                                         SizedBox(width: 3,),
                                                         Text(provider.piModel.position,style: TextStyle(color: Colors.green,fontSize: 12.5),)
                                                       ],
@@ -531,12 +529,15 @@ class _profileState extends State<profile> {
                                     ],
                                   ),
                                   SizedBox(height: 10,),
+                                  /*
                                   Row(
                                     children: [
                                       Text('يمكنه ايضا اللعب ',style: TextStyle(color: Colors.black45),),
                                       Text('RAM/CAM',style: TextStyle(fontWeight: FontWeight.bold),)
                                     ],
                                   )
+
+                                   */
 
                                 ],
                               ),

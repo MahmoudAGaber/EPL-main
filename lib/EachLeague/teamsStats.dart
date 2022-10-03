@@ -22,6 +22,11 @@ class _teamsStatsState extends State<teamsStats> {
     fontFamily: 'Vazirmatn',
     fontSize: 20,
   );
+  List<String> icons = [
+    'assets/passesIcon.png',
+    'assets/matchsIcon.png',
+    'assets/goalsIcon.png'
+  ];
 
   @override
   void initState() {
@@ -63,17 +68,22 @@ class _teamsStatsState extends State<teamsStats> {
                       child: Column(
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(children: <Widget>[
-                              Text(
-                                provider.statsModel.teamsModel[index].title.tr,
-                                style: TextStyle(color: Theme.of(context).primaryColor,fontWeight: FontWeight.bold),
-                              )
-                            ]),
+                            padding: const EdgeInsets.only(top: 12,bottom: 12,left: 16,right: 16),
+                            child: Row(
+                                children: <Widget>[
+                                  Container(
+                                      height: 18,width: 18,
+                                      child: Image.asset(icons[index])),
+                                  SizedBox(width: 10,),
+                                  Text(
+                                      provider.statsModel.teamsModel[index].title.tr,
+                                      style: Theme.of(context).textTheme.headline2
+                                  )
+                                ]),
                           ),
                           Container(
                             decoration: BoxDecoration(
-                              color: Colors.grey[100],
+                              color: Theme.of(context).colorScheme.onBackground,
                             ),
                             height: 100,
                             child: Padding(
@@ -136,7 +146,7 @@ class _teamsStatsState extends State<teamsStats> {
                                               ),
                                               Text(
                                                 provider.statsModel.teamsModel[index].firstModel.name.tr,
-                                                style: content,
+                                                style: Theme.of(context).textTheme.bodyText1,
                                               ),
 
                                             ],
@@ -145,21 +155,24 @@ class _teamsStatsState extends State<teamsStats> {
                                       ],
                                     ),
 
-                                    Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment
-                                          .spaceBetween,
-                                      children: <Widget>[
-                                        Text(
-                                          provider
-                                              .statsModel
-                                              .teamsModel[
-                                          index]
-                                              .firstModel
-                                              .number,
-                                          style: TextStyle(color: Colors.black26,fontSize: 22,fontWeight: FontWeight.w600),
-                                        ),
-                                      ],
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 15),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment
+                                            .spaceBetween,
+                                        children: <Widget>[
+                                          Text(
+                                            provider
+                                                .statsModel
+                                                .teamsModel[
+                                            index]
+                                                .firstModel
+                                                .number,
+                                            style:Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 24),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ]),
                             ),
@@ -175,7 +188,7 @@ class _teamsStatsState extends State<teamsStats> {
                               children: <Widget>[
                                 Row(
                                     children: <Widget>[
-                                      Text('2',style: TextStyle(fontSize: 18,color: Colors.black38),),
+                                      Text('2',style: Theme.of(context).textTheme.subtitle2.copyWith(fontSize: 18)),
                                       SizedBox(width: 15,),
                                       GestureDetector(
                                         onTap: () {
@@ -198,8 +211,8 @@ class _teamsStatsState extends State<teamsStats> {
                                                       )));
                                         },
                                         child: Container(
-                                            height: 30,
-                                            width: 30,
+                                            height: 40,
+                                            width: 40,
                                             child: ClipRRect(
                                                 borderRadius: BorderRadius
                                                     .all(Radius
@@ -217,12 +230,12 @@ class _teamsStatsState extends State<teamsStats> {
                                           .statsModel
                                           .teamsModel[index]
                                           .secondModel
-                                          .name)
+                                          .name,  style: Theme.of(context).textTheme.bodyText2)
                                     ]),
                                 SizedBox(width: 25,),
                                 Container(
                                   decoration: BoxDecoration(
-                                      color: Colors.grey[100],
+                                      color: Theme.of(context).colorScheme.onPrimary,
                                       borderRadius: BorderRadius.circular(4)
                                   ),
                                   child: Padding(
@@ -233,9 +246,7 @@ class _teamsStatsState extends State<teamsStats> {
                                           .teamsModel[index]
                                           .secondModel
                                           .number,
-                                      style: TextStyle(
-                                          fontFamily: 'Vazirmatn',
-                                          fontSize: 15),
+                                        style: Theme.of(context).textTheme.bodyText1,
                                     ),
                                   ),
                                 ),
@@ -253,7 +264,7 @@ class _teamsStatsState extends State<teamsStats> {
                               children: <Widget>[
                                 Row(
                                     children: <Widget>[
-                                      Text('3',style: TextStyle(fontSize: 18,color: Colors.black38),),
+                                      Text('3',style: Theme.of(context).textTheme.subtitle2.copyWith(fontSize: 18)),
                                       SizedBox(width: 15,),
                                       GestureDetector(
                                         onTap: () {
@@ -276,8 +287,8 @@ class _teamsStatsState extends State<teamsStats> {
                                                       )));
                                         },
                                         child: Container(
-                                            height: 30,
-                                            width: 30,
+                                            height: 40,
+                                            width: 40,
                                             child: ClipRRect(
                                                 borderRadius: BorderRadius
                                                     .all(Radius
@@ -295,12 +306,12 @@ class _teamsStatsState extends State<teamsStats> {
                                           .statsModel
                                           .teamsModel[index]
                                           .thirdModel
-                                          .name)
+                                          .name, style: Theme.of(context).textTheme.bodyText2,)
                                     ]),
                                 SizedBox(width: 25,),
                                 Container(
                                   decoration: BoxDecoration(
-                                      color: Colors.grey[100],
+                                      color: Theme.of(context).colorScheme.onPrimary,
                                       borderRadius: BorderRadius.circular(4)
                                   ),
                                   child: Padding(
@@ -311,9 +322,7 @@ class _teamsStatsState extends State<teamsStats> {
                                           .teamsModel[index]
                                           .thirdModel
                                           .number,
-                                      style: TextStyle(
-                                          fontFamily: 'Vazirmatn',
-                                          fontSize: 15),
+                                      style: Theme.of(context).textTheme.bodyText1,
                                     ),
                                   ),
                                 ),

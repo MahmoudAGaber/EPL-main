@@ -102,7 +102,7 @@ class _VideoTeamState extends State<VideoTeam> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
                                       provider.videoModelList[index].title,
-                                      style: TextStyle(fontFamily: 'Vazirmatn', fontSize: 14, fontWeight: FontWeight.w500),
+                                      style: Theme.of(context).textTheme.bodyText1,
                                       overflow: TextOverflow.clip ,
                                     ),
                                   ),
@@ -114,20 +114,12 @@ class _VideoTeamState extends State<VideoTeam> {
                                     children: <Widget>[
                                       Text(
                                         provider.videoModelList[index].username,
-                                        style: TextStyle(
-                                            fontFamily: 'Vazirmatn',
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.grey),
+                                        style: Theme.of(context).textTheme.bodyText2
                                       ),
                                       SizedBox(width: 4,),
                                       Text(
                                         " ${provider.videoModelList[index].date} - ${provider.videoModelList[index].date} ".tr,
-                                        style: TextStyle(
-                                            fontFamily: 'Vazirmatn',
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.grey),
+                                        style: Theme.of(context).textTheme.bodyText2
                                       ),
                                     ],
                                   ),

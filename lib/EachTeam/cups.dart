@@ -34,25 +34,24 @@ class _CupsState extends State<Cups> {
                   child: CircularProgressIndicator(
                       backgroundColor: Theme.of(context).primaryColor),
                 ))
-            : ListView.builder(
-                physics: BouncingScrollPhysics(),
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: provider.trophiesBoxesModelList.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: <Widget>[
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(top: 5, right: 5, left: 5),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          child: Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
+            : Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: provider.trophiesBoxesModelList.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 4,top: 4),
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10))),
                                 child: Column(
                                   children: <Widget>[
                                     Row(
@@ -65,44 +64,45 @@ class _CupsState extends State<Cups> {
                                   ),
 
                                    */
-                                        Column(
-                                          children: <Widget>[
-                                            Text(
-                                              provider
-                                                  .trophiesBoxesModelList[index]
-                                                  .name
-                                                  .tr,
-                                              style: TextStyle(
-                                                  fontFamily: 'Vazirmatn',
-                                                  color: Colors.black,
-                                                  fontSize: 15),
-                                            )
-                                          ],
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 10,bottom: 10,right: 16,left: 16),
+                                          child: Column(
+                                            children: <Widget>[
+                                              Text(
+                                                provider
+                                                    .trophiesBoxesModelList[index]
+                                                    .name
+                                                    .tr,
+                                                style: Theme.of(context).textTheme.headline2,
+                                              )
+                                            ],
+                                          ),
                                         )
                                       ],
                                     ),
                                     Divider(
                                       height: 20,
                                     ),
-                                    Row(
-                                      children: <Widget>[
-                                        Text(
-                                          " الفائز  ".toString().tr,
-                                          style: TextStyle(
-                                              fontFamily: 'Vazirmatn',
-                                              color: Colors.black),
-                                        ),
-                                        Text(
-                                          "${provider.trophiesBoxesModelList[index].winnerCount}",
-                                          style: TextStyle(
-                                              fontFamily: 'Vazirmatn',
-                                              color: Colors.green),
-                                        )
-                                      ],
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 4,bottom: 4,right: 16,left: 16),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Text(
+                                            " الفائز  ".toString().tr,
+                                            style: Theme.of(context).textTheme.bodyText1,
+                                          ),
+                                          Text(
+                                            "${provider.trophiesBoxesModelList[index].winnerCount}",
+                                            style: TextStyle(
+                                                fontFamily: 'Vazirmatn',
+                                                color: Colors.green),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          left: 63, bottom: 8, top: 8),
+                                          left: 63, bottom: 8, top: 8,right: 16),
                                       child: Row(
                                         children: <Widget>[
                                           Expanded(
@@ -113,6 +113,7 @@ class _CupsState extends State<Cups> {
                                                     .trophiesBoxesModelList[
                                                         index]
                                                     .winner,
+                                                 style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
                                                 overflow: TextOverflow.visible,
                                               ),
                                             ),
@@ -120,25 +121,27 @@ class _CupsState extends State<Cups> {
                                         ],
                                       ),
                                     ),
-                                    Row(
-                                      children: <Widget>[
-                                        Text(
-                                          " الوصيف ".toString(),
-                                          style: TextStyle(
-                                              fontFamily: 'Vazirmatn',
-                                              color: Colors.black),
-                                        ),
-                                        Text(
-                                          "${provider.trophiesBoxesModelList[index].runnerCount}",
-                                          style: TextStyle(
-                                              fontFamily: 'Vazirmatn',
-                                              color: Colors.red),
-                                        )
-                                      ],
+                                    SizedBox(height: 10,),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 4,bottom: 4,right: 16,left: 16),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Text(
+                                            " الوصيف ".toString(),
+                                            style: Theme.of(context).textTheme.bodyText1,
+                                          ),
+                                          Text(
+                                            "${provider.trophiesBoxesModelList[index].runnerCount}",
+                                            style: TextStyle(
+                                                fontFamily: 'Vazirmatn',
+                                                color: Colors.red),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          left: 63, bottom: 8, top: 8),
+                                          left: 63, bottom: 4, top: 4,right: 16),
                                       child: Row(
                                         children: <Widget>[
                                           Expanded(
@@ -146,21 +149,23 @@ class _CupsState extends State<Cups> {
                                               provider
                                                   .trophiesBoxesModelList[index]
                                                   .runner,
+                                              style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
                                               overflow: TextOverflow.visible,
                                             ),
                                           )
                                         ],
                                       ),
-                                    )
+                                    ),
+                                    SizedBox(height: 8,),
                                   ],
-                                ),
-                              )),
-                        ),
+                                )),
+                          ),
+                        ],
                       ),
-                    ],
-                  );
-                },
-              );
+                    );
+                  },
+                ),
+            );
       },
     );
   }
