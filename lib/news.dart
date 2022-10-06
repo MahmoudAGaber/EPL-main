@@ -46,7 +46,7 @@ class _newsState extends State<news> with SingleTickerProviderStateMixin {
           title: Padding(
             padding: const EdgeInsets.only(right: 0),
             child: Row(
-              children: <Widget>[Text("الأخبار".tr,style: TextStyle(color: Colors.white),)],
+              children: <Widget>[Text("الأخبار".tr,style: TextStyle(color: Colors.white,fontSize: 20),)],
             ),
           ),
           bottom: PreferredSize(

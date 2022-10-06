@@ -79,7 +79,7 @@ class _playersStatsState extends State<playersStats> {
                                     children: <Widget>[
                                   Container(
                                     height: 18,width: 18,
-                                      child: Image.asset(icons[index])),
+                                      child: Image.asset(icons[index],color: Theme.of(context).colorScheme.secondary,)),
                                   SizedBox(width: 10,),
                                   Text(
                                     provider.statsModel.playersModel[index].title.tr,

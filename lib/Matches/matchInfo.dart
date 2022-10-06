@@ -117,9 +117,12 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
                 actions: <Widget>[
                   Row(
                     children: <Widget>[
+                      /*
                       IconButton(
                           icon: Icon(Icons.more_vert, color: Colors.white),
                           onPressed: null),
+
+                       */
                     ],
                   )
                 ],
@@ -137,7 +140,7 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
                       : FlexibleSpaceBar(
                           background: Padding(
                             padding:
-                                const EdgeInsets.only(bottom: 63, left: 40),
+                                const EdgeInsets.only(bottom: 63, left: 12),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
@@ -151,67 +154,40 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
                                           context: context,
                                           builder:
                                               (context) => StatefulBuilder(
-                                                      builder:
-                                                          (context, setState) {
+                                                      builder: (context, setState) {
                                                     return Container(
-                                                      height:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              1.3,
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              double.infinity,
+                                                      height: MediaQuery.of(context).size.width * 1.3,
+                                                      width: MediaQuery.of(context).size.width * double.infinity,
                                                       child: Scaffold(
+                                                        backgroundColor: Theme.of(context).backgroundColor,
                                                         body: Container(
-                                                          height: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              1.3,
-                                                          width: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              double.infinity,
+                                                          height: MediaQuery.of(context).size.width * 1.3,
+                                                          width: MediaQuery.of(context).size.width * double.infinity,
                                                           child:
                                                               ListView.builder(
                                                                   itemCount: 10,
-                                                                  itemBuilder:
-                                                                      (context,
-                                                                          ind) {
+                                                                  itemBuilder:(context, ind) {
                                                                     return Column(
                                                                       children: [
                                                                         ind == 0
                                                                             ? Container(
-                                                                                decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 2, color: Colors.grey[100]))),
-                                                                                height: 50,
+                                                                                decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 1,  color: Theme.of(context).dividerColor))),
                                                                                 width: MediaQuery.of(context).size.width * double.infinity,
                                                                                 child: Column(
                                                                                   children: [
                                                                                     Padding(
-                                                                                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                                                                      padding: const EdgeInsets.only(left: 12,right: 12,top: 14,bottom: 14),
                                                                                       child: Row(
                                                                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                         children: [
-                                                                                          Text("${notficationString[ind]}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                                                                                          ElevatedButton(
-                                                                                            onPressed: () {
-                                                                                              print(widget.awayId);
+                                                                                          Text("${notficationString[ind]}", style:Theme.of(context).textTheme.headline2),
+                                                                                          InkWell(
+                                                                                            onTap: () {
+                                                                                              print(notifCheak);
+                                                                                              Navigator.pop(context);
                                                                                             },
-                                                                                            child: Text("انتهى",
-                                                                                                style: TextStyle(
-                                                                                                  color: Color(0xfff77109B),
-                                                                                                  fontWeight: FontWeight.bold,
-                                                                                                  fontSize: 16,
-                                                                                                )),
-                                                                                            style: ElevatedButton.styleFrom(
-                                                                                              primary: Colors.white,
-                                                                                              elevation: 0.0,
-                                                                                              shadowColor: Colors.transparent,
-                                                                                            ),
+                                                                                            child: Text("حسنًا",
+                                                                                                style: Theme.of(context).textTheme.bodyText1.copyWith(color: Color(0xFFD96BFF,),fontWeight: FontWeight.bold,fontSize: 16)),
                                                                                           )
                                                                                         ],
                                                                                       ),
@@ -221,89 +197,93 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
                                                                               )
                                                                             : ind == 1
                                                                                 ? Container(
-                                                                                    decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 2, color: Colors.grey[100]))),
-                                                                                    height: 45,
-                                                                                    child: Row(
-                                                                                      mainAxisAlignment: MainAxisAlignment.start,
-                                                                                      children: [
-                                                                                        Container(
-                                                                                          height: 40,
-                                                                                          width: 40,
-                                                                                          child: Checkbox(
-                                                                                              shape: CircleBorder(),
-                                                                                              activeColor: Color(0xfff77109B),
-                                                                                              splashRadius: 20,
-                                                                                              value: notifCheak[ind],
-                                                                                              onChanged: (onChange) {
-                                                                                                setState(() {
-                                                                                                  notifCheak[1] = !notifCheak[1];
-                                                                                                  if (notifCheak[1] == true) {
-                                                                                                    notifCheak[2] = true;
-                                                                                                    notifCheak[3] = true;
-                                                                                                    notifCheak[4] = true;
-                                                                                                    notifCheak[5] = true;
-                                                                                                    notifCheak[6] = true;
-                                                                                                    notifCheak[7] = true;
-                                                                                                    notifCheak[8] = true;
-                                                                                                    notifCheak[9] = true;
-                                                                                                  } else {
-                                                                                                    notifCheak[2] = false;
-                                                                                                    notifCheak[3] = false;
-                                                                                                    notifCheak[4] = false;
-                                                                                                    notifCheak[5] = false;
-                                                                                                    notifCheak[6] = false;
-                                                                                                    notifCheak[7] = false;
-                                                                                                    notifCheak[8] = false;
-                                                                                                    notifCheak[9] = false;
-                                                                                                  }
-                                                                                                });
-                                                                                              }),
-                                                                                        ),
-                                                                                        Text("${notficationString[ind]}", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                                                                                      ],
+                                                                                    decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 1, color: Theme.of(context).dividerColor))),
+                                                                                    child: Padding(
+                                                                                      padding: const EdgeInsets.only(left: 12,right: 12,top: 4,bottom: 4),
+                                                                                      child: Row(
+                                                                                        mainAxisAlignment: MainAxisAlignment.start,
+                                                                                        children: [
+                                                                                          Container(
+                                                                                            height: 40,
+                                                                                            width: 40,
+                                                                                            child: Checkbox(
+                                                                                                shape: CircleBorder(),
+                                                                                                activeColor: Color(0xfff77109B),
+                                                                                                splashRadius: 20,
+                                                                                                value: notifCheak[ind],
+                                                                                                onChanged: (onChange) {
+                                                                                                  setState(() {
+                                                                                                    notifCheak[1] = !notifCheak[1];
+                                                                                                    if (notifCheak[1] == true) {
+                                                                                                      notifCheak[2] = true;
+                                                                                                      notifCheak[3] = true;
+                                                                                                      notifCheak[4] = true;
+                                                                                                      notifCheak[5] = true;
+                                                                                                      notifCheak[6] = true;
+                                                                                                      notifCheak[7] = true;
+                                                                                                      notifCheak[8] = true;
+                                                                                                      notifCheak[9] = true;
+                                                                                                    } else {
+                                                                                                      notifCheak[2] = false;
+                                                                                                      notifCheak[3] = false;
+                                                                                                      notifCheak[4] = false;
+                                                                                                      notifCheak[5] = false;
+                                                                                                      notifCheak[6] = false;
+                                                                                                      notifCheak[7] = false;
+                                                                                                      notifCheak[8] = false;
+                                                                                                      notifCheak[9] = false;
+                                                                                                    }
+                                                                                                  });
+                                                                                                }),
+                                                                                          ),
+                                                                                          Text("${notficationString[ind]}", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                                                                                        ],
+                                                                                      ),
                                                                                     ),
                                                                                   )
                                                                                 : Container(
-                                                                                    decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 2, color: Colors.grey[100]))),
-                                                                                    height: 45,
-                                                                                    child: Row(
-                                                                                      mainAxisAlignment: MainAxisAlignment.start,
-                                                                                      children: [
-                                                                                        Container(
-                                                                                          height: 40,
-                                                                                          width: 40,
-                                                                                          child: Checkbox(
-                                                                                              shape: CircleBorder(),
-                                                                                              activeColor: Color(0xfff77109B),
-                                                                                              splashRadius: 20,
-                                                                                              value: notifCheak[ind],
-                                                                                              onChanged: (onChange) {
-                                                                                                setState(() {
-                                                                                                  notifCheak[ind] = !notifCheak[ind];
+                                                                                    decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 1, color: Theme.of(context).dividerColor))),
+                                                                                    child: Padding(
+                                                                                      padding: const EdgeInsets.only(left: 12,right: 12,top: 4,bottom: 4),
+                                                                                      child: Row(
+                                                                                        mainAxisAlignment: MainAxisAlignment.start,
+                                                                                        children: [
+                                                                                          Container(
+                                                                                            height: 40,
+                                                                                            width: 40,
+                                                                                            child: Checkbox(
+                                                                                                shape: CircleBorder(),
+                                                                                                activeColor: Color(0xfff77109B),
+                                                                                                splashRadius: 20,
+                                                                                                value: notifCheak[ind],
+                                                                                                onChanged: (onChange) {
+                                                                                                  setState(() {
+                                                                                                    notifCheak[ind] = !notifCheak[ind];
 
-                                                                                                  // if (selected ==
-                                                                                                  //     true) {
-                                                                                                  //   for (var i = 0;
-                                                                                                  //       i < 8;
-                                                                                                  //       i++) {}
-                                                                                                  // } else {}
-                                                                                                });
-                                                                                              }),
-                                                                                        ),
-                                                                                        Padding(
-                                                                                          padding: const EdgeInsets.all(8.0),
-                                                                                          child: Container(
-                                                                                            decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(50)),
-                                                                                            height: 20,
-                                                                                            width: 20,
-                                                                                            child: Padding(
-                                                                                              padding: const EdgeInsets.all(3),
-                                                                                              child: Image.asset("assets/soccer-ball.png"),
+                                                                                                    // if (selected ==
+                                                                                                    //     true) {
+                                                                                                    //   for (var i = 0;
+                                                                                                    //       i < 8;
+                                                                                                    //       i++) {}
+                                                                                                    // } else {}
+                                                                                                  });
+                                                                                                }),
+                                                                                          ),
+                                                                                          Padding(
+                                                                                            padding: const EdgeInsets.all(8.0),
+                                                                                            child: Container(
+                                                                                              decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(50)),
+                                                                                              height: 20,
+                                                                                              width: 20,
+                                                                                              child: Padding(
+                                                                                                padding: const EdgeInsets.all(3),
+                                                                                                child: Image.asset("assets/soccer-ball.png"),
+                                                                                              ),
                                                                                             ),
                                                                                           ),
-                                                                                        ),
-                                                                                        Text("${notficationString[ind]}", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                                                                                      ],
+                                                                                          Text("${notficationString[ind]}", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                                                                        ],
+                                                                                      ),
                                                                                     ),
                                                                                   ),
                                                                       ],

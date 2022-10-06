@@ -35,22 +35,13 @@ class matchInfo_a extends StatefulWidget {
 
 class _matchInfo_aState extends State<matchInfo_a>
     with TickerProviderStateMixin {
-  TextStyle content = TextStyle(fontFamily: 'Vazirmatn', fontSize: 13.5);
-  TextStyle content2 =
-      TextStyle(fontFamily: 'Vazirmatn', fontSize: 13.5, color: Colors.grey);
-  TextStyle content3 = TextStyle(fontFamily: 'Vazirmatn', fontSize: 12);
-  TextStyle content4 =
-      TextStyle(fontFamily: 'Vazirmatn', fontSize: 12, color: Colors.grey);
-  TextStyle number = TextStyle(
-      fontFamily: 'Vazirmatn', fontSize: 18, fontWeight: FontWeight.w400);
+
 
   static const TextStyle tapbar = TextStyle(
       fontFamily: 'Vazirmatn',
       fontSize: 13,
       fontWeight: FontWeight.w500,
       color: Colors.white);
-  TextStyle head =
-      TextStyle(fontFamily: 'Vazirmatn', fontSize: 16, color: Colors.white);
 
   bool chContaier = false;
   double heightOfgoals = 65;
@@ -437,12 +428,13 @@ class _matchInfo_aState extends State<matchInfo_a>
           child: SliverPersistentHeader(
               pinned: true,
               delegate: _SliverAppBarDelegate(
-                  maxHeight: 45,
+                  maxHeight: 60,
                   minHeight: 45,
                   child: Consumer<EachMatchViewModel>(
                     builder: (context, provider, child) {
                       return Container(
-                        color: Theme.of(context).primaryColor,
+                        height: 60,
+                        color: Theme.of(context).backgroundColor,
                         child: TabBar(
                             indicatorColor: Theme.of(context).primaryColor,
                             isScrollable: true,
@@ -610,7 +602,7 @@ class _matchInfo_aState extends State<matchInfo_a>
     if (provider.sortedStatsModelMatch != null) {
       test.add(statsName());
     }
-    if (provider.tablesModelList != null) {
+    if (provider.tablesModelList[0].list.isNotEmpty) {
       test.add(matchTableName());
     }
 
@@ -678,11 +670,11 @@ class _matchInfo_aState extends State<matchInfo_a>
       test.add(stats());
     }
 
-    if (provider.tablesModelList != null &&
+    if (provider.tablesModelList[0].list.isNotEmpty &&
         provider.tablesModelList[0].list.length == 1) {
       test.add(matchTable());
     }
-    if (provider.tablesModelList != null &&
+    if (provider.tablesModelList[0].list.isNotEmpty &&
         provider.tablesModelList[0].list.length > 1) {
       test.add(matchGTable());
     }

@@ -142,7 +142,7 @@ class _leagueNewsState extends State<leagueNews> {
                                                         const EdgeInsets.only(left: 15, right: 15),
                                                         child: Text(
                                                           provider.newsModelList[index].title,
-                                                          style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 15),
+                                                          style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 15,color: Colors.white70),
                                                           overflow: TextOverflow.clip,
                                                         ),
                                                       ),
@@ -156,11 +156,11 @@ class _leagueNewsState extends State<leagueNews> {
                                                     SizedBox(width: 5,),
                                                     Text(
                                                       provider.newsModelList[index].username,
-                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                        style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13,color: Colors.white70),
                                                     ),
                                                     SizedBox(width: 5,),
                                                     Text("- ${provider.newsModelList[index].date.tr} - ${provider.newsModelList[index].time.tr}",
-                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13,color: Colors.white70),
                                                       overflow: TextOverflow.clip,
                                                     ),
                                                   ],

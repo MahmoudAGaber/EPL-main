@@ -389,15 +389,13 @@ class _TeamPositionState extends State<TeamPosition> {
                                                                       mainAxisAlignment:
                                                                       MainAxisAlignment.start,
                                                                       children: [
-                                                                        Column(
-                                                                          mainAxisAlignment:
-                                                                          MainAxisAlignment.center,
-                                                                          children: [
-                                                                            Text(
+                                                                        Flexible(
+                                                                          child: FittedBox(
+                                                                            child: Text(
                                                                               provider.tablesModelList[0].list[0].tableModel[index].name,
                                                                               style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
-                                                                            )
-                                                                          ],
+                                                                            ),
+                                                                          ),
                                                                         )
                                                                       ],
                                                                     )),

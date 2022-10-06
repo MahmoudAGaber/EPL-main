@@ -19,8 +19,7 @@ class SearchController extends GetxController {
 
   // suceess
 
-  List<Team> get searchState =>
-      (teamSearchState.value as SearchStateSuccess).data;
+  List<Team> get searchState => (teamSearchState.value as SearchStateSuccess).data;
 
   Future<void> search() async {
     final searchKey = searchTextEditingController.text;
@@ -44,8 +43,7 @@ class SearchController extends GetxController {
       print('searchkey: $searchKey');
       print('result: $result');
 
-      teamSearchState.value =
-          SearchStateSuccess(result, DateTime.now().millisecondsSinceEpoch);
+      teamSearchState.value = SearchStateSuccess(result, DateTime.now().millisecondsSinceEpoch);
     } catch (e) {
       teamSearchState.value = SearchStateError();
     }

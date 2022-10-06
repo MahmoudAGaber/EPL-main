@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 
+import 'home.dart';
+
 class More extends StatefulWidget {
   @override
   _MoreState createState() => _MoreState();
@@ -26,13 +28,15 @@ class _MoreState extends State<More> {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.close),
+            icon: Icon(Icons.close,
+            color: Colors.white,),
           )
         ],
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Column(
         children: <Widget>[
+          /*
           Padding(
             padding: const EdgeInsets.all(15),
             child: Container(
@@ -93,11 +97,14 @@ class _MoreState extends State<More> {
               ),
             ),
           ),
+
+           */
           Divider(),
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Column(
               children: <Widget>[
+                /*
                 GestureDetector(
                   onTap: () {
                     //Navigator.pushNamed(context, '/transferCenter');
@@ -173,6 +180,200 @@ class _MoreState extends State<More> {
                     ],
                   ),
                 ),
+
+
+                 */
+                SizedBox(
+                  height: 12,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder:(context)=> home(index: 0,)
+                    ));
+                  },
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[800],
+                          borderRadius: BorderRadius.all(Radius.circular(100)),
+                        ),
+                        child:Padding(
+                          padding: const EdgeInsets.all(7.0),
+                          child: Image.asset('assets/matchsIcon.png',width: 20,height: 20,color: Colors.white,),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                              "المباريات".tr,
+                              style: Theme.of(context).textTheme.headline2
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(
+                        builder:(context)=> home(index: 1,)
+                    ));
+                  },
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[800],
+                          borderRadius: BorderRadius.all(Radius.circular(100)),
+                        ),
+                        child:Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset('assets/newsIcon.png',width: 20,height: 20,color: Colors.white,),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                              "الاخبار".tr,
+                              style: Theme.of(context).textTheme.headline2
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(
+                        builder:(context)=> home(index: 2,)
+                    ));
+                  },
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[800],
+                          borderRadius: BorderRadius.all(Radius.circular(100)),
+                        ),
+                        child:Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: Image.asset('assets/video2Icon.png',width: 20,height: 20,color: Colors.white,),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                              "الفيديو".tr,
+                              style: Theme.of(context).textTheme.headline2
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(
+                        builder:(context)=> home(index: 3,)
+                    ));
+                  },
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[800],
+                          borderRadius: BorderRadius.all(Radius.circular(100)),
+                        ),
+                        child:Icon(
+                          Icons.star,
+                          color: Colors.white,
+                          size: 28,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                              "المفضله".tr,
+                              style: Theme.of(context).textTheme.headline2
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(
+                        builder:(context)=> home(index: 4,)
+                    ));
+                  },
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[800],
+                          borderRadius: BorderRadius.all(Radius.circular(100)),
+                        ),
+                        child:Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset('assets/cupIcon.png',width: 20,height: 20,color: Colors.white,),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                              "البطولات".tr,
+                              style: Theme.of(context).textTheme.headline2
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
                 SizedBox(
                   height: 20,
                 ),
@@ -203,7 +404,7 @@ class _MoreState extends State<More> {
                         children: <Widget>[
                           Text(
                             "الاعدادات".tr,
-                            style: _textStyle,
+                            style: Theme.of(context).textTheme.headline2
                           ),
                         ],
                       )

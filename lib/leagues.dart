@@ -77,7 +77,7 @@ class _LeaguesState extends State<Leagues> with SingleTickerProviderStateMixin {
                     Text(
                       'بطولات',
                       style: TextStyle(
-                          fontFamily: 'Vazirmatn', color: Colors.white),
+                          fontFamily: 'Vazirmatn', color: Colors.white,fontSize: 20),
                     )
                   ],
                 ),
@@ -133,13 +133,11 @@ class _LeaguesState extends State<Leagues> with SingleTickerProviderStateMixin {
                                             const EdgeInsets.only(bottom: 4),
                                         child: Icon(
                                           Icons.search,
-                                          color: Colors.grey,
+                                          color: Theme.of(context).colorScheme.primaryVariant
                                         ),
                                       ),
                                       hintText: "ابحث عن بطوله",
-                                      hintStyle: TextStyle(
-                                          color: Colors.grey,
-                                          fontFamily: 'Vazirmatn')),
+                                      hintStyle: Theme.of(context).textTheme.headline3.copyWith(fontSize: 15)),
                                 ),
                               ),
                             ),
@@ -150,131 +148,109 @@ class _LeaguesState extends State<Leagues> with SingleTickerProviderStateMixin {
                               elevation: 2,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: 15, left: 15, top: 10),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
+                              child: ExpansionTile(
+                                initiallyExpanded: true,
+                                title: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 15, left: 15, top: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
                                             'اتابعهم',
-                                            style: TextStyle(
-                                                fontFamily: 'Vazirmatn',
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                          // Text(
-                                          //   'تعديل',
-                                          //   style: TextStyle(
-                                          //       fontFamily: 'Vazirmatn',
-                                          //       fontSize: 13,
-                                          //       fontWeight: FontWeight.w600,
-                                          //       color: Theme.of(context)
-                                          //           .primaryColor),
-                                          // ),
-                                        ],
-                                      )),
-                                  Divider(),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 16),
-                                    child: Container(
-                                      height: 260,
-                                      child: Obx(() {
-                                        final teams = favouriteController
-                                            .favouriteTeams.value;
-                                        return GridView.builder(
-                                            scrollDirection: Axis.horizontal,
-                                            itemCount: teams.length,
-                                            gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(
-                                                    crossAxisCount: 2),
-                                            itemBuilder:
-                                                (BuildContext context, index) {
-                                              final item = teams[index];
-                                              return Padding(
-                                                padding:
-                                                    const EdgeInsets.all(1.0),
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    if (widget.tag ==
-                                                        'البطولات') {
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) => ChangeNotifierProvider<
-                                                                      EachTeamViewModel>(
-                                                                  create: (_) =>
-                                                                      EachTeamViewModel(),
-                                                                  child:
-                                                                      EachTeam(
-                                                                    url: item
-                                                                        .teamBasicDataModel
-                                                                        .url,
-                                                                  ))));
-                                                    } else {
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) => ChangeNotifierProvider<
-                                                                      EachLeagueViewModel>(
-                                                                  create: (_) =>
-                                                                      EachLeagueViewModel(),
-                                                                  child: EachLeague(
-                                                                      url: item
-                                                                          .teamBasicDataModel
-                                                                          .url))));
-                                                    }
-                                                  },
-                                                  child: Card(
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8)),
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Container(
-                                                              width: 45,
-                                                              height: 45,
+                                            style: Theme.of(context).textTheme.headline2
+                                        ),
+                                        // Text(
+                                        //   'تعديل',
+                                        //   style: TextStyle(
+                                        //       fontFamily: 'Vazirmatn',
+                                        //       fontSize: 13,
+                                        //       fontWeight: FontWeight.w600,
+                                        //       color: Theme.of(context)
+                                        //           .primaryColor),
+                                        // ),
+                                      ],
+                                    )),
+                                children: [
+                                  Obx(() {
+                                    final teams = favouriteController
+                                        .favouriteTeams.value;
+                                    return ListView.builder(
+                                        scrollDirection: Axis.vertical,
+                                        itemCount: teams.length,
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemBuilder: (BuildContext context, index) {
+                                          final item = teams[index];
+                                          return Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                if (widget.tag ==
+                                                    'البطولات') {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) => ChangeNotifierProvider<
+                                                                  EachTeamViewModel>(
+                                                              create: (_) =>
+                                                                  EachTeamViewModel(),
                                                               child:
-                                                                  CachedNetworkImage(
-                                                                imageUrl: item
+                                                                  EachTeam(
+                                                                url: item
                                                                     .teamBasicDataModel
-                                                                    .image
-                                                                    .hostedFile,
-                                                              )),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child: Text(
-                                                              item.teamBasicDataModel
-                                                                  .text,
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style: TextStyle(
-                                                                fontFamily:
-                                                                    'Vazirmatn',
-                                                              ),
-                                                            ),
-                                                          )
-                                                        ],
+                                                                    .url,
+                                                              ))));
+                                                } else {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) => ChangeNotifierProvider<
+                                                                  EachLeagueViewModel>(
+                                                              create: (_) =>
+                                                                  EachLeagueViewModel(),
+                                                              child: EachLeague(
+                                                                  url: item
+                                                                      .teamBasicDataModel
+                                                                      .url))));
+                                                }
+                                              },
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .start,
+                                                children: [
+                                                  Container(
+                                                      width: 30,
+                                                      height: 30,
+                                                      child:
+                                                          CachedNetworkImage(
+                                                        imageUrl: item
+                                                            .teamBasicDataModel
+                                                            .image
+                                                            .hostedFile,
                                                       )),
-                                                ),
-                                              );
-                                            });
-                                      }),
-                                    ),
-                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets
+                                                            .all(8.0),
+                                                    child: Text(
+                                                      item.teamBasicDataModel
+                                                          .text,
+                                                      textAlign:
+                                                          TextAlign
+                                                              .center,
+                                                      style: Theme.of(context).textTheme.bodyText1
+                                                      ),
+                                                    ),
+
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        });
+                                  }),
                                 ],
                               ),
                             ),
@@ -295,16 +271,16 @@ class _LeaguesState extends State<Leagues> with SingleTickerProviderStateMixin {
                                       children: [
                                         Text(
                                           'مقترحة',
-                                          style: TextStyle(
-                                              fontFamily: 'Vazirmatn',
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600),
+                                            style: Theme.of(context).textTheme.headline2
                                         ),
+                                        /*
                                         Icon(
                                           Icons.clear,
                                           color: Colors.grey,
                                           size: 20,
                                         )
+
+                                         */
                                       ],
                                     )),
                                 Divider(),
@@ -396,11 +372,7 @@ class _LeaguesState extends State<Leagues> with SingleTickerProviderStateMixin {
                                                               Text(
                                                                 teamBasicDataModel
                                                                     .text,
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontFamily:
-                                                                      'Vazirmatn',
-                                                                ),
+                                                                  style: Theme.of(context).textTheme.headline2
                                                               )
                                                             ],
                                                           ),
@@ -472,7 +444,10 @@ class _LeaguesState extends State<Leagues> with SingleTickerProviderStateMixin {
                                       );
                                     }
                                     return Center(
-                                      child: Text('ابدأ بالبحث الآن'),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 10),
+                                        child: Text('ابدأ بالبحث الآن',style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),),
+                                      ),
                                     );
                                   },
                                 ),
@@ -493,12 +468,9 @@ class _LeaguesState extends State<Leagues> with SingleTickerProviderStateMixin {
                                     padding: const EdgeInsets.only(top: 4,bottom: 4),
                                     child: Card(
                                       elevation: 2,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                       child: Theme(
-                                        data: Theme.of(context).copyWith(
-                                            dividerColor: Colors.transparent),
+                                        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
                                         child: ExpansionTile(
                                           initiallyExpanded: true,
                                           title: GestureDetector(
@@ -508,20 +480,12 @@ class _LeaguesState extends State<Leagues> with SingleTickerProviderStateMixin {
                                                 Container(
                                                     width: 30,
                                                     height: 30,
-                                                    child: provider
-                                                            .responseModelLeagues[
-                                                                index]
-                                                            .countryImage
-                                                            .endsWith('svg')
+                                                    child: provider.responseModelLeagues[index].countryImage.endsWith('svg')
                                                         ? ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(50),
-                                                            child: SvgPicture
-                                                                .network(
+                                                            borderRadius: BorderRadius.circular(50),
+                                                            child: SvgPicture.network(
                                                               "https://www.eplworld.com/${provider.responseModelLeagues[index].countryImage}",
-                                                              semanticsLabel:
-                                                                  'Acme Logo',
+                                                              semanticsLabel: 'Acme Logo',
                                                               fit: BoxFit.cover,
                                                             ))
                                                         : Image.network(
@@ -530,14 +494,8 @@ class _LeaguesState extends State<Leagues> with SingleTickerProviderStateMixin {
                                                   width: 15,
                                                 ),
                                                 Text(
-                                                  provider
-                                                      .responseModelLeagues[index]
-                                                      .name,
-                                                  style: TextStyle(
-                                                      fontFamily: 'Vazirmatn',
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w400),
+                                                  provider.responseModelLeagues[index].name,
+                                                    style: Theme.of(context).textTheme.headline2.copyWith(fontSize: 16)
                                                 ),
                                               ],
                                             ),
@@ -569,8 +527,7 @@ class _LeaguesState extends State<Leagues> with SingleTickerProviderStateMixin {
                                                                     ))));
                                                   },
                                                   child: Padding(
-                                                    padding: const EdgeInsets.all(
-                                                        10.0),
+                                                    padding: const EdgeInsets.all(10.0),
                                                     child: Row(
                                                       children: [
                                                         Container(
@@ -608,10 +565,7 @@ class _LeaguesState extends State<Leagues> with SingleTickerProviderStateMixin {
                                                                   index]
                                                               .Tournaments[indexx]
                                                               .name,
-                                                          style: TextStyle(
-                                                              fontFamily:
-                                                                  'Vazirmatn',
-                                                              fontSize: 15),
+                                                            style: Theme.of(context).textTheme.headline2
                                                         ),
                                                       ],
                                                     ),

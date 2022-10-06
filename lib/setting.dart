@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'lang/LocalizationService.dart';
 
@@ -24,6 +25,8 @@ class _settingState extends State<setting> {
   final _scaffoldkey = new GlobalKey<ScaffoldState>();
   VoidCallback _showpersBottomSheetCallBack;
   DarkThemeProvider darkThemeProvider;
+  Future<void> _launched;
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -34,6 +37,11 @@ class _settingState extends State<setting> {
     _showpersBottomSheetCallBack = _bottomSheet;
   }
 
+
+
+
+
+
   void _bottomSheet() {
     setState(() {
       _showpersBottomSheetCallBack = null;
@@ -42,89 +50,49 @@ class _settingState extends State<setting> {
     _scaffoldkey.currentState
         .showBottomSheet((BuildContext context) {
           return new Container(
-              height: 280,
+              height: 180,
               width: MediaQuery.of(context).size.width,
-              color: Colors.white,
+              color: Theme.of(context).primaryColor,
               child: Padding(
                 padding: const EdgeInsets.only(
                     top: 10, right: 20, left: 20, bottom: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Row(
                       children: <Widget>[
-                        Text(
-                          "تابعنا".tr,
-                          style: _textStyle,
-                        )
-                      ],
-                    ),
-                    Divider(
-                      height: 15,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Icon(
-                          MdiIcons.facebook,
-                          size: 30,
-                          color: Colors.blue[800],
+                        GestureDetector(
+                          onTap: (){
+                            launch('https://www.instagram.com/eplworld/?fbclid=IwAR1XE1MWPHsHQoVc9gXu4F875DydtvvzopI9lXJpj-NWZ5k3hGVB_DHF8FI');
+                          },
+                            child: Icon(MdiIcons.instagram,
+                                size: 40,
+                                color: Theme.of(context).colorScheme.secondary)
                         ),
                         SizedBox(
                           width: 10,
                         ),
-                        Text(
-                          "Facebook".tr,
-                          style: _textStyle,
-                        )
+
                       ],
                     ),
                     Row(
                       children: <Widget>[
-                        Icon(MdiIcons.instagram, size: 30, color: Colors.black),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          "Instagram".tr,
-                          style: _textStyle,
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Icon(
-                          MdiIcons.twitter,
-                          size: 30,
-                          color: Colors.blue,
+                        GestureDetector(
+                          onTap: (){
+
+                              launch('https://twitter.com/eplworld/?fbclid=IwAR1gHoxqvdnt1cia3-x86izw8QjTmWOwnlRw5ellKTn_Pag4baXVNBTA8tQ');
+                          },
+                          child: Icon(
+                            MdiIcons.twitter,
+                            size: 40,
+                            color: Theme.of(context).colorScheme.secondary),
                         ),
                         SizedBox(
                           width: 10,
                         ),
-                        Text(
-                          "Twitter".tr,
-                          style: _textStyle,
-                        )
+
                       ],
                     ),
-                    Divider(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(left: 30),
-                          child: InkWell(
-                            child: Text(
-                              "الغاء".tr,
-                              style: TextStyle(                      fontFamily: 'Vazirmatn',
-                                  color: Theme.of(context).primaryColor),
-                            ),
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        )
-                      ],
-                    )
                   ],
                 ),
               ));
@@ -152,7 +120,7 @@ class _settingState extends State<setting> {
               backgroundColor: Theme.of(context).primaryColor,
               title: Text(
                 "الاعدادات".tr,
-                style: TextStyle( fontFamily: 'Vazirmatn',color: Colors.white),
+                style: TextStyle( fontFamily: 'Vazirmatn',color: Colors.white,fontSize: 20),
               ),
             ),
             body: Padding(
@@ -160,6 +128,7 @@ class _settingState extends State<setting> {
               const EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
               child: ListView(
                 children: <Widget>[
+                  /*
                   GestureDetector(
                     onTap: () {
                       // Navigator.pushNamed(context, '/tv');
@@ -201,6 +170,8 @@ class _settingState extends State<setting> {
                   SizedBox(
                     height: 35,
                   ),
+
+                   */
                   Row(
                     children: <Widget>[
                       Container(
@@ -272,11 +243,11 @@ class _settingState extends State<setting> {
                         children: <Widget>[
                           Text(
                             "لغة الواجهة".tr,
-                            style: _textStyle,
+                           style: Theme.of(context).textTheme.headline2,
                           ),
                           Text(
                             "اللغة العربية".tr,
-                            style: _textStyle1,
+                            style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 14)
                           ),
                           /*
                         DropdownButton(
@@ -332,7 +303,7 @@ class _settingState extends State<setting> {
                           children: <Widget>[
                             Text(
                               "مشاركة هذا التطبيق".tr,
-                              style: _textStyle,
+                              style: Theme.of(context).textTheme.headline2,
                             ),
                           ],
                         )
@@ -367,7 +338,7 @@ class _settingState extends State<setting> {
                           children: <Widget>[
                             Text(
                               "تابعنا".tr,
-                              style: _textStyle,
+                              style: Theme.of(context).textTheme.headline2,
                             ),
                           ],
                         )
@@ -377,34 +348,39 @@ class _settingState extends State<setting> {
                   SizedBox(
                     height: 35,
                   ),
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[800],
-                          borderRadius: BorderRadius.all(Radius.circular(100)),
-                        ),
-                        child: Icon(
-                          Icons.not_listed_location,
-                          color: Colors.white,
-                          size: 28,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "الدعم".tr,
-                            style: _textStyle,
+                  GestureDetector(
+                    onTap: (){
+                      launch('mailto:eplworld@eplworld.net');
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[800],
+                            borderRadius: BorderRadius.all(Radius.circular(100)),
                           ),
-                        ],
-                      )
-                    ],
+                          child: Icon(
+                            Icons.not_listed_location,
+                            color: Colors.white,
+                            size: 28,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "الدعم".tr,
+                              style: Theme.of(context).textTheme.headline2,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ],
               ),

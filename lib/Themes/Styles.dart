@@ -33,7 +33,7 @@ class Styles {
       colorScheme: ColorScheme(
           primary: Colors.grey,
           secondary: isDarkTheme?Colors.white:Colors.black,
-          primaryVariant: Colors.grey,
+          primaryVariant: isDarkTheme?Colors.white:Colors.black54,
           secondaryVariant: Colors.grey,
           surface: isDarkTheme ? Color(0xFF111111) : Colors.grey[200],
           background: isDarkTheme?Colors.grey[400] : Colors.grey[300],

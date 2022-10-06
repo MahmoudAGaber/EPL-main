@@ -31,6 +31,8 @@ class _FavouritesState extends State<Favourites>
     with SingleTickerProviderStateMixin {
   SearchController controller;
   FavoritesController favouriteController;
+  var state2;
+  var data2;
   @override
   void initState() {
     // TODO: implement initState
@@ -38,11 +40,17 @@ class _FavouritesState extends State<Favourites>
     final repo = TeamRepo(
         TeamsRemoteDataSource(Get.find()),
         FavouriteTeamLocalDataSource(
-            Injection.getIt.get<GetStorage>(), widget.tag));
+            Injection.getIt.get<GetStorage>(),
+            widget.tag));
     controller = Get.put(SearchController(repo), tag: widget.tag);
     Get.put(FavoritesController(repo, widget.tag),
         permanent: true, tag: widget.tag);
     favouriteController = Get.find<FavoritesController>(tag: widget.tag);
+
+     state2 = controller.teamSearchState.value;
+    if (state2 is SearchStateSuccess) {
+       data2 = state2.data;
+    }
 
 /*
     Get.put(ControllerFavorites(Injection.getIt.get<TeamRepo>()),
@@ -60,25 +68,69 @@ class _FavouritesState extends State<Favourites>
             children: <Widget>[
               Text(
                 "المفضلة".tr,
-                style: TextStyle(color: Colors.white, fontFamily: 'Vazirmatn'),
+                style: TextStyle(color: Colors.white, fontFamily: 'Vazirmatn',fontSize: 20),
               )
             ],
           ),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(12.0),
           child: ListView(
             shrinkWrap: true,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 10),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  child: Container(
+                    height: 60,
+                    child: TextFormField(
+                      controller:
+                      controller.searchTextEditingController,
+/*
+                          onChanged: (inputValue) {
+                            controller.onChanged(inputValue);
+                            return;
+                            if (lastInputValue != inputValue) {
+                              lastInputValue = inputValue;
+                              context
+                                  .read<TeamSearchBloc>()
+                                  .add(TextChanged(text: inputValue));
+                            }
+                          },
+*/
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                              BorderRadius.circular(8),
+                              borderSide:
+                              BorderSide(color: Theme.of(context).buttonColor)),
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          filled: true,
+                          fillColor: Theme.of(context).buttonColor,
+                          prefixIcon: Padding(
+                            padding:
+                            const EdgeInsets.only(bottom: 4),
+                            child: Icon(
+                                Icons.search,
+                                color: Theme.of(context).colorScheme.primaryVariant
+                            ),
+                          ),
+                          hintText: "ابحث عن فريق",
+                          hintStyle: Theme.of(context).textTheme.headline3.copyWith(fontSize: 15)),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16,right: 12,left: 12),
                 child: Text(
                   'اتابعهم',
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Vazirmatn',
-                      color: Colors.black),
+                  style: Theme.of(context).textTheme.headline2
                 ),
               ),
               Padding(
@@ -95,7 +147,7 @@ class _FavouritesState extends State<Favourites>
                         itemBuilder: (BuildContext context, index) {
                           final item = teams[index];
                           return Padding(
-                            padding: const EdgeInsets.all(1.0),
+                            padding: const EdgeInsets.all(2.0),
                             child: GestureDetector(
                               onTap: () {
                                 if (widget.tag == 'الفرق') {
@@ -108,8 +160,7 @@ class _FavouritesState extends State<Favourites>
                                                   create: (_) =>
                                                       EachTeamViewModel(),
                                                   child: EachTeam(
-                                                    url: item
-                                                        .teamBasicDataModel.url,
+                                                    url: item.teamBasicDataModel.url,
                                                   ))));
                                 } else {
                                   Navigator.push(
@@ -158,63 +209,14 @@ class _FavouritesState extends State<Favourites>
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
-                  child: Container(
-                    height: 60,
-                    child: TextFormField(
-                      controller: controller.searchTextEditingController,
-/*
-                          onChanged: (inputValue) {
-                            controller.onChanged(inputValue);
-                            return;
-                            if (lastInputValue != inputValue) {
-                              lastInputValue = inputValue;
-                              context
-                                  .read<TeamSearchBloc>()
-                                  .add(TextChanged(text: inputValue));
-                            }
-                          },
-*/
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(color: Colors.white)),
-                          errorBorder: InputBorder.none,
-                          disabledBorder: InputBorder.none,
-                          filled: true,
-                          fillColor: Colors.white,
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.only(bottom: 4),
-                            child: Icon(
-                              Icons.search,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          hintText: "ابحث عن فريق",
-                          hintStyle: TextStyle(
-                              color: Colors.grey, fontFamily: 'Vazirmatn')),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16,left: 12,right: 12),
                 child: Text(
                   'مقترحة',
-                  style: TextStyle(
-                      fontFamily: 'Vazirmatn',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black),
+                  style: Theme.of(context).textTheme.headline2
                 ),
               ),
               Obx(
-                () {
+                    () {
                   final state = controller.teamSearchState.value;
                   print('state');
                   if (state is SearchStateLoading) {
@@ -232,8 +234,7 @@ class _FavouritesState extends State<Favourites>
                       itemCount: data.length,
                       itemBuilder: (_, index) {
                         final item = data[index];
-                        final teamBasicDataModel =
-                            data[index].teamBasicDataModel;
+                        final teamBasicDataModel = data[index].teamBasicDataModel;
                         return Padding(
                           padding: const EdgeInsets.only(top: 6),
                           child: GestureDetector(
@@ -244,7 +245,7 @@ class _FavouritesState extends State<Favourites>
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             ChangeNotifierProvider<
-                                                    EachTeamViewModel>(
+                                                EachTeamViewModel>(
                                                 create: (_) =>
                                                     EachTeamViewModel(),
                                                 child: EachTeam(
@@ -256,7 +257,7 @@ class _FavouritesState extends State<Favourites>
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             ChangeNotifierProvider<
-                                                    EachLeagueViewModel>(
+                                                EachLeagueViewModel>(
                                                 create: (_) =>
                                                     EachLeagueViewModel(),
                                                 child: EachLeague(
@@ -273,7 +274,7 @@ class _FavouritesState extends State<Favourites>
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
                                         child: Row(
@@ -289,17 +290,15 @@ class _FavouritesState extends State<Favourites>
                                               width: 4,
                                             ),
                                             Text(
-                                              teamBasicDataModel.text,
-                                              style: TextStyle(
-                                                fontFamily: 'Vazirmatn',
-                                              ),
+                                                teamBasicDataModel.text,
+                                                style:Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13)
                                             )
                                           ],
                                         ),
                                       ),
                                       Padding(
                                         padding:
-                                            const EdgeInsets.only(left: 20),
+                                        const EdgeInsets.only(left: 20),
                                         child: Builder(builder: (contextt) {
                                           return InkWell(
                                             onTap: () {
@@ -318,21 +317,21 @@ class _FavouritesState extends State<Favourites>
                                               decoration: BoxDecoration(
                                                   color: Colors.grey[200],
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          15)),
+                                                  BorderRadius.circular(
+                                                      15)),
                                               child: Center(
                                                   child: Text(
-                                                item.isFavourite
-                                                    ? 'الغاء'
-                                                    : 'تابع',
-                                                style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .primaryColor,
-                                                    fontFamily: 'Vazirmatn',
-                                                    fontSize: 12,
-                                                    fontWeight:
+                                                    item.isFavourite
+                                                        ? 'الغاء'
+                                                        : 'تابع',
+                                                    style: TextStyle(
+                                                        color: Theme.of(context)
+                                                            .primaryColor,
+                                                        fontFamily: 'Vazirmatn',
+                                                        fontSize: 12,
+                                                        fontWeight:
                                                         FontWeight.bold),
-                                              )),
+                                                  )),
                                             ),
                                           );
                                         }),
@@ -353,10 +352,11 @@ class _FavouritesState extends State<Favourites>
                     );
                   }
                   return Center(
-                    child: Text('ابدأ بالبحث الآن'),
+                    child: Text('ابدأ بالبحث الآن',style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),),
                   );
                 },
               ),
+
               SizedBox(
                 height: 400,
               )

@@ -61,6 +61,7 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
         child:
             Consumer<EachMatchViewModel>(
                 builder: (context, provider, child) {
+                  print("hellllllo${provider.tablesModelList[0].list}");
           return provider.loadingEventsEnd || provider.matchDetailsModel == null
               ? Padding(
                   padding: const EdgeInsets.only(top: 35),
@@ -73,6 +74,7 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
               : Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Column(children: <Widget>[
+                  /*
                   Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8)),
@@ -91,6 +93,8 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                       ),
                     ),
                   ),
+
+                   */
                   SizedBox(
                     height: 8,
                   ),
@@ -407,7 +411,7 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                     )
                   ]),
                   SizedBox(height: 8,),
-                  provider.tablesModelList == null || provider.tablesModelList[0].list.length > 1
+                  provider.tablesModelList[0].list.isEmpty || provider.tablesModelList[0].list.length > 1
                       ?Container()
                       :Container(
                     width: MediaQuery.of(context).size.width,
@@ -443,7 +447,7 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                                   child: Row(
                                     children: <Widget>[
                                       Container(
-                                        width: MediaQuery.of(context).size.width * 0.41,
+                                        width: MediaQuery.of(context).size.width * 0.4,
                                         child: Row(
                                           children: <Widget>[
                                             SizedBox(
@@ -463,7 +467,7 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                                             0.29,
                                         child: Padding(
                                           padding: const EdgeInsets.only(
-                                              left: 3, right: 15),
+                                              left: 3, right: 20),
                                           child: Row(
                                             children: <Widget>[
                                               Expanded(

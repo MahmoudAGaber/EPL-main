@@ -81,7 +81,7 @@ class _SplashScreenState extends State<SplashScreen> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {});
     Timer(Duration(seconds: 3), () {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => home()));
+          context, MaterialPageRoute(builder: (context) => home(index: 0,)));
     });
     initPlatformState();
     super.initState();

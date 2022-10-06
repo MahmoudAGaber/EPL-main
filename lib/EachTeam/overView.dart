@@ -104,7 +104,7 @@ class _OverViewState extends State<OverView> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
-                                height: 100,
+                                height: 110,
                                 width: MediaQuery.of(context).size.width,
                                 child: ListView.builder(
                                     physics: ClampingScrollPhysics(),
@@ -732,12 +732,9 @@ class _OverViewState extends State<OverView> {
                                                                       MainAxisAlignment
                                                                           .start,
                                                                   children: [
-                                                                    Column(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .center,
-                                                                      children: [
-                                                                        Text(
+                                                                    Flexible(
+                                                                      child: FittedBox(
+                                                                        child: Text(
                                                                           provider
                                                                               .tablesModelList[0]
                                                                               .list[0]
@@ -747,8 +744,9 @@ class _OverViewState extends State<OverView> {
                                                                               .textTheme
                                                                               .bodyText1
                                                                               .copyWith(fontSize: 13),
-                                                                        )
-                                                                      ],
+                                                                          overflow: TextOverflow.clip,
+                                                                        ),
+                                                                      ),
                                                                     )
                                                                   ],
                                                                 )),
@@ -942,7 +940,7 @@ class _OverViewState extends State<OverView> {
                                     padding: const EdgeInsets.only(left: 4),
                                     child: Container(
                                       height: 220,
-                                      width: 250,
+                                      width: 270,
                                       child: Card(
                                         elevation: 3.0,
                                         shape: RoundedRectangleBorder(
@@ -955,7 +953,7 @@ class _OverViewState extends State<OverView> {
                                               child: Row(children: <Widget>[
                                                 Container(
                                                   height: 18,width: 18,
-                                                  child: Image.asset(icons[index]),
+                                                  child: Image.asset(icons[index],color: Theme.of(context).colorScheme.secondary,)
                                                 ),
                                                 SizedBox(width: 10,),
                                                 Text(
@@ -1009,8 +1007,8 @@ class _OverViewState extends State<OverView> {
                                                                             )));
                                                               },
                                                               child: Container(
-                                                                  height: 60,
-                                                                  width: 60,
+                                                                  height: 55,
+                                                                  width: 55,
                                                                   child: ClipRRect(
                                                                       borderRadius:
                                                                           BorderRadius
@@ -1139,8 +1137,8 @@ class _OverViewState extends State<OverView> {
                                                                         )));
                                                           },
                                                           child: Container(
-                                                              height: 40,
-                                                              width: 40,
+                                                              height: 35,
+                                                              width: 35,
                                                               child: ClipRRect(
                                                                   borderRadius: BorderRadius
                                                                       .all(Radius
@@ -1152,7 +1150,7 @@ class _OverViewState extends State<OverView> {
                                                                   ))),
                                                         ),
                                                         SizedBox(
-                                                          width: 10,
+                                                          width: 8,
                                                         ),
                                                         Column(
                                                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -1259,8 +1257,8 @@ class _OverViewState extends State<OverView> {
                                                                         )));
                                                           },
                                                           child: Container(
-                                                              height: 40,
-                                                              width: 40,
+                                                              height: 35,
+                                                              width: 35,
                                                               child: ClipRRect(
                                                                   borderRadius: BorderRadius
                                                                       .all(Radius
@@ -1272,7 +1270,7 @@ class _OverViewState extends State<OverView> {
                                                                   ))),
                                                         ),
                                                         SizedBox(
-                                                          width: 10,
+                                                          width: 8,
                                                         ),
                                                         Column(
                                                           crossAxisAlignment: CrossAxisAlignment.start,

@@ -123,14 +123,21 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
       oneLeagueViewModel = Provider.of(context, listen: false);
 
 /*
-      oneLeagueViewModel.headerProfile(widget.url, '',context);
+      await oneLeagueViewModel.headerProfile(widget.url, '',context);
       await oneLeagueViewModel.getTables(widget.url, 'tables',);
-      oneLeagueViewModel.getMatches(widget.url, '/matches');
-      oneLeagueViewModel.getNews('${widget.url}', 'news');
-      oneLeagueViewModel.getPlayersStats("${widget.url}");
-      oneLeagueViewModel.getTeamsStats('${widget.url}');
+      await oneLeagueViewModel.getMatches(widget.url, '/matches');
+      await oneLeagueViewModel.getNews('${widget.url}', 'news',1);
+      await oneLeagueViewModel.getPlayersStats("${widget.url}");
+      await oneLeagueViewModel.getTeamsStats('${widget.url}');
+      await oneLeagueViewModel.getTransfers(
+      "${widget.url}",
+      'transfers',
+    );
+      await oneLeagueViewModel.getCups("${widget.url}/trophies");
+
 
  */
+
       getData();
 
       _controller.addListener(() {
@@ -152,20 +159,20 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
     super.initState();
   }
 
-  void getData() {
-    oneLeagueViewModel.getNews('${widget.url}', 'news', 1);
-    oneLeagueViewModel.all(widget.url);
-    oneLeagueViewModel.getTables(
+  void getData() async{
+     oneLeagueViewModel.getNews('${widget.url}', 'news', 1);
+     oneLeagueViewModel.all(widget.url);
+     oneLeagueViewModel.getTables(
       widget.url,
       'tables',
     );
-    oneLeagueViewModel.getPlayersStats("${widget.url}");
-    oneLeagueViewModel.getTeamsStats('${widget.url}');
-    oneLeagueViewModel.getTransfers(
+     oneLeagueViewModel.getPlayersStats("${widget.url}");
+      oneLeagueViewModel.getTeamsStats('${widget.url}');
+     oneLeagueViewModel.getTransfers(
       "${widget.url}",
       'transfers',
     );
-    oneLeagueViewModel.getCups("${widget.url}/trophies");
+     oneLeagueViewModel.getCups("${widget.url}/trophies");
   }
 
   @override
@@ -210,7 +217,7 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
                 //tabVieww = tabView(provider);
                 //tabController = new TabController(length: tabVieww.length, vsync: this, initialIndex: _selectedIndex);
                 //provider.toggleLoading(false);
-                return provider.loadingMatches
+                return  provider.loadingMatches
                     ? Center(
                         child: Container(),
                       )

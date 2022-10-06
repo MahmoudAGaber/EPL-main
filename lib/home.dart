@@ -19,7 +19,8 @@ import 'dart:ui' as ui;
 
 class home extends StatefulWidget {
   DateTime dateTime;
-  home({this.dateTime});
+  int index;
+  home({this.dateTime,this.index});
   @override
   _homeState createState() => _homeState();
 }
@@ -29,7 +30,7 @@ class _homeState extends State<home> {
   VideosViewModel videosViewModel;
   NewsViewModel newsViewModel;
   MatchesViewModel matchesViewModel;
-  PageController _pageController = PageController();
+  PageController _pageController;
   List<Widget> _childern = [];
 
   int _selectedIndex = 0;
@@ -42,6 +43,7 @@ class _homeState extends State<home> {
   void _onItemTapped(int selectedIndex) {
     _pageController.jumpToPage(selectedIndex);
   }
+
 
   bool isSwitched = false;
 
@@ -63,6 +65,9 @@ class _homeState extends State<home> {
 
       // More(),
     ];
+
+    _pageController = PageController(initialPage: widget.index,keepPage: true);
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         initializeDateFormatting("EN_SA", null).then((_) {
@@ -110,33 +115,27 @@ class _homeState extends State<home> {
               BottomNavigationBarItem(
                 icon: Padding(
                   padding: const EdgeInsets.only(right: 10,),
-                  child: new Icon(MdiIcons.soccerField,
+                  child: new Container(
+                    height: 22,width: 22,
+                    child: Image.asset('assets/matchsIcon.png',
                       color: _selectedIndex == 0
-                          ? Color.fromRGBO(95, 31, 117, 1.0)
-                          : Colors.grey),
+                        ? Color.fromRGBO(95, 31, 117, 1.0)
+                        : Colors.grey,),
+                  ),
                 ),
                 label: "المباريات".tr,
-                // title: Padding(
-                //
-                //   padding: const EdgeInsets.only(right: 10),
-                //   child: new Text(
-                //     "المباريات".tr,
-                //
-                //     style: TextStyle(                      fontFamily: 'Vazirmatn',
-                //         fontWeight: FontWeight.w400,
-                //         color: _selectedIndex == 0
-                //             ? Color.fromRGBO(95, 31, 117, 1.0)
-                //             : Colors.grey),
-                //   ),
-                // )
+
               ),
               BottomNavigationBarItem(
                   icon: Padding(
-                    padding: const EdgeInsets.only(left: 10,),
-                    child: new Icon(MdiIcons.newspaperVariant,
+                    padding: const EdgeInsets.only(right: 10,),
+                    child: new Container(
+                      height: 20,width: 20,
+                      child: Image.asset('assets/newsIcon.png',
                         color: _selectedIndex == 1
                             ? Color.fromRGBO(95, 31, 117, 1.0)
-                            : Colors.grey),
+                            : Colors.grey,),
+                    ),
                   ),
                   label: "الأخبار".tr
                   // title: Padding(
@@ -190,11 +189,14 @@ class _homeState extends State<home> {
                */
               BottomNavigationBarItem(
                   icon: Padding(
-                    padding: const EdgeInsets.only(left: 10,),
-                    child: new Icon(Icons.videocam_rounded,
+                    padding: const EdgeInsets.only(right: 10,),
+                    child: new Container(
+                      height: 22,width: 22,
+                      child: Image.asset('assets/video2Icon.png',
                         color: _selectedIndex == 2
                             ? Color.fromRGBO(95, 31, 117, 1.0)
-                            : Colors.grey),
+                            : Colors.grey,),
+                    ),
                   ),
                   label: "الفيديو".tr
                   // title: Padding(
@@ -211,13 +213,15 @@ class _homeState extends State<home> {
                   ),
               BottomNavigationBarItem(
                   icon: Padding(
-                    padding: const EdgeInsets.only(),
-                    child: new Icon(MdiIcons.star,
-                        color: _selectedIndex == 3
-                            ? Color.fromRGBO(95, 31, 117, 1.0)
-                            : Colors.grey),
+                    padding: const EdgeInsets.only(right: 10,),
+                    child: new Icon(
+                      Icons.star_border,
+                      color: _selectedIndex == 3
+                          ? Color.fromRGBO(95, 31, 117, 1.0)
+                          : Colors.grey,
+                    )
                   ),
-                  label: "البطولات".tr
+                  label: "المفضلة".tr
                   // title: new Text(
                   //   "البطولات".tr,
                   //   style: TextStyle(                      fontFamily: 'Vazirmatn',
@@ -229,13 +233,16 @@ class _homeState extends State<home> {
                   ),
               BottomNavigationBarItem(
                   icon: Padding(
-                    padding: const EdgeInsets.only(),
-                    child: new Icon(MdiIcons.trophy,
+                    padding: const EdgeInsets.only(right: 10,),
+                    child: new Container(
+                      height: 20,width: 20,
+                      child: Image.asset('assets/cupIcon.png',
                         color: _selectedIndex == 4
                             ? Color.fromRGBO(95, 31, 117, 1.0)
-                            : Colors.grey),
+                            : Colors.grey,),
+                    ),
                   ),
-                  label: "المفضلة".tr),
+                  label: "البطولات".tr),
 
               /*
             BottomNavigationBarItem(

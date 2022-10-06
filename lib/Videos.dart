@@ -61,7 +61,7 @@ class _VideosState extends State<Videos> {
             children: <Widget>[
               Text(
                 "الفيديوهات".tr,
-                style: TextStyle(fontFamily: 'Vazirmatn', color: Colors.white),
+                style: TextStyle(fontFamily: 'Vazirmatn', color: Colors.white,fontSize: 20),
               )
             ],
           ),

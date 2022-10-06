@@ -53,91 +53,132 @@ class _MatchGPositionState extends State<MatchGPosition> {
                   child: CircularProgressIndicator(),
                 ),
               )
-            : Column(
-                children: [
+            : Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment:
+                CrossAxisAlignment.start,
+                children: <Widget>[
+                  /*
+                        Padding(
+                            padding: const EdgeInsets.only(
+                                right: 16,
+                                left: 16,
+                                top: 12,
+                                bottom: 8),
+                            child: Row(
+                              children: [
+                                // CircleAvatar(radius: 10,),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                /*
+                                Text(provider.calName,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline2),
+
+                                 */
+                              ],
+                            )),
+                        Divider(),
+
+                         */
                   Padding(
-                    padding: const EdgeInsets.only(top: 15.0, bottom: 5.0),
+                    padding: const EdgeInsets.only(
+                        top: 20.0, bottom: 16.0),
                     child: Container(
-                      width: MediaQuery.of(context).size.width,
+                      width:
+                      MediaQuery.of(context).size.width,
                       child: Row(
                         children: <Widget>[
                           Container(
-                            width: MediaQuery.of(context).size.width * 0.42,
+                            width: MediaQuery.of(context)
+                                .size
+                                .width *
+                                0.41,
                             child: Row(
                               children: <Widget>[
                                 SizedBox(
                                   width: 10,
                                 ),
                                 Text(
-                                  "#",
+                                  "المركز",
                                   style: TextStyle(
-                                      fontFamily: 'Vazirmatn',
-                                      color: Colors.grey),
-                                ),
-                                SizedBox(
-                                  width: 50,
-                                ),
-                                Text(
-                                  "فريق".tr,
-                                  style: TextStyle(
-                                      fontFamily: 'Vazirmatn',
+                                      fontFamily:
+                                      'Vazirmatn',
                                       color: Colors.grey),
                                 ),
                               ],
                             ),
                           ),
                           Container(
-                            width: MediaQuery.of(context).size.width * 0.34,
+                            width: MediaQuery.of(context)
+                                .size
+                                .width *
+                                0.3,
                             child: Padding(
                               padding:
-                                  const EdgeInsets.only(left: 3, right: 20),
+                              const EdgeInsets.only(
+                                  left: 3, right: 15),
                               child: Row(
                                 children: <Widget>[
-                                  Text(
-                                    "ل".tr,
-                                    style: headline2,
+                                  Expanded(
+                                    child: Text(
+                                      "ل".tr,
+                                      style: headline2,
+                                    ),
                                   ),
                                   SizedBox(
                                     width: 25,
                                   ),
-                                  Text(
-                                    "ف".tr,
-                                    style: headline2,
-                                  ),
+                                  Expanded(
+                                      child: Text(
+                                        "ف".tr,
+                                        style: headline2,
+                                      )),
                                   SizedBox(
-                                    width: 22,
+                                    width: 30,
                                   ),
-                                  Text(
-                                    "ت".tr,
-                                    style: headline2,
-                                  ),
+                                  Expanded(
+                                      child: Text(
+                                        "ت".tr,
+                                        style: headline2,
+                                      )),
                                   SizedBox(
-                                    width: 25,
+                                    width: 30,
                                   ),
-                                  Text(
-                                    "خ".tr,
-                                    style: headline2,
-                                  ),
+                                  Expanded(
+                                      child: Text(
+                                        "خ".tr,
+                                        style: headline2,
+                                      )),
                                 ],
                               ),
                             ),
                           ),
                           Container(
-                            width: MediaQuery.of(context).size.width * 0.24,
+                            width: MediaQuery.of(context)
+                                .size
+                                .width *
+                                0.22,
                             child: Row(
                               children: <Widget>[
                                 SizedBox(
-                                  width: 27,
+                                  width: 25,
                                 ),
                                 Text(
                                   "-/+",
                                   style: headline2,
                                 ),
                                 SizedBox(
-                                  width: 25,
+                                  width: 15,
                                 ),
                                 Text(
-                                  "ف أ".tr,
+                                  "ن".tr,
                                   style: headline2,
                                 ),
                               ],
@@ -147,18 +188,22 @@ class _MatchGPositionState extends State<MatchGPosition> {
                       ),
                     ),
                   ),
-                  ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: provider.tablesModelList[0].list.length,
-                    itemBuilder: (BuildContext context, index) {
-                      return Column(
+                ],
+              ),
+              ListView.builder(
+                physics: BouncingScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: provider.tablesModelList[0].list.length,
+                itemBuilder: (BuildContext context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 4,bottom: 4),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Column(
                         children: <Widget>[
                           Column(
                             children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
-                              ),
                               Padding(
                                 padding: const EdgeInsets.only(
                                     right: 10, left: 10, top: 8, bottom: 8),
@@ -166,12 +211,8 @@ class _MatchGPositionState extends State<MatchGPosition> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        provider.tablesModelList[0].list[index]
-                                            .title,
-                                        style: TextStyle(
-                                            fontFamily: 'Vazirmatn',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold),
+                                          provider.tablesModelList[0].list[index].title,
+                                          style: Theme.of(context).textTheme.headline1
                                       ),
                                     ]),
                               ),
@@ -181,293 +222,246 @@ class _MatchGPositionState extends State<MatchGPosition> {
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               physics: ClampingScrollPhysics(),
-                              itemCount: provider.tablesModelList[0].list[index]
-                                  .tableModel.length,
+                              itemCount: provider.tablesModelList[0].list[index].tableModel.length,
                               itemBuilder: (BuildContext context, indexx) {
-                                return Stack(
-                                  children: [
-                                    Container(
-                                      color: (provider
-                                                      .tablesModelList[0]
-                                                      .list[index]
-                                                      .tableModel[indexx]
-                                                      .id ==
-                                                  widget.awayId) ||
-                                              (provider
-                                                      .tablesModelList[0]
-                                                      .list[index]
-                                                      .tableModel[indexx]
-                                                      .id ==
-                                                  widget.homeId)
-                                          ? Colors.grey[300]
-                                          : null,
-                                      child: Column(children: <Widget>[
-                                        GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ChangeNotifierProvider<
+                                return Container(
+                                  height: 60,
+                                  child: Stack(
+                                    children: [
+                                      Positioned(
+                                        top: 6,
+                                        right: 1,
+                                        left: 1,
+                                        child: Container(
+                                          height: 60,
+                                          color: (provider.tablesModelList[0].list[index].tableModel[indexx].id == widget.awayId)
+                                              ||
+                                              (provider.tablesModelList[0].list[index].tableModel[indexx].id == widget.homeId)
+                                              ?Theme.of(context).colorScheme.surface
+                                              :null,
+                                          child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) => ChangeNotifierProvider<
                                                                 EachTeamViewModel>(
-                                                            create: (_) =>
-                                                                EachTeamViewModel(),
-                                                            child: EachTeam(
-                                                              url: provider
-                                                                  .tablesModelList[
-                                                                      0]
-                                                                  .list[index]
-                                                                  .tableModel[
-                                                                      indexx]
-                                                                  .link,
-                                                              id: provider
-                                                                  .tablesModelList[
-                                                                      0]
-                                                                  .list[index]
-                                                                  .tableModel[
-                                                                      indexx]
-                                                                  .id,
-                                                            ))));
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10, right: 10),
-                                            child: Container(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              height: 35,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: <Widget>[
-                                                  Row(
-                                                    children: [
-                                                      Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text((provider
-                                                                  .tablesModelList[
-                                                                      0]
-                                                                  .list[index]
-                                                                  .tableModel[
-                                                                      indexx]
-                                                                  .serial)
-                                                              .toString()),
-                                                        ],
-                                                      ),
-                                                      Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Container(
-                                                            child: Container(
-                                                                width: 40,
-                                                                height: 28,
-                                                                child: Image
-                                                                    .network(
-                                                                        'https://www.eplworld.com${provider.tablesModelList[0].list[index].tableModel[indexx].logo}')),
-                                                          ),
-                                                        ],
-                                                      )
-                                                    ],
-                                                  ),
-                                                  Flexible(
-                                                      flex: 4,
+                                                                create: (_) =>
+                                                                    EachTeamViewModel(),
+                                                                child:
+                                                                EachTeam(
+                                                                  url: provider.tablesModelList[0].list[index].tableModel[indexx].link,
+                                                                  id: provider.tablesModelList[0].list[index].tableModel[indexx].id,
+                                                                )
+                                                            )
+                                                        )
+                                                    );
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                    const EdgeInsets
+                                                        .only(
+                                                        right: 12,
+                                                        left: 12),
+                                                    child: Container(
+                                                      width: MediaQuery.of(
+                                                          context)
+                                                          .size
+                                                          .width *
+                                                          0.87,
+                                                      height: 35,
                                                       child: Row(
                                                         mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Column(
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                        children: <
+                                                            Widget>[
+                                                          Row(
                                                             mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
+                                                            MainAxisAlignment
+                                                                .center,
+                                                            crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
                                                             children: [
-                                                              Text(
-                                                                provider
-                                                                    .tablesModelList[
-                                                                        0]
-                                                                    .list[index]
-                                                                    .tableModel[
-                                                                        indexx]
-                                                                    .name,
-                                                                style: content,
-                                                              )
+                                                              Column(
+                                                                mainAxisAlignment:
+                                                                MainAxisAlignment.center,
+                                                                children: [
+                                                                  Text(
+                                                                    (provider.tablesModelList[0].list[index].tableModel[indexx].serial).toString(),
+                                                                    style:
+                                                                    Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              SizedBox(
+                                                                width:
+                                                                3,
+                                                              ),
+                                                              Column(
+                                                                mainAxisAlignment:
+                                                                MainAxisAlignment.center,
+                                                                crossAxisAlignment:
+                                                                CrossAxisAlignment.center,
+                                                                children: [
+                                                                  Container(
+                                                                    child: Container(
+                                                                        width: 35,
+                                                                        height: 25,
+                                                                        child: Image.network('https://www.eplworld.com${provider.tablesModelList[0].list[index].tableModel[indexx].logo}')),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              SizedBox(
+                                                                width:
+                                                                10,
+                                                              ),
                                                             ],
+                                                          ),
+                                                          Flexible(
+                                                              flex: 4,
+                                                              child:
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                MainAxisAlignment.start,
+                                                                children: [
+                                                                  Column(
+                                                                    mainAxisAlignment:
+                                                                    MainAxisAlignment.center,
+                                                                    children: [
+                                                                      Text(
+                                                                        provider.tablesModelList[0].list[index].tableModel[indexx].name,
+                                                                        style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                      )
+                                                                    ],
+                                                                  )
+                                                                ],
+                                                              )),
+                                                          Flexible(
+                                                            flex: 6,
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                              children: [
+                                                                Column(
+                                                                  mainAxisAlignment:
+                                                                  MainAxisAlignment.center,
+                                                                  children: [
+                                                                    Text(
+                                                                      provider.tablesModelList[0].list[index].tableModel[indexx].colL.toString(),
+                                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                Column(
+                                                                  mainAxisAlignment:
+                                                                  MainAxisAlignment.center,
+                                                                  children: [
+                                                                    Text(
+                                                                      provider.tablesModelList[0].list[index].tableModel[indexx].colF.toString(),
+                                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                Column(
+                                                                  mainAxisAlignment:
+                                                                  MainAxisAlignment.center,
+                                                                  children: [
+                                                                    Text(
+                                                                      provider.tablesModelList[0].list[index].tableModel[indexx].colT.toString(),
+                                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                Column(
+                                                                  mainAxisAlignment:
+                                                                  MainAxisAlignment.center,
+                                                                  children: [
+                                                                    Text(
+                                                                      provider.tablesModelList[0].list[index].tableModel[indexx].colK.toString(),
+                                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                Column(
+                                                                  mainAxisAlignment:
+                                                                  MainAxisAlignment.center,
+                                                                  children: [
+                                                                    Text(
+                                                                      provider.tablesModelList[0].list[index].tableModel[indexx].colFA,
+                                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                Column(
+                                                                  mainAxisAlignment:
+                                                                  MainAxisAlignment.center,
+                                                                  children: [
+                                                                    Text(
+                                                                      provider.tablesModelList[0].list[index].tableModel[indexx].colN.toString(),
+                                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ],
+                                                            ),
                                                           )
                                                         ],
-                                                      )),
-                                                  Flexible(
-                                                    flex: 6,
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Text(
-                                                              provider
-                                                                  .tablesModelList[
-                                                                      0]
-                                                                  .list[index]
-                                                                  .tableModel[
-                                                                      indexx]
-                                                                  .colL
-                                                                  .toString(),
-                                                              style: content,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Text(
-                                                              provider
-                                                                  .tablesModelList[
-                                                                      0]
-                                                                  .list[index]
-                                                                  .tableModel[
-                                                                      indexx]
-                                                                  .colF
-                                                                  .toString(),
-                                                              style: content,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Text(
-                                                              provider
-                                                                  .tablesModelList[
-                                                                      0]
-                                                                  .list[index]
-                                                                  .tableModel[
-                                                                      indexx]
-                                                                  .colT
-                                                                  .toString(),
-                                                              style: content,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Text(
-                                                              provider
-                                                                  .tablesModelList[
-                                                                      0]
-                                                                  .list[index]
-                                                                  .tableModel[
-                                                                      indexx]
-                                                                  .colK
-                                                                  .toString(),
-                                                              style: content,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Text(
-                                                              provider
-                                                                  .tablesModelList[
-                                                                      0]
-                                                                  .list[index]
-                                                                  .tableModel[
-                                                                      indexx]
-                                                                  .colFA,
-                                                              style: content,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Text(
-                                                              provider
-                                                                  .tablesModelList[
-                                                                      0]
-                                                                  .list[index]
-                                                                  .tableModel[
-                                                                      indexx]
-                                                                  .colN
-                                                                  .toString(),
-                                                              style: content,
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ],
+                                                      ),
                                                     ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ),
+                                                  ),
+                                                ),
+                                              ]),
                                         ),
-                                        Divider(
-                                          height: 2.0,
-                                          color: Colors.grey,
-                                        )
-                                      ]),
-                                    ),
-                                    Container(
-                                        width: 4,
-                                        height: 35,
-                                        color: provider
-                                                    .tablesModelList[0]
-                                                    .list[index]
-                                                    .tableModel[indexx]
-                                                    .tag ==
+                                      ),
+                                      Positioned(
+                                          child: Divider(
+                                            height: 7,
+                                          )),
+                                      Positioned(
+                                        top: 8,
+                                        bottom: 2,
+                                        child: Container(
+                                            width: 2,
+                                            height: 40,
+                                            color: provider
+                                                .tablesModelList[0]
+                                                .list[index]
+                                                .tableModel[indexx]
+                                                .tag ==
                                                 'green'
-                                            ? Colors.green
-                                            : provider
-                                                        .tablesModelList[0]
-                                                        .list[index]
-                                                        .tableModel[indexx]
-                                                        .tag ==
-                                                    'blue'
+                                                ? Colors.green
+                                                : provider
+                                                .tablesModelList[0]
+                                                .list[index]
+                                                .tableModel[indexx]
+                                                .tag ==
+                                                'blue'
                                                 ? Colors.blue
                                                 : provider
-                                                            .tablesModelList[0]
-                                                            .list[index]
-                                                            .tableModel[indexx]
-                                                            .tag ==
-                                                        'red'
-                                                    ? Colors.red
-                                                    : provider
-                                                                .tablesModelList[
-                                                                    0]
-                                                                .list[index]
-                                                                .tableModel[
-                                                                    indexx]
-                                                                .tag ==
-                                                            'yellow'
-                                                        ? Colors.yellow
-                                                        : null),
-                                  ],
+                                                .tablesModelList[0]
+                                                .list[index]
+                                                .tableModel[indexx]
+                                                .tag ==
+                                                'red'
+                                                ? Colors.red
+                                                : provider
+                                                .tablesModelList[0]
+                                                .list[index]
+                                                .tableModel[indexx]
+                                                .tag ==
+                                                'yellow'
+                                                ? Colors
+                                                .yellow
+                                                : null),
+                                      ),
+                                    ],
+                                  ),
                                 );
                               }),
                           SizedBox(
@@ -476,8 +470,7 @@ class _MatchGPositionState extends State<MatchGPosition> {
                           ListView.builder(
                               physics: BouncingScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: provider.tablesModelList[0].list[index]
-                                  .footermodel.length,
+                              itemCount: provider.tablesModelList[0].list[index].footermodel.length,
                               itemBuilder: (context, indexx) {
                                 return Padding(
                                   padding: const EdgeInsets.only(
@@ -489,40 +482,40 @@ class _MatchGPositionState extends State<MatchGPosition> {
                                         height: 12,
                                         decoration: BoxDecoration(
                                             borderRadius:
-                                                BorderRadius.circular(4),
+                                            BorderRadius.circular(4),
                                             color: provider
-                                                        .tablesModelList[0]
-                                                        .list[index]
-                                                        .footermodel[indexx]
-                                                        .color ==
-                                                    'green'
+                                                .tablesModelList[0]
+                                                .list[index]
+                                                .footermodel[indexx]
+                                                .color ==
+                                                'green'
                                                 ? Colors.green
                                                 : provider
-                                                            .tablesModelList[0]
-                                                            .list[index]
-                                                            .footermodel[indexx]
-                                                            .color ==
-                                                        'blue'
-                                                    ? Colors.blue
-                                                    : provider
-                                                                .tablesModelList[
-                                                                    0]
-                                                                .list[index]
-                                                                .footermodel[
-                                                                    indexx]
-                                                                .color ==
-                                                            'red'
-                                                        ? Colors.red
-                                                        : provider
-                                                                    .tablesModelList[
-                                                                        0]
-                                                                    .list[index]
-                                                                    .footermodel[
-                                                                        indexx]
-                                                                    .color ==
-                                                                'yellow'
-                                                            ? Colors.yellow
-                                                            : null),
+                                                .tablesModelList[0]
+                                                .list[index]
+                                                .footermodel[indexx]
+                                                .color ==
+                                                'blue'
+                                                ? Colors.blue
+                                                : provider
+                                                .tablesModelList[
+                                            0]
+                                                .list[index]
+                                                .footermodel[
+                                            indexx]
+                                                .color ==
+                                                'red'
+                                                ? Colors.red
+                                                : provider
+                                                .tablesModelList[
+                                            0]
+                                                .list[index]
+                                                .footermodel[
+                                            indexx]
+                                                .color ==
+                                                'yellow'
+                                                ? Colors.yellow
+                                                : null),
                                       ),
                                       SizedBox(
                                         width: 10,
@@ -534,11 +527,14 @@ class _MatchGPositionState extends State<MatchGPosition> {
                                 );
                               })
                         ],
-                      );
-                    },
-                  ),
-                ],
-              );
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        );
       },
     );
   }

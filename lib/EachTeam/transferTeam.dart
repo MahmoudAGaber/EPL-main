@@ -166,7 +166,7 @@ class _tranferTeamState extends State<tranferTeam> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Container(
-                                            width: MediaQuery.of(context).size.width * 0.21,
+                                            width: MediaQuery.of(context).size.width * 0.2,
                                             child: Text(provider.transferBoxesModelList[index].toName.tr,
                                               textDirection: TextDirection.rtl,
                                               textAlign: TextAlign.left,

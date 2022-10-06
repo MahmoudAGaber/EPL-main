@@ -38,65 +38,24 @@ class _clanderbarState extends State<clanderbar> {
         Navigator.of(context, rootNavigator: false).push(MaterialPageRoute(
             builder: (context) => home(
                   dateTime: date,
+                  index: 0,
                 )));
       },
 
-      daysTextStyle: TextStyle(
-          fontFamily: 'Vazirmatn',
-          color: Colors.black,
-          fontSize: 20,
-          fontWeight: FontWeight.w600),
-      headerTextStyle: TextStyle(
-          fontFamily: 'Vazirmatn',
-          color: Colors.black,
-          fontSize: 20,
-          fontWeight: FontWeight.w600),
-      inactiveWeekendTextStyle: TextStyle(
-          fontFamily: 'Vazirmatn',
-          color: Colors.black,
-          fontSize: 20,
-          fontWeight: FontWeight.w600),
-      markedDateCustomTextStyle: TextStyle(
-          fontFamily: 'Vazirmatn',
-          color: Colors.black,
-          fontSize: 20,
-          fontWeight: FontWeight.w600),
-      markedDateMoreCustomTextStyle: TextStyle(
-          fontFamily: 'Vazirmatn',
-          color: Colors.black,
-          fontSize: 20,
-          fontWeight: FontWeight.w600),
-      weekdayTextStyle: TextStyle(
-        fontFamily: 'Vazirmatn',
-        color: Colors.black87,
-        fontSize: 15,
-      ),
-      selectedDayTextStyle: TextStyle(
-          fontFamily: 'Vazirmatn',
-          color: Colors.white,
-          fontSize: 20,
-          fontWeight: FontWeight.w600),
-      nextDaysTextStyle: TextStyle(
-          fontFamily: 'Vazirmatn',
-          color: Colors.grey,
-          fontSize: 20,
-          fontWeight: FontWeight.w600),
-      prevDaysTextStyle: TextStyle(
-          fontFamily: 'Vazirmatn',
-          color: Colors.grey,
-          fontSize: 20,
-          fontWeight: FontWeight.w600),
-      todayTextStyle:
-          TextStyle(fontFamily: 'Vazirmatn', color: Colors.white, fontSize: 20),
-      iconColor: Colors.black,
+      daysTextStyle: Theme.of(context).textTheme.headline2.copyWith(fontSize: 20,fontWeight: FontWeight.bold),
+      headerTextStyle:Theme.of(context).textTheme.headline2.copyWith(fontSize: 20,fontWeight: FontWeight.bold),
+      inactiveWeekendTextStyle:Theme.of(context).textTheme.headline2.copyWith(fontSize: 20,fontWeight: FontWeight.bold),
+      markedDateCustomTextStyle: Theme.of(context).textTheme.headline2.copyWith(fontSize: 20,fontWeight: FontWeight.bold),
+      markedDateMoreCustomTextStyle:Theme.of(context).textTheme.headline2.copyWith(fontSize: 20,fontWeight: FontWeight.bold),
+      weekdayTextStyle:Theme.of(context).textTheme.headline2.copyWith(fontSize: 15,fontWeight: FontWeight.bold),
+      selectedDayTextStyle: TextStyle(fontFamily: 'Vazirmatn', color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
+      nextDaysTextStyle: TextStyle(fontFamily: 'Vazirmatn', color: Colors.grey, fontSize: 20, fontWeight: FontWeight.w600),
+      prevDaysTextStyle: TextStyle(fontFamily: 'Vazirmatn', color: Colors.grey, fontSize: 20, fontWeight: FontWeight.w600),
+      todayTextStyle: TextStyle(fontFamily: 'Vazirmatn', color: Colors.white, fontSize: 20),
+      iconColor: Theme.of(context).colorScheme.secondary,
       daysHaveCircularBorder: true,
       showOnlyCurrentMonthDate: false,
-      weekendTextStyle: TextStyle(
-          fontFamily: 'Vazirmatn',
-          color: Colors.black87,
-          fontSize: 20,
-          fontWeight: FontWeight.w600),
-
+      weekendTextStyle: Theme.of(context).textTheme.headline2.copyWith(fontSize: 20,fontWeight: FontWeight.bold),
       weekFormat: false,
 //      firstDayOfWeek: 4,
       height: 420.0,
@@ -149,13 +108,12 @@ class _clanderbarState extends State<clanderbar> {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 16.0),
                   child: Theme(
-                      data: Theme.of(context).copyWith(
-                          colorScheme: ColorScheme.light(
-                        primary: Theme.of(context)
-                            .primaryColor, // header background color
-                        onPrimary: Colors.white, // header text color
-                        onSurface: Colors.black,
-                      )),
+                      data: Theme.of(context).copyWith(colorScheme: ColorScheme.light(
+                        primary: Theme.of(context).primaryColor, // header background color
+                        onPrimary: Theme.of(context).colorScheme.secondary, // header text color
+                        onSurface: Theme.of(context).colorScheme.secondary,
+
+                          )),
                       child: _calendarCarouselNoHeader),
                 ), //
               ],

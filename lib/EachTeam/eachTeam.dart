@@ -12,6 +12,7 @@ import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
+import '../main.dart';
 import 'Teampostions.dart';
 import 'cups.dart';
 import 'matchesForteam.dart';
@@ -190,11 +191,12 @@ class _EachTeamState extends State<EachTeam> with TickerProviderStateMixin {
             child: SliverPersistentHeader(
                 pinned: true,
                 delegate: _SliverAppBarDelegate(
-                    maxHeight: 45,
+                    maxHeight: 60,
                     minHeight: 45,
                     child: Consumer<EachTeamViewModel>(
                       builder: (context, provider, child) {
                         return Container(
+                          height: 60,
                           color: Theme.of(context).primaryColor,
                           child: tabController == null
                               ? Container()
@@ -219,7 +221,10 @@ class _EachTeamState extends State<EachTeam> with TickerProviderStateMixin {
       textDirection: TextDirection.rtl,
       child: Consumer<EachTeamViewModel>(
         builder: (context, provider, child) {
-          return Scaffold(
+          return /*provider.headerProfileModel ==null
+              ?NoData2(context)
+              :
+              */Scaffold(
             body: SafeArea(
               child: NestedScrollView(
                 controller: _controller,

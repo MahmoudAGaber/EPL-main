@@ -231,7 +231,7 @@ class _ForYouState extends State<ForYou> {
                                                         const EdgeInsets.only(left: 15, right: 15),
                                                         child: Text(
                                                           provider.newsList[0].title,
-                                                          style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 15),
+                                                          style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 15,color: Colors.white),
                                                           overflow: TextOverflow.clip,
                                                         ),
                                                       ),
@@ -245,11 +245,11 @@ class _ForYouState extends State<ForYou> {
                                                     SizedBox(width: 5,),
                                                     Text(
                                                       provider.newsList[0].username,
-                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                        style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13,color: Colors.white70)
                                                     ),
                                                     SizedBox(width: 5,),
                                                     Text("- ${provider.newsList[0].date.tr} - ${provider.newsList[0].time.tr}",
-                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13,color: Colors.white70),
                                                       overflow: TextOverflow.clip,
                                                     ),
                                                   ],
@@ -455,7 +455,7 @@ class _ForYouState extends State<ForYou> {
                                                                     const EdgeInsets.only(left: 15, right: 15),
                                                                     child: Text(
                                                                       provider.newsList[index].title,
-                                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 15),
+                                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 15,color: Colors.white),
                                                                       overflow: TextOverflow.clip,
                                                                     ),
                                                                   ),
@@ -469,11 +469,11 @@ class _ForYouState extends State<ForYou> {
                                                                 SizedBox(width: 5,),
                                                                 Text(
                                                                   provider.newsList[index].username,
-                                                                    style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13)
+                                                                    style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13,color: Colors.white70)
                                                                 ),
                                                                 SizedBox(width: 5,),
                                                                 Text("- ${provider.newsList[index].date.tr} - ${provider.newsList[index].time.tr}",
-                                                                  style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                  style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13,color: Colors.white70),
                                                                   overflow: TextOverflow.clip,
                                                                 ),
                                                               ],

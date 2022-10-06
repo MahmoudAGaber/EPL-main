@@ -40,6 +40,7 @@ class _PostionsState extends State<Postions> {
         'tables',
       );
       dropList = oneLeagueViewModel.dropsTableRows;
+      selectedItem = dropList[0];
     });
 
     super.initState();

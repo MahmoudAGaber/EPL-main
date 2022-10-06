@@ -76,6 +76,53 @@ Widget NoData() {
     ],
   );
 }
+Widget NoMatchesPN(context) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Container(
+        height: 150,
+        width: 150,
+        child: Image.asset("assets/EPL-Logo.png"),
+      ),
+      Container(
+        height: 400,
+        child: Text(
+          "لا توجد مباريات تلعب الان",
+          style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 22)
+          ),
+        ),
+    ],
+  );
+}
+Widget NoData2(context) {
+  return Scaffold(
+    body: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              height: 150,
+              width: 150,
+              child: Image.asset("assets/EPL-Logo.png"),
+            ),
+            Container(
+              height: 100,
+              child: Text(
+                "لا توجد بيانات متوفرة",
+                style:Theme.of(context).textTheme.headline2.copyWith(fontSize: 22
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+}
 
 Widget NoMatches() {
   return Column(
