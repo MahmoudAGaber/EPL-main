@@ -20,7 +20,7 @@ TextStyle tapbar = TextStyle(
 TextStyle headline = TextStyle(
     fontFamily: 'Vazirmatn', fontSize: 11, fontWeight: FontWeight.w600);
 TextStyle headline2 =
-    TextStyle(fontFamily: 'Vazirmatn', fontSize: 13.5, color: Colors.grey);
+    TextStyle(fontFamily: 'Vazirmatn', fontSize: 14, color: Colors.grey);
 TextStyle content = TextStyle(
   fontFamily: 'Vazirmatn',
   fontSize: 13.5,
@@ -354,7 +354,7 @@ class _PostionsState extends State<Postions> {
                                                                         Text(
                                                                           (provider.tablesModelList[0].list[0].tableModel[index].serial).toString(),
                                                                           style:
-                                                                              Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                              Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 14),
                                                                         ),
                                                                       ],
                                                                     ),
@@ -371,14 +371,14 @@ class _PostionsState extends State<Postions> {
                                                                         Container(
                                                                           child: Container(
                                                                               width: 35,
-                                                                              height: 25,
+                                                                              height: 28,
                                                                               child: Image.network('https://www.eplworld.com${provider.tablesModelList[0].list[0].tableModel[index].logo}')),
                                                                         ),
                                                                       ],
                                                                     ),
                                                                     SizedBox(
                                                                       width:
-                                                                          10,
+                                                                          5,
                                                                     ),
                                                                   ],
                                                                 ),
@@ -389,15 +389,16 @@ class _PostionsState extends State<Postions> {
                                                                       mainAxisAlignment:
                                                                           MainAxisAlignment.start,
                                                                       children: [
-                                                                        Column(
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.center,
-                                                                          children: [
-                                                                            Text(
-                                                                              provider.tablesModelList[0].list[0].tableModel[index].name,
-                                                                              style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
-                                                                            )
-                                                                          ],
+                                                                        Flexible(
+                                                                          child: FittedBox(
+                                                                            child: Padding(
+                                                                              padding: const EdgeInsets.only(left: 5,right: 5),
+                                                                              child: Text(
+                                                                                provider.tablesModelList[0].list[0].tableModel[index].name,
+                                                                                style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 14),
+                                                                              ),
+                                                                            ),
+                                                                          ),
                                                                         )
                                                                       ],
                                                                     )),
@@ -414,7 +415,7 @@ class _PostionsState extends State<Postions> {
                                                                         children: [
                                                                           Text(
                                                                             provider.tablesModelList[0].list[0].tableModel[index].colL.toString(),
-                                                                            style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                            style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 14),
                                                                           ),
                                                                         ],
                                                                       ),
@@ -424,7 +425,7 @@ class _PostionsState extends State<Postions> {
                                                                         children: [
                                                                           Text(
                                                                             provider.tablesModelList[0].list[0].tableModel[index].colF.toString(),
-                                                                            style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                            style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 14),
                                                                           ),
                                                                         ],
                                                                       ),
@@ -434,7 +435,7 @@ class _PostionsState extends State<Postions> {
                                                                         children: [
                                                                           Text(
                                                                             provider.tablesModelList[0].list[0].tableModel[index].colT.toString(),
-                                                                            style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                            style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 14),
                                                                           ),
                                                                         ],
                                                                       ),
@@ -444,7 +445,7 @@ class _PostionsState extends State<Postions> {
                                                                         children: [
                                                                           Text(
                                                                             provider.tablesModelList[0].list[0].tableModel[index].colK.toString(),
-                                                                            style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                            style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 14),
                                                                           ),
                                                                         ],
                                                                       ),
@@ -454,7 +455,7 @@ class _PostionsState extends State<Postions> {
                                                                         children: [
                                                                           Text(
                                                                             provider.tablesModelList[0].list[0].tableModel[index].colFA,
-                                                                            style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                            style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 14),
                                                                           ),
                                                                         ],
                                                                       ),
@@ -464,7 +465,7 @@ class _PostionsState extends State<Postions> {
                                                                         children: [
                                                                           Text(
                                                                             provider.tablesModelList[0].list[0].tableModel[index].colN.toString(),
-                                                                            style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                            style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 14),
                                                                           )
                                                                         ],
                                                                       ),
@@ -607,7 +608,7 @@ class _PostionsState extends State<Postions> {
                                           style: Theme.of(context)
                                               .textTheme
                                               .subtitle2
-                                              .copyWith(fontSize: 13),
+                                              .copyWith(fontSize: 13.5),
                                         )
                                       ],
                                     ),

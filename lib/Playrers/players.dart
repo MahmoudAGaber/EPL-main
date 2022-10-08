@@ -18,7 +18,7 @@ class EachPlayer extends StatefulWidget {
 
 class _EachPlayerState extends State<EachPlayer> with TickerProviderStateMixin {
   static const TextStyle tapbar = TextStyle(
-      fontFamily: 'Vazirmatn', fontSize: 13, fontWeight: FontWeight.w500);
+      fontFamily: 'Vazirmatn', fontSize: 14, fontWeight: FontWeight.w500);
   TextStyle head = TextStyle(
     fontFamily: 'Vazirmatn',
     fontSize: 16,
@@ -96,7 +96,7 @@ class _EachPlayerState extends State<EachPlayer> with TickerProviderStateMixin {
                 ],
               )
             ],
-            expandedHeight: 120.0,
+            expandedHeight: 130.0,
             pinned: true,
             floating: true,
             snap: true,
@@ -133,7 +133,7 @@ class _EachPlayerState extends State<EachPlayer> with TickerProviderStateMixin {
                                 ),
                               ),
                               Positioned(
-                                  top: 93,
+                                  top: 105,
                                   right: 95,
                                   child: Row(
                                     children: <Widget>[
@@ -164,7 +164,7 @@ class _EachPlayerState extends State<EachPlayer> with TickerProviderStateMixin {
                           ),
                         ),
                         titlePadding:
-                            EdgeInsets.only(top: 5.0, bottom: 20.0, right: 100),
+                            EdgeInsets.only(top: 1.0, bottom: 20.0, right: 100),
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
@@ -191,57 +191,64 @@ class _EachPlayerState extends State<EachPlayer> with TickerProviderStateMixin {
             length: 2,
             child: SliverPersistentHeader(
               pinned: true,
-              delegate: _SliverAppBarDelegate(TabBar(
-                  isScrollable: true,
-                  controller: tabController,
-                  onTap: (index) {
-                    setState(() {
-                      if (index == 1) {}
-                    });
-                  },
-                  indicatorColor: Colors.deepPurple,
-                  tabs: [
-                    Tab(
-                      child: Text(
-                        "الملف الشخصي".tr,
-                        style: tapbar,
+              delegate: _SliverAppBarDelegate(
+                  maxHeight: 60,
+                  minHeight: 45,
+                  child:Container(
+                    height: 60,
+                    color: Theme.of(context).backgroundColor,
+                    child: TabBar(
+                    isScrollable: true,
+                    controller: tabController,
+                    onTap: (index) {
+                      setState(() {
+                        if (index == 1) {}
+                      });
+                    },
+                    indicatorColor: Colors.deepPurple,
+                    tabs: [
+                      Tab(
+                        child: Text(
+                          "الملف الشخصي".tr,
+                          style: tapbar,
+                        ),
                       ),
-                    ),
-                    /*
+                      /*
 
-                    Tab(
-                      child: Text(
-                        "احصائيات".tr,
-                        style: tapbar,
+                      Tab(
+                        child: Text(
+                          "احصائيات".tr,
+                          style: tapbar,
+                        ),
                       ),
-                    ),
 
-                     */
-                    Tab(
-                      child: Text(
-                        "المهنه".tr,
-                        style: tapbar,
+                       */
+                      Tab(
+                        child: Text(
+                          "المهنه".tr,
+                          style: tapbar,
+                        ),
                       ),
-                    ),
-                    /*
-                    Tab(
-                      child: Text(
-                        "المباريات".tr,
-                        style: tapbar,
+                      /*
+                      Tab(
+                        child: Text(
+                          "المباريات".tr,
+                          style: tapbar,
+                        ),
                       ),
-                    ),
 
-                     */
-                    /*
-                    Tab(
-                      child: Text(
-                        "انتقالات".tr,
-                        style: tapbar,
+                       */
+                      /*
+                      Tab(
+                        child: Text(
+                          "انتقالات".tr,
+                          style: tapbar,
+                        ),
                       ),
-                    ),
 
-                     */
-                  ])),
+                       */
+                    ]),
+                  )),
             ),
           ),
         ),
@@ -275,27 +282,33 @@ class _EachPlayerState extends State<EachPlayer> with TickerProviderStateMixin {
 }
 
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
-  final TabBar _tabBar;
-  _SliverAppBarDelegate(this._tabBar);
+  _SliverAppBarDelegate({
+    @required this.minHeight,
+    @required this.maxHeight,
+    this.child,
+  });
+
+  final double minHeight;
+  final double maxHeight;
+  final Widget child;
 
   @override
-  double get minExtent => _tabBar.preferredSize.height;
+  double get minExtent => minHeight;
 
   @override
-  double get maxExtent => _tabBar.preferredSize.height;
+  double get maxExtent => maxHeight;
 
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return new Container(
-      color: Theme.of(context).primaryColor,
-      child: _tabBar,
-    );
+    return new SizedBox.expand(child: child);
   }
 
   @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
+  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
+    return maxHeight != oldDelegate.maxHeight ||
+        minHeight != oldDelegate.minHeight ||
+        child != oldDelegate.child;
   }
 }
 

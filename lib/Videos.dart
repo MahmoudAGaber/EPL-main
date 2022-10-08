@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:arseli/Provider/NewsViewModel.dart';
+import 'package:arseli/SubOfVideos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -16,12 +17,19 @@ class Videos extends StatefulWidget {
   _VideosState createState() => _VideosState();
 }
 
-class _VideosState extends State<Videos> {
+class _VideosState extends State<Videos> with SingleTickerProviderStateMixin {
+  static const TextStyle tapbar = TextStyle(
+      fontFamily: 'Vazirmatn',
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      color: Colors.white);
+
   VideosViewModel videosViewModel;
   int selectIndex = 0;
   int page = 0;
   String ocId = '';
   bool loadVideos = false;
+  TabController tabController;
 
   onSelected(int index) {
     setState(() => selectIndex = index);
@@ -32,19 +40,14 @@ class _VideosState extends State<Videos> {
   @override
   void initState() {
     Timer(Duration(milliseconds: 100), () {});
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp)async {
       videosViewModel = Provider.of(context, listen: false);
-      videosViewModel.getVideos('تقارير ومؤتمرات صحفية'.tr, 0, "");
+       await videosViewModel.getVideos( 'تقارير ومؤتمرات صحفية',0,"");
 
-      _controller.addListener(() {
-        if (_controller.position.pixels ==
-            _controller.position.maxScrollExtent) {
-          page++;
-          loadVideos = true;
-          // print("hiiiiiiiiiii");
-          videosViewModel.getVideos('تقارير ومؤتمرات صحفية'.tr, page, ocId);
-        }
-      });
+
+      tabController = new TabController(length: videosViewModel.categoriesList.length, vsync: this);
+
+
     });
     super.initState();
   }
@@ -66,7 +69,29 @@ class _VideosState extends State<Videos> {
             ],
           ),
         ),
-      ),
+        bottom: PreferredSize(
+         preferredSize: const Size.fromHeight(70),
+          child: Consumer<VideosViewModel>(
+            builder: (context,provider,child){
+            return  provider.categoriesList == null
+                ?Container()
+                :DefaultTabController(
+              length: provider.categoriesList.length,
+              child: Container(
+                height: 60,
+                color: Theme.of(context).backgroundColor,
+                child: TabBar(
+                  indicatorColor: Colors.white,
+                  isScrollable: true,
+                      controller: tabController,
+                      tabs:List.generate(provider.categoriesList.length, (index) => itemName(provider, index))
+                    ),
+              )
+            );
+                },
+              ),
+          ),
+          ),
       // bottomSheet: loadVideos ?Container(color: Colors.green,height: 50, child: Center(child: CircularProgressIndicator()),):null,
       /*
       drawer: Drawer(
@@ -75,7 +100,22 @@ class _VideosState extends State<Videos> {
       ),
 
        */
-      body: Consumer<VideosViewModel>(
+
+        body: Consumer<VideosViewModel>(
+          builder: (context, provider, child) {
+            return tabController == null
+                ? Container()
+                : TabBarView(
+              controller: tabController,
+            children: List.generate(
+                provider.categoriesList.length,
+                    (index)=> ChangeNotifierProvider(
+                      create:(_)=>VideosViewModel(),
+                child: SubOfVideos(ocId: provider.categoriesList[index].ocId,))),
+            );
+          } ,
+        )
+      /*Consumer<VideosViewModel>(
         builder: (context, provider, child) {
           return provider.loadingNews
               ? Center(
@@ -316,6 +356,21 @@ class _VideosState extends State<Videos> {
                 );
         },
       ),
+    );
+  }
+
+
+*/
+
+    );
+
+
+
+  }
+  itemName(VideosViewModel provider,index){
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: Text(provider.categoriesList[index].name == null?"":provider.categoriesList[index].name,style: tapbar,),
     );
   }
 }

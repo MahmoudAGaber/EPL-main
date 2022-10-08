@@ -34,7 +34,7 @@ class _EachTeamState extends State<EachTeam> with TickerProviderStateMixin {
   ScrollController _controller = ScrollController();
   static const TextStyle tapbar = TextStyle(
       fontFamily: 'Vazirmatn',
-      fontSize: 13,
+      fontSize: 14,
       fontWeight: FontWeight.w500,
       color: Colors.white);
   TextStyle head =
@@ -118,7 +118,7 @@ class _EachTeamState extends State<EachTeam> with TickerProviderStateMixin {
                 ],
               )
             ],
-            expandedHeight: 120.0,
+            expandedHeight: 130.0,
             pinned: true,
             floating: true,
             snap: true,
@@ -147,7 +147,7 @@ class _EachTeamState extends State<EachTeam> with TickerProviderStateMixin {
                             ),
                           ),
                           Positioned(
-                              top: 100,
+                              top: 105,
                               right: 100,
                               child: Row(
                                 children: <Widget>[
@@ -191,13 +191,13 @@ class _EachTeamState extends State<EachTeam> with TickerProviderStateMixin {
             child: SliverPersistentHeader(
                 pinned: true,
                 delegate: _SliverAppBarDelegate(
-                    maxHeight: 60,
+                    maxHeight: 55,
                     minHeight: 45,
                     child: Consumer<EachTeamViewModel>(
                       builder: (context, provider, child) {
                         return Container(
-                          height: 60,
-                          color: Theme.of(context).primaryColor,
+                          height: 55,
+                          color: Theme.of(context).backgroundColor,
                           child: tabController == null
                               ? Container()
                               : TabBar(

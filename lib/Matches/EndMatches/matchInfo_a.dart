@@ -39,7 +39,7 @@ class _matchInfo_aState extends State<matchInfo_a>
 
   static const TextStyle tapbar = TextStyle(
       fontFamily: 'Vazirmatn',
-      fontSize: 13,
+      fontSize: 14,
       fontWeight: FontWeight.w500,
       color: Colors.white);
 
@@ -329,7 +329,7 @@ class _matchInfo_aState extends State<matchInfo_a>
           child: SliverPersistentHeader(
             delegate: _SliverAppBarDelegate1(
                 minHeight: 45.0,
-                maxHeight: heightOfgoals,
+                maxHeight: 50,
                 child: Consumer<EachMatchViewModel>(
                   builder: (context, provider, child) {
                     return provider.msnModel == null
@@ -347,16 +347,20 @@ class _matchInfo_aState extends State<matchInfo_a>
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
                                         Container(
-                                          width: MediaQuery.of(context).size.width *
-                                              .4,
-                                          child: Center(
-                                            child: Text(
-                                              provider.msnModel.homeTeamName.tr,
-                                              style: TextStyle(
-                                                  fontFamily: 'Vazirmatn',
-                                                  color: Colors.white,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w500),
+                                          height: 40,
+                                          width: MediaQuery.of(context).size.width * .4,
+                                          child: Flexible(
+                                            child: Center(
+                                              heightFactor:20,
+                                              child: Text(
+                                                provider.msnModel.homeTeamName.tr,
+                                                style: TextStyle(
+                                                    fontFamily: 'Vazirmatn',
+                                                    color: Colors.white,
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w500,height: 2),
+                                                overflow: TextOverflow.clip,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -366,15 +370,19 @@ class _matchInfo_aState extends State<matchInfo_a>
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
                                         Container(
+                                          height: 40,
                                           width: MediaQuery.of(context).size.width * .4,
-                                          child: Center(
-                                            child: Text(
+                                          child: Flexible(
+                                            child: Center(
+                                              child: Text(
                                               provider.msnModel.awayTeamName.tr,
-                                              style: TextStyle(
-                                                  fontFamily: 'Vazirmatn',
-                                                  color: Colors.white,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w500),
+                                                style: TextStyle(
+                                                    fontFamily: 'Vazirmatn',
+                                                    color: Colors.white,
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w500,height:2 ),
+                                                overflow: TextOverflow.clip,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -404,6 +412,7 @@ class _matchInfo_aState extends State<matchInfo_a>
                                           ),
                                         ),
                                       ),
+                                      /*
                                       Padding(
                                         padding: const EdgeInsets.only(top: 5),
                                         child: Container(
@@ -413,6 +422,8 @@ class _matchInfo_aState extends State<matchInfo_a>
                                               })),
                                         ),
                                       )
+
+                                       */
                                     ],
                                   ),
                                 ),

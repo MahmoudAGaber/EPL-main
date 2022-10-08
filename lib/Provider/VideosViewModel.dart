@@ -9,10 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class VideosViewModel with ChangeNotifier{
-  bool loadingNews = true;
   bool add = false;
   bool init = true;
   bool endOfList = false;
+  bool loadingVideos = true;
 
   RequestHandler requestHandler = RequestHandler();
   List<VideoModel> videosList;
@@ -20,10 +20,12 @@ class VideosViewModel with ChangeNotifier{
   List<CategoriesModel> categoriesList;
 
   Future<void> getVideos(String firstItem,int page,String filter)async{
+
     ResponseModelVideos responseModel = await requestHandler.getVideos(
         endPoint: '/videos',
         parma: '?page=$page&filter=$filter'
     );
+
 
    // videosList =VideoModel.listFromJson(responseModel.videos);
     categoriesList=List();
@@ -33,6 +35,7 @@ class VideosViewModel with ChangeNotifier{
     if(page <=1 ){
       add = false;
       videosList =VideoModel.listFromJson(responseModel.videos);
+      notifyListeners();
     }
     else if(page > 1){
       add = true;
@@ -43,8 +46,7 @@ class VideosViewModel with ChangeNotifier{
       notifyListeners();
     }
     //videosList.addAll(videosListAdd);
-
-    loadingNews = false;
+    loadingVideos = false;
     notifyListeners();
   }
 

@@ -145,6 +145,7 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
       isDark = darkThemeProvider.darkTheme;
 
       getMatches = matchesViewModel.getMatches(widget.date);
+      print(matchesViewModel.liveMatches);
       var now = new DateTime.now();
       today =  DateFormat("dd-MM-yyyy", 'EN_SA').format(now.subtract(new Duration(days: 0)));
     });
@@ -329,19 +330,10 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                                   EachMatchViewModel(),
                                                               child:
                                                               matchInfo(
-                                                                url: provider.subOfMatches[
-                                                                indexx]
-                                                                    .matchURL,
-                                                                homeId: provider.subOfMatches[
-                                                                indexx]
-                                                                    .homeID,
-                                                                awayId: provider.subOfMatches[
-                                                                indexx]
-                                                                    .awayID,
-                                                                comName: provider
-                                                                    .matchesList[
-                                                                indexx]
-                                                                    .comName,
+                                                                url: provider.subOfMatches[indexx].matchURL,
+                                                                homeId: provider.subOfMatches[indexx].homeID,
+                                                                awayId: provider.subOfMatches[indexx].awayID,
+                                                                comName: provider.matchesList[indexx].comName,
                                                               ),
                                                             )
                                                                 : Oops()));
@@ -667,22 +659,9 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                                             .subOfMathes[
                                                                         indexx]
                                                                             .matchURL,
-                                                                        homeId: provider
-                                                                            .matchesList[
-                                                                        index]
-                                                                            .subOfMathes[
-                                                                        indexx]
-                                                                            .homeID,
-                                                                        awayId: provider
-                                                                            .matchesList[
-                                                                        index]
-                                                                            .subOfMathes[
-                                                                        indexx]
-                                                                            .awayID,
-                                                                        comName: provider
-                                                                            .matchesList[
-                                                                        index]
-                                                                            .comName,
+                                                                        homeId: provider.matchesList[index].subOfMathes[indexx].homeID,
+                                                                        awayId: provider.matchesList[index].subOfMathes[indexx].awayID,
+                                                                        comName: provider.matchesList[index].comName,
                                                                       ),
                                                                     )
                                                                         : Oops()));

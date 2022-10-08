@@ -165,7 +165,7 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
                   preferredSize: Size.fromHeight(50),
               child: Container())
               : PreferredSize(
-            preferredSize: const Size.fromHeight(75),
+            preferredSize: const Size.fromHeight(70),
                 child: DefaultTabController(
             length:10 ,
                   child: Container(

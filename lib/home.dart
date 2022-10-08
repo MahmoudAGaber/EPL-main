@@ -86,7 +86,7 @@ class _homeState extends State<home> {
       leaguesViewModel = Provider.of(context, listen: false);
 
       newsViewModel.getNews(1, "1");
-      videosViewModel.getVideos('تقارير ومؤتمرات صحفية'.tr, 0, "");
+      //videosViewModel.getVideos('تقارير ومؤتمرات صحفية', 0, "");
       leaguesViewModel.getDataLeagues();
     });
     super.initState();
@@ -114,7 +114,7 @@ class _homeState extends State<home> {
             items: [
               BottomNavigationBarItem(
                 icon: Padding(
-                  padding: const EdgeInsets.only(right: 10,),
+                  padding: const EdgeInsets.only(right: 0,),
                   child: new Container(
                     height: 22,width: 22,
                     child: Image.asset('assets/matchsIcon.png',
@@ -128,9 +128,9 @@ class _homeState extends State<home> {
               ),
               BottomNavigationBarItem(
                   icon: Padding(
-                    padding: const EdgeInsets.only(right: 10,),
+                    padding: const EdgeInsets.only(right: 0,left: 8),
                     child: new Container(
-                      height: 20,width: 20,
+                      height: 19,width: 19,
                       child: Image.asset('assets/newsIcon.png',
                         color: _selectedIndex == 1
                             ? Color.fromRGBO(95, 31, 117, 1.0)
@@ -189,9 +189,9 @@ class _homeState extends State<home> {
                */
               BottomNavigationBarItem(
                   icon: Padding(
-                    padding: const EdgeInsets.only(right: 10,),
+                    padding: const EdgeInsets.only(right: 0,),
                     child: new Container(
-                      height: 22,width: 22,
+                      height: 23,width: 23,
                       child: Image.asset('assets/video2Icon.png',
                         color: _selectedIndex == 2
                             ? Color.fromRGBO(95, 31, 117, 1.0)
@@ -213,12 +213,13 @@ class _homeState extends State<home> {
                   ),
               BottomNavigationBarItem(
                   icon: Padding(
-                    padding: const EdgeInsets.only(right: 10,),
+                    padding: const EdgeInsets.only(right: 0,),
                     child: new Icon(
                       Icons.star_border,
                       color: _selectedIndex == 3
                           ? Color.fromRGBO(95, 31, 117, 1.0)
                           : Colors.grey,
+                      size: 25,
                     )
                   ),
                   label: "المفضلة".tr
@@ -233,7 +234,7 @@ class _homeState extends State<home> {
                   ),
               BottomNavigationBarItem(
                   icon: Padding(
-                    padding: const EdgeInsets.only(right: 10,),
+                    padding: const EdgeInsets.only(right: 0,),
                     child: new Container(
                       height: 20,width: 20,
                       child: Image.asset('assets/cupIcon.png',

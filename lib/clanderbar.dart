@@ -90,7 +90,7 @@ class _clanderbarState extends State<clanderbar> {
             backgroundColor: Theme.of(context).primaryColor,
             title: Text(
               "اليوم".tr,
-              style: TextStyle(fontFamily: 'Vazirmatn', color: Colors.white),
+              style: TextStyle(fontFamily: 'Vazirmatn', color: Colors.white,fontSize: 20),
             ),
           ),
           body: SingleChildScrollView(

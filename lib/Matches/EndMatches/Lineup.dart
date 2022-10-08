@@ -80,23 +80,14 @@ class _LineupState extends State<Lineup> {
                               children: <Widget>[
                                 Text(
                                   provider.lineupsModel.home.teamName,
-                                  style: TextStyle(
-                                    fontFamily: 'Vazirmatn',
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w800,
-                                  ),
+                                  style: Theme.of(context).textTheme.headline2
                                 ),
                                 SizedBox(
                                   width: 15,
                                 ),
                                 Text(provider.lineupsModel.home.formation,
-                                    style: TextStyle(
-                                      fontFamily: 'Vazirmatn',
-                                      color: Colors.white60,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    )),
+                                    style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 15)
+                                ),
                               ],
                             ),
                           ),
@@ -423,42 +414,31 @@ class _LineupState extends State<Lineup> {
                               children: <Widget>[
                                 Text(
                                   provider.lineupsModel.away.teamName,
-                                  style: TextStyle(
-                                    fontFamily: 'Vazirmatn',
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w800,
-                                  ),
+                                  style: Theme.of(context).textTheme.headline2
                                 ),
                                 SizedBox(
                                   width: 15,
                                 ),
                                 Text(provider.lineupsModel.away.formation,
-                                    style: TextStyle(
-                                      fontFamily: 'Vazirmatn',
-                                      color: Colors.white70,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    )),
+                                    style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 15)),
                               ],
                             ),
                           ),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.all(12.0),
                         child: Row(
                           children: <Widget>[
                             Text(
                               "مدرب",
-                              style: TextStyle(
-                                  fontFamily: 'Vazirmatn', fontSize: 17),
+                              style: Theme.of(context).textTheme.headline2
                             ),
                           ],
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(4.0),
+                        padding: const EdgeInsets.all(12.0),
                         child: Card(
                           elevation: 2,
                           shape: RoundedRectangleBorder(
@@ -501,6 +481,7 @@ class _LineupState extends State<Lineup> {
                                             child: Center(
                                           child: Text(
                                             provider.lineupsModel.home.players.coach.name,
+                                            style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
                                             overflow: TextOverflow.visible,
                                           ),
                                         ))
@@ -536,6 +517,7 @@ class _LineupState extends State<Lineup> {
                                       child: Text(
                                         provider.lineupsModel.away.players.coach
                                             .name,
+                                        style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
                                         overflow: TextOverflow.visible,
                                       ),
                                     ))
@@ -547,19 +529,18 @@ class _LineupState extends State<Lineup> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.all(12.0),
                         child: Row(
                           children: <Widget>[
                             Text(
                               "مقاعد الاحتياط ",
-                              style: TextStyle(
-                                  fontFamily: 'Vazirmatn', fontSize: 17),
+                              style: Theme.of(context).textTheme.headline2
                             ),
                           ],
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(4.0),
+                        padding: const EdgeInsets.all(12.0),
                         child: Card(
                           elevation: 2,
                           shape: RoundedRectangleBorder(
@@ -820,6 +801,7 @@ class _LineupState extends State<Lineup> {
                                                                               index]
                                                                           .number
                                                                           .toString(),
+                                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
                                                                     ),
                                                                   ),
                                                                   FittedBox(
@@ -832,6 +814,7 @@ class _LineupState extends State<Lineup> {
                                                                           child:
                                                                               Text(
                                                                             provider.lineupsModel.home.players.outField[index].name,
+                                                                                style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
                                                                             overflow:
                                                                                 TextOverflow.clip,
                                                                           ),
@@ -1103,6 +1086,7 @@ class _LineupState extends State<Lineup> {
                                                                             index]
                                                                         .number
                                                                         .toString(),
+                                                                    style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
                                                                   ),
                                                                   Row(
                                                                     mainAxisAlignment:
@@ -1116,6 +1100,7 @@ class _LineupState extends State<Lineup> {
                                                                             .players
                                                                             .outField[index]
                                                                             .name,
+                                                                        style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
                                                                         overflow:
                                                                             TextOverflow.visible,
                                                                       ),
@@ -1181,7 +1166,7 @@ class _LineupState extends State<Lineup> {
                                         "بطاقة صفراء",
                                         style: TextStyle(
                                             fontFamily: 'Vazirmatn',
-                                            fontSize: 12),
+                                            fontSize: 13),
                                       )
                                     ],
                                   ),
@@ -1202,7 +1187,7 @@ class _LineupState extends State<Lineup> {
                                         "بطاقة حمراء",
                                         style: TextStyle(
                                             fontFamily: 'Vazirmatn',
-                                            fontSize: 12),
+                                            fontSize: 13),
                                       )
                                     ],
                                   ),
@@ -1246,7 +1231,7 @@ class _LineupState extends State<Lineup> {
                                         "الاصفر الثاني",
                                         style: TextStyle(
                                             fontFamily: 'Vazirmatn',
-                                            fontSize: 12),
+                                            fontSize: 13),
                                       )
                                     ],
                                   ),
@@ -1263,7 +1248,7 @@ class _LineupState extends State<Lineup> {
                                         "مصاب",
                                         style: TextStyle(
                                             fontFamily: 'Vazirmatn',
-                                            fontSize: 12),
+                                            fontSize: 13),
                                       )
                                     ],
                                   ),
@@ -1280,7 +1265,7 @@ class _LineupState extends State<Lineup> {
                                         "الواجب الدولي ",
                                         style: TextStyle(
                                             fontFamily: 'Vazirmatn',
-                                            fontSize: 12),
+                                            fontSize: 13),
                                       )
                                     ],
                                   )
@@ -1332,7 +1317,7 @@ class _LineupState extends State<Lineup> {
             ),
             Text(
               _textIcons,
-              style: TextStyle(fontFamily: 'Vazirmatn', fontSize: 12),
+              style: TextStyle(fontFamily: 'Vazirmatn', fontSize: 13),
             )
           ],
         ),

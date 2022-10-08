@@ -129,7 +129,7 @@ class _leagueNewsState extends State<leagueNews> {
                                           height: 220,
                                           decoration: BoxDecoration(
                                               borderRadius: BorderRadius.circular(8),
-                                            color: Theme.of(context).primaryColor.withOpacity(0.4),
+                                              color: Theme.of(context).primaryColor.withOpacity(0.2),
                                           ),
                                           child: Column(
                                             mainAxisAlignment: MainAxisAlignment.end,

@@ -43,13 +43,13 @@ class SearchStateSuccess extends SearchState {
         _timeStamp,
       ];
 
-  SearchStateSuccess copyWith({
-    List<Team> teams,
-  }) {
+  SearchStateSuccess copyWith({List<Team> teams,}) {
     return SearchStateSuccess(
         teams ?? this.data, DateTime.now().millisecondsSinceEpoch);
   }
 }
+
+
 
 class SearchStateError extends SearchState {
   const SearchStateError();

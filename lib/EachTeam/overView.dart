@@ -28,7 +28,7 @@ class _OverViewState extends State<OverView> {
       fontFamily: 'Vazirmatn', fontSize: 15, fontWeight: FontWeight.w500);
   TextStyle content = TextStyle(fontFamily: 'Vazirmatn', fontSize: 14);
   TextStyle content2 =
-      TextStyle(fontFamily: 'Vazirmatn', fontSize: 13, color: Colors.black45);
+      TextStyle(fontFamily: 'Vazirmatn', fontSize: 14, color: Colors.black45);
   TextStyle content3 = TextStyle(fontFamily: 'Vazirmatn', fontSize: 12);
   TextStyle content4 =
       TextStyle(fontFamily: 'Vazirmatn', fontSize: 12, color: Colors.grey);
@@ -714,14 +714,14 @@ class _OverViewState extends State<OverView> {
                                                                           width:
                                                                               35,
                                                                           height:
-                                                                              25,
+                                                                              28,
                                                                           child: Image.network(
                                                                               'https://www.eplworld.com${provider.tablesModelList[0].list[0].tableModel[index].logo}')),
                                                                     ),
                                                                   ],
                                                                 ),
                                                                 SizedBox(
-                                                                  width: 10,
+                                                                  width: 5,
                                                                 ),
                                                               ],
                                                             ),
@@ -734,17 +734,20 @@ class _OverViewState extends State<OverView> {
                                                                   children: [
                                                                     Flexible(
                                                                       child: FittedBox(
-                                                                        child: Text(
-                                                                          provider
-                                                                              .tablesModelList[0]
-                                                                              .list[0]
-                                                                              .tableModel[index]
-                                                                              .name,
-                                                                          style: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyText1
-                                                                              .copyWith(fontSize: 13),
-                                                                          overflow: TextOverflow.clip,
+                                                                        child: Padding(
+                                                                          padding: const EdgeInsets.only(left: 5,right: 5),
+                                                                          child: Text(
+                                                                            provider
+                                                                                .tablesModelList[0]
+                                                                                .list[0]
+                                                                                .tableModel[index]
+                                                                                .name,
+                                                                            style: Theme.of(context)
+                                                                                .textTheme
+                                                                                .bodyText1
+                                                                                .copyWith(fontSize: 14),
+                                                                            overflow: TextOverflow.clip,
+                                                                          ),
                                                                         ),
                                                                       ),
                                                                     )
@@ -777,7 +780,7 @@ class _OverViewState extends State<OverView> {
                                                                             .textTheme
                                                                             .bodyText1
                                                                             .copyWith(
-                                                                                fontSize: 13),
+                                                                                fontSize: 14),
                                                                       ),
                                                                     ],
                                                                   ),
@@ -801,7 +804,7 @@ class _OverViewState extends State<OverView> {
                                                                             .textTheme
                                                                             .bodyText1
                                                                             .copyWith(
-                                                                                fontSize: 13),
+                                                                                fontSize: 14),
                                                                       ),
                                                                     ],
                                                                   ),
@@ -825,7 +828,7 @@ class _OverViewState extends State<OverView> {
                                                                             .textTheme
                                                                             .bodyText1
                                                                             .copyWith(
-                                                                                fontSize: 13),
+                                                                                fontSize: 14),
                                                                       ),
                                                                     ],
                                                                   ),
@@ -849,7 +852,7 @@ class _OverViewState extends State<OverView> {
                                                                             .textTheme
                                                                             .bodyText1
                                                                             .copyWith(
-                                                                                fontSize: 13),
+                                                                                fontSize: 14),
                                                                       ),
                                                                     ],
                                                                   ),
@@ -872,7 +875,7 @@ class _OverViewState extends State<OverView> {
                                                                             .textTheme
                                                                             .bodyText1
                                                                             .copyWith(
-                                                                                fontSize: 13),
+                                                                                fontSize: 14),
                                                                       ),
                                                                     ],
                                                                   ),
@@ -896,7 +899,7 @@ class _OverViewState extends State<OverView> {
                                                                             .textTheme
                                                                             .bodyText1
                                                                             .copyWith(
-                                                                                fontSize: 13),
+                                                                                fontSize: 14),
                                                                       )
                                                                     ],
                                                                   ),

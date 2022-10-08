@@ -19,4 +19,13 @@ class TeamsRemoteDataSource {
     print(data);
     return data.map((e) => TeamBasicDataModel.json(e)).toList();
   }
+
+  Future<List<TeamBasicDataModel>> getData(CancelToken cancelToken) async {
+    this.cancelToken = cancelToken;
+    final result = await dio.dio.get('/fetch?term=$search', cancelToken: cancelToken);
+    final data = (result.data as List);
+    print('remote data search: $search');
+    print(data);
+    return data.map((e) => TeamBasicDataModel.json(e)).toList();
+  }
 }

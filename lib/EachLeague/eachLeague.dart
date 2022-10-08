@@ -31,7 +31,7 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
   ScrollController _controller = ScrollController();
 
   TextStyle tapbar =
-      TextStyle(fontFamily: 'Vazirmatn', fontSize: 13, color: Colors.white);
+      TextStyle(fontFamily: 'Vazirmatn', fontSize: 14, color: Colors.white);
   TextStyle head =
       TextStyle(fontFamily: 'Vazirmatn', fontSize: 16, color: Colors.white);
 
@@ -207,7 +207,7 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
                 ],
               )
             ],
-            expandedHeight: 120.0,
+            expandedHeight: 130.0,
             pinned: true,
             floating: true,
             snap: true,
@@ -240,7 +240,7 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
                                 ),
                               ),
                               Positioned(
-                                  top: 100,
+                                  top: 105,
                                   right: 100,
                                   child: Row(
                                     children: <Widget>[
@@ -257,8 +257,7 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
                           ),
                         ),
                         //centerTitle: true,
-                        titlePadding: EdgeInsets.only(
-                            top: 1.0, bottom: 20.0, left: 4, right: 100),
+                        titlePadding: EdgeInsets.only(top: 1.0, bottom: 20.0, left: 4, right: 100),
                         title: FittedBox(
                           child: Container(
                             child: Row(
@@ -290,7 +289,7 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
             child: SliverPersistentHeader(
                 pinned: true,
                 delegate: _SliverAppBarDelegate(
-                    maxHeight: 45,
+                    maxHeight: 55,
                     minHeight: 45,
                     child: Selector<EachLeagueViewModel, bool>(
                       selector: (context, modelProvider) =>
@@ -299,7 +298,8 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
                         return loading
                             ? Container()
                             : Container(
-                                color: Theme.of(context).primaryColor,
+                                height: 55,
+                                color: Theme.of(context).backgroundColor,
                                 child: DefaultTabController(
                                   length: tabName(oneLeagueViewModel).length,
                                   child: TabBar(

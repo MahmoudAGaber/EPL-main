@@ -31,7 +31,7 @@ class matchInfo extends StatefulWidget {
 class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
   static const TextStyle tapbar = TextStyle(
       fontFamily: 'Vazirmatn',
-      fontSize: 13,
+      fontSize: 14,
       fontWeight: FontWeight.w500,
       color: Colors.white);
   TextStyle head =

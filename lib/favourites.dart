@@ -31,8 +31,7 @@ class _FavouritesState extends State<Favourites>
     with SingleTickerProviderStateMixin {
   SearchController controller;
   FavoritesController favouriteController;
-  var state2;
-  var data2;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -47,10 +46,6 @@ class _FavouritesState extends State<Favourites>
         permanent: true, tag: widget.tag);
     favouriteController = Get.find<FavoritesController>(tag: widget.tag);
 
-     state2 = controller.teamSearchState.value;
-    if (state2 is SearchStateSuccess) {
-       data2 = state2.data;
-    }
 
 /*
     Get.put(ControllerFavorites(Injection.getIt.get<TeamRepo>()),
@@ -80,48 +75,61 @@ class _FavouritesState extends State<Favourites>
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
-                  child: Container(
-                    height: 60,
-                    child: TextFormField(
-                      controller:
-                      controller.searchTextEditingController,
+                child: GestureDetector(
+                  onTap: (){
+                    searchIcon();
+                  },
+                  child: AbsorbPointer(
+                    absorbing: true,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Container(
+                        height: 60,
+                        child: TextFormField(
+                          controller:
+                          controller.searchTextEditingController,
 /*
-                          onChanged: (inputValue) {
-                            controller.onChanged(inputValue);
-                            return;
-                            if (lastInputValue != inputValue) {
-                              lastInputValue = inputValue;
-                              context
-                                  .read<TeamSearchBloc>()
-                                  .add(TextChanged(text: inputValue));
-                            }
-                          },
+                              onChanged: (inputValue) {
+                                controller.onChanged(inputValue);
+                                return;
+                                if (lastInputValue != inputValue) {
+                                  lastInputValue = inputValue;
+                                  context
+                                      .read<TeamSearchBloc>()
+                                      .add(TextChanged(text: inputValue));
+                                }
+                              },
 */
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                              BorderRadius.circular(8),
-                              borderSide:
-                              BorderSide(color: Theme.of(context).buttonColor)),
-                          errorBorder: InputBorder.none,
-                          disabledBorder: InputBorder.none,
-                          filled: true,
-                          fillColor: Theme.of(context).buttonColor,
-                          prefixIcon: Padding(
-                            padding:
-                            const EdgeInsets.only(bottom: 4),
-                            child: Icon(
-                                Icons.search,
-                                color: Theme.of(context).colorScheme.primaryVariant
-                            ),
-                          ),
-                          hintText: "ابحث عن فريق",
-                          hintStyle: Theme.of(context).textTheme.headline3.copyWith(fontSize: 15)),
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius:
+                                  BorderRadius.circular(8),
+                                  borderSide:
+                                  BorderSide(color: Theme.of(context).buttonColor)),
+                              errorBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
+                              filled: true,
+                              fillColor: Theme.of(context).buttonColor,
+                              prefixIcon: Padding(
+                                padding:
+                                const EdgeInsets.only(bottom: 4),
+                                child: IconButton(
+                                  onPressed: (){
+                                    searchIcon();
+                                  },
+                                  icon:Icon(
+                                      Icons.search,
+                                      color: Theme.of(context).colorScheme.primaryVariant
+                                  ),
+                                ),
+                              ),
+                              hintText: "ابحث عن فريق",
+                              hintStyle: Theme.of(context).textTheme.headline3.copyWith(fontSize: 15)),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -365,6 +373,208 @@ class _FavouritesState extends State<Favourites>
         ),
       ),
     );
+  }
+
+  searchIcon() {
+    //List<SearchResponseModel> searchItems=[];
+    TextEditingController search = TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(
+            builder: (context, setState) {
+              return Dialog(
+                backgroundColor: Theme.of(context).colorScheme.surface,
+                insetPadding:
+                EdgeInsets.only(top: 55, right: 12, left: 12, bottom: 155),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: Column(
+                  children: [
+                    Row(
+                      children: <Widget>[
+                        IconButton(
+                          icon: Icon(
+                              Icons.arrow_forward,
+                              color: Theme.of(context).colorScheme.primaryVariant
+                          ),
+                          onPressed: () {
+                           // provider.getDataSearch('1');
+                            Navigator.pop(context);
+                          },
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: TextField(
+                            onChanged: (value) {
+                              /*
+                              provider.searchItems
+                                  .where((element) => element.text
+                                  .toLowerCase()
+                                  .contains(value))
+                                  .toList();
+                              provider.getDataSearch(value);
+
+                               */
+                            },
+                            controller: controller.searchTextEditingController,
+                            textCapitalization:
+                            TextCapitalization.sentences,
+                            decoration: InputDecoration.collapsed(
+                                hintText:
+                                "البحث عن الفرق،المقابلات،اللاعبين،الاخبار"
+                                    .tr,
+                                hintStyle: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 17)
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Obx(
+                          () {
+                        final state = controller.teamSearchState.value;
+                        print('state');
+                        if (state is SearchStateLoading) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        if (state is SearchStateSuccess) {
+                          final data = state.data;
+
+                          return ListView.builder(
+                            physics: ClampingScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: data.length,
+                            itemBuilder: (_, index) {
+                              final item = data[index];
+                              final teamBasicDataModel = data[index].teamBasicDataModel;
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 6),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    if (widget.tag == 'الفرق') {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ChangeNotifierProvider<
+                                                      EachTeamViewModel>(
+                                                      create: (_) =>
+                                                          EachTeamViewModel(),
+                                                      child: EachTeam(
+                                                        url: teamBasicDataModel.url,
+                                                      ))));
+                                    } else {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ChangeNotifierProvider<
+                                                      EachLeagueViewModel>(
+                                                      create: (_) =>
+                                                          EachLeagueViewModel(),
+                                                      child: EachLeague(
+                                                          url: teamBasicDataModel
+                                                              .url))));
+                                    }
+                                  },
+                                  child: Container(
+                                    height: 50,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                    width: 35,
+                                                    height: 35,
+                                                    child: CachedNetworkImage(
+                                                      imageUrl: teamBasicDataModel
+                                                          .image.hostedFile,
+                                                    )),
+                                                SizedBox(
+                                                  width: 4,
+                                                ),
+                                                Text(
+                                                    teamBasicDataModel.text,
+                                                    style:Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13)
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                            const EdgeInsets.only(left: 20),
+                                            child: Builder(builder: (contextt) {
+                                              return InkWell(
+                                                onTap: () {
+                                                  favouriteController
+                                                      .toggleFavourite(index);
+/*
+                                                  context
+                                                      .read<TeamSearchBloc>()
+                                                      .add(ToggleFavourite(
+                                                          index));
+*/
+                                                },
+                                                child: Container(
+                                                  width: 45,
+                                                  height: 20,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.grey[200],
+                                                      borderRadius:
+                                                      BorderRadius.circular(
+                                                          15)),
+                                                  child: Center(
+                                                      child: Text(
+                                                        item.isFavourite
+                                                            ? 'الغاء'
+                                                            : 'تابع',
+                                                        style: TextStyle(
+                                                            color: Theme.of(context)
+                                                                .primaryColor,
+                                                            fontFamily: 'Vazirmatn',
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                            FontWeight.bold),
+                                                      )),
+                                                ),
+                                              );
+                                            }),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        }
+                        if (state is SearchStateError) {
+                          return Center(
+                            child: Text('لا يوجد نتائج'),
+                          );
+                        }
+                        return Center(
+                          child: Text('ابدأ بالبحث الآن',style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        });
   }
 
   addDialogTeam() {

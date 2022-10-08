@@ -137,18 +137,8 @@ class _TwoDTMatchesState extends State<TwoDTMatches> {
                                                                 .subOfMathes[
                                                                     indexx]
                                                                 .matchURL,
-                                                            homeId: provider
-                                                                .matchesList[
-                                                                    index]
-                                                                .subOfMathes[
-                                                                    indexx]
-                                                                .homeID,
-                                                            awayId: provider
-                                                                .matchesList[
-                                                                    index]
-                                                                .subOfMathes[
-                                                                    indexx]
-                                                                .awayID,
+                                                            homeId: provider.matchesList[index].subOfMathes[indexx].homeID,
+                                                            awayId: provider.matchesList[index].subOfMathes[indexx].awayID,
                                                             comName: provider
                                                                 .matchesList[
                                                                     index]

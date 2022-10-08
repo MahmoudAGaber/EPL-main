@@ -23,6 +23,19 @@ class TeamRepo {
     return teams;
   }
 
+  Future<List<Team>> getData() async {
+    final result = await teamsRemoteDataSource.getData(CancelToken());
+    final teams = result
+        .map((e) => Team(e, favouriteTeamLocalDataSource.isExist(e.url)))
+        .toList()
+        .where((element) =>
+    element.teamBasicDataModel.category ==
+        favouriteTeamLocalDataSource.key)
+        .toList();
+    print('search repo: ${teams}');
+    return teams;
+  }
+
   List<Team> getAllFavorite() {
     final result = favouriteTeamLocalDataSource.getAll();
     final teams = result

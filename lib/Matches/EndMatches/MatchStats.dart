@@ -195,7 +195,7 @@ class _MatchStatsState extends State<MatchStats> {
                           ),
                         ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(12.0),
                     child: Column(
                       children: [
                         provider.sortedStatsModelMatch.general.isEmpty
@@ -210,10 +210,7 @@ class _MatchStatsState extends State<MatchStats> {
                                     children: [
                                       Text(
                                         'عام',
-                                        style: TextStyle(
-                                            fontFamily: 'Vazirmatn',
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500),
+                                        style: Theme.of(context).textTheme.headline2.copyWith(fontSize: 16),
                                       ),
                                       SizedBox(
                                         height: 10,
@@ -258,8 +255,7 @@ class _MatchStatsState extends State<MatchStats> {
                                                                           "${"${provider.sortedStatsModelMatch.general[index].home}".split('%').first}") >
                                                                       int.parse(
                                                                           "${"${provider.sortedStatsModelMatch.general[index].away}".split('%').first}")
-                                                                  ? Colors
-                                                                      .grey[300]
+                                                                  ? Theme.of(context).colorScheme.background
                                                                   : null),
                                                           child: Padding(
                                                             padding:
@@ -271,10 +267,7 @@ class _MatchStatsState extends State<MatchStats> {
                                                                     bottom: 3),
                                                             child: Text(
                                                               "${provider.sortedStatsModelMatch.general[index].home}",
-                                                              style: TextStyle(
-                                                                  fontFamily:
-                                                                      'Vazirmatn',
-                                                                  fontSize: 16),
+                                                               style: Theme.of(context).textTheme.headline2
                                                             ),
                                                           ),
                                                         ),
@@ -284,12 +277,7 @@ class _MatchStatsState extends State<MatchStats> {
                                                   Container(
                                                     child: Text(
                                                       "${provider.sortedStatsModelMatch.general[index].name}",
-                                                      style: TextStyle(
-                                                          fontFamily:
-                                                              'Vazirmatn',
-                                                          fontSize: 16,
-                                                          color:
-                                                              Colors.black54),
+                                                     style: Theme.of(context).textTheme.headline2
                                                     ),
                                                   ),
                                                   Container(
@@ -325,10 +313,7 @@ class _MatchStatsState extends State<MatchStats> {
                                                                     bottom: 3),
                                                             child: Text(
                                                               "${provider.sortedStatsModelMatch.general[index].away}",
-                                                              style: TextStyle(
-                                                                  fontFamily:
-                                                                      'Vazirmatn',
-                                                                  fontSize: 16),
+                                                           style: Theme.of(context).textTheme.headline2
                                                             ),
                                                           ),
                                                         ),
@@ -343,6 +328,7 @@ class _MatchStatsState extends State<MatchStats> {
                                   ),
                                 ),
                               ),
+                        SizedBox(height: 8,),
                         provider.sortedStatsModelMatch.passing.isEmpty
                             ? Container()
                             : Card(
@@ -355,10 +341,7 @@ class _MatchStatsState extends State<MatchStats> {
                                     children: [
                                       Text(
                                         'توزيع',
-                                        style: TextStyle(
-                                            fontFamily: 'Vazirmatn',
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500),
+                                         style: Theme.of(context).textTheme.headline2.copyWith(fontSize: 16),
                                       ),
                                       SizedBox(
                                         height: 10,
@@ -403,8 +386,7 @@ class _MatchStatsState extends State<MatchStats> {
                                                                           "${"${provider.sortedStatsModelMatch.passing[index].home}".split('%').first}") >
                                                                       int.parse(
                                                                           "${"${provider.sortedStatsModelMatch.passing[index].away}".split('%').first}")
-                                                                  ? Colors
-                                                                      .grey[300]
+                                                                  ? Theme.of(context).colorScheme.background
                                                                   : null),
                                                           child: Padding(
                                                             padding:
@@ -416,10 +398,7 @@ class _MatchStatsState extends State<MatchStats> {
                                                                     bottom: 3),
                                                             child: Text(
                                                               "${provider.sortedStatsModelMatch.passing[index].home}",
-                                                              style: TextStyle(
-                                                                  fontFamily:
-                                                                      'Vazirmatn',
-                                                                  fontSize: 16),
+                                                              style: Theme.of(context).textTheme.headline2
                                                             ),
                                                           ),
                                                         ),
@@ -429,12 +408,7 @@ class _MatchStatsState extends State<MatchStats> {
                                                   Container(
                                                     child: Text(
                                                       "${provider.sortedStatsModelMatch.passing[index].name}",
-                                                      style: TextStyle(
-                                                          fontFamily:
-                                                              'Vazirmatn',
-                                                          fontSize: 16,
-                                                          color:
-                                                              Colors.black54),
+                                                      style: Theme.of(context).textTheme.headline2
                                                     ),
                                                   ),
                                                   Container(
@@ -470,10 +444,7 @@ class _MatchStatsState extends State<MatchStats> {
                                                                     bottom: 3),
                                                             child: Text(
                                                               "${provider.sortedStatsModelMatch.passing[index].away}",
-                                                              style: TextStyle(
-                                                                  fontFamily:
-                                                                      'Vazirmatn',
-                                                                  fontSize: 16),
+                                                              style: Theme.of(context).textTheme.headline2
                                                             ),
                                                           ),
                                                         ),
@@ -488,6 +459,7 @@ class _MatchStatsState extends State<MatchStats> {
                                   ),
                                 ),
                               ),
+                        SizedBox(height: 8,),
                         provider.sortedStatsModelMatch.attack.isEmpty
                             ? Container()
                             : Card(
@@ -500,10 +472,7 @@ class _MatchStatsState extends State<MatchStats> {
                                     children: [
                                       Text(
                                         'هجوم',
-                                        style: TextStyle(
-                                            fontFamily: 'Vazirmatn',
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500),
+                                        style: Theme.of(context).textTheme.headline2.copyWith(fontSize: 16),
                                       ),
                                       SizedBox(
                                         height: 10,
@@ -548,8 +517,7 @@ class _MatchStatsState extends State<MatchStats> {
                                                                           "${"${provider.sortedStatsModelMatch.attack[index].home}".split('%').first}") >
                                                                       int.parse(
                                                                           "${"${provider.sortedStatsModelMatch.attack[index].away}".split('%').first}")
-                                                                  ? Colors
-                                                                      .grey[300]
+                                                                  ? Theme.of(context).colorScheme.background
                                                                   : null),
                                                           child: Padding(
                                                             padding:
@@ -561,10 +529,7 @@ class _MatchStatsState extends State<MatchStats> {
                                                                     bottom: 3),
                                                             child: Text(
                                                               "${provider.sortedStatsModelMatch.attack[index].home}",
-                                                              style: TextStyle(
-                                                                  fontFamily:
-                                                                      'Vazirmatn',
-                                                                  fontSize: 16),
+                                                              style:Theme.of(context).textTheme.headline2
                                                             ),
                                                           ),
                                                         ),
@@ -574,12 +539,7 @@ class _MatchStatsState extends State<MatchStats> {
                                                   Container(
                                                     child: Text(
                                                       "${provider.sortedStatsModelMatch.attack[index].name}",
-                                                      style: TextStyle(
-                                                          fontFamily:
-                                                              'Vazirmatn',
-                                                          fontSize: 16,
-                                                          color:
-                                                              Colors.black54),
+                                                      style: Theme.of(context).textTheme.headline2
                                                     ),
                                                   ),
                                                   Container(
@@ -615,10 +575,7 @@ class _MatchStatsState extends State<MatchStats> {
                                                                     bottom: 3),
                                                             child: Text(
                                                               "${provider.sortedStatsModelMatch.attack[index].away}",
-                                                              style: TextStyle(
-                                                                  fontFamily:
-                                                                      'Vazirmatn',
-                                                                  fontSize: 16),
+                                                              style: Theme.of(context).textTheme.headline2
                                                             ),
                                                           ),
                                                         ),
@@ -633,6 +590,7 @@ class _MatchStatsState extends State<MatchStats> {
                                   ),
                                 ),
                               ),
+                        SizedBox(height: 8,),
                         provider.sortedStatsModelMatch.defend.isEmpty
                             ? Container()
                             : Card(
@@ -645,10 +603,7 @@ class _MatchStatsState extends State<MatchStats> {
                                     children: [
                                       Text(
                                         'دفاع',
-                                        style: TextStyle(
-                                            fontFamily: 'Vazirmatn',
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500),
+                                       style: Theme.of(context).textTheme.headline2.copyWith(fontSize: 16),
                                       ),
                                       SizedBox(
                                         height: 10,
@@ -693,8 +648,7 @@ class _MatchStatsState extends State<MatchStats> {
                                                                           "${"${provider.sortedStatsModelMatch.defend[index].home}".split('%').first}") >
                                                                       int.parse(
                                                                           "${"${provider.sortedStatsModelMatch.defend[index].away}".split('%').first}")
-                                                                  ? Colors
-                                                                      .grey[300]
+                                                                  ? Theme.of(context).colorScheme.background
                                                                   : null),
                                                           child: Padding(
                                                             padding:
@@ -706,10 +660,7 @@ class _MatchStatsState extends State<MatchStats> {
                                                                     bottom: 3),
                                                             child: Text(
                                                               "${provider.sortedStatsModelMatch.defend[index].home}",
-                                                              style: TextStyle(
-                                                                  fontFamily:
-                                                                      'Vazirmatn',
-                                                                  fontSize: 16),
+                                                              style: Theme.of(context).textTheme.headline2
                                                             ),
                                                           ),
                                                         ),
@@ -719,12 +670,7 @@ class _MatchStatsState extends State<MatchStats> {
                                                   Container(
                                                     child: Text(
                                                       "${provider.sortedStatsModelMatch.defend[index].name}",
-                                                      style: TextStyle(
-                                                          fontFamily:
-                                                              'Vazirmatn',
-                                                          fontSize: 16,
-                                                          color:
-                                                              Colors.black54),
+                                                      style:Theme.of(context).textTheme.headline2
                                                     ),
                                                   ),
                                                   Container(
@@ -760,10 +706,7 @@ class _MatchStatsState extends State<MatchStats> {
                                                                     bottom: 3),
                                                             child: Text(
                                                               "${provider.sortedStatsModelMatch.defend[index].away}",
-                                                              style: TextStyle(
-                                                                  fontFamily:
-                                                                      'Vazirmatn',
-                                                                  fontSize: 16),
+                                                              style:Theme.of(context).textTheme.headline2
                                                             ),
                                                           ),
                                                         ),
@@ -778,6 +721,7 @@ class _MatchStatsState extends State<MatchStats> {
                                   ),
                                 ),
                               ),
+                        SizedBox(height: 8,),
                         provider.sortedStatsModelMatch.precision.isEmpty
                             ? Container()
                             : Card(
@@ -790,10 +734,7 @@ class _MatchStatsState extends State<MatchStats> {
                                     children: [
                                       Text(
                                         'إنضباط',
-                                        style: TextStyle(
-                                            fontFamily: 'Vazirmatn',
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500),
+                                         style: Theme.of(context).textTheme.headline2.copyWith(fontSize: 16),
                                       ),
                                       SizedBox(
                                         height: 10,
@@ -838,8 +779,7 @@ class _MatchStatsState extends State<MatchStats> {
                                                                           "${"${provider.sortedStatsModelMatch.precision[index].home}".split('%').first}") >
                                                                       int.parse(
                                                                           "${"${provider.sortedStatsModelMatch.precision[index].away}".split('%').first}")
-                                                                  ? Colors
-                                                                      .grey[300]
+                                                                  ? Theme.of(context).colorScheme.background
                                                                   : null),
                                                           child: Padding(
                                                             padding:
@@ -851,10 +791,7 @@ class _MatchStatsState extends State<MatchStats> {
                                                                     bottom: 3),
                                                             child: Text(
                                                               "${provider.sortedStatsModelMatch.precision[index].home}",
-                                                              style: TextStyle(
-                                                                  fontFamily:
-                                                                      'Vazirmatn',
-                                                                  fontSize: 16),
+                                                              style: Theme.of(context).textTheme.headline2
                                                             ),
                                                           ),
                                                         ),
@@ -864,12 +801,7 @@ class _MatchStatsState extends State<MatchStats> {
                                                   Container(
                                                     child: Text(
                                                       "${provider.sortedStatsModelMatch.precision[index].name}",
-                                                      style: TextStyle(
-                                                          fontFamily:
-                                                              'Vazirmatn',
-                                                          fontSize: 16,
-                                                          color:
-                                                              Colors.black54),
+                                                      style: Theme.of(context).textTheme.headline2
                                                     ),
                                                   ),
                                                   Container(
@@ -905,10 +837,7 @@ class _MatchStatsState extends State<MatchStats> {
                                                                     bottom: 3),
                                                             child: Text(
                                                               "${provider.sortedStatsModelMatch.precision[index].away}",
-                                                              style: TextStyle(
-                                                                  fontFamily:
-                                                                      'Vazirmatn',
-                                                                  fontSize: 16),
+                                                              style: Theme.of(context).textTheme.headline2
                                                             ),
                                                           ),
                                                         ),
