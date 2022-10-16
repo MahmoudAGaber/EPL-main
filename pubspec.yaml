@@ -48,10 +48,10 @@ dependencies:
   dynamic_theme: ^1.0.0
   webview_flutter: ^1.0.7
   device_info_plus: ^0.7.2
-  flutter_calendar_carousel: ^2.4.0
-  async: 
+  async:
   pretty_dio_logger: ^1.1.1
   modal_bottom_sheet:
+  flutter_calendar_carousel:
   material_design_icons_flutter: ^4.0.5755
   get: 4.3.8
   provider: ^6.0.3

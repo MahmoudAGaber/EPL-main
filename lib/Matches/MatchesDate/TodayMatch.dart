@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 import 'package:arseli/EachLeague/eachLeague.dart';
 import 'package:arseli/Matches/EndMatches/matchInfo_a.dart';
 import 'package:arseli/Oops.dart';
@@ -306,12 +307,7 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                         MaterialPageRoute(
                                                             builder: (context) => provider.subOfMatches[
                                                             indexx]
-                                                                .status ==
-                                                                "Played" ||
-                                                                provider.subOfMatches[
-                                                                indexx]
-                                                                    .status ==
-                                                                    "Playing"
+                                                                .status == "Played" || provider.subOfMatches[indexx].status == "Playing"
                                                                 ? ChangeNotifierProvider<
                                                                 EachMatchViewModel>(
                                                               create: (_) =>
@@ -378,9 +374,7 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                                       Positioned(
                                                                           right: 10,
                                                                           top: 7,
-                                                                          child:provider.subOfMatches[indexx].status ==
-                                                                              "Playing"
-                                                                              ? CircleAvatar(
+                                                                          child:provider.subOfMatches[indexx].status == "Playing" ? CircleAvatar(
                                                                             minRadius: 13,
                                                                             backgroundColor: Colors.green,
                                                                             child: Padding(
@@ -500,8 +494,7 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                         ),
 
                                                       ),
-                                                      provider.subOfMatches[indexx].status == 'Played'
-                                                          ? Container(
+                                                      provider.subOfMatches[indexx].status == 'Played' ? Container(
                                                         width: 48,
                                                         height: 18,
                                                         decoration: BoxDecoration(
@@ -611,8 +604,9 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                       physics: ClampingScrollPhysics(),
                                                       shrinkWrap: true,
                                                       scrollDirection: Axis.vertical,
-                                                      itemCount: provider.matchesList[index].subOfMathes.length,
+                                                      itemCount: provider.matchesList[index].subOfMathes.where((element) => element.status == "Playing").toList().length,
                                                       itemBuilder: (widget, indexx) {
+                                                        final dataList = provider.matchesList[index].subOfMathes.where((element) => element.status == "Playing").toList();
                                                         return GestureDetector(
                                                           onLongPress: () {
                                                             // addDialog();
@@ -621,46 +615,28 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                             Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
-                                                                    builder: (context) => provider
-                                                                        .matchesList[
-                                                                    index]
-                                                                        .subOfMathes[
-                                                                    indexx]
-                                                                        .status ==
-                                                                        "Played" ||
-                                                                        provider
-                                                                            .matchesList[
-                                                                        index]
-                                                                            .subOfMathes[
-                                                                        indexx]
-                                                                            .status ==
-                                                                            "Playing"
+                                                                    builder: (context) => dataList[indexx].status == "Played" || dataList[indexx].status == "Playing"
                                                                         ? ChangeNotifierProvider<
                                                                         EachMatchViewModel>(
                                                                       create: (_) =>
                                                                           EachMatchViewModel(),
                                                                       child:
                                                                       matchInfo_a(
-                                                                        url: provider.matchesList[index].subOfMathes[indexx].matchURL,
-                                                                        homeId: provider.matchesList[index].subOfMathes[indexx].homeID,
-                                                                        awayId: provider.matchesList[index].subOfMathes[indexx].awayID,comName: provider.matchesList[index].comName,
+                                                                        url:dataList[indexx].matchURL,
+                                                                        homeId: dataList[indexx].homeID,
+                                                                        awayId: dataList[indexx].awayID,comName: provider.matchesList[index].comName,
                                                                       ),
                                                                     )
-                                                                        : provider.matchesList[index].subOfMathes[indexx].status == "Fixture"
+                                                                        : dataList[indexx].status == "Fixture"
                                                                         ? ChangeNotifierProvider<
                                                                         EachMatchViewModel>(
                                                                       create: (_) =>
                                                                           EachMatchViewModel(),
                                                                       child:
                                                                       matchInfo(
-                                                                        url: provider
-                                                                            .matchesList[
-                                                                        index]
-                                                                            .subOfMathes[
-                                                                        indexx]
-                                                                            .matchURL,
-                                                                        homeId: provider.matchesList[index].subOfMathes[indexx].homeID,
-                                                                        awayId: provider.matchesList[index].subOfMathes[indexx].awayID,
+                                                                        url:dataList[indexx].matchURL,
+                                                                        homeId: dataList[indexx].homeID,
+                                                                        awayId: dataList[indexx].awayID,
                                                                         comName: provider.matchesList[index].comName,
                                                                       ),
                                                                     )
@@ -691,9 +667,7 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                                                   children: [
                                                                                     Flexible(
                                                                                       child: Text(
-                                                                                        provider
-                                                                                            .matchesList[index]
-                                                                                            .subOfMathes[indexx]
+                                                                                        dataList[indexx]
                                                                                             .homeName,
                                                                                         style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
                                                                                         overflow: TextOverflow.clip,
@@ -708,8 +682,7 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                                               Positioned(
                                                                                   right: 10,
                                                                                   top: 7,
-                                                                                  child: provider.matchesList[index].subOfMathes[indexx].status ==
-                                                                                      "Playing"
+                                                                                  child: dataList[indexx].status == "Playing"
                                                                                       ? CircleAvatar(
                                                                                     minRadius: 13,
                                                                                     backgroundColor: Colors.green,
@@ -718,15 +691,15 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                                                       child: Padding(
                                                                                         padding: const EdgeInsets.all(2.0),
                                                                                         child: Text(
-                                                                                          provider.matchesList[index].subOfMathes[indexx].matchTime.toString(),
+                                                                                          dataList[indexx].matchTime.toString(),
                                                                                           style: TextStyle(fontFamily: 'Vazirmatn', fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
                                                                                         ),
                                                                                       ),
                                                                                     ),
                                                                                   )
-                                                                                      : provider.matchesList[index].subOfMathes[indexx].status == "Played"
+                                                                                      : dataList[indexx].status == "Played"
                                                                                       ? Container()
-                                                                                      : provider.matchesList[index].subOfMathes[indexx].status == "Fixture"
+                                                                                      : dataList[indexx].status == "Fixture"
                                                                                       ? Container()
                                                                                       : Container(
                                                                                       decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.all(Radius.circular(100))),
@@ -759,36 +732,31 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                                               Container(
                                                                                 width: 35,
                                                                                 height: 30,
-                                                                                child: provider
-                                                                                    .matchesList[
-                                                                                index]
-                                                                                    .subOfMathes[
-                                                                                indexx]
-                                                                                    .homeLogo
+                                                                                child: dataList[indexx].homeLogo
                                                                                     .endsWith(
                                                                                     'svg')
                                                                                     ? SvgPicture.network(
-                                                                                    "https://www.eplworld.com${provider.matchesList[index].subOfMathes[indexx].homeLogo}",
+                                                                                    "https://www.eplworld.com${dataList[indexx].homeLogo}",
                                                                                     semanticsLabel:
                                                                                     'Acme Logo')
                                                                                     : Image.network(
-                                                                                    "https://www.eplworld.com${provider.matchesList[index].subOfMathes[indexx].homeLogo}"),
+                                                                                    "https://www.eplworld.com${dataList[indexx].homeLogo}"),
                                                                               ),
                                                                             ),
-                                                                            provider.matchesList[index].subOfMathes[indexx].status == 'Fixture'
+                                                                            dataList[indexx].status == 'Fixture'
                                                                                 ? Text(
-                                                                              provider.matchesList[index].subOfMathes[indexx].time,
+                                                                              dataList[indexx].time,
                                                                               style: Theme.of(context).textTheme.bodyText1,
                                                                             )
-                                                                                : provider.matchesList[index].subOfMathes[indexx].status == 'Postponed'
+                                                                                : dataList[indexx].status == 'Postponed'
                                                                                 ? Text(
-                                                                                provider.matchesList[index].subOfMathes[indexx].time,
+                                                                                dataList[indexx].time,
                                                                                 style: Theme.of(context).textTheme.bodyText1
                                                                             )
                                                                                 : Padding(
                                                                               padding: const EdgeInsets.only(top: 8),
                                                                               child: Text(
-                                                                                "${provider.matchesList[index].subOfMathes[indexx].homeScore} - ${provider.matchesList[index].subOfMathes[indexx].awayScore} ",
+                                                                                "${dataList[indexx].homeScore} - ${dataList[indexx].awayScore} ",
                                                                                 style: Theme.of(context).textTheme.bodyText1,
                                                                               ),
                                                                             ),
@@ -802,7 +770,7 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                                                 height: 30,
                                                                                 child: Image
                                                                                     .network(
-                                                                                    "https://www.eplworld.com${provider.matchesList[index].subOfMathes[indexx].awayLogo}"),
+                                                                                    "https://www.eplworld.com${dataList[indexx].awayLogo}"),
                                                                               ),
                                                                             ),
                                                                           ],
@@ -820,7 +788,7 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                                               .start,
                                                                           children: [
                                                                             Expanded(
-                                                                              child: Text(provider.matchesList[index].subOfMathes[indexx].awayName,
+                                                                              child: Text(dataList[indexx].awayName,
                                                                                 style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
                                                                                 overflow: TextOverflow.clip,
                                                                               ),
@@ -833,7 +801,7 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                                 ),
 
                                                               ),
-                                                              provider.matchesList[index].subOfMathes[indexx].status == 'Played'
+                                                              dataList[indexx].status == 'Played'
                                                                   ? Container(
                                                                 width: 48,
                                                                 height: 18,

@@ -4,6 +4,7 @@ import 'package:arseli/Models/matches/PlayerInf.dart';
 import 'package:arseli/Models/matches/ResponseModel.dart';
 import 'package:arseli/Models/matches/SubOfMatches.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
 class MatchesViewModel with ChangeNotifier {
   RequestHandler requestHandler = RequestHandler();
@@ -62,6 +63,7 @@ class MatchesViewModel with ChangeNotifier {
     var seen = Set<MatchesModel>();
     matchesList = matchesList2.where((element) => seen.add(element)).toList();
 
+
     print("hiiiiiii$subOfMatches");
 
     loadingMatches = false;
@@ -87,8 +89,11 @@ class MatchesViewModel with ChangeNotifier {
           subOfMatches2.add(matchesList[i].subOfMathes[j]);
         }
         else if((matchesList[i].subOfMathes[j].status == "Fixture")){
+          print("Now Here");
           matchesList2.add(matchesList[i]);
           subOfMatches2.add(matchesList[i].subOfMathes[j]);
+          subOfMatches2.sort((first,next) => DateFormat("hh:mm").parse(first.time).compareTo( DateFormat("hh:mm").parse(next.time)));
+
         }
       }
     }

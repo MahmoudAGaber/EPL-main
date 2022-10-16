@@ -22,6 +22,7 @@ import 'Provider/EachLeagueViewModel.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'clanderbar.dart';
 import 'home.dart';
 
 class Matches extends StatefulWidget {
@@ -146,7 +147,9 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
                     SizedBox(width: 25,),
                     GestureDetector(
                       onTap: (){
-                        Navigator.pushNamed(context, '/clanderbar');
+                       showDialog(context: context, builder: (context) => Dialog(
+                         child: clanderbar(),
+                       ));
                       },
                       child: Container(
                         height: 25,width: 25,
