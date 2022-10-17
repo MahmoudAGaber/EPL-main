@@ -31,6 +31,7 @@ class _clanderbarState extends State<clanderbar> {
       headerTitleTouchable: true,
       selectedDayButtonColor: Theme.of(context).primaryColor,
       selectedDayBorderColor: Theme.of(context).primaryColor,
+      locale: 'ar',
 
       onDayPressed: (DateTime date, List<Event> events) {
         this.setState(() => _currentDate2 = date);
