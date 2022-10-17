@@ -146,7 +146,7 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
       isDark = darkThemeProvider.darkTheme;
 
       getMatches = matchesViewModel.getMatches(widget.date);
-      print(matchesViewModel.liveMatches);
+      //print(matchesViewModel.liveMatches);
       var now = new DateTime.now();
       today =  DateFormat("dd-MM-yyyy", 'EN_SA').format(now.subtract(new Duration(days: 0)));
     });
@@ -604,9 +604,13 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                       physics: ClampingScrollPhysics(),
                                                       shrinkWrap: true,
                                                       scrollDirection: Axis.vertical,
-                                                      itemCount: provider.matchesList[index].subOfMathes.where((element) => element.status == "Playing").toList().length,
+                                                      itemCount: playNow
+                                                          ?provider.matchesList[index].subOfMathes.where((element) => element.status == "Playing").toList().length
+                                                          :provider.matchesList[index].subOfMathes.length,
                                                       itemBuilder: (widget, indexx) {
-                                                        final dataList = provider.matchesList[index].subOfMathes.where((element) => element.status == "Playing").toList();
+                                                        final dataList = playNow
+                                                            ?provider.matchesList[index].subOfMathes.where((element) => element.status == "Playing").toList()
+                                                            :provider.matchesList[index].subOfMathes;
                                                         return GestureDetector(
                                                           onLongPress: () {
                                                             // addDialog();
