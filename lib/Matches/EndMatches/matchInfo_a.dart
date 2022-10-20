@@ -201,6 +201,7 @@ class _matchInfo_aState extends State<matchInfo_a>
   Widget build(BuildContext context) {
     List<Widget> _sliverBuilder(BuildContext context, bool innerBoxIsScrolled) {
       return <Widget>[
+
         Directionality(
           textDirection: TextDirection.rtl,
           child: SliverAppBar(
@@ -219,7 +220,7 @@ class _matchInfo_aState extends State<matchInfo_a>
                   ],
                 )
               ],
-              expandedHeight: 120.0,
+              expandedHeight: 130.0,
               pinned: true,
               floating: true,
               snap: true,
@@ -258,17 +259,11 @@ class _matchInfo_aState extends State<matchInfo_a>
                               children: <Widget>[
                                 InkWell(
                                   onTap: () {
-                                    Navigator.push(
-                                        context,
+                                    Navigator.push(context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                ChangeNotifierProvider<
-                                                        EachTeamViewModel>(
-                                                    create: (_) =>
-                                                        EachTeamViewModel(),
+                                            builder: (context) => ChangeNotifierProvider<EachTeamViewModel>(create: (_) => EachTeamViewModel(),
                                                     child: EachTeam(
-                                                      url: provider
-                                                          .msnModel.homeTeamURL,
+                                                      url: provider.msnModel.homeTeamURL,
                                                       id: widget.homeId,
                                                     ))));
                                   },
@@ -348,18 +343,17 @@ class _matchInfo_aState extends State<matchInfo_a>
                                       children: [
                                         Container(
                                           height: 40,
-                                          width: MediaQuery.of(context).size.width * .4,
-                                          child: Flexible(
-                                            child: Center(
-                                              heightFactor:20,
+                                          width: MediaQuery.of(context).size.width * .5,
+                                          child: Center(
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 25),
                                               child: Text(
                                                 provider.msnModel.homeTeamName.tr,
                                                 style: TextStyle(
                                                     fontFamily: 'Vazirmatn',
                                                     color: Colors.white,
                                                     fontSize: 20,
-                                                    fontWeight: FontWeight.w500,height: 2),
-                                                overflow: TextOverflow.clip,
+                                                    fontWeight: FontWeight.w500),
                                               ),
                                             ),
                                           ),
@@ -371,17 +365,17 @@ class _matchInfo_aState extends State<matchInfo_a>
                                       children: [
                                         Container(
                                           height: 40,
-                                          width: MediaQuery.of(context).size.width * .4,
-                                          child: Flexible(
-                                            child: Center(
+                                          width: MediaQuery.of(context).size.width * .5,
+                                          child: Center(
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(right: 30),
                                               child: Text(
-                                              provider.msnModel.awayTeamName.tr,
+                                                provider.msnModel.awayTeamName.tr,
                                                 style: TextStyle(
                                                     fontFamily: 'Vazirmatn',
                                                     color: Colors.white,
                                                     fontSize: 20,
-                                                    fontWeight: FontWeight.w500,height:2 ),
-                                                overflow: TextOverflow.clip,
+                                                    fontWeight: FontWeight.w500),
                                               ),
                                             ),
                                           ),
@@ -455,7 +449,7 @@ class _matchInfo_aState extends State<matchInfo_a>
                             },
                             controller: this.tabController,
                             // controller: tabController,
-                            tabs: tabs),
+                            tabs:tabs),
                       );
                     },
                   ))),
@@ -477,7 +471,7 @@ class _matchInfo_aState extends State<matchInfo_a>
                           headerSliverBuilder: _sliverBuilder,
                           body: TabBarView(
                               controller: tabController,
-                              children: this.tabView),
+                              children: tabView),
                         ),
                       ));
           },
@@ -601,6 +595,7 @@ class _matchInfo_aState extends State<matchInfo_a>
       ),
     );
   }
+
 
   List<Widget> _tabs(EachMatchViewModel provider) {
     List<Widget> test = [];
