@@ -74,7 +74,7 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
               : Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Column(children: <Widget>[
-        
+
                   Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8)),
@@ -94,7 +94,7 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                     ),
                   ),
 
-                
+
                   SizedBox(
                     height: 8,
                   ),
