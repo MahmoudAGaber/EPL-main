@@ -401,6 +401,7 @@ class _FavouritesState extends State<Favourites>
                           onPressed: () {
                            // provider.getDataSearch('1');
                             Navigator.pop(context);
+                            controller.searchTextEditingController.clear();
                           },
                         ),
                         SizedBox(
