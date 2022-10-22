@@ -441,7 +441,8 @@ class _matchInfo_aState extends State<matchInfo_a>
                         height: 60,
                         color: Theme.of(context).backgroundColor,
                         child: TabBar(
-                            indicatorColor: Theme.of(context).primaryColor,
+                            indicatorColor: Colors.white,
+                            labelColor: Theme.of(context).primaryColor,
                             isScrollable: true,
                             onTap: (index) {
                               _selectedIndex = index;

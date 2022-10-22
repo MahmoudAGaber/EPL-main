@@ -1,4 +1,6 @@
 import 'package:arseli/Data/RequestHandler.dart';
+import 'package:arseli/Playrers/players.dart';
+import 'package:arseli/Provider/EachPlayerViewModel.dart';
 import 'package:arseli/Provider/EachTeamViewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -81,21 +83,26 @@ class _tranferTeamState extends State<tranferTeam> {
                                             children: [
                                               GestureDetector(
                                                   onTap: () {
-                                                    Navigator.pushNamed(
-                                                        context, '/players');
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) => ChangeNotifierProvider<EachplayerViewModel>(
+                                                                create: (_) => EachplayerViewModel(),
+                                                                child: EachPlayer(
+                                                                  url: provider.transferBoxesModelList[index].link,
+                                                                )
+                                                            )));
                                                   },
                                                   child: Container(
-                                                    height: 70,
-                                                    width: 70,
+                                                    height: 48,
+                                                    width: 48,
                                                     decoration: BoxDecoration(
                                                       borderRadius:
                                                       BorderRadius.all(Radius.circular(50)),
                                                     ),
                                                     child: ClipRRect(
                                                         borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                50)),
+                                                        BorderRadius.all(Radius.circular(50)),
                                                         child: Image.network(
                                                             "https://www.eplworld.com${provider.transferBoxesModelList[index].mainIMG}")),
                                                   )

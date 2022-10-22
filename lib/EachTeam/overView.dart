@@ -58,7 +58,7 @@ class _OverViewState extends State<OverView> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       eachTeamViewModel = Provider.of(context, listen: false);
       eachTeamViewModel.getOverView("${widget.url}/overview");
-      print(widget.id);
+    //  print(widget.id);
     });
 
     super.initState();
@@ -119,6 +119,7 @@ class _OverViewState extends State<OverView> {
                                           shrinkWrap: true,
                                           itemCount: 1,
                                           itemBuilder: (contex, indexx) {
+                                            final data = provider.lastMatch.last;
                                             return GestureDetector(
                                               onTap: () {
                                                 Navigator.push(
@@ -126,12 +127,7 @@ class _OverViewState extends State<OverView> {
                                                     MaterialPageRoute(
                                                         builder: (context) =>
                                                             matchInfo_a(
-                                                              url: provider
-                                                                  .recentMatcheBox[
-                                                                      index]
-                                                                  .matchInBoxModel[
-                                                                      indexx]
-                                                                  .matchURL,
+                                                              url: data.matchURL,
                                                             )));
                                               },
                                               child: Padding(
@@ -155,12 +151,7 @@ class _OverViewState extends State<OverView> {
                                                                 .spaceBetween,
                                                         children: <Widget>[
                                                           Text(
-                                                              provider
-                                                                  .recentMatcheBox[
-                                                                      index]
-                                                                  .matchInBoxModel[
-                                                                      indexx]
-                                                                  .matchDate
+                                                              data.matchDate
                                                                   .tr,
                                                               style: Theme.of(
                                                                       context)
@@ -173,12 +164,7 @@ class _OverViewState extends State<OverView> {
                                                                 width: 2,
                                                               ),
                                                               Text(
-                                                                  provider
-                                                                      .recentMatcheBox[
-                                                                          index]
-                                                                      .matchInBoxModel[
-                                                                          indexx]
-                                                                      .belongsTo,
+                                                                  data.belongsTo,
                                                                   style: Theme.of(
                                                                           context)
                                                                       .textTheme
@@ -212,9 +198,7 @@ class _OverViewState extends State<OverView> {
                                                                     Flexible(
                                                                       child:
                                                                           Text(
-                                                                        provider
-                                                                            .recentMatcheBox[index]
-                                                                            .matchInBoxModel[indexx]
+                                                                            data
                                                                             .homeTeamName,
                                                                         style: Theme.of(context)
                                                                             .textTheme
@@ -253,21 +237,21 @@ class _OverViewState extends State<OverView> {
                                                                             37,
                                                                         height:
                                                                             30,
-                                                                        child: provider.recentMatcheBox[index].matchInBoxModel[indexx].homeTeamLogo.endsWith('svg')
-                                                                            ? SvgPicture.network("https://www.eplworld.com${provider.recentMatcheBox[index].matchInBoxModel[indexx].homeTeamLogo}",
+                                                                        child: data.homeTeamLogo.endsWith('svg')
+                                                                            ? SvgPicture.network("https://www.eplworld.com${data.homeTeamLogo}",
                                                                                 semanticsLabel: 'Acme Logo')
-                                                                            : Image.network("https://www.eplworld.com${provider.recentMatcheBox[index].matchInBoxModel[indexx].homeTeamLogo}"),
+                                                                            : Image.network("https://www.eplworld.com${data.homeTeamLogo}"),
                                                                       ),
                                                                     ),
-                                                                    provider.recentMatcheBox[index].matchInBoxModel[indexx].periodId !=
+                                                                    data.periodId !=
                                                                             null
                                                                         ? Text(
-                                                                            provider.recentMatcheBox[index].matchInBoxModel[indexx].status == 'Fixture'
-                                                                                ? provider.recentMatcheBox[index].matchInBoxModel[indexx].matchTime
-                                                                                : "${provider.recentMatcheBox[index].matchInBoxModel[indexx].homeTeamScore}"
+                                                                        data.status == 'Fixture'
+                                                                                ? data.matchTime
+                                                                                : "${data.homeTeamScore}"
                                                                                     " - "
-                                                                                    "${provider.recentMatcheBox[index].matchInBoxModel[indexx].awayTeamScore}",
-                                                                            style: (provider.recentMatcheBox[index].matchInBoxModel[indexx].status == "Fixture") ? Theme.of(context).textTheme.bodyText1 : Theme.of(context).textTheme.bodyText1)
+                                                                                    "${data.awayTeamScore}",
+                                                                            style: (data.status == "Fixture") ? Theme.of(context).textTheme.bodyText1 : Theme.of(context).textTheme.bodyText1)
                                                                         : Text('__', style: Theme.of(context).textTheme.bodyText1),
                                                                     Padding(
                                                                       padding: const EdgeInsets
@@ -279,9 +263,9 @@ class _OverViewState extends State<OverView> {
                                                                               37,
                                                                           height:
                                                                               30,
-                                                                          child: provider.recentMatcheBox[index].matchInBoxModel[indexx].awayTeamLogo.endsWith('svg')
-                                                                              ? SvgPicture.network("https://www.eplworld.com${provider.recentMatcheBox[index].matchInBoxModel[indexx].awayTeamLogo}", semanticsLabel: 'Acme Logo')
-                                                                              : Image.network("https://www.eplworld.com${provider.recentMatcheBox[index].matchInBoxModel[indexx].awayTeamLogo}")),
+                                                                          child: data.awayTeamLogo.endsWith('svg')
+                                                                              ? SvgPicture.network("https://www.eplworld.com${data.awayTeamLogo}", semanticsLabel: 'Acme Logo')
+                                                                              : Image.network("https://www.eplworld.com${data.awayTeamLogo}")),
                                                                     ),
                                                                   ],
                                                                 ),
@@ -303,9 +287,7 @@ class _OverViewState extends State<OverView> {
                                                                     Flexible(
                                                                       child:
                                                                           Text(
-                                                                        provider
-                                                                            .recentMatcheBox[index]
-                                                                            .matchInBoxModel[indexx]
+                                                                            data
                                                                             .awayTeamName,
                                                                         style: Theme.of(context)
                                                                             .textTheme
@@ -397,7 +379,7 @@ class _OverViewState extends State<OverView> {
                                                                   .newsModelList[
                                                                       index]
                                                                   .imageJPG,
-                                                              fit: BoxFit.fill),
+                                                              fit: BoxFit.cover),
                                                           borderRadius:
                                                               BorderRadius.only(
                                                                   topRight: Radius

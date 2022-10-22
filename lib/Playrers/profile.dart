@@ -490,7 +490,9 @@ class _profileState extends State<profile> {
                                                   child: ClipRRect(
                                                     borderRadius: BorderRadius.all(Radius.circular(50),
                                                     ),
-                                                    child: Image.network("https://www.eplworld.com${provider.headerProfileModel.logo}"),
+                                                    child: provider.headerProfileModel.logo==null
+                                                        ?Container()
+                                                        :Image.network("https://www.eplworld.com${provider.headerProfileModel.logo}"),
                                                   ),
                                                 ),
                                               ),

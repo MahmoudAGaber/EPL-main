@@ -1202,7 +1202,7 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                   Icon(
                     MdiIcons.timer,
                     size: 22,
-                    color: Colors.black54,
+                    color: Theme.of(context).colorScheme.primaryVariant,
                   ),
                   SizedBox(
                     width: 5,

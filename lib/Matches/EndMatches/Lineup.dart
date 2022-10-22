@@ -80,13 +80,13 @@ class _LineupState extends State<Lineup> {
                               children: <Widget>[
                                 Text(
                                   provider.lineupsModel.home.teamName,
-                                  style: Theme.of(context).textTheme.headline2
+                                    style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.white)
                                 ),
                                 SizedBox(
                                   width: 15,
                                 ),
                                 Text(provider.lineupsModel.home.formation,
-                                    style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 15)
+                                    style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 15,color: Colors.white70)
                                 ),
                               ],
                             ),
@@ -116,24 +116,17 @@ class _LineupState extends State<Lineup> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: List.generate(
-                                            GoalKeeper(widget.matchID, 'home')
-                                                .length,
-                                            (index) => GoalKeeper(
-                                                widget.matchID,
-                                                'home')[index])),
+                                            GoalKeeper(provider,widget.matchID, 'home').length,
+                                            (index) => GoalKeeper(provider,widget.matchID, 'home')[index])),
                                     SingleChildScrollView(
                                       child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceEvenly,
                                           children: List.generate(
-                                              Defender(widget.matchID, provider,
-                                                      'home')
-                                                  .length,
+                                              Defender(widget.matchID, provider, 'home').length,
                                               (index) => Flexible(
                                                     child: Defender(
-                                                        widget.matchID,
-                                                        provider,
-                                                        'home')[index],
+                                                        widget.matchID, provider, 'home')[index],
                                                   ))),
                                     ),
                                     SingleChildScrollView(
@@ -141,40 +134,24 @@ class _LineupState extends State<Lineup> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceEvenly,
                                           children: List.generate(
-                                              CenterPlayer(widget.matchID,
-                                                      provider, 'home')
-                                                  .length,
+                                              CenterPlayer(widget.matchID, provider, 'home').length,
                                               (index) => Flexible(
-                                                  child: CenterPlayer(
-                                                      widget.matchID,
-                                                      provider,
-                                                      'home')[index]))),
+                                                  child: CenterPlayer(widget.matchID, provider, 'home')[index]))),
                                     ),
                                     Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: List.generate(
-                                            Attack(widget.matchID, provider,
-                                                    'home')
-                                                .length,
-                                            (index) => Attack(widget.matchID,
-                                                provider, 'home')[index])),
-                                    provider.lineupsModel.home.formation
-                                                .split('-')
-                                                .length ==
-                                            3
+                                            Attack(widget.matchID, provider, 'home').length,
+                                            (index) => Attack(widget.matchID, provider, 'home')[index])),
+                                    provider.lineupsModel.home.formation.split('-').length == 3
                                         ? Container()
                                         : Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: List.generate(
-                                                AttackStricker(widget.matchID,
-                                                        provider, 'home')
-                                                    .length,
-                                                (index) => AttackStricker(
-                                                    widget.matchID,
-                                                    provider,
-                                                    'home')[index])),
+                                                AttackStricker(widget.matchID, provider, 'home').length,
+                                                (index) => AttackStricker(widget.matchID, provider, 'home')[index])),
                                   ],
                                 )
                                 /*
@@ -276,130 +253,138 @@ class _LineupState extends State<Lineup> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    provider.lineupsModel.away.formation
-                                                .split('-')
-                                                .length ==
-                                            3
+                                    Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                        children: List.generate(
+                                            Attack(widget.matchID, provider, 'away').length,
+                                                (index) => Attack(widget.matchID,
+                                                provider, 'away')[index])),
+                                    provider.lineupsModel.away.formation.split('-').length == 3
                                         ? Container()
-                                        : Expanded(
-                                            child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceEvenly,
-                                                children: List.generate(
-                                                    AttackStricker(
-                                                            widget.matchID,
-                                                            provider,
-                                                            'away')
-                                                        .length,
-                                                    (index) => AttackStricker(
-                                                        widget.matchID,
-                                                        provider,
-                                                        'away')[index]))),
-                                    Expanded(
+                                        : Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                        children: List.generate(
+                                            AttackStricker(widget.matchID, provider, 'away').length,
+                                                (index) => AttackStricker(widget.matchID, provider, 'away')[index])),
+                                    SingleChildScrollView(
                                       child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
+                                          MainAxisAlignment.spaceEvenly,
                                           children: List.generate(
-                                              Attack(widget.matchID, provider,
-                                                      'away')
-                                                  .length,
-                                              (index) => Attack(widget.matchID,
-                                                  provider, 'away')[index])),
+                                              CenterPlayer(widget.matchID, provider, 'away').length, (index) => Flexible(
+                                                  child: CenterPlayer(widget.matchID, provider, 'away')[index]))),
                                     ),
-                                    Expanded(
+                                    SingleChildScrollView(
                                       child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
+                                          MainAxisAlignment.spaceEvenly,
                                           children: List.generate(
-                                              CenterPlayer(widget.matchID,
-                                                      provider, 'away')
-                                                  .length,
-                                              (index) => CenterPlayer(
-                                                  widget.matchID,
-                                                  provider,
-                                                  'away')[index])),
+                                              Defender(widget.matchID, provider, 'away').length, (index) => Flexible(
+                                                child: Defender(widget.matchID, provider, 'away')[index],
+                                              ))),
                                     ),
-                                    Expanded(
-                                        child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: List.generate(
-                                                Defender(widget.matchID,
-                                                        provider, 'away')
-                                                    .length,
-                                                (index) => Defender(
-                                                    widget.matchID,
-                                                    provider,
-                                                    'away')[index]))),
-                                    Expanded(
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: List.generate(
-                                              GoalKeeper(widget.matchID, 'away')
-                                                  .length,
-                                              (index) => GoalKeeper(
-                                                  widget.matchID,
-                                                  'away')[index])),
-                                    ),
+                                    Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        children: List.generate(
+                                            GoalKeeper(provider,widget.matchID, 'away').length,
+                                                (index) => GoalKeeper(provider,widget.matchID, 'away')[index])),
+
+
+
                                   ],
                                 )
-                                /*
-                        Stack(
-                          children: [
-                            Positioned(
-                                right: MediaQuery.of(context).size.width * 0.4,
-                                bottom: 360,
-                                child: PlayerAway(0)),
-                            Positioned(
-                                right: MediaQuery.of(context).size.width * 0.01,
-                                top: 70,
-                                child: PlayerAway(1)),
-                            Positioned(
-                                right: MediaQuery.of(context).size.width * 0.25,
-                                top: 70,
-                                child: PlayerAway(2)),
-                            Positioned(
-                                right: MediaQuery.of(context).size.width * 0.53,
-                                top: 70,
-                                child: PlayerAway(3)),
-                            Positioned(
-                                right: MediaQuery.of(context).size.width * 0.77,
-                                top: 70,
-                                child: PlayerAway(4)),
-                            Positioned(
-                                right: MediaQuery.of(context).size.width * 0.25,
-                                top: 170,
-                                child: PlayerAway(5)),
-                            Positioned(
-                                right: MediaQuery.of(context).size.width * 0.55,
-                                top: 170,
-                                child: PlayerAway(6)),
-                            Positioned(
-                              right: MediaQuery.of(context).size.width * 0.05,
-                              top: 260,
-                              child: PlayerAway(7),
-                            ),
-                            Positioned(
-                              right: MediaQuery.of(context).size.width * 0.4,
-                              top: 260,
-                              child: PlayerAway(8),
-                            ),
-                            Positioned(
-                              right: MediaQuery.of(context).size.width * 0.75,
-                              top: 260,
-                              child: PlayerAway(9),
-                            ),
-                            Positioned(
-                              right: MediaQuery.of(context).size.width * 0.4,
-                              top: 360,
-                              child: PlayerAway(10),
-                            ),
-                          ],),
+                              /*
+                          Stack(
+                            children: [
+                              Positioned(
+                                  right: MediaQuery
+                                      .of(context)
+                                      .size
+                                      .width * 0.4,
+                                  top: 360,
+                                  child: PlayerHome(0)),
+                              Positioned(
+                                  right: MediaQuery
+                                      .of(context)
+                                      .size
+                                      .width * 0.01,
+                                  bottom: 90,
+                                  child: PlayerHome(1)),
+                              Positioned(
+                                  right: MediaQuery
+                                      .of(context)
+                                      .size
+                                      .width * 0.26,
+                                  bottom: 90,
+                                  child: PlayerHome(2)),
+                              Positioned(
+                                  right: MediaQuery
+                                      .of(context)
+                                      .size
+                                      .width * 0.53,
+                                  bottom: 90,
+                                  child: PlayerHome(3)),
+                              Positioned(
+                                  right: MediaQuery
+                                      .of(context)
+                                      .size
+                                      .width * 0.76,
+                                  bottom: 90,
+                                  child: PlayerHome(4)),
+                              Positioned(
+                                  right: MediaQuery
+                                      .of(context)
+                                      .size
+                                      .width * 0.25,
+                                  bottom: 190,
+                                  child: PlayerHome(5)),
+                              Positioned(
+                                  right: MediaQuery
+                                      .of(context)
+                                      .size
+                                      .width * 0.55,
+                                  bottom: 190,
+                                  child: PlayerHome(6)),
+                              Positioned(
+                                right: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .width * 0.05,
+                                bottom: 280,
+                                child: PlayerHome(7),
+                              ),
+                              Positioned(
+                                right: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .width * 0.4,
+                                bottom: 280,
+                                child: PlayerHome(8),
+                              ),
+                              Positioned(
+                                right: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .width * 0.75,
+                                bottom: 280,
+                                child: PlayerHome(9),
+                              ),
+                              Positioned(
+                                right: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .width * 0.4,
+                                bottom: 365,
+                                child: PlayerHome(10),
+                              ),
+                            ],
+                          ),
 
-                             */
-                                ),
+                               */
+                            ),
                           ),
                         ],
                       ),
@@ -414,13 +399,13 @@ class _LineupState extends State<Lineup> {
                               children: <Widget>[
                                 Text(
                                   provider.lineupsModel.away.teamName,
-                                  style: Theme.of(context).textTheme.headline2
+                                  style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.white)
                                 ),
                                 SizedBox(
                                   width: 15,
                                 ),
                                 Text(provider.lineupsModel.away.formation,
-                                    style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 15)),
+                                  style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 15,color: Colors.white70))
                               ],
                             ),
                           ),
@@ -551,7 +536,7 @@ class _LineupState extends State<Lineup> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 SizedBox(
-                                  width: 20,
+                                  width: 25,
                                 ),
                                 Expanded(
                                   child: Column(
@@ -560,222 +545,168 @@ class _LineupState extends State<Lineup> {
                                           physics: ClampingScrollPhysics(),
                                           shrinkWrap: true,
                                           scrollDirection: Axis.vertical,
-                                          itemCount: provider.lineupsModel.home
-                                              .players.outField.length,
-                                          itemBuilder:
-                                              (BuildContext context, index) {
+                                          itemCount: provider.lineupsModel.home.players.outField.length,
+                                          itemBuilder: (BuildContext context, index) {
                                             return InkWell(
                                               onTap: () => {
-                                                eachMatchViewModel
-                                                    .getPlayerInfo(
-                                                        widget.matchID,
-                                                        provider
-                                                            .lineupsModel
-                                                            .home
-                                                            .players
-                                                            .outField[index]
-                                                            .id)
+                                                eachMatchViewModel.getPlayerInfo(widget.matchID, provider.lineupsModel.home.players.outField[index].id)
                                                     .then((value) => {
                                                           if (value != null)
-                                                            showPlayerInfo(
-                                                                context, value)
+                                                            showPlayerInfo(context, value,provider.msnModel.homeTeamLogo)
                                                         })
                                               },
                                               child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10.0),
+                                                padding: const EdgeInsets.all(10.0),
                                                 child: Container(
                                                   height: 115,
                                                   child: Stack(
                                                     children: <Widget>[
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                right: 10),
-                                                        child: Stack(
-                                                          children: [
-                                                            Container(
-                                                              width: 88,
-                                                              height: 100,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                borderRadius: BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            100)),
+                                                      Positioned(
+                                                        top: 20,
+                                                        right: 30,
+                                                        child: Container(
+                                                          width: 50,
+                                                          height: 50,
+                                                          decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                                                          ),
+                                                          child: ClipRRect(borderRadius: BorderRadius.all(
+                                                            Radius.circular(50),
                                                               ),
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        left:
-                                                                            12,
-                                                                        right:
-                                                                            12,
-                                                                        top: 25,
-                                                                        bottom:
-                                                                            25),
-                                                                child:
-                                                                    ClipRRect(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .all(
-                                                                    Radius
-                                                                        .circular(
-                                                                            100),
-                                                                  ),
-                                                                  child: Image
-                                                                      .network(
-                                                                          "https://www.eplworld.com${provider.lineupsModel.home.players.outField[index].img}"),
-                                                                ),
-                                                              ),
+                                                              child: Image.network(
+                                                            "https://www.eplworld.com${provider.lineupsModel.home.players.outField[index].img}",height: 20,width: 20,),
                                                             ),
-                                                            Positioned(
-                                                                top: 0,
-                                                                left: 0,
-                                                                child:
-                                                                    Container(
-                                                                  width: 40,
-                                                                  height: 50,
-                                                                  child: ListView
-                                                                      .builder(
-                                                                    physics:
-                                                                        NeverScrollableScrollPhysics(),
-                                                                    itemCount: provider.lineupsModel.home.players.outField[index].events ==
-                                                                            null
-                                                                        ? 0
-                                                                        : provider
-                                                                            .lineupsModel
-                                                                            .home
-                                                                            .players
-                                                                            .outField[index]
-                                                                            .events
-                                                                            .length,
-                                                                    itemBuilder:
-                                                                        (context,
-                                                                            indexx) {
-                                                                      return provider.lineupsModel.home.players.outField[index].events[indexx].type ==
-                                                                              'substitute'
-                                                                          ? Column(
-                                                                              children: [
-                                                                                Text(
-                                                                                  provider.lineupsModel.home.players.outField[index].events[indexx].time.toString(),
-                                                                                  style: TextStyle(fontFamily: 'Vazirmatn', color: Colors.green),
-                                                                                ),
-                                                                                Container(
-                                                                                  decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(8)),
-                                                                                  child: Padding(
-                                                                                    padding: const EdgeInsets.only(left: 3, right: 3),
-                                                                                    child: Icon(
-                                                                                      Icons.arrow_right_alt_outlined,
-                                                                                      color: Colors.white,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ],
-                                                                            )
-                                                                          : Container();
-                                                                    },
-                                                                  ),
-                                                                )),
-                                                            provider
-                                                                        .lineupsModel
-                                                                        .home
-                                                                        .players
-                                                                        .outField[
-                                                                            index]
-                                                                        .rating !=
-                                                                    null
-                                                                ? Positioned(
-                                                                    top: 15,
-                                                                    right: 0,
-                                                                    child:
-                                                                        Container(
-                                                                      width: 33,
-                                                                      height:
-                                                                          23,
-                                                                      child:
-                                                                          Column(
-                                                                        children: [
-                                                                          Container(
-                                                                            width:
-                                                                                33,
-                                                                            height:
-                                                                                23,
-                                                                            decoration:
-                                                                                BoxDecoration(color: Colors.orange, borderRadius: BorderRadius.circular(8)),
-                                                                            child:
-                                                                                Padding(
-                                                                              padding: const EdgeInsets.only(left: 3, right: 3),
-                                                                              child: Center(child: Text(provider.lineupsModel.home.players.outField[index].rating, style: TextStyle(fontFamily: 'Vazirmatn', color: Colors.white))),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ))
-                                                                : Container(
-                                                                    width: 33,
-                                                                    height: 23,
-                                                                  ),
-                                                            Positioned(
-                                                                bottom: 15,
-                                                                right: 0,
-                                                                child:
-                                                                    Container(
-                                                                  width: 25,
-                                                                  height: 25,
-                                                                  child: ListView
-                                                                      .builder(
-                                                                          physics:
-                                                                              NeverScrollableScrollPhysics(),
-                                                                          itemCount: provider.lineupsModel.home.players.outField[index].events == null
-                                                                              ? 0
-                                                                              : provider.lineupsModel.home.players.outField[index].events.length,
-                                                                          itemBuilder: (context, indexx) {
-                                                                            return provider.lineupsModel.home.players.outField[index].events[indexx].type == 'goal'
-                                                                                ? Column(
-                                                                                    children: [
-                                                                                      Padding(
-                                                                                        padding: const EdgeInsets.only(left: 3, right: 3),
-                                                                                        child: Center(child: Icon(MdiIcons.soccer)),
-                                                                                      ),
-                                                                                    ],
-                                                                                  )
-                                                                                : Container();
-                                                                          }),
-                                                                )),
-                                                            Positioned(
-                                                                bottom: 17,
-                                                                left: 15,
-                                                                child:
-                                                                    Container(
-                                                                  width: 16,
-                                                                  height: 23,
-                                                                  child: ListView
-                                                                      .builder(
-                                                                          physics:
-                                                                              NeverScrollableScrollPhysics(),
-                                                                          itemCount: provider.lineupsModel.home.players.outField[index].events == null
-                                                                              ? 0
-                                                                              : provider.lineupsModel.home.players.outField[index].events.length,
-                                                                          itemBuilder: (context, indexx) {
-                                                                            return provider.lineupsModel.home.players.outField[index].events[indexx].type == 'yellowCard'
-                                                                                ? Column(
-                                                                                    children: [
-                                                                                      Container(
-                                                                                        width: 16,
-                                                                                        height: 23,
-                                                                                        decoration: BoxDecoration(color: Colors.yellow, borderRadius: BorderRadius.circular(4)),
-                                                                                      ),
-                                                                                    ],
-                                                                                  )
-                                                                                : Container();
-                                                                          }),
-                                                                ))
-                                                          ],
                                                         ),
                                                       ),
+                                                      Positioned(
+                                                          top: 0,
+                                                          left: 10,
+                                                          child:
+                                                          Container(
+                                                            width: 40,
+                                                            height: 50,
+                                                            child: ListView.builder(
+                                                              physics: NeverScrollableScrollPhysics(),
+                                                              itemCount: provider.lineupsModel.home.players.outField[index].events == null
+                                                                  ? 0
+                                                                  : provider.lineupsModel.home.players.outField[index].events.length,
+                                                              itemBuilder: (context, indexx) {
+                                                                return provider.lineupsModel.home.players.outField[index].events[indexx].type ==
+                                                                    'substitute'
+                                                                    ? Column(
+                                                                  children: [
+                                                                    Text(
+                                                                      provider.lineupsModel.home.players.outField[index].events[indexx].time.toString(),
+                                                                      style: TextStyle(fontFamily: 'Vazirmatn', color: Colors.green),
+                                                                    ),
+                                                                    Container(
+                                                                      height: 20,
+                                                                      decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(6)),
+                                                                      child: Padding(
+                                                                        padding: const EdgeInsets.only(left: 4, right: 4),
+                                                                        child: Icon(
+                                                                          Icons.arrow_right_alt_outlined,
+                                                                          color: Colors.white,
+                                                                          size: 20,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                )
+                                                                    : Container();
+                                                              },
+                                                            ),
+                                                          )),
+                                                      provider.lineupsModel.home.players.outField[index].rating != null
+                                                          ? Positioned(
+                                                          top: 15,
+                                                          left: 20,
+                                                          child:
+                                                          Container(
+                                                            width: 33,
+                                                            height:
+                                                            23,
+                                                            child:
+                                                            Column(
+                                                              children: [
+                                                                Container(
+                                                                  width:
+                                                                  33,
+                                                                  height:
+                                                                  23,
+                                                                  decoration:
+                                                                  BoxDecoration(color: Colors.orange, borderRadius: BorderRadius.circular(8)),
+                                                                  child:
+                                                                  Padding(
+                                                                    padding: const EdgeInsets.only(left: 3, right: 3),
+                                                                    child: Center(child: Text(provider.lineupsModel.home.players.outField[index].rating, style: TextStyle(fontFamily: 'Vazirmatn', color: Colors.white))),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ))
+                                                          : Container(
+                                                        width: 33,
+                                                        height: 23,
+                                                      ),
+                                                      Positioned(
+                                                          bottom: 35,
+                                                          right:15,
+                                                          child:
+                                                          Container(
+                                                            width: 60,
+                                                            height: 25,
+                                                            child: ListView.builder(
+                                                              scrollDirection: Axis.horizontal,
+                                                                physics: NeverScrollableScrollPhysics(),
+                                                                itemCount: provider.lineupsModel.home.players.outField[index].events == null
+                                                                    ? 0
+                                                                    : provider.lineupsModel.home.players.outField[index].events.length,
+                                                                itemBuilder: (context, indexx) {
+                                                                  return provider.lineupsModel.home.players.outField[index].events[indexx].type == 'goal'
+                                                                      ? Row(
+                                                                    mainAxisAlignment: MainAxisAlignment.end,
+                                                                    children: [
+                                                                      Container(
+                                                                          width: 10,
+                                                                          child: Icon(
+                                                                            MdiIcons.soccer,
+                                                                            size: 20,
+                                                                            color: Colors.white,
+                                                                          )),
+                                                                    ],
+                                                                  )
+                                                                      : Container();
+                                                                }),
+                                                          )),
+                                                      Positioned(
+                                                          bottom: 35,
+                                                          left: 25,
+                                                          child:
+                                                          Container(
+                                                            width: 16,
+                                                            height: 23,
+                                                            child: ListView
+                                                                .builder(
+                                                                physics:
+                                                                NeverScrollableScrollPhysics(),
+                                                                itemCount: provider.lineupsModel.home.players.outField[index].events == null
+                                                                    ? 0
+                                                                    : provider.lineupsModel.home.players.outField[index].events.length,
+                                                                itemBuilder: (context, indexx) {
+                                                                  return provider.lineupsModel.home.players.outField[index].events[indexx].type != 'yellowCard'
+                                                                      ? Column(
+                                                                    children: [
+                                                                      Container(
+                                                                        width: 16,
+                                                                        height: 23,
+                                                                        decoration: BoxDecoration(color: Colors.yellow, borderRadius: BorderRadius.circular(4)),
+                                                                      ),
+                                                                    ],
+                                                                  )
+                                                                      : Container();
+                                                                }),
+                                                          )),
                                                       Positioned(
                                                         bottom: 0,
                                                         right: 0,
@@ -836,7 +767,7 @@ class _LineupState extends State<Lineup> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 90,
+                                  width: 70,
                                 ),
                                 Expanded(
                                   child: Column(
@@ -852,216 +783,164 @@ class _LineupState extends State<Lineup> {
                                               (BuildContext context, index) {
                                             return InkWell(
                                               onTap: () => {
-                                                eachMatchViewModel
-                                                    .getPlayerInfo(
-                                                        widget.matchID,
-                                                        provider
-                                                            .lineupsModel
-                                                            .home
-                                                            .players
-                                                            .outField[index]
-                                                            .id)
+                                                eachMatchViewModel.getPlayerInfo(widget.matchID, provider.lineupsModel.away.players.outField[index].id)
                                                     .then((value) => {
                                                           if (value != null)
-                                                            showPlayerInfo(
-                                                                context, value)
+                                                            showPlayerInfo(context, value,provider.msnModel.awayTeamLogo)
                                                         })
                                               },
                                               child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10.0),
+                                                padding: const EdgeInsets.all(10.0),
                                                 child: Container(
                                                   height: 115,
                                                   child: Stack(
                                                     children: <Widget>[
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                right: 10),
-                                                        child: Stack(
-                                                          children: [
-                                                            Container(
-                                                              width: 88,
-                                                              height: 100,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                borderRadius: BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            100)),
-                                                              ),
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        left:
-                                                                            12,
-                                                                        right:
-                                                                            12,
-                                                                        top: 25,
-                                                                        bottom:
-                                                                            25),
-                                                                child:
-                                                                    ClipRRect(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .all(
-                                                                    Radius
-                                                                        .circular(
-                                                                            100),
-                                                                  ),
-                                                                  child: Image
-                                                                      .network(
-                                                                          "https://www.eplworld.com${provider.lineupsModel.away.players.outField[index].img}"),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Positioned(
-                                                                top: 0,
-                                                                left: 0,
-                                                                child:
-                                                                    Container(
-                                                                  width: 40,
-                                                                  height: 50,
-                                                                  child: ListView
-                                                                      .builder(
-                                                                    physics:
-                                                                        NeverScrollableScrollPhysics(),
-                                                                    itemCount: provider.lineupsModel.away.players.outField[index].events ==
-                                                                            null
-                                                                        ? 0
-                                                                        : provider
-                                                                            .lineupsModel
-                                                                            .away
-                                                                            .players
-                                                                            .outField[index]
-                                                                            .events
-                                                                            .length,
-                                                                    itemBuilder:
-                                                                        (context,
-                                                                            indexx) {
-                                                                      return provider.lineupsModel.away.players.outField[index].events[indexx].type ==
-                                                                              'substitute'
-                                                                          ? Column(
-                                                                              children: [
-                                                                                Text(
-                                                                                  provider.lineupsModel.away.players.outField[index].events[indexx].time.toString(),
-                                                                                  style: TextStyle(fontFamily: 'Vazirmatn', color: Colors.green),
-                                                                                ),
-                                                                                Container(
-                                                                                  decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(8)),
-                                                                                  child: Padding(
-                                                                                    padding: const EdgeInsets.only(left: 3, right: 3),
-                                                                                    child: Icon(
-                                                                                      Icons.arrow_right_alt_outlined,
-                                                                                      color: Colors.white,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ],
-                                                                            )
-                                                                          : Container();
-                                                                    },
-                                                                  ),
-                                                                )),
-                                                            provider
-                                                                        .lineupsModel
-                                                                        .away
-                                                                        .players
-                                                                        .outField[
-                                                                            index]
-                                                                        .rating !=
-                                                                    null
-                                                                ? Positioned(
-                                                                    top: 15,
-                                                                    right: 0,
-                                                                    child:
-                                                                        Container(
-                                                                      width: 33,
-                                                                      height:
-                                                                          23,
-                                                                      child:
-                                                                          Column(
-                                                                        children: [
-                                                                          Container(
-                                                                            width:
-                                                                                33,
-                                                                            height:
-                                                                                23,
-                                                                            decoration:
-                                                                                BoxDecoration(color: Colors.orange, borderRadius: BorderRadius.circular(8)),
-                                                                            child:
-                                                                                Padding(
-                                                                              padding: const EdgeInsets.only(left: 3, right: 3),
-                                                                              child: Center(child: Text(provider.lineupsModel.away.players.outField[index].rating, style: TextStyle(fontFamily: 'Vazirmatn', color: Colors.white))),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ))
-                                                                : Container(
-                                                                    width: 33,
-                                                                    height: 23,
-                                                                  ),
-                                                            Positioned(
-                                                                bottom: 15,
-                                                                right: 0,
-                                                                child:
-                                                                    Container(
-                                                                  width: 25,
-                                                                  height: 25,
-                                                                  child: ListView
-                                                                      .builder(
-                                                                          physics:
-                                                                              NeverScrollableScrollPhysics(),
-                                                                          itemCount: provider.lineupsModel.away.players.outField[index].events == null
-                                                                              ? 0
-                                                                              : provider.lineupsModel.away.players.outField[index].events.length,
-                                                                          itemBuilder: (context, indexx) {
-                                                                            return provider.lineupsModel.away.players.outField[index].events[indexx].type == 'goal'
-                                                                                ? Column(
-                                                                                    children: [
-                                                                                      Padding(
-                                                                                        padding: const EdgeInsets.only(left: 3, right: 3),
-                                                                                        child: Center(child: Icon(MdiIcons.soccer)),
-                                                                                      ),
-                                                                                    ],
-                                                                                  )
-                                                                                : Container();
-                                                                          }),
-                                                                )),
-                                                            Positioned(
-                                                                bottom: 17,
-                                                                left: 15,
-                                                                child:
-                                                                    Container(
-                                                                  width: 16,
-                                                                  height: 23,
-                                                                  child: ListView
-                                                                      .builder(
-                                                                          physics:
-                                                                              NeverScrollableScrollPhysics(),
-                                                                          itemCount: provider.lineupsModel.away.players.outField[index].events == null
-                                                                              ? 0
-                                                                              : provider.lineupsModel.away.players.outField[index].events.length,
-                                                                          itemBuilder: (context, indexx) {
-                                                                            return provider.lineupsModel.away.players.outField[index].events[indexx].type == 'yellowCard'
-                                                                                ? Column(
-                                                                                    children: [
-                                                                                      Container(
-                                                                                        width: 16,
-                                                                                        height: 23,
-                                                                                        decoration: BoxDecoration(color: Colors.yellow, borderRadius: BorderRadius.circular(4)),
-                                                                                      ),
-                                                                                    ],
-                                                                                  )
-                                                                                : Container();
-                                                                          }),
-                                                                ))
-                                                          ],
+                                                      Positioned(
+                                                        top: 20,
+                                                        right: 30,
+                                                        child: Container(
+                                                          width: 50,
+                                                          height: 50,
+                                                          decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                                                          ),
+                                                          child: ClipRRect(borderRadius: BorderRadius.all(
+                                                            Radius.circular(50),
+                                                          ),
+                                                            child: Image.network(
+                                                              "https://www.eplworld.com${provider.lineupsModel.away.players.outField[index].img}",height: 20,width: 20,),
+                                                          ),
                                                         ),
                                                       ),
+                                                      Positioned(
+                                                          top: 0,
+                                                          left: 10,
+                                                          child:
+                                                          Container(
+                                                            width: 40,
+                                                            height: 50,
+                                                            child: ListView.builder(
+                                                              physics: NeverScrollableScrollPhysics(),
+                                                              itemCount: provider.lineupsModel.away.players.outField[index].events == null
+                                                                  ? 0
+                                                                  : provider.lineupsModel.away.players.outField[index].events.length,
+                                                              itemBuilder: (context, indexx) {
+                                                                return provider.lineupsModel.away.players.outField[index].events[indexx].type ==
+                                                                    'substitute'
+                                                                    ? Column(
+                                                                  children: [
+                                                                    Text(
+                                                                      provider.lineupsModel.away.players.outField[index].events[indexx].time.toString(),
+                                                                      style: TextStyle(fontFamily: 'Vazirmatn', color: Colors.green),
+                                                                    ),
+                                                                    Container(
+                                                                      height: 20,
+                                                                      decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(6)),
+                                                                      child: Padding(
+                                                                        padding: const EdgeInsets.only(left: 4, right: 4),
+                                                                        child: Icon(
+                                                                          Icons.arrow_right_alt_outlined,
+                                                                          color: Colors.white,
+                                                                          size: 20,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                )
+                                                                    : Container();
+                                                              },
+                                                            ),
+                                                          )),
+                                                      provider.lineupsModel.away.players.outField[index].rating != null
+                                                          ? Positioned(
+                                                          top: 15,
+                                                          left: 20,
+                                                          child:
+                                                          Container(
+                                                            width: 33,
+                                                            height:
+                                                            23,
+                                                            child:
+                                                            Column(
+                                                              children: [
+                                                                Container(
+                                                                  width:
+                                                                  33,
+                                                                  height:
+                                                                  23,
+                                                                  decoration:
+                                                                  BoxDecoration(color: Colors.orange, borderRadius: BorderRadius.circular(8)),
+                                                                  child:
+                                                                  Padding(
+                                                                    padding: const EdgeInsets.only(left: 3, right: 3),
+                                                                    child: Center(child: Text(provider.lineupsModel.away.players.outField[index].rating, style: TextStyle(fontFamily: 'Vazirmatn', color: Colors.white))),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ))
+                                                          : Container(
+                                                        width: 33,
+                                                        height: 23,
+                                                      ),
+                                                      Positioned(
+                                                          bottom: 35,
+                                                          right:15,
+                                                          child:
+                                                          Container(
+                                                            width: 60,
+                                                            height: 25,
+                                                            child: ListView.builder(
+                                                                scrollDirection: Axis.horizontal,
+                                                                physics: NeverScrollableScrollPhysics(),
+                                                                itemCount: provider.lineupsModel.away.players.outField[index].events == null
+                                                                    ? 0
+                                                                    : provider.lineupsModel.away.players.outField[index].events.length,
+                                                                itemBuilder: (context, indexx) {
+                                                                  return provider.lineupsModel.away.players.outField[index].events[indexx].type == 'goal'
+                                                                      ? Row(
+                                                                    mainAxisAlignment: MainAxisAlignment.end,
+                                                                    children: [
+                                                                      Container(
+                                                                          width: 10,
+                                                                          child: Icon(
+                                                                            MdiIcons.soccer,
+                                                                            size: 20,
+                                                                            color: Colors.white,
+                                                                          )),
+                                                                    ],
+                                                                  )
+                                                                      : Container();
+                                                                }),
+                                                          )),
+                                                      Positioned(
+                                                          bottom: 35,
+                                                          left: 25,
+                                                          child:
+                                                          Container(
+                                                            width: 16,
+                                                            height: 23,
+                                                            child: ListView
+                                                                .builder(
+                                                                physics:
+                                                                NeverScrollableScrollPhysics(),
+                                                                itemCount: provider.lineupsModel.away.players.outField[index].events == null
+                                                                    ? 0
+                                                                    : provider.lineupsModel.away.players.outField[index].events.length,
+                                                                itemBuilder: (context, indexx) {
+                                                                  return provider.lineupsModel.away.players.outField[index].events[indexx].type != 'yellowCard'
+                                                                      ? Column(
+                                                                    children: [
+                                                                      Container(
+                                                                        width: 16,
+                                                                        height: 23,
+                                                                        decoration: BoxDecoration(color: Colors.yellow, borderRadius: BorderRadius.circular(4)),
+                                                                      ),
+                                                                    ],
+                                                                  )
+                                                                      : Container();
+                                                                }),
+                                                          )),
                                                       Positioned(
                                                         bottom: 0,
                                                         right: 0,
@@ -1070,41 +949,43 @@ class _LineupState extends State<Lineup> {
                                                             child: Center(
                                                               child: Column(
                                                                 mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
+                                                                MainAxisAlignment
+                                                                    .center,
                                                                 crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .center,
+                                                                CrossAxisAlignment
+                                                                    .center,
                                                                 children: <
                                                                     Widget>[
-                                                                  Text(
-                                                                    provider
-                                                                        .lineupsModel
-                                                                        .away
-                                                                        .players
-                                                                        .outField[
-                                                                            index]
-                                                                        .number
-                                                                        .toString(),
-                                                                    style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                  Center(
+                                                                    child: Text(
+                                                                      provider
+                                                                          .lineupsModel
+                                                                          .away
+                                                                          .players
+                                                                          .outField[
+                                                                      index]
+                                                                          .number
+                                                                          .toString(),
+                                                                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                    ),
                                                                   ),
-                                                                  Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      Text(
-                                                                        provider
-                                                                            .lineupsModel
-                                                                            .away
-                                                                            .players
-                                                                            .outField[index]
-                                                                            .name,
-                                                                        style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
-                                                                        overflow:
-                                                                            TextOverflow.visible,
-                                                                      ),
-                                                                    ],
+                                                                  FittedBox(
+                                                                    child: Row(
+                                                                      mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                      children: [
+                                                                        Center(
+                                                                          child:
+                                                                          Text(
+                                                                            provider.lineupsModel.away.players.outField[index].name,
+                                                                            style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                            overflow:
+                                                                            TextOverflow.clip,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
                                                                   ),
                                                                 ],
                                                               ),
@@ -1118,6 +999,9 @@ class _LineupState extends State<Lineup> {
                                           }),
                                     ],
                                   ),
+                                ),
+                                SizedBox(
+                                  width: 25,
                                 ),
                               ],
                             ),
@@ -1326,11 +1210,11 @@ class _LineupState extends State<Lineup> {
   }
 }
 
-List<Widget> GoalKeeper(String matchId, type) {
+List<Widget> GoalKeeper( EachMatchViewModel provider,String matchId, type) {
   List<Widget> test = [];
   type == 'away'
-      ? test.add(PlayerAway(matchId, 0))
-      : test.add(PlayerHome(matchId, 0));
+      ? test.add(PlayerAway(matchId, 0,provider.msnModel.awayTeamLogo))
+      : test.add(PlayerHome(matchId, 0,provider.msnModel.homeTeamLogo));
   return test;
 }
 
@@ -1339,12 +1223,12 @@ List<Widget> Defender(String matchId, EachMatchViewModel provider, type) {
   if (type == "away") {
     int no = int.parse(provider.lineupsModel.away.formation.split('-').first);
     for (int i = 1; i <= no; i++) {
-      test.add(PlayerAway(matchId, i));
+      test.add(PlayerAway(matchId, i,provider.msnModel.awayTeamLogo));
     }
   } else {
     int no = int.parse(provider.lineupsModel.home.formation.split('-').first);
     for (int i = 1; i <= no; i++) {
-      test.add(PlayerHome(matchId, i));
+      test.add(PlayerHome(matchId, i,provider.msnModel.homeTeamLogo));
     }
   }
 
@@ -1358,14 +1242,14 @@ List<Widget> CenterPlayer(String matchId, EachMatchViewModel provider, type) {
         int.parse(provider.lineupsModel.away.formation.split('-').first);
     int no = int.parse(provider.lineupsModel.away.formation.split('-')[1]);
     for (int i = start + 1; i <= no + start; i++) {
-      test.add(PlayerAway(matchId, i));
+      test.add(PlayerAway(matchId, i,provider.msnModel.awayTeamLogo));
     }
   } else {
     int start =
         int.parse(provider.lineupsModel.home.formation.split('-').first);
     int no = int.parse(provider.lineupsModel.home.formation.split('-')[1]);
     for (int i = start + 1; i <= no + start; i++) {
-      test.add(PlayerHome(matchId, i));
+      test.add(PlayerHome(matchId, i,provider.msnModel.homeTeamLogo));
     }
   }
   return test;
@@ -1379,7 +1263,7 @@ List<Widget> Attack(String matchId, EachMatchViewModel provider, type) {
     int middle = int.parse(provider.lineupsModel.away.formation.split('-')[1]);
     int no = int.parse(provider.lineupsModel.away.formation.split('-')[2]);
     for (int i = start + middle + 1; i <= no + middle + start; i++) {
-      test.add(PlayerAway(matchId, i));
+      test.add(PlayerAway(matchId, i,provider.msnModel.awayTeamLogo));
     }
   } else {
     int start =
@@ -1387,7 +1271,7 @@ List<Widget> Attack(String matchId, EachMatchViewModel provider, type) {
     int middle = int.parse(provider.lineupsModel.home.formation.split('-')[1]);
     int no = int.parse(provider.lineupsModel.home.formation.split('-')[2]);
     for (int i = start + middle + 1; i <= no + middle + start; i++) {
-      test.add(PlayerHome(matchId, i));
+      test.add(PlayerHome(matchId, i,provider.msnModel.homeTeamLogo));
     }
   }
 
@@ -1405,7 +1289,7 @@ List<Widget> AttackStricker(String matchId, EachMatchViewModel provider, type) {
     for (int i = start + middle + middle2 + 1;
         i <= no + middle + middle2 + start;
         i++) {
-      test.add(PlayerAway(matchId, i));
+      test.add(PlayerAway(matchId, i,provider.msnModel.awayTeamLogo));
     }
   } else {
     int start =
@@ -1416,22 +1300,22 @@ List<Widget> AttackStricker(String matchId, EachMatchViewModel provider, type) {
     for (int i = start + middle + middle2 + 1;
         i <= no + middle + middle2 + start;
         i++) {
-      test.add(PlayerHome(matchId, i));
+      test.add(PlayerHome(matchId, i,provider.msnModel.homeTeamLogo));
     }
   }
 
   return test;
 }
 
-Widget PlayerHome(String matchId, index) {
+Widget PlayerHome(String matchId, index,teamImage) {
   return Consumer<EachMatchViewModel>(builder: (context, provider, child) {
     return InkWell(
       onTap: () => {
-        provider
-            .getPlayerInfo(
-                matchId, provider.lineupsModel.away.players.inField[index].id)
-            .then(
-                (value) => {if (value != null) showPlayerInfo(context, value)})
+        provider.getPlayerInfo(matchId, provider.lineupsModel.home.players.inField[index].id).then((value){
+           showPlayerInfo(context,value,teamImage);
+        }),
+
+            //.then((value) => {if (value != null) showPlayerInfo(context, value,teamImage)})
       },
       child: Container(
         decoration: BoxDecoration(
@@ -1440,14 +1324,14 @@ Widget PlayerHome(String matchId, index) {
         height: provider.lineupsModel.home.formation.split('-').length == 3
             ? 110
             : 90,
-        width: 82,
+        width: 100,
         child: Stack(
           children: <Widget>[
             Stack(
               children: [
                 Container(
-                  width: 92,
-                  height: 92,
+                  width: 95,
+                  height: 95,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(50)),
                   ),
@@ -1615,12 +1499,12 @@ Widget PlayerHome(String matchId, index) {
               ],
             ),
             Positioned(
-              top: 60,
+              top: 62,
               left: 0,
               right: 5,
               child: Container(
-                  height: 55,
-                  width: 100,
+                  height: 40,
+                  width: 115,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -1632,12 +1516,12 @@ Widget PlayerHome(String matchId, index) {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Expanded(
+                              FittedBox(
                                 child: Text(
                                   "${provider.lineupsModel.home.players.inField[index].number} ",
                                   style: TextStyle(
                                       fontFamily: 'Vazirmatn',
-                                      color: Colors.white),
+                                      color: Colors.white,fontSize: 13),
                                 ),
                               ),
                             ],
@@ -1649,15 +1533,15 @@ Widget PlayerHome(String matchId, index) {
                           height: 40,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Expanded(
+                              FittedBox(
                                 child: Text(
                                     "${provider.lineupsModel.home.players.inField[index].name} ",
                                     style: TextStyle(
                                         fontFamily: 'Vazirmatn',
                                         color: Colors.white,
-                                        fontSize: 13.5),
+                                        fontSize: 13,height: 1.1),
                                     overflow: TextOverflow.visible),
                               ),
                             ],
@@ -1674,31 +1558,28 @@ Widget PlayerHome(String matchId, index) {
   });
 }
 
-Widget PlayerAway(matchId, index) {
+Widget PlayerAway(matchId, index,teamImage) {
   return Consumer<EachMatchViewModel>(builder: (context, provider, child) {
     return InkWell(
       onTap: () => {
-        provider
-            .getPlayerInfo(
-                matchId, provider.lineupsModel.away.players.inField[index].id)
-            .then(
-                (value) => {if (value != null) showPlayerInfo(context, value)})
+        provider.getPlayerInfo(matchId, provider.lineupsModel.away.players.inField[index].id)
+            .then((value) => {if (value != null) showPlayerInfo(context, value,teamImage)})
       },
-      child: Container(
+      child:  Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(30)),
         ),
         height: provider.lineupsModel.away.formation.split('-').length == 3
             ? 110
             : 90,
-        width: 82,
+        width: 100,
         child: Stack(
           children: <Widget>[
             Stack(
               children: [
                 Container(
-                  width: 92,
-                  height: 92,
+                  width: 95,
+                  height: 95,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(50)),
                   ),
@@ -1727,78 +1608,78 @@ Widget PlayerAway(matchId, index) {
                       child: ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: provider.lineupsModel.away.players
-                                    .inField[index].events ==
-                                null
+                            .inField[index].events ==
+                            null
                             ? 0
                             : provider.lineupsModel.away.players.inField[index]
-                                .events.length,
+                            .events.length,
                         itemBuilder: (context, indexx) {
                           return provider.lineupsModel.away.players
-                                      .inField[index].events[indexx].type ==
-                                  'substitute'
+                              .inField[index].events[indexx].type ==
+                              'substitute'
                               ? Column(
-                                  children: [
-                                    Text(
-                                      provider.lineupsModel.away.players
-                                          .inField[index].events[indexx].time
-                                          .toString(),
-                                      style: TextStyle(
-                                          fontFamily: 'Vazirmatn',
-                                          color: Colors.white),
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.red,
-                                          borderRadius:
-                                              BorderRadius.circular(4)),
-                                      child: Center(
-                                          child: Icon(
-                                        Icons.arrow_forward,
-                                        color: Colors.white,
-                                        size: 20,
-                                      )),
-                                    ),
-                                  ],
-                                )
+                            children: [
+                              Text(
+                                provider.lineupsModel.away.players
+                                    .inField[index].events[indexx].time
+                                    .toString(),
+                                style: TextStyle(
+                                    fontFamily: 'Vazirmatn',
+                                    color: Colors.white),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius:
+                                    BorderRadius.circular(4)),
+                                child: Center(
+                                    child: Icon(
+                                      Icons.arrow_forward,
+                                      color: Colors.white,
+                                      size: 20,
+                                    )),
+                              ),
+                            ],
+                          )
                               : Container();
                         },
                       ),
                     )),
                 provider.lineupsModel.away.players.inField[index].rating
-                        .isNotEmpty
+                    .isNotEmpty
                     ? Positioned(
-                        top: 20,
-                        right: 2,
-                        child: Container(
-                          width: 33,
-                          height: 23,
-                          child: Column(
-                            children: [
-                              Container(
-                                width: 30,
-                                height: 20,
-                                decoration: BoxDecoration(
-                                    color: Colors.orange,
-                                    borderRadius: BorderRadius.circular(4)),
-                                child: Center(
-                                    child: Text(
-                                        provider.lineupsModel.away.players
-                                            .inField[index].rating,
-                                        style: TextStyle(
-                                            fontFamily: 'Vazirmatn',
-                                            color: Colors.white,
-                                            fontSize: 12))),
-                              ),
-                            ],
+                    top: 20,
+                    right: 2,
+                    child: Container(
+                      width: 33,
+                      height: 23,
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 30,
+                            height: 20,
+                            decoration: BoxDecoration(
+                                color: Colors.orange,
+                                borderRadius: BorderRadius.circular(4)),
+                            child: Center(
+                                child: Text(
+                                    provider.lineupsModel.away.players
+                                        .inField[index].rating,
+                                    style: TextStyle(
+                                        fontFamily: 'Vazirmatn',
+                                        color: Colors.white,
+                                        fontSize: 12))),
                           ),
-                        ))
-                    : Container(
-                        width: 33,
-                        height: 23,
+                        ],
                       ),
+                    ))
+                    : Container(
+                  width: 33,
+                  height: 23,
+                ),
                 Positioned(
                     bottom: 18,
-                    right: 48,
+                    right: 52,
                     child: Container(
                       width: 40,
                       height: 25,
@@ -1806,27 +1687,27 @@ Widget PlayerAway(matchId, index) {
                           scrollDirection: Axis.horizontal,
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: provider.lineupsModel.away.players
-                                      .inField[index].events ==
-                                  null
+                              .inField[index].events ==
+                              null
                               ? 0
                               : provider.lineupsModel.away.players
-                                  .inField[index].events.length,
+                              .inField[index].events.length,
                           itemBuilder: (context, indexx) {
                             return provider.lineupsModel.away.players
-                                        .inField[index].events[indexx].type ==
-                                    'goal'
+                                .inField[index].events[indexx].type ==
+                                'goal'
                                 ? Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Container(
-                                          width: 10,
-                                          child: Icon(
-                                            MdiIcons.soccer,
-                                            size: 20,
-                                            color: Colors.white,
-                                          )),
-                                    ],
-                                  )
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Container(
+                                    width: 10,
+                                    child: Icon(
+                                      MdiIcons.soccer,
+                                      size: 20,
+                                      color: Colors.white,
+                                    )),
+                              ],
+                            )
                                 : Container();
                           }),
                     )),
@@ -1839,39 +1720,39 @@ Widget PlayerAway(matchId, index) {
                       child: ListView.builder(
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: provider.lineupsModel.away.players
-                                      .inField[index].events ==
-                                  null
+                              .inField[index].events ==
+                              null
                               ? 0
                               : provider.lineupsModel.away.players
-                                  .inField[index].events.length,
+                              .inField[index].events.length,
                           itemBuilder: (context, indexx) {
                             return provider.lineupsModel.away.players
-                                        .inField[index].events[indexx].type ==
-                                    'yellowCard'
+                                .inField[index].events[indexx].type ==
+                                'yellowCard'
                                 ? Column(
-                                    children: [
-                                      Container(
-                                        width: 13,
-                                        height: 18,
-                                        decoration: BoxDecoration(
-                                            color: Colors.yellow,
-                                            borderRadius:
-                                                BorderRadius.circular(2)),
-                                      ),
-                                    ],
-                                  )
+                              children: [
+                                Container(
+                                  width: 13,
+                                  height: 18,
+                                  decoration: BoxDecoration(
+                                      color: Colors.yellow,
+                                      borderRadius:
+                                      BorderRadius.circular(2)),
+                                ),
+                              ],
+                            )
                                 : Container();
                           }),
                     ))
               ],
             ),
             Positioned(
-              top: 60,
+              top: 62,
               left: 0,
               right: 5,
               child: Container(
-                  height: 55,
-                  width: 100,
+                  height: 40,
+                  width: 115,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -1883,12 +1764,12 @@ Widget PlayerAway(matchId, index) {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Expanded(
+                              FittedBox(
                                 child: Text(
                                   "${provider.lineupsModel.away.players.inField[index].number} ",
                                   style: TextStyle(
                                       fontFamily: 'Vazirmatn',
-                                      color: Colors.white),
+                                      color: Colors.white,fontSize: 13),
                                 ),
                               ),
                             ],
@@ -1900,15 +1781,15 @@ Widget PlayerAway(matchId, index) {
                           height: 40,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Expanded(
+                              FittedBox(
                                 child: Text(
                                     "${provider.lineupsModel.away.players.inField[index].name} ",
                                     style: TextStyle(
                                         fontFamily: 'Vazirmatn',
                                         color: Colors.white,
-                                        fontSize: 13.5),
+                                        fontSize: 13,height: 1.1),
                                     overflow: TextOverflow.visible),
                               ),
                             ],

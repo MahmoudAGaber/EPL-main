@@ -86,6 +86,7 @@ class _clanderbarState extends State<clanderbar> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: new Scaffold(
+
           appBar: AppBar(
             iconTheme: IconThemeData(color: Colors.white),
             backgroundColor: Theme.of(context).primaryColor,
@@ -94,6 +95,7 @@ class _clanderbarState extends State<clanderbar> {
               style: TextStyle(fontFamily: 'Vazirmatn', color: Colors.white,fontSize: 20),
             ),
           ),
+
           body: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

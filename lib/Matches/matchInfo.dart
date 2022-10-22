@@ -529,7 +529,7 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
   Widget matchHTHName() {
     return Tab(
       child: Text(
-        "المواجة ".tr,
+        "المواجهة ".tr,
         style: tapbar,
       ),
     );

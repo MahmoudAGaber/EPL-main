@@ -46,6 +46,7 @@ class EachTeamViewModel with ChangeNotifier{
   List<PlayersModel> playersModelList;
   List<RecentMatchesBox> recentMatcheBox;
   List<RecentMatches> recentMatche;
+  List<MatchInBoxModel> lastMatch;
   SquadsModel squadsModel;
   List<TrophiesBoxes> trophiesBoxesModelList;
   MatchInBoxModel newtGame;
@@ -79,9 +80,14 @@ class EachTeamViewModel with ChangeNotifier{
       msg = responseModel.msg;
       statsModel = StatsModel.json(responseModel.data.stats);
       recentMatcheBox = RecentMatchesBox.toList(modifidedResponse);
+      getLastMatch();
       newsModelList = NewsModel.listFromJson(responseModel.data.newsBoxes);
       tablesModelList = MainTables.listfromJson(responseModel.data.tables);
       headerProfileModel = HeaderProfileModel.json(responseModel.data.headerProfile);
+
+
+
+
 
 
 
@@ -285,4 +291,17 @@ class EachTeamViewModel with ChangeNotifier{
     loadingOneLeague = false;
     notifyListeners();
   }
+
+  void getLastMatch(){
+    List<MatchInBoxModel> matchInBox=[];
+      for(int i=0; i<recentMatcheBox.length; i++){
+        for(int j=0; j<recentMatcheBox[i].matchInBoxModel.length; j++){
+          if(recentMatcheBox[i].matchInBoxModel[j].status=='Played') {
+            matchInBox.add(recentMatcheBox[i].matchInBoxModel[j]);
+          }
+        }
+      }
+      lastMatch = matchInBox;
+
+    }
 }

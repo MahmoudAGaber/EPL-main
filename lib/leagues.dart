@@ -187,8 +187,7 @@ class _LeaguesState extends State<Leagues> with SingleTickerProviderStateMixin {
                                             padding: const EdgeInsets.all(10.0),
                                             child: GestureDetector(
                                               onTap: () {
-                                                if (widget.tag ==
-                                                    'البطولات') {
+                                                if (widget.tag == 'الفرق') {
                                                   Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
@@ -202,7 +201,7 @@ class _LeaguesState extends State<Leagues> with SingleTickerProviderStateMixin {
                                                                     .teamBasicDataModel
                                                                     .url,
                                                               ))));
-                                                } else {
+                                                } else if(widget.tag == 'البطولات') {
                                                   Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
@@ -334,8 +333,7 @@ class _LeaguesState extends State<Leagues> with SingleTickerProviderStateMixin {
                                                               create: (_) =>
                                                                   EachLeagueViewModel(),
                                                               child: EachLeague(
-                                                                  url: teamBasicDataModel
-                                                                      .url))));
+                                                                  url: teamBasicDataModel.url))));
                                                 }
                                               },
                                               child: Card(

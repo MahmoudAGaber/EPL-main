@@ -18,7 +18,10 @@ class EachPlayer extends StatefulWidget {
 
 class _EachPlayerState extends State<EachPlayer> with TickerProviderStateMixin {
   static const TextStyle tapbar = TextStyle(
-      fontFamily: 'Vazirmatn', fontSize: 14, fontWeight: FontWeight.w500);
+      fontFamily: 'Vazirmatn',
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      color: Colors.white);
   TextStyle head = TextStyle(
     fontFamily: 'Vazirmatn',
     fontSize: 16,
@@ -122,9 +125,7 @@ class _EachPlayerState extends State<EachPlayer> with TickerProviderStateMixin {
                                         child: ClipRRect(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(100)),
-                                            child: provider
-                                                        .headerProfileModel ==
-                                                    null
+                                            child: provider.headerProfileModel == null
                                                 ? CircularProgressIndicator()
                                                 : Image.network(
                                                     "https://www.eplworld.com${provider.headerProfileModel.logo}",
@@ -198,14 +199,15 @@ class _EachPlayerState extends State<EachPlayer> with TickerProviderStateMixin {
                     height: 60,
                     color: Theme.of(context).backgroundColor,
                     child: TabBar(
-                    isScrollable: true,
-                    controller: tabController,
-                    onTap: (index) {
-                      setState(() {
-                        if (index == 1) {}
-                      });
-                    },
-                    indicatorColor: Colors.deepPurple,
+                        indicatorColor: Colors.white,
+                        labelColor: Theme.of(context).primaryColor,
+                        isScrollable: true,
+                        controller: tabController,
+                        onTap: (index) {
+                          setState(() {
+                            if (index == 1) {}
+                          });
+                          },
                     tabs: [
                       Tab(
                         child: Text(

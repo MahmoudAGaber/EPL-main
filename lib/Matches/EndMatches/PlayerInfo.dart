@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../Provider/EachPlayerViewModel.dart';
 
-void showPlayerInfo(BuildContext context, PlayerInf playerInf) {
+ Route<Object> showPlayerInfo(BuildContext context, PlayerInf playerInf,String teamImage) {
   showGeneralDialog(
     context: context,
     barrierLabel: "Barrier",
@@ -21,7 +21,7 @@ void showPlayerInfo(BuildContext context, PlayerInf playerInf) {
         body: Center(
           child: Container(
               margin: EdgeInsets.all(20),
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.surface,
               child: ListView(
                 physics: ClampingScrollPhysics(),
                 shrinkWrap: true,
@@ -32,8 +32,8 @@ void showPlayerInfo(BuildContext context, PlayerInf playerInf) {
                     children: [
                       ListTile(
                           leading: Container(
-                            width: 45,
-                            height: 45,
+                            width: 48,
+                            height: 48,
                             decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(100)),
@@ -47,14 +47,11 @@ void showPlayerInfo(BuildContext context, PlayerInf playerInf) {
                                   "https://www.eplworld.com${playerInf.image}"),
                             ),
                           ),
-                          title: Text(
-                              playerInf.firstName + " " + playerInf.lastName),
-                          subtitle: Text(playerInf.position == null
-                              ? ""
-                              : playerInf.position),
+                          title: Text(playerInf.firstName + " " + playerInf.lastName),
+                          subtitle: Text(playerInf.position == null ? "" : playerInf.position),
                           trailing: InkWell(
                               onTap: () => {Navigator.pop(context)},
-                              child: Icon(Icons.close)))
+                              child: Icon(Icons.close,color: Theme.of(context).colorScheme.secondary,)))
 
                       // Row(
                       //   mainAxisSize: MainAxisSize.max,
@@ -91,13 +88,11 @@ void showPlayerInfo(BuildContext context, PlayerInf playerInf) {
                             children: [
                               Container(
                                 margin: EdgeInsets.only(
-                                    left: 20, right: 20, top: 10),
+                                    left: 20, right: 20, top: 10,bottom: 10),
                                 alignment: Alignment.centerRight,
                                 child: Text(playerInf.statAPI[index].title,
-                                    style: TextStyle(
-                                        fontFamily: 'Vazirmatn',
-                                        fontSize: 20,
-                                        color: Colors.black)),
+                                    style: Theme.of(context).textTheme.headline2.copyWith(fontSize: 16)
+                                ),
                               ),
                               ListView.builder(
                                 itemCount: playerInf.statAPI[index].attr.length,
@@ -112,16 +107,17 @@ void showPlayerInfo(BuildContext context, PlayerInf playerInf) {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          playerInf
-                                              .statAPI[index].attr[index2].key,
+                                          playerInf.statAPI[index].attr[index2].key,
+                                          style: Theme.of(context).textTheme.bodyText1,
                                         ),
-                                        Text(playerInf
-                                            .statAPI[index].attr[index2].value)
+                                        Text(playerInf.statAPI[index].attr[index2].value,
+                                        style: Theme.of(context).textTheme.bodyText1,)
                                       ],
                                     ),
                                   );
                                 },
                               ),
+                              SizedBox(height: 5,),
                               Container(
                                 height: 1,
                                 color: Colors.black12,
@@ -140,15 +136,15 @@ void showPlayerInfo(BuildContext context, PlayerInf playerInf) {
                                         create: (_) => EachplayerViewModel(),
                                         child: EachPlayer(
                                           url: playerInf.url,
-                                          teamImg: playerInf.image,
+                                          teamImg: teamImage,
                                         ),
                                       )))
                         },
                         child: Container(
                           alignment: Alignment.center,
-                          height: 30,
+                          height: 40,
                           color: Colors.black12,
-                          child: Text('تفاصيل اللاعب'),
+                          child: Text('تفاصيل اللاعب',style: Theme.of(context).textTheme.headline2,),
                         ),
                       )
                     ],

@@ -148,7 +148,7 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
                     GestureDetector(
                       onTap: (){
                        showDialog(context: context, builder: (context) => Dialog(
-                          insetPadding: EdgeInsets.only(right: 4,left: 4,bottom: 100,top: 12),
+                          insetPadding: EdgeInsets.only(bottom: 180,top: 70),
                          child: clanderbar(),
                        ));
                       },
