@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'lang/LocalizationService.dart';
@@ -19,26 +20,34 @@ TextStyle _textStyle1 = TextStyle(fontFamily: 'Vazirmatn',color: Colors.grey, fo
 
 class _settingState extends State<setting> {
   String _selectedLang = LocalizationService.langs.last;
-  List<String> theme=['فاتح',"غامق"];
-  String selectedTheme = 'فاتح';
+
+  List<String> theme=['فاتح',"داكن"];
+  String selectedTheme;
 
   final _scaffoldkey = new GlobalKey<ScaffoldState>();
   VoidCallback _showpersBottomSheetCallBack;
   DarkThemeProvider darkThemeProvider;
   Future<void> _launched;
 
+  Future<void> getTheme()async{
+    var prefs = await SharedPreferences.getInstance();
+    selectedTheme = 'فاتح';
+    setState(() {
+      selectedTheme = prefs.getString('selected');
+    });
+
+  }
   @override
-  void initState() {
+  void initState(){
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       darkThemeProvider = Provider.of(context,listen: false);
       darkThemeProvider.darkTheme;
+      getTheme();
+
     });
     super.initState();
     _showpersBottomSheetCallBack = _bottomSheet;
   }
-
-
-
 
 
 
@@ -197,18 +206,20 @@ class _settingState extends State<setting> {
                               underline: SizedBox(),
                               icon: Icon(Icons.arrow_drop_down),
                               value: selectedTheme,
-                              items: theme.map((String lang) {
+                              items: theme.map((String them) {
                                 return DropdownMenuItem(
-                                    value: lang, child: Text(lang));
+                                    value: them, child: Text(them));
                               }).toList(),
-                              onChanged: (String value) {
+                              onChanged: (String value) async{
+                                SharedPreferences prefs = await SharedPreferences.getInstance();
+                                await prefs.setString('selected', value);
+                                getTheme();
                                 selectedTheme = value;
-                                if(value=='غامق'){
+                                if(value=='داكن'){
                                   provider.darkTheme=true;
                                 }else{
                                   provider.darkTheme=false;
                                 }
-
 
                               }
                           )

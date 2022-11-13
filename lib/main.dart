@@ -1,6 +1,7 @@
 import 'package:arseli/Provider/EachLeagueViewModel.dart';
 import 'package:arseli/Provider/EachMatchViewModel.dart';
 import 'package:arseli/Provider/LeaguesViewModel.dart';
+import 'package:arseli/Provider/MapProvider.dart';
 import 'package:arseli/Provider/MatchesViewModel.dart';
 import 'package:arseli/Provider/SearchViewModel.dart';
 import 'package:arseli/Provider/TokenViewModel.dart';
@@ -151,24 +152,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Get.put(ConfiguredDio(), permanent: true);
 
-  // InitialBinding().dependencies();
   await Injection.setup();
-
-  // await Firebase.initializeApp();
-  // var token = FirebaseMessaging.instance.getToken();
-  // print(token);
-  // FirebaseMessaging.onMessage.listen((event) {
-  //   print(event.data.toString());
-  // });
-  // FirebaseMessaging.onBackgroundMessage(_firebaseMassgingBackgrundHandler);
-  // await flutterLocalNotificationsPlugin
-  //     .resolvePlatformSpecificImplementation<
-  //         AndroidFlutterLocalNotificationsPlugin>()
-  //     ?.createNotificationChannel(channel);
-
-  // await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-  //     alert: true, badge: true, sound: true);
-
   runApp(
     MultiProvider(
       providers: [
@@ -182,6 +166,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => VideosProvider()),
         ChangeNotifierProvider(create: (_) => TokenViewModel()),
         ChangeNotifierProvider(create: (_) => DarkThemeProvider()),
+        ChangeNotifierProvider(create: (_) => MapProvider()),
       ],
       child: MyApp(),
     ),

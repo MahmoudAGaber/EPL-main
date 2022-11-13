@@ -75,7 +75,7 @@ class _MatchesForTeamState extends State<MatchesForTeam> {
       textDirection: TextDirection.rtl,
       child: Consumer<EachTeamViewModel>(
         builder: (context, provider, child) {
-          return provider.loadingOneLeague
+          return provider.loadingMatches
               ? Padding(
                   padding: EdgeInsets.only(top: 35),
                   child: Center(
@@ -97,13 +97,12 @@ class _MatchesForTeamState extends State<MatchesForTeam> {
                           value:selectedItem,
                           isExpanded: true,
                           menuMaxHeight: 300,
-                          items: provider.dropsTableRows2.map((String value) {
+                          items: provider.dropsTableRows.map((String value) {
                             return DropdownMenuItem<String>(
                               onTap: () {
-                                provider.dropTableRows2List.forEach((element) {
+                                provider.dropTableRowsList.forEach((element) {
                                   if (value == element.text) {
-                                    provider.getAllMatches(widget.url,
-                                        "matches/${element.value}");
+                                    provider.getAllMatches(widget.url,"matches/${element.value}");
                                   }
                                 });
                               },
@@ -145,10 +144,13 @@ class _MatchesForTeamState extends State<MatchesForTeam> {
                                         padding: const EdgeInsets.all(12.0),
                                         child: Row(
                                           children: <Widget>[
+                                            /*
                                             Text(
                                               provider.recentMatcheBox[index].date.tr,
                                               style: content,
                                             )
+
+                                             */
                                           ],
                                         ),
                                       ),
@@ -158,44 +160,17 @@ class _MatchesForTeamState extends State<MatchesForTeam> {
                                               scrollDirection: Axis.vertical,
                                               physics: ClampingScrollPhysics(),
                                               shrinkWrap: true,
-                                              itemCount: provider.recentMatcheBox[index]
-                                                  .matchInBoxModel.length,
-                                              itemBuilder:
-                                                  (BuildContext context, indexx) {
+                                              itemCount: provider.recentMatcheBox[index].matchInBoxModel.length,
+                                              itemBuilder: (BuildContext context, indexx) {
                                                 return GestureDetector(
                                                   onTap: () {
                                                     Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
-                                                            builder: (context) => provider
-                                                                .recentMatcheBox[
-                                                            index]
-                                                                .matchInBoxModel[
-                                                            indexx]
-                                                                .status ==
-                                                                "Played"
-                                                                ? matchInfo_a(
-                                                              url: provider
-                                                                  .recentMatcheBox[
-                                                              index]
-                                                                  .matchInBoxModel[
-                                                              indexx]
-                                                                  .matchURL,
-                                                            )
-                                                                : provider
-                                                                .recentMatcheBox[
-                                                            index]
-                                                                .matchInBoxModel[
-                                                            indexx]
-                                                                .status ==
-                                                                "Fixture"
-                                                                ? matchInfo(
-                                                              url: provider
-                                                                  .recentMatcheBox[
-                                                              index]
-                                                                  .matchInBoxModel[
-                                                              indexx]
-                                                                  .matchURL,
+                                                            builder: (context) => provider.recentMatcheBox[index].matchInBoxModel[indexx].status == "Played"
+                                                                ? matchInfo_a(url: provider.recentMatcheBox[index].matchInBoxModel[indexx].matchURL,)
+                                                                : provider.recentMatcheBox[index].matchInBoxModel[indexx].status == "Fixture"
+                                                                ? matchInfo(url: provider.recentMatcheBox[index].matchInBoxModel[indexx].matchURL,
                                                             )
                                                                 : Oops()));
                                                   },
@@ -204,11 +179,24 @@ class _MatchesForTeamState extends State<MatchesForTeam> {
                                                     MainAxisAlignment.center,
                                                     children: [
                                                       Padding(
+                                                        padding: const EdgeInsets.only(left: 20,right: 20,top: 8),
+                                                        child: Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                          Text(provider.recentMatcheBox[index].matchInBoxModel[indexx].matchDate,
+                                                            style: Theme.of(context).textTheme.bodyText2,),
+                                                            Text(provider.recentMatcheBox[index].matchInBoxModel[indexx].belongsTo,
+                                                              style: Theme.of(context).textTheme.bodyText2,
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Padding(
                                                         padding: const EdgeInsets.only(
                                                             left: 5,
                                                             right: 5,
-                                                            bottom: 9,
-                                                            top: 9),
+                                                            bottom: 15,
+                                                            top: 2),
                                                         child: Row(
                                                           mainAxisAlignment:
                                                           MainAxisAlignment.center,
@@ -391,6 +379,7 @@ class _MatchesForTeamState extends State<MatchesForTeam> {
                                                           ],
                                                         ),
                                                       ),
+                                                      Divider(height: 4,)
                                                     ],
                                                   ),
                                                 );

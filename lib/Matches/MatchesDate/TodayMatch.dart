@@ -330,6 +330,7 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                                 homeId: provider.subOfMatches[indexx].homeID,
                                                                 awayId: provider.subOfMatches[indexx].awayID,
                                                                 comName: provider.matchesList[indexx].comName,
+                                                                matchId:provider.subOfMatches[indexx].matchID
                                                               ),
                                                             )
                                                                 : Oops()));
@@ -642,6 +643,7 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                                         homeId: dataList[indexx].homeID,
                                                                         awayId: dataList[indexx].awayID,
                                                                         comName: provider.matchesList[index].comName,
+                                                                        matchId: dataList[indexx].matchID,
                                                                       ),
                                                                     )
                                                                         : Oops()));

@@ -142,6 +142,7 @@ class EachTeamViewModel with ChangeNotifier{
   }
 
   //Get Matches
+  /*
   Future<void> getMatches(url,params)async{
     MainResponse responseModel = await requestHandler.getEachTeam(
         endPoint: url,
@@ -168,9 +169,11 @@ class EachTeamViewModel with ChangeNotifier{
     notifyListeners();
   }
 
+   */
+
   Future<void> getAllMatches(url,params)async{
     MainResponse responseModel = await requestHandler.getEachTeam(
-        endPoint: "$url",
+        endPoint: url,
         parma: "/$params"
     );
 
@@ -187,21 +190,23 @@ class EachTeamViewModel with ChangeNotifier{
         });
       });
 
-      recentMatche = RecentMatches.toList(modifidedResponse2);
-      calName = responseModel.data.calName;
+      recentMatcheBox = RecentMatchesBox.toList(modifidedResponse2);
+
+     // calName = responseModel.data.calName;
       dropTableRowsList = DropTableRowsModel.listFromJson(responseModel.data.dropTableRows);
-      url = responseModel.data.pPath;
+      //url = responseModel.data.pPath;
 
       List<String> drops = [];
       dropTableRowsList.forEach((element) {
         drops.add(element.text);
       });
       dropsTableRows = drops;
+      //print(dropTableRowsList[3].value);
     }catch(e){
       print(e);
     }
     //print(dropsTableRows);
-    loadingOneLeague = false;
+    loadingMatches = false;
     notifyListeners();
   }
 

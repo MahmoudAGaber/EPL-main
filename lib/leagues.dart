@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:arseli/Data/local_data_sources/favourite/favourite_team_local_data_source.dart';
 import 'package:arseli/Data/remote_data_sources/teams/teams_remote_data_source.dart';
 import 'package:arseli/Data/repos/team_repo.dart';
@@ -10,6 +12,7 @@ import 'package:arseli/controllers/search_controller.dart';
 import 'package:arseli/injection.dart';
 import 'package:arseli/states/team_search_state.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -18,8 +21,11 @@ import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'EachLeague/eachLeague.dart';
+import 'Models/token.dart';
+import 'Provider/TokenViewModel.dart';
 
 class Leagues extends StatefulWidget {
   final String tag;
@@ -37,11 +43,55 @@ class _LeaguesState extends State<Leagues> with SingleTickerProviderStateMixin {
   TabController tabController;
   SearchController controller;
   FavoritesController favouriteController;
+
+  Token token = Token();
+  final String defaultLocale = Platform.localeName;
+  getToken() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      token.id = androidInfo.id;
+      token.deviceName = androidInfo.device;
+      token.appVersion = androidInfo.version.release;
+      token.deviceType = "Android";
+      token.deviceModel = androidInfo.model;
+      token.systemVersion = Platform.operatingSystemVersion;
+      token.defaultLocale = defaultLocale;
+      token.timeZone = DateTime.now().timeZoneName;
+      token.oneSignalToken = "";
+      if (token.id != null) {
+        saveToken(token);
+      }
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+
+      token.id = iosInfo.identifierForVendor;
+      token.deviceName = iosInfo.name;
+      token.appVersion = iosInfo.systemVersion;
+      token.deviceType = "IOS";
+      token.deviceModel = iosInfo.model;
+      token.systemVersion = Platform.operatingSystemVersion;
+      token.defaultLocale = defaultLocale;
+      token.timeZone = DateTime.now().timeZoneName;
+      token.oneSignalToken = "";
+      if (token.id != null) {
+        saveToken(token);
+      }
+    }
+  }
+
+  saveToken(Token token) async {
+    var prefs = await SharedPreferences.getInstance();
+    var userPref = prefs.setString("DeviceID", token.id);
+    var res = await Provider.of<TokenViewModel>(context, listen: false).sendToken(token);
+  }
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       leaguesViewModel = Provider.of(context, listen: false);
       leaguesViewModel.getDataLeagues();
+      getToken();
     });
     super.initState();
     tabController = new TabController(length: 3, vsync: this);

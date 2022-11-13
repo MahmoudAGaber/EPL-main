@@ -183,7 +183,7 @@ class _PostionsState extends State<Postions> {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width *
-                                                  0.41,
+                                                  0.42,
                                               child: Row(
                                                 children: <Widget>[
                                                   SizedBox(
@@ -203,7 +203,7 @@ class _PostionsState extends State<Postions> {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width *
-                                                  0.27,
+                                                  0.29,
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.only(
@@ -225,7 +225,7 @@ class _PostionsState extends State<Postions> {
                                                       style: headline2,
                                                     )),
                                                     SizedBox(
-                                                      width: 25,
+                                                      width: 26,
                                                     ),
                                                     Expanded(
                                                         child: Text(
@@ -233,7 +233,7 @@ class _PostionsState extends State<Postions> {
                                                       style: headline2,
                                                     )),
                                                     SizedBox(
-                                                      width: 25,
+                                                      width: 22,
                                                     ),
                                                     Expanded(
                                                         child: Text(
@@ -248,18 +248,18 @@ class _PostionsState extends State<Postions> {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width *
-                                                  0.23,
+                                                  0.19,
                                               child: Row(
                                                 children: <Widget>[
                                                   SizedBox(
-                                                    width: 30,
+                                                    width: 20,
                                                   ),
                                                   Text(
                                                     "-/+",
                                                     style: headline2,
                                                   ),
                                                   SizedBox(
-                                                    width: 23,
+                                                    width: 20,
                                                   ),
                                                   Text(
                                                     "ن".tr,

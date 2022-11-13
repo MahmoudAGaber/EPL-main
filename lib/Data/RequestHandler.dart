@@ -24,6 +24,7 @@ import 'AppException.dart';
 
 class RequestHandler {
   static const mainUrl = "https://www.eplworld.com/api";
+  static const mainUrl2 = "http://mobile.eplworld.com:5678/webhook/subs?fbclid=IwAR0e62KHeSh-uaZKhpkO2MjGYBCEPDpo_nB-e2wn6DWn-EZ5VoA5AhrH_R8";
   static String error;
   MainResponse mainResponse = MainResponse();
 
@@ -359,4 +360,25 @@ class RequestHandler {
     //print('data from RequestHandler${response.body}');
     return ResponseModelEachPlayer.json(json.decode(response.body));
   }
+
+
+  Future<MainResponse> matchNotification({
+    endPoint,
+    String parma = '',
+    Map<dynamic,dynamic> requestBody
+  }) async {
+    Response response = await http.post(Uri.parse(mainUrl2 + endPoint + parma),
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          'authorization':'Basic TW9iaWxlQXBwOjVkb2F5ZXloZm56bHo1ZWM3YXhiOWxzMGs='},
+        body: jsonEncode(requestBody));
+    if (response.statusCode == 500) {
+      return null;
+    }
+    return MainResponse.json(json.decode(response.body));
+  }
+
+
+
+
 }

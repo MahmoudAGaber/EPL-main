@@ -164,7 +164,9 @@ class _TeamPositionState extends State<TeamPosition> {
                                             SizedBox(
                                               width: 5,
                                             ),
-                                            Text(provider.calName,
+                                           provider.calName==null
+                                               ?Container()
+                                               : Text(provider.calName,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .headline2),
@@ -177,13 +179,13 @@ class _TeamPositionState extends State<TeamPosition> {
                                       child: Container(
                                         width:
                                         MediaQuery.of(context).size.width,
-                                        child: Row(
+                                        child:  Row(
                                           children: <Widget>[
                                             Container(
                                               width: MediaQuery.of(context)
                                                   .size
                                                   .width *
-                                                  0.41,
+                                                  0.42,
                                               child: Row(
                                                 children: <Widget>[
                                                   SizedBox(
@@ -203,7 +205,7 @@ class _TeamPositionState extends State<TeamPosition> {
                                               width: MediaQuery.of(context)
                                                   .size
                                                   .width *
-                                                  0.27,
+                                                  0.29,
                                               child: Padding(
                                                 padding:
                                                 const EdgeInsets.only(
@@ -225,7 +227,7 @@ class _TeamPositionState extends State<TeamPosition> {
                                                           style: headline2,
                                                         )),
                                                     SizedBox(
-                                                      width: 25,
+                                                      width: 26,
                                                     ),
                                                     Expanded(
                                                         child: Text(
@@ -233,7 +235,7 @@ class _TeamPositionState extends State<TeamPosition> {
                                                           style: headline2,
                                                         )),
                                                     SizedBox(
-                                                      width: 25,
+                                                      width: 22,
                                                     ),
                                                     Expanded(
                                                         child: Text(
@@ -248,18 +250,18 @@ class _TeamPositionState extends State<TeamPosition> {
                                               width: MediaQuery.of(context)
                                                   .size
                                                   .width *
-                                                  0.23,
+                                                  0.19,
                                               child: Row(
                                                 children: <Widget>[
                                                   SizedBox(
-                                                    width: 30,
+                                                    width: 20,
                                                   ),
                                                   Text(
                                                     "-/+",
                                                     style: headline2,
                                                   ),
                                                   SizedBox(
-                                                    width: 23,
+                                                    width: 20,
                                                   ),
                                                   Text(
                                                     "ن".tr,

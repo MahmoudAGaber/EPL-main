@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:arseli/Data/MainResponse.dart';
 import 'package:arseli/Data/RequestHandler.dart';
 import 'package:arseli/Models/EachTeam/TablesModel.dart';
@@ -15,6 +17,7 @@ import 'package:arseli/Models/matches/Matches.dart';
 import 'package:arseli/Models/matches/PlayerInf.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Oops.dart';
 
@@ -28,6 +31,10 @@ class EachMatchViewModel with ChangeNotifier {
   bool loadingLineUps = true;
   bool loadingStats = true;
   bool loadingMatchesHTH = true;
+  bool matchNotif = true;
+
+  bool _notificationLoading = false;
+  bool get getNotificationLoading => _notificationLoading;
 
   PlayerInf playerInf;
   MSNModel msnModel;
@@ -41,6 +48,22 @@ class EachMatchViewModel with ChangeNotifier {
   SortedStatsModelMatch sortedStatsModelMatch;
 
   LineupsModel lineupsModel;
+
+  Future<MainResponse> matchNoti(url, context,data) async {
+    MainResponse responseModel = await requestHandler.matchNotification(
+      endPoint: url,
+      requestBody: data
+    );
+
+    matchNotif = false;
+    notifyListeners();
+    return responseModel;
+  }
+
+  void toggleLoading(bool loading){
+    _notificationLoading = loading;
+    notifyListeners();
+  }
 
   Future<void> getMSN(url, context) async {
     ResponseModelEachMatch responseModel = await requestHandler.getEachMatch(

@@ -444,10 +444,13 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                                 const EdgeInsets.only(top: 5.0, bottom: 15.0),
                                 child: Container(
                                   width: MediaQuery.of(context).size.width,
-                                  child: Row(
+                                  child:  Row(
                                     children: <Widget>[
                                       Container(
-                                        width: MediaQuery.of(context).size.width * 0.4,
+                                        width: MediaQuery.of(context)
+                                            .size
+                                            .width *
+                                            0.42,
                                         child: Row(
                                           children: <Widget>[
                                             SizedBox(
@@ -456,18 +459,22 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                                             Text(
                                               "المركز",
                                               style: TextStyle(
-                                                  fontFamily: 'Vazirmatn',
+                                                  fontFamily:
+                                                  'Vazirmatn',
                                                   color: Colors.grey),
                                             ),
                                           ],
                                         ),
                                       ),
                                       Container(
-                                        width: MediaQuery.of(context).size.width *
+                                        width: MediaQuery.of(context)
+                                            .size
+                                            .width *
                                             0.29,
                                         child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 3, right: 20),
+                                          padding:
+                                          const EdgeInsets.only(
+                                              left: 3, right: 15),
                                           child: Row(
                                             children: <Widget>[
                                               Expanded(
@@ -485,7 +492,7 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                                                     style: headline2,
                                                   )),
                                               SizedBox(
-                                                width: 25,
+                                                width: 26,
                                               ),
                                               Expanded(
                                                   child: Text(
@@ -493,7 +500,7 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                                                     style: headline2,
                                                   )),
                                               SizedBox(
-                                                width: 30,
+                                                width: 22,
                                               ),
                                               Expanded(
                                                   child: Text(
@@ -504,14 +511,15 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                                           ),
                                         ),
                                       ),
-
                                       Container(
-                                        width:
-                                        MediaQuery.of(context).size.width * 0.22,
+                                        width: MediaQuery.of(context)
+                                            .size
+                                            .width *
+                                            0.19,
                                         child: Row(
                                           children: <Widget>[
                                             SizedBox(
-                                              width: 25,
+                                              width: 20,
                                             ),
                                             Text(
                                               "-/+",

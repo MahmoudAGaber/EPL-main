@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
 import 'package:arseli/Models/token.dart';
@@ -22,11 +23,14 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   static final String oneSignalAppId = '141280ca-d653-4400-a580-0064de00194e';
+  String oneSignalUserId='';
   Future<Void> initPlatformState() async {
     OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
     OneSignal.shared.setAppId(oneSignalAppId);
-    await OneSignal.shared
-        .promptUserForPushNotificationPermission(fallbackToSettings: true);
+    final status = await OneSignal.shared.getDeviceState();
+    final String osUserID = status?.userId;
+    oneSignalUserId=osUserID;
+    await OneSignal.shared.promptUserForPushNotificationPermission(fallbackToSettings: true);
     OneSignal.shared.promptLocationPermission().then((dynamic accepted) {
       print('Accepted permission: $accepted ');
     });
@@ -35,49 +39,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     getToken();
-
-    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    //   RemoteNotification notification = message.notification;
-    //   AndroidNotification android = message.notification?.android;
-    //   if (notification != null && android != null) {
-    //     flutterLocalNotificationsPlugin.show(
-    //       notification.hashCode,
-    //       notification.title,
-    //       notification.body,
-    //       NotificationDetails(
-    //         android: AndroidNotificationDetails(
-    //           channel.id,
-    //           channel.name,
-    //           channel.description,
-    //           color: Colors.blue,
-    //           playSound: true,
-    //           icon: '@mipmap/ic_launcher',
-    //         ),
-    //       ),
-    //     );
-    //   }
-    // });
-    // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    //   print('A new onMessageOpenedApp event');
-    //   RemoteNotification notification = message.notification;
-    //   AndroidNotification android = message.notification?.android;
-    //   if (notification != null && android != null) {
-    //     showDialog(
-    //         context: context,
-    //         builder: (_) {
-    //           return AlertDialog(
-    //             title: Text(notification.title),
-    //             content: SingleChildScrollView(
-    //                 child: Column(
-    //               crossAxisAlignment: CrossAxisAlignment.start,
-    //               children: [
-    //                 Text(notification.body),
-    //               ],
-    //             )),
-    //           );
-    //         });
-    //   }
-    // });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {});
     Timer(Duration(seconds: 3), () {
       Navigator.pushReplacement(
@@ -91,6 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
   final String defaultLocale = Platform.localeName;
   getToken() async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    var prefs = await SharedPreferences.getInstance();
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
       token.id = androidInfo.id;
@@ -101,11 +63,28 @@ class _SplashScreenState extends State<SplashScreen> {
       token.systemVersion = Platform.operatingSystemVersion;
       token.defaultLocale = defaultLocale;
       token.timeZone = DateTime.now().timeZoneName;
-      token.oneSignalToken = "";
+      token.oneSignalToken = oneSignalUserId;
 
       if (token.id != null) {
         saveToken(token);
       }
+
+      final androidToken = Token(
+        id: androidInfo.id,
+        deviceName:androidInfo.device,
+        appVersion: androidInfo.version.release,
+        deviceType:"Android",
+        deviceModel: androidInfo.model,
+        systemVersion:  Platform.operatingSystemVersion,
+        defaultLocale:defaultLocale,
+        timeZone: DateTime.now().timeZoneName,
+        oneSignalToken: oneSignalUserId,
+
+
+      );
+      String json = jsonEncode(androidToken);
+      prefs.setString('token',json);
+      return token;
     } else if (Platform.isIOS) {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
 
@@ -117,18 +96,34 @@ class _SplashScreenState extends State<SplashScreen> {
       token.systemVersion = Platform.operatingSystemVersion;
       token.defaultLocale = defaultLocale;
       token.timeZone = DateTime.now().timeZoneName;
-      token.oneSignalToken = "";
+      token.oneSignalToken = oneSignalUserId;
+
       if (token.id != null) {
         saveToken(token);
       }
+      final iosToken = Token(
+        id: iosInfo.identifierForVendor,
+        deviceName:iosInfo.name,
+        appVersion: iosInfo.systemVersion,
+        deviceType:"IOS",
+        deviceModel: iosInfo.model,
+        systemVersion:  Platform.operatingSystemVersion,
+        defaultLocale:defaultLocale,
+        timeZone: DateTime.now().timeZoneName,
+        oneSignalToken: oneSignalUserId,
+
+
+      );
+      String json = jsonEncode(iosToken);
+      prefs.setString('token',json);
+      return token;
     }
   }
 
   saveToken(Token token) async {
     var prefs = await SharedPreferences.getInstance();
     var userPref = prefs.setString("DeviceID", token.id);
-    var res = await Provider.of<TokenViewModel>(context, listen: false)
-        .sendToken(token);
+    var res = await Provider.of<TokenViewModel>(context, listen: false).sendToken(token);
   }
 
   void ShowNotification() {

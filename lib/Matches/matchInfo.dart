@@ -1,17 +1,23 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:arseli/EachTeam/eachTeam.dart';
 import 'package:arseli/Matches/MatchGPosition.dart';
 import 'package:arseli/Matches/MatchPostion.dart';
 import 'package:arseli/Matches/preConfron.dart';
+import 'package:arseli/Models/MatchesList.dart';
+import 'package:arseli/Models/matchesNoti.dart';
+import 'package:arseli/Models/token.dart';
 import 'package:arseli/Provider/EachMatchViewModel.dart';
 import 'package:arseli/Provider/EachTeamViewModel.dart';
+import 'package:arseli/Provider/MapProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'MatchEvent.dart';
 import 'PlayerInjured.dart';
@@ -21,8 +27,9 @@ class matchInfo extends StatefulWidget {
   String awayId;
   String url;
   String comName;
+  String matchId;
 
-  matchInfo({this.url, this.homeId, this.awayId, this.comName});
+  matchInfo({this.url, this.homeId, this.awayId, this.comName,this.matchId});
 
   @override
   _matchInfoState createState() => _matchInfoState();
@@ -40,6 +47,7 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
   TabController tabController;
   int _selectedIndex = 0;
   EachMatchViewModel eachMatchViewModel;
+  Token token = Token();
 
   loadData() {
     return Future.wait([
@@ -52,12 +60,15 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
 
   List<Widget> tabs;
   List<Widget> tabView;
+  MatchesList matchesList;
+  MatchesCheckNoti matchesCheckNoti;
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       eachMatchViewModel = Provider.of(context, listen: false);
       await loadData();
+      //getToken();
       tabController = TabController(
           length: getTabView(eachMatchViewModel).length,
           vsync: this,
@@ -105,8 +116,11 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
     "Plan": false,
     "Game reminder": false,
   };
+
+
   @override
   Widget build(BuildContext context) {
+    final mapProvider = Provider.of<MapProvider>(context,listen: false);
     List<Widget> _sliverBuilder(BuildContext context, bool innerBoxIsScrolled) {
       return <Widget>[
         Directionality(
@@ -181,13 +195,39 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
                                                                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                         children: [
                                                                                           Text("${notficationString[ind]}", style:Theme.of(context).textTheme.headline2),
-                                                                                          InkWell(
-                                                                                            onTap: () {
-                                                                                              print(notifCheak);
-                                                                                              Navigator.pop(context);
+                                                                                          Selector<EachMatchViewModel,bool>(
+                                                                                            selector:(context,provider)=>
+                                                                                            provider.getNotificationLoading,
+                                                                                            builder: (context,loading,child){
+                                                                                              return InkWell(
+                                                                                                onTap: () {
+
+                                                                                                  matchesList = MatchesList(
+                                                                                                    matchId: widget.matchId,
+                                                                                                    matchesCheckNoti: MatchesCheckNoti(
+                                                                                                      goal: notifCheak[2],
+                                                                                                      missedPenalty: notifCheak[3],
+                                                                                                      started: notifCheak[4],
+                                                                                                      halfTimeBreak: notifCheak[5],
+                                                                                                      endMatch: notifCheak[6],
+                                                                                                      redCard: notifCheak[7],
+                                                                                                      plan: notifCheak[8],
+                                                                                                      gameReminder: notifCheak[9],
+                                                                                                    )
+                                                                                                  );
+
+
+                                                                                                  mapProvider.dataa.putIfAbsent(widget.matchId, () => matchesList.toMap());
+
+                                                                                                  eachMatchViewModel.matchNoti('', context,mapProvider.dataa);
+
+                                                                                                  Navigator.pop(context);
+                                                                                                },
+                                                                                                child: Text("حسنًا",
+                                                                                                    style: Theme.of(context).textTheme.bodyText1.copyWith(color: Color(0xFFD96BFF,),fontWeight: FontWeight.bold,fontSize: 16)),
+                                                                                              );
                                                                                             },
-                                                                                            child: Text("حسنًا",
-                                                                                                style: Theme.of(context).textTheme.bodyText1.copyWith(color: Color(0xFFD96BFF,),fontWeight: FontWeight.bold,fontSize: 16)),
+
                                                                                           )
                                                                                         ],
                                                                                       ),
