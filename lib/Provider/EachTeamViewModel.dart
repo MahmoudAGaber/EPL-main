@@ -51,6 +51,7 @@ class EachTeamViewModel with ChangeNotifier{
   List<TrophiesBoxes> trophiesBoxesModelList;
   MatchInBoxModel newtGame;
   List<TransferBoxesModel> transferBoxesModelList;
+  List<TransferBoxesModel> addTransferBoxesModelList;
   List<DropTableRowsModel> dropTableRowsList;
   List<String> dropsTableRows;
   List<DropTableRowsModel> dropTableRows2List;
@@ -282,17 +283,25 @@ class EachTeamViewModel with ChangeNotifier{
 
 
  */
-  Future<void> getTransfers(url,params,context)async{
+  Future<void> getTransfers(url,page)async{
     MainResponse responseModel = await requestHandler.getTransfers(
         endPoint:url,
-        parma: "/$params",
-        context: context
+        parma:'?page=$page',
     );
 
     try {
-      transferBoxesModelList =
-          TransferBoxesModel.listFromJson(responseModel.data.transferBoxes);
-    }catch(e){}
+      if (page <= 1) {
+        transferBoxesModelList =
+            TransferBoxesModel.listFromJson(responseModel.data.transferBoxes);
+      } else if (page > 1) {
+        addTransferBoxesModelList =
+            TransferBoxesModel.listFromJson(responseModel.data.transferBoxes);
+        transferBoxesModelList.addAll(addTransferBoxesModelList);
+        addTransferBoxesModelList.clear();
+      }
+    }catch(e){
+
+    }
     loadingOneLeague = false;
     notifyListeners();
   }

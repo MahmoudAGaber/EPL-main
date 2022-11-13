@@ -87,7 +87,7 @@ class _TeamNewsState extends State<TeamNews> {
                                 ),
                                 Container(
                                   height: 100,
-                                  width: MediaQuery.of(context).size.width*.57,
+                                  width: MediaQuery.of(context).size.width*.59,
                                   child: Column(
                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment: CrossAxisAlignment.start,

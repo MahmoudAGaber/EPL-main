@@ -46,6 +46,7 @@ class _EachTeamState extends State<EachTeam> with TickerProviderStateMixin {
   int _selectedIndex = 0;
   int newsPages = 1;
   int videosPages = 1;
+  int transfersPages = 1;
 
   AnimationController animationController;
   Animation<double> _animation;
@@ -60,7 +61,7 @@ class _EachTeamState extends State<EachTeam> with TickerProviderStateMixin {
       eachTeamViewModel.getAllMatches(widget.url, 'matches');
       eachTeamViewModel.getTables(widget.url, 'tables');
       eachTeamViewModel.getSquads("${widget.url}/squad");
-      eachTeamViewModel.getTransfers("${widget.url}", 'transfers', context);
+      eachTeamViewModel.getTransfers("${widget.url}/transfers",1,);
       eachTeamViewModel.getCups("${widget.url}/trophies");
 
       _controller.addListener(() {
@@ -73,6 +74,10 @@ class _EachTeamState extends State<EachTeam> with TickerProviderStateMixin {
           } else if (tabController.index == 2) {
             videosPages++;
             eachTeamViewModel.getVideos("${widget.url}/videos", videosPages);
+          }
+          else if (tabController.index == 6) {
+            transfersPages++;
+            eachTeamViewModel.getTransfers("${widget.url}/transfers", transfersPages);
           }
         }
       });

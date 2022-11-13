@@ -79,56 +79,53 @@ class _FavouritesState extends State<Favourites>
                   onTap: (){
                     searchIcon();
                   },
-                  child: AbsorbPointer(
-                    absorbing: true,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                      child: Container(
-                        height: 60,
-                        child: TextFormField(
-                          controller:
-                          controller.searchTextEditingController,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Container(
+                      height: 60,
+                      child: TextFormField(
+                        controller:
+                        controller.searchTextEditingController,
 /*
-                              onChanged: (inputValue) {
-                                controller.onChanged(inputValue);
-                                return;
-                                if (lastInputValue != inputValue) {
-                                  lastInputValue = inputValue;
-                                  context
-                                      .read<TeamSearchBloc>()
-                                      .add(TextChanged(text: inputValue));
-                                }
-                              },
+                            onChanged: (inputValue) {
+                              controller.onChanged(inputValue);
+                              return;
+                              if (lastInputValue != inputValue) {
+                                lastInputValue = inputValue;
+                                context
+                                    .read<TeamSearchBloc>()
+                                    .add(TextChanged(text: inputValue));
+                              }
+                            },
 */
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius:
-                                  BorderRadius.circular(8),
-                                  borderSide:
-                                  BorderSide(color: Theme.of(context).buttonColor)),
-                              errorBorder: InputBorder.none,
-                              disabledBorder: InputBorder.none,
-                              filled: true,
-                              fillColor: Theme.of(context).buttonColor,
-                              prefixIcon: Padding(
-                                padding:
-                                const EdgeInsets.only(bottom: 4),
-                                child: IconButton(
-                                  onPressed: (){
-                                    searchIcon();
-                                  },
-                                  icon:Icon(
-                                      Icons.search,
-                                      color: Theme.of(context).colorScheme.primaryVariant
-                                  ),
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius:
+                                BorderRadius.circular(8),
+                                borderSide:
+                                BorderSide(color: Theme.of(context).buttonColor)),
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            filled: true,
+                            fillColor: Theme.of(context).buttonColor,
+                            prefixIcon: Padding(
+                              padding:
+                              const EdgeInsets.only(bottom: 4),
+                              child: IconButton(
+                                onPressed: (){
+                                  //searchIcon();
+                                },
+                                icon:Icon(
+                                    Icons.search,
+                                    color: Theme.of(context).colorScheme.primaryVariant
                                 ),
                               ),
-                              hintText: "ابحث عن فريق",
-                              hintStyle: Theme.of(context).textTheme.headline3.copyWith(fontSize: 15)),
-                        ),
+                            ),
+                            hintText: "ابحث عن فريق",
+                            hintStyle: Theme.of(context).textTheme.headline3.copyWith(fontSize: 15)),
                       ),
                     ),
                   ),

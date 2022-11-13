@@ -92,7 +92,7 @@ class _VideoTeamState extends State<VideoTeam> {
                           ),
                           Container(
                             height: 100,
-                            width: MediaQuery.of(context).size.width*.57,
+                            width: MediaQuery.of(context).size.width*.58,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
