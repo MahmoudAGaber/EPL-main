@@ -73,6 +73,7 @@ dependencies:
   flutter_cache_manager: ^3.3.0
   equatable: ^2.0.3
   onesignal_flutter:
+  animated_drawer: ^0.0.4
 
   #chewie: ^1.0.0
   #flick_video_player: ^0.3.1
@@ -152,6 +153,7 @@ flutter:
     - assets/cupIcon.png
     - assets/videoIcon.png
     - assets/video2Icon.png
+    - assets/Icons/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

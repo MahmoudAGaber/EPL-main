@@ -117,7 +117,7 @@ class _homeState extends State<home> {
                   padding: const EdgeInsets.only(right: 0,),
                   child: new Container(
                     height: 22,width: 22,
-                    child: Image.asset('assets/matchsIcon.png',
+                    child: Image.asset('assets/Icons/Mask Group 232.png',
                       color: _selectedIndex == 0
                         ? Color.fromRGBO(95, 31, 117, 1.0)
                         : Colors.grey,),
@@ -128,10 +128,10 @@ class _homeState extends State<home> {
               ),
               BottomNavigationBarItem(
                   icon: Padding(
-                    padding: const EdgeInsets.only(right: 0,left: 8),
+                    padding: const EdgeInsets.only(right: 0,left: 12),
                     child: new Container(
                       height: 19,width: 19,
-                      child: Image.asset('assets/newsIcon.png',
+                      child: Image.asset('assets/Icons/Mask Group 236.png',
                         color: _selectedIndex == 1
                             ? Color.fromRGBO(95, 31, 117, 1.0)
                             : Colors.grey,),
@@ -192,7 +192,7 @@ class _homeState extends State<home> {
                     padding: const EdgeInsets.only(right: 0,),
                     child: new Container(
                       height: 23,width: 23,
-                      child: Image.asset('assets/video2Icon.png',
+                      child: Image.asset('assets/Icons/Mask Group 235.png',
                         color: _selectedIndex == 2
                             ? Color.fromRGBO(95, 31, 117, 1.0)
                             : Colors.grey,),
@@ -214,13 +214,13 @@ class _homeState extends State<home> {
               BottomNavigationBarItem(
                   icon: Padding(
                     padding: const EdgeInsets.only(right: 0,),
-                    child: new Icon(
-                      Icons.star_border,
-                      color: _selectedIndex == 3
-                          ? Color.fromRGBO(95, 31, 117, 1.0)
-                          : Colors.grey,
-                      size: 25,
-                    )
+                    child: new Container(
+                      height: 20,width: 20,
+                      child: Image.asset('assets/Icons/Mask Group 239.png',
+                        color: _selectedIndex == 3
+                            ? Color.fromRGBO(95, 31, 117, 1.0)
+                            : Colors.grey,),
+                    ),
                   ),
                   label: "المفضلة".tr
                   // title: new Text(
@@ -237,7 +237,7 @@ class _homeState extends State<home> {
                     padding: const EdgeInsets.only(right: 0,),
                     child: new Container(
                       height: 20,width: 20,
-                      child: Image.asset('assets/cupIcon.png',
+                      child: Image.asset('assets/Icons/Mask Group 237.png',
                         color: _selectedIndex == 4
                             ? Color.fromRGBO(95, 31, 117, 1.0)
                             : Colors.grey,),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:animated_drawer/views/animated_drawer.dart';
 
 import 'home.dart';
 
@@ -28,8 +29,10 @@ class _MoreState extends State<More> {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.close,
-            color: Colors.white,),
+            icon: Icon(
+              Icons.close,
+              color: Colors.white,
+            ),
           )
         ],
         backgroundColor: Theme.of(context).primaryColor,
@@ -188,9 +191,12 @@ class _MoreState extends State<More> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder:(context)=> home(index: 0,)
-                    ));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => home(
+                                  index: 0,
+                                )));
                   },
                   child: Row(
                     children: <Widget>[
@@ -201,9 +207,14 @@ class _MoreState extends State<More> {
                           color: Colors.grey[800],
                           borderRadius: BorderRadius.all(Radius.circular(100)),
                         ),
-                        child:Padding(
+                        child: Padding(
                           padding: const EdgeInsets.all(7.0),
-                          child: Image.asset('assets/matchsIcon.png',width: 20,height: 20,color: Colors.white,),
+                          child: Image.asset(
+                            'assets/matchsIcon.png',
+                            width: 20,
+                            height: 20,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -212,10 +223,8 @@ class _MoreState extends State<More> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                              "المباريات".tr,
-                              style: Theme.of(context).textTheme.headline2
-                          ),
+                          Text("المباريات".tr,
+                              style: Theme.of(context).textTheme.headline2),
                         ],
                       )
                     ],
@@ -226,9 +235,12 @@ class _MoreState extends State<More> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                        builder:(context)=> home(index: 1,)
-                    ));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => home(
+                                  index: 1,
+                                )));
                   },
                   child: Row(
                     children: <Widget>[
@@ -239,9 +251,14 @@ class _MoreState extends State<More> {
                           color: Colors.grey[800],
                           borderRadius: BorderRadius.all(Radius.circular(100)),
                         ),
-                        child:Padding(
+                        child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Image.asset('assets/newsIcon.png',width: 20,height: 20,color: Colors.white,),
+                          child: Image.asset(
+                            'assets/newsIcon.png',
+                            width: 20,
+                            height: 20,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -250,10 +267,8 @@ class _MoreState extends State<More> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                              "الاخبار".tr,
-                              style: Theme.of(context).textTheme.headline2
-                          ),
+                          Text("الاخبار".tr,
+                              style: Theme.of(context).textTheme.headline2),
                         ],
                       )
                     ],
@@ -264,9 +279,12 @@ class _MoreState extends State<More> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                        builder:(context)=> home(index: 2,)
-                    ));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => home(
+                                  index: 2,
+                                )));
                   },
                   child: Row(
                     children: <Widget>[
@@ -277,9 +295,14 @@ class _MoreState extends State<More> {
                           color: Colors.grey[800],
                           borderRadius: BorderRadius.all(Radius.circular(100)),
                         ),
-                        child:Padding(
+                        child: Padding(
                           padding: const EdgeInsets.all(6.0),
-                          child: Image.asset('assets/video2Icon.png',width: 20,height: 20,color: Colors.white,),
+                          child: Image.asset(
+                            'assets/video2Icon.png',
+                            width: 20,
+                            height: 20,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -288,10 +311,8 @@ class _MoreState extends State<More> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                              "الفيديو".tr,
-                              style: Theme.of(context).textTheme.headline2
-                          ),
+                          Text("الفيديو".tr,
+                              style: Theme.of(context).textTheme.headline2),
                         ],
                       )
                     ],
@@ -302,9 +323,12 @@ class _MoreState extends State<More> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                        builder:(context)=> home(index: 3,)
-                    ));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => home(
+                                  index: 3,
+                                )));
                   },
                   child: Row(
                     children: <Widget>[
@@ -315,7 +339,7 @@ class _MoreState extends State<More> {
                           color: Colors.grey[800],
                           borderRadius: BorderRadius.all(Radius.circular(100)),
                         ),
-                        child:Icon(
+                        child: Icon(
                           Icons.star,
                           color: Colors.white,
                           size: 28,
@@ -327,10 +351,8 @@ class _MoreState extends State<More> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                              "المفضله".tr,
-                              style: Theme.of(context).textTheme.headline2
-                          ),
+                          Text("المفضله".tr,
+                              style: Theme.of(context).textTheme.headline2),
                         ],
                       )
                     ],
@@ -341,9 +363,12 @@ class _MoreState extends State<More> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                        builder:(context)=> home(index: 4,)
-                    ));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => home(
+                                  index: 4,
+                                )));
                   },
                   child: Row(
                     children: <Widget>[
@@ -354,9 +379,14 @@ class _MoreState extends State<More> {
                           color: Colors.grey[800],
                           borderRadius: BorderRadius.all(Radius.circular(100)),
                         ),
-                        child:Padding(
+                        child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Image.asset('assets/cupIcon.png',width: 20,height: 20,color: Colors.white,),
+                          child: Image.asset(
+                            'assets/cupIcon.png',
+                            width: 20,
+                            height: 20,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -365,10 +395,8 @@ class _MoreState extends State<More> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                              "البطولات".tr,
-                              style: Theme.of(context).textTheme.headline2
-                          ),
+                          Text("البطولات".tr,
+                              style: Theme.of(context).textTheme.headline2),
                         ],
                       )
                     ],
@@ -402,10 +430,8 @@ class _MoreState extends State<More> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                            "الاعدادات".tr,
-                            style: Theme.of(context).textTheme.headline2
-                          ),
+                          Text("الاعدادات".tr,
+                              style: Theme.of(context).textTheme.headline2),
                         ],
                       )
                     ],

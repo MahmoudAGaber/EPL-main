@@ -22,7 +22,7 @@ class _settingState extends State<setting> {
   String _selectedLang = LocalizationService.langs.last;
 
   List<String> theme=['فاتح',"داكن"];
-  String selectedTheme;
+  String selectedTheme='فاتح';
 
   final _scaffoldkey = new GlobalKey<ScaffoldState>();
   VoidCallback _showpersBottomSheetCallBack;

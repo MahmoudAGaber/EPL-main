@@ -232,16 +232,19 @@ class _matchInfo_aState extends State<matchInfo_a>
                       )
                     : FlexibleSpaceBar(
                         background: Padding(
-                          padding: const EdgeInsets.only(bottom: 63, left: 40),
+                          padding: const EdgeInsets.only(bottom: 75, left: 40,),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: <Widget>[
+                              /*
                               IconButton(
                                   icon: Icon(
                                     Icons.notifications_none,
                                     color: Colors.white,
                                   ),
                                   onPressed: null),
+
+                               */
                               IconButton(
                                   icon: Icon(Icons.star_border,
                                       color: Colors.white),

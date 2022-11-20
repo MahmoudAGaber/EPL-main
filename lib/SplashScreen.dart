@@ -84,6 +84,7 @@ class _SplashScreenState extends State<SplashScreen> {
       );
       String json = jsonEncode(androidToken);
       prefs.setString('token',json);
+      print(prefs.getString('matchesNoti'));
       return token;
     } else if (Platform.isIOS) {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;

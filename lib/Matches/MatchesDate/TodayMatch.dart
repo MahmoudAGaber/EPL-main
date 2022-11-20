@@ -359,13 +359,16 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                                           mainAxisAlignment: MainAxisAlignment.end,
                                                                           children: [
                                                                             Flexible(
-                                                                              child: Text(
-                                                                                provider.subOfMatches[indexx]
-                                                                                    .homeName,
-                                                                                style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
-                                                                                overflow: TextOverflow.clip,
+                                                                              child: Container(
+                                                                                width:90,
+                                                                                child: Text(
+                                                                                  provider.subOfMatches[indexx]
+                                                                                      .homeName,
+                                                                                  style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                                  overflow: TextOverflow.clip,
 
-                                                                                textDirection: ui.TextDirection.ltr,
+                                                                                  textDirection: ui.TextDirection.ltr,
+                                                                                ),
                                                                               ),
                                                                             ),
 
@@ -373,7 +376,7 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                                         ),
                                                                       ),
                                                                       Positioned(
-                                                                          right: 10,
+                                                                          right: 4,
                                                                           top: 7,
                                                                           child:provider.subOfMatches[indexx].status == "Playing" ? CircleAvatar(
                                                                             minRadius: 13,
@@ -672,13 +675,16 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                                                   mainAxisAlignment: MainAxisAlignment.end,
                                                                                   children: [
                                                                                     Flexible(
-                                                                                      child: Text(
-                                                                                        dataList[indexx]
-                                                                                            .homeName,
-                                                                                        style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
-                                                                                        overflow: TextOverflow.clip,
+                                                                                      child: Container(
+                                                                                        width: 90,
+                                                                                        child: Text(
+                                                                                          dataList[indexx]
+                                                                                              .homeName,
+                                                                                          style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),
+                                                                                          overflow: TextOverflow.clip,
 
-                                                                                        textDirection: ui.TextDirection.ltr,
+                                                                                          textDirection: ui.TextDirection.ltr,
+                                                                                        ),
                                                                                       ),
                                                                                     ),
 
@@ -686,7 +692,7 @@ class _TodayMatchesState extends State<TodayMatches> with AutomaticKeepAliveClie
                                                                                 ),
                                                                               ),
                                                                               Positioned(
-                                                                                  right: 10,
+                                                                                  right: 4,
                                                                                   top: 7,
                                                                                   child: dataList[indexx].status == "Playing"
                                                                                       ? CircleAvatar(

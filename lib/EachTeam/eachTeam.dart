@@ -168,7 +168,7 @@ class _EachTeamState extends State<EachTeam> with TickerProviderStateMixin {
                       ),
                     ),
                     titlePadding:
-                        EdgeInsets.only(top: 1.0, bottom: 20.0, right: 100),
+                        EdgeInsets.only(top: 1.0, bottom: 25.0, right: 100),
                     title: FittedBox(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,

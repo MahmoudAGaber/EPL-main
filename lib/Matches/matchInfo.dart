@@ -201,7 +201,6 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
                                                                                             builder: (context,loading,child){
                                                                                               return InkWell(
                                                                                                 onTap: () {
-
                                                                                                   matchesList = MatchesList(
                                                                                                     matchId: widget.matchId,
                                                                                                     matchesCheckNoti: MatchesCheckNoti(
