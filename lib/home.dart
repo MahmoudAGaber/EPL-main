@@ -36,7 +36,7 @@ class _homeState extends State<home> {
   int _selectedIndex = 0;
   void _onPageChanged(int index) {
     setState(() {
-      _selectedIndex = index;
+      _selectedIndex= index;
     });
   }
 
@@ -73,7 +73,7 @@ class _homeState extends State<home> {
         initializeDateFormatting("EN_SA", null).then((_) {
           var now = new DateTime.now();
           DateFormat.MMMEd('EN_SA').format(now);
-
+          _selectedIndex = widget.index;
           today = DateFormat("dd-MM-yyyy", 'EN_SA')
               .format(now.subtract(new Duration(days: 0)));
           matchesViewModel.getMatches(today);

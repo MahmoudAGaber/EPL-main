@@ -210,7 +210,7 @@ class _MoreState extends State<More> {
                         child: Padding(
                           padding: const EdgeInsets.all(7.0),
                           child: Image.asset(
-                            'assets/matchsIcon.png',
+                            'assets/Icons/Mask Group 232.png',
                             width: 20,
                             height: 20,
                             color: Colors.white,
@@ -254,7 +254,7 @@ class _MoreState extends State<More> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Image.asset(
-                            'assets/newsIcon.png',
+                            'assets/Icons/Mask Group 236.png',
                             width: 20,
                             height: 20,
                             color: Colors.white,
@@ -298,7 +298,7 @@ class _MoreState extends State<More> {
                         child: Padding(
                           padding: const EdgeInsets.all(6.0),
                           child: Image.asset(
-                            'assets/video2Icon.png',
+                            'assets/Icons/Mask Group 235.png',
                             width: 20,
                             height: 20,
                             color: Colors.white,
@@ -339,10 +339,14 @@ class _MoreState extends State<More> {
                           color: Colors.grey[800],
                           borderRadius: BorderRadius.all(Radius.circular(100)),
                         ),
-                        child: Icon(
-                          Icons.star,
-                          color: Colors.white,
-                          size: 28,
+                        child: Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: Image.asset(
+                            'assets/Icons/Mask Group 239.png',
+                            width: 20,
+                            height: 20,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -382,7 +386,7 @@ class _MoreState extends State<More> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Image.asset(
-                            'assets/cupIcon.png',
+                            'assets/Icons/Mask Group 237.png',
                             width: 20,
                             height: 20,
                             color: Colors.white,

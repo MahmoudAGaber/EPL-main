@@ -153,11 +153,14 @@ class _SplashScreenState extends State<SplashScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: Container(
-              height: MediaQuery.of(context).size.height * .45,
-              width: MediaQuery.of(context).size.width * .45,
-              child: Image.asset(
-                'assets/EPL-Logo.png',
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 50),
+              child: Container(
+                height: MediaQuery.of(context).size.height * .45,
+                width: MediaQuery.of(context).size.width * .45,
+                child: Image.asset(
+                  'assets/EPL-Logo.png',
+                ),
               ),
             ),
           ),

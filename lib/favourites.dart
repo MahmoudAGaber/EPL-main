@@ -68,91 +68,188 @@ class _FavouritesState extends State<Favourites>
             ],
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: GestureDetector(
-                  onTap: (){
-                    searchIcon();
-                  },
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                    child: Container(
-                      height: 60,
-                      child: TextFormField(
-                        controller:
-                        controller.searchTextEditingController,
+        body: GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.focusedChild?.unfocus();
+              controller.searchTextEditingController.clear();
+            }
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: GestureDetector(
+                    onTap: (){
+                      searchIcon();
+                    },
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Container(
+                        height: 60,
+                        child: TextFormField(
+                          controller:
+                          controller.searchTextEditingController,
 /*
-                            onChanged: (inputValue) {
-                              controller.onChanged(inputValue);
-                              return;
-                              if (lastInputValue != inputValue) {
-                                lastInputValue = inputValue;
-                                context
-                                    .read<TeamSearchBloc>()
-                                    .add(TextChanged(text: inputValue));
-                              }
-                            },
+                              onChanged: (inputValue) {
+                                controller.onChanged(inputValue);
+                                return;
+                                if (lastInputValue != inputValue) {
+                                  lastInputValue = inputValue;
+                                  context
+                                      .read<TeamSearchBloc>()
+                                      .add(TextChanged(text: inputValue));
+                                }
+                              },
 */
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.circular(8),
-                                borderSide:
-                                BorderSide(color: Theme.of(context).buttonColor)),
-                            errorBorder: InputBorder.none,
-                            disabledBorder: InputBorder.none,
-                            filled: true,
-                            fillColor: Theme.of(context).buttonColor,
-                            prefixIcon: Padding(
-                              padding:
-                              const EdgeInsets.only(bottom: 4),
-                              child: IconButton(
-                                onPressed: (){
-                                  //searchIcon();
-                                },
-                                icon:Icon(
-                                    Icons.search,
-                                    color: Theme.of(context).colorScheme.primaryVariant
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius:
+                                  BorderRadius.circular(8),
+                                  borderSide:
+                                  BorderSide(color: Theme.of(context).buttonColor)),
+                              errorBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
+                              filled: true,
+                              fillColor: Theme.of(context).buttonColor,
+                              prefixIcon: Padding(
+                                padding:
+                                const EdgeInsets.only(bottom: 4),
+                                child: IconButton(
+                                  onPressed: (){
+                                    //searchIcon();
+                                  },
+                                  icon:Icon(
+                                      Icons.search,
+                                      color: Theme.of(context).colorScheme.primaryVariant
+                                  ),
                                 ),
                               ),
-                            ),
-                            hintText: "ابحث عن فريق",
-                            hintStyle: Theme.of(context).textTheme.headline3.copyWith(fontSize: 15)),
+                              hintText: "ابحث عن فريق",
+                              hintStyle: Theme.of(context).textTheme.headline3.copyWith(fontSize: 15)),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16,right: 12,left: 12),
-                child: Text(
-                  'اتابعهم',
-                  style: Theme.of(context).textTheme.headline2
+                Padding(
+                  padding: const EdgeInsets.only(top: 16,right: 12,left: 12),
+                  child: Text(
+                    'اتابعهم',
+                    style: Theme.of(context).textTheme.headline2
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Container(
-                  height: 260,
-                  child: Obx(() {
-                    final teams = favouriteController.favouriteTeams.value;
-                    return GridView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: teams.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2),
-                        itemBuilder: (BuildContext context, index) {
-                          final item = teams[index];
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: Container(
+                    height: 260,
+                    child: Obx(() {
+                      final teams = favouriteController.favouriteTeams.value;
+                      return GridView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: teams.length,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2),
+                          itemBuilder: (BuildContext context, index) {
+                            final item = teams[index];
+                            return Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  if (widget.tag == 'الفرق') {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ChangeNotifierProvider<
+                                                        EachTeamViewModel>(
+                                                    create: (_) =>
+                                                        EachTeamViewModel(),
+                                                    child: EachTeam(
+                                                      url: item.teamBasicDataModel.url,
+                                                    ))));
+                                  } else {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ChangeNotifierProvider<
+                                                        EachLeagueViewModel>(
+                                                    create: (_) =>
+                                                        EachLeagueViewModel(),
+                                                    child: EachLeague(
+                                                        url: item
+                                                            .teamBasicDataModel
+                                                            .url))));
+                                  }
+                                },
+                                child: Card(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8)),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                            width: 45,
+                                            height: 45,
+                                            child: CachedNetworkImage(
+                                              imageUrl: item.teamBasicDataModel
+                                                  .image.hostedFile,
+                                            )),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            item.teamBasicDataModel.text,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily: 'Vazirmatn',
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )),
+                              ),
+                            );
+                          });
+                    }),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16,left: 12,right: 12),
+                  child: Text(
+                    'مقترحة',
+                    style: Theme.of(context).textTheme.headline2
+                  ),
+                ),
+                Obx(
+                      () {
+                    final state = controller.teamSearchState.value;
+                    print('state');
+                    if (state is SearchStateLoading) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    if (state is SearchStateSuccess) {
+                      final data = state.data;
+
+                      return ListView.builder(
+                        physics: ClampingScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: data.length,
+                        itemBuilder: (_, index) {
+                          final item = data[index];
+                          final teamBasicDataModel = data[index].teamBasicDataModel;
                           return Padding(
-                            padding: const EdgeInsets.all(2.0),
+                            padding: const EdgeInsets.only(top: 6),
                             child: GestureDetector(
                               onTap: () {
                                 if (widget.tag == 'الفرق') {
@@ -161,11 +258,11 @@ class _FavouritesState extends State<Favourites>
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               ChangeNotifierProvider<
-                                                      EachTeamViewModel>(
+                                                  EachTeamViewModel>(
                                                   create: (_) =>
                                                       EachTeamViewModel(),
                                                   child: EachTeam(
-                                                    url: item.teamBasicDataModel.url,
+                                                    url: teamBasicDataModel.url,
                                                   ))));
                                 } else {
                                   Navigator.push(
@@ -173,199 +270,111 @@ class _FavouritesState extends State<Favourites>
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               ChangeNotifierProvider<
-                                                      EachLeagueViewModel>(
+                                                  EachLeagueViewModel>(
                                                   create: (_) =>
                                                       EachLeagueViewModel(),
                                                   child: EachLeague(
-                                                      url: item
-                                                          .teamBasicDataModel
+                                                      url: teamBasicDataModel
                                                           .url))));
                                 }
                               },
                               child: Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8)),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                          width: 45,
-                                          height: 45,
-                                          child: CachedNetworkImage(
-                                            imageUrl: item.teamBasicDataModel
-                                                .image.hostedFile,
-                                          )),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          item.teamBasicDataModel.text,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontFamily: 'Vazirmatn',
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6)),
+                                child: Container(
+                                  height: 50,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                  width: 35,
+                                                  height: 35,
+                                                  child: CachedNetworkImage(
+                                                    imageUrl: teamBasicDataModel
+                                                        .image.hostedFile,
+                                                  )),
+                                              SizedBox(
+                                                width: 4,
+                                              ),
+                                              Text(
+                                                  teamBasicDataModel.text,
+                                                  style:Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13)
+                                              )
+                                            ],
                                           ),
                                         ),
-                                      )
-                                    ],
-                                  )),
-                            ),
-                          );
-                        });
-                  }),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16,left: 12,right: 12),
-                child: Text(
-                  'مقترحة',
-                  style: Theme.of(context).textTheme.headline2
-                ),
-              ),
-              Obx(
-                    () {
-                  final state = controller.teamSearchState.value;
-                  print('state');
-                  if (state is SearchStateLoading) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  if (state is SearchStateSuccess) {
-                    final data = state.data;
-
-                    return ListView.builder(
-                      physics: ClampingScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: data.length,
-                      itemBuilder: (_, index) {
-                        final item = data[index];
-                        final teamBasicDataModel = data[index].teamBasicDataModel;
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 6),
-                          child: GestureDetector(
-                            onTap: () {
-                              if (widget.tag == 'الفرق') {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ChangeNotifierProvider<
-                                                EachTeamViewModel>(
-                                                create: (_) =>
-                                                    EachTeamViewModel(),
-                                                child: EachTeam(
-                                                  url: teamBasicDataModel.url,
-                                                ))));
-                              } else {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ChangeNotifierProvider<
-                                                EachLeagueViewModel>(
-                                                create: (_) =>
-                                                    EachLeagueViewModel(),
-                                                child: EachLeague(
-                                                    url: teamBasicDataModel
-                                                        .url))));
-                              }
-                            },
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6)),
-                              child: Container(
-                                height: 50,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                                width: 35,
-                                                height: 35,
-                                                child: CachedNetworkImage(
-                                                  imageUrl: teamBasicDataModel
-                                                      .image.hostedFile,
-                                                )),
-                                            SizedBox(
-                                              width: 4,
-                                            ),
-                                            Text(
-                                                teamBasicDataModel.text,
-                                                style:Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13)
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                        const EdgeInsets.only(left: 20),
-                                        child: Builder(builder: (contextt) {
-                                          return InkWell(
-                                            onTap: () {
-                                              favouriteController
-                                                  .toggleFavourite(index);
+                                        Padding(
+                                          padding:
+                                          const EdgeInsets.only(left: 20),
+                                          child: Builder(builder: (contextt) {
+                                            return InkWell(
+                                              onTap: () {
+                                                favouriteController
+                                                    .toggleFavourite(index);
 /*
-                                                  context
-                                                      .read<TeamSearchBloc>()
-                                                      .add(ToggleFavourite(
-                                                          index));
+                                                    context
+                                                        .read<TeamSearchBloc>()
+                                                        .add(ToggleFavourite(
+                                                            index));
 */
-                                            },
-                                            child: Container(
-                                              width: 45,
-                                              height: 20,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.grey[200],
-                                                  borderRadius:
-                                                  BorderRadius.circular(
-                                                      15)),
-                                              child: Center(
-                                                  child: Text(
-                                                    item.isFavourite
-                                                        ? 'الغاء'
-                                                        : 'تابع',
-                                                    style: TextStyle(
-                                                        color: Theme.of(context)
-                                                            .primaryColor,
-                                                        fontFamily: 'Vazirmatn',
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                        FontWeight.bold),
-                                                  )),
-                                            ),
-                                          );
-                                        }),
-                                      )
-                                    ],
+                                              },
+                                              child: Container(
+                                                width: 45,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.grey[200],
+                                                    borderRadius:
+                                                    BorderRadius.circular(
+                                                        15)),
+                                                child: Center(
+                                                    child: Text(
+                                                      item.isFavourite
+                                                          ? 'الغاء'
+                                                          : 'تابع',
+                                                      style: TextStyle(
+                                                          color: Theme.of(context)
+                                                              .primaryColor,
+                                                          fontFamily: 'Vazirmatn',
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                          FontWeight.bold),
+                                                    )),
+                                              ),
+                                            );
+                                          }),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    );
-                  }
-                  if (state is SearchStateError) {
+                          );
+                        },
+                      );
+                    }
+                    if (state is SearchStateError) {
+                      return Center(
+                        child: Text('لا يوجد نتائج'),
+                      );
+                    }
                     return Center(
-                      child: Text('لا يوجد نتائج'),
+                      child: Text('ابدأ بالبحث الآن',style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),),
                     );
-                  }
-                  return Center(
-                    child: Text('ابدأ بالبحث الآن',style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 13),),
-                  );
-                },
-              ),
+                  },
+                ),
 
-              SizedBox(
-                height: 400,
-              )
-            ],
+                SizedBox(
+                  height: 400,
+                )
+              ],
+            ),
           ),
         ),
       ),
