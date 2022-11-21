@@ -74,6 +74,7 @@ dependencies:
   equatable: ^2.0.3
   onesignal_flutter:
   animated_drawer: ^0.0.4
+  persistent_bottom_nav_bar: ^5.0.2
 
   #chewie: ^1.0.0
   #flick_video_player: ^0.3.1
