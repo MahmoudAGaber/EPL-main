@@ -67,86 +67,7 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
   MatchesList matchesList;
   MatchesCheckNoti matchesCheckNoti;
 
-  _connectTosocket() async {
-    G.initSocket();
-    await G.socketUtils.initSocket();
-    G.socketUtils.connectToSocket();
-    G.socketUtils.setOnconnectListener(onConnect);
-    G.socketUtils.setOnConnectionErrorListener(onConnectionError);
-    G.socketUtils.setOnconnectionTimeOutListener(onConnectionTimeout);
-    G.socketUtils.setOnDisconnectListener(onDisconnect);
-    G.socketUtils.setOnErrorListener(onError);
-    G.socketUtils.setOnMessageReceived(onMessageReceived);
-  }
 
-  onConnect(data) {
-    if (mounted) {
-      setState(() {
-        _connectedToSocket = true;
-        _connectMessage = 'Connected';
-        print(_connectMessage);
-      });
-    }
-  }
-
-  onMessageReceived(data) {
-    if (mounted) {
-      setState(() {
-        _connectedToSocket = false;
-        _connectMessage = 'message today match ';
-        print(
-            _connectMessage + "--> id ==>" + SocketResponse.fromJson(data).id);
-
-        loadData();
-      });
-    }
-  }
-
-  onConnectionError(data) {
-    if (mounted) {
-      setState(() {
-        _connectedToSocket = false;
-        _connectMessage = 'Connection Error';
-        print(_connectMessage + data.toString());
-      });
-    }
-  }
-
-  onConnectionTimeout(data) {
-    if (mounted) {
-      setState(() {
-        _connectedToSocket = false;
-        _connectMessage = 'Connection Timeout';
-        print(_connectMessage);
-      });
-    }
-  }
-
-  onError(data) {
-    if (mounted) {
-      setState(() {
-        _connectedToSocket = false;
-        _connectMessage = 'Connection Error';
-        print(_connectMessage);
-      });
-    }
-  }
-
-  onDisconnect(data) {
-    if (mounted) {
-      setState(() {
-        _connectedToSocket = false;
-        _connectMessage = 'Disconnected';
-        print(_connectMessage);
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    G.socketUtils.closeConnection();
-  }
 
   @override
   void initState() {
@@ -202,11 +123,7 @@ class _matchInfoState extends State<matchInfo> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration.zero, () {
-      _connectedToSocket = false;
-      _connectMessage = 'Connecting...';
-      _connectTosocket();
-    });
+
     final mapProvider = Provider.of<MapProvider>(context,listen: false);
     List<Widget> _sliverBuilder(BuildContext context, bool innerBoxIsScrolled) {
       return <Widget>[

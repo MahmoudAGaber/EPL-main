@@ -58,6 +58,17 @@ class _matchInfo_aState extends State<matchInfo_a>
   bool _connectedToSocket;
   String _connectMessage;
 
+  Future getData() async {
+    await Future.wait([
+      eachMatchViewModel.getMSN(widget.url, context),
+      eachMatchViewModel.getMatchEndEvent(widget.url),
+      eachMatchViewModel.getMatchLineups(widget.url),
+      eachMatchViewModel.getTables(widget.url),
+      eachMatchViewModel.getMatchStats(widget.url),
+      eachMatchViewModel.getHTHMatch(widget.url),
+    ]);
+  }
+
   _connectTosocket() async {
     G.initSocket();
     await G.socketUtils.initSocket();
@@ -85,9 +96,9 @@ class _matchInfo_aState extends State<matchInfo_a>
       setState(() {
         _connectedToSocket = false;
         _connectMessage = 'message each League ';
-        print(
-            _connectMessage + "--> id ==>" + SocketResponse.fromJson(data).id);
-        // getData();
+        print(_connectMessage + "--> id ==>" + SocketResponse.fromJson(data).id);
+        eachMatchViewModel.getMatchEndEvent(widget.url);
+         getData();
       });
     }
   }
@@ -150,12 +161,6 @@ class _matchInfo_aState extends State<matchInfo_a>
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      print('initState addPostFrameCallback');
-      Future.delayed(Duration.zero, () {
-        _connectedToSocket = false;
-        _connectMessage = 'Connecting...';
-        // _connectTosocket();
-      });
 
       eachMatchViewModel = Provider.of(context, listen: false);
       await getData();
@@ -199,6 +204,11 @@ class _matchInfo_aState extends State<matchInfo_a>
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero, () {
+      _connectedToSocket = false;
+      _connectMessage = 'Connecting...';
+      _connectTosocket();
+    });
     List<Widget> _sliverBuilder(BuildContext context, bool innerBoxIsScrolled) {
       return <Widget>[
 
@@ -696,16 +706,7 @@ class _matchInfo_aState extends State<matchInfo_a>
     return test;
   }
 
-  Future getData() async {
-    await Future.wait([
-      eachMatchViewModel.getMSN(widget.url, context),
-      eachMatchViewModel.getMatchEndEvent(widget.url),
-      eachMatchViewModel.getMatchLineups(widget.url),
-      eachMatchViewModel.getTables(widget.url),
-      eachMatchViewModel.getMatchStats(widget.url),
-      eachMatchViewModel.getHTHMatch(widget.url),
-    ]);
-  }
+
 }
 
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
