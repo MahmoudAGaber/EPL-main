@@ -10,6 +10,8 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
+import '../Playrers/players.dart';
+import '../Provider/EachPlayerViewModel.dart';
 import '../main.dart';
 
 class TransferCenter extends StatefulWidget {
@@ -93,8 +95,18 @@ class _TransferCenterState extends State<TransferCenter> {
                                             children: [
                                               GestureDetector(
                                                   onTap: () {
-                                                    Navigator.pushNamed(
-                                                        context, '/players');
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                ChangeNotifierProvider<EachplayerViewModel>(
+                                                                  create: (_) =>
+                                                                      EachplayerViewModel(),
+                                                                  child: EachPlayer(
+                                                                    url: '',
+                                                                    teamImg: provider.headerProfileModel.logo,
+                                                                  ),
+                                                                )));
                                                   },
                                                   child: Container(
                                                     height: 70,

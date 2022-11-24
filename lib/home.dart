@@ -106,7 +106,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
       child: Scaffold(
         body: Center(child: _widgetOptions.elementAt(_selectedIndex),),
         bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.shifting,
+          type: BottomNavigationBarType.fixed,
           items: [
             BottomNavigationBarItem(
               icon: Padding(

@@ -256,7 +256,7 @@ class _EachLeagueState extends State<EachLeague> with TickerProviderStateMixin {
                             ],
                           ),
                         ),
-                        //centerTitle: true,
+                        centerTitle: false,
                         titlePadding: EdgeInsets.only(top: 1.0, bottom: 20.0, left: 4, right: 100),
                         title: FittedBox(
                           child: Container(

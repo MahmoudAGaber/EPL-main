@@ -164,6 +164,7 @@ class _EachPlayerState extends State<EachPlayer> with TickerProviderStateMixin {
                             ],
                           ),
                         ),
+                        centerTitle: false,
                         titlePadding:
                             EdgeInsets.only(top: 1.0, bottom: 20.0, right: 100),
                         title: Row(
