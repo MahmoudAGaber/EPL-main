@@ -12,12 +12,11 @@ class TeamRepo {
 
   Future<List<Team>> search(String search) async {
     final result = await teamsRemoteDataSource.search(search, CancelToken());
-    final teams = result
-        .map((e) => Team(e, favouriteTeamLocalDataSource.isExist(e.url)))
+    final teams =
+    result.map((e) => Team(e, favouriteTeamLocalDataSource.isExist(e.url)))
         .toList()
         .where((element) =>
-            element.teamBasicDataModel.category ==
-            favouriteTeamLocalDataSource.key)
+            element.teamBasicDataModel.category == favouriteTeamLocalDataSource.key)
         .toList();
     print('search repo: ${teams}');
     return teams;

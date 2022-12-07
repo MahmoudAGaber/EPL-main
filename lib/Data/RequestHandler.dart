@@ -17,9 +17,11 @@ import 'package:arseli/Models/matches/EachMatch/HeadToHead/ResponseModelHeadToHe
 import 'package:arseli/Models/matches/EachMatch/ResponseModelEachMatch.dart';
 import 'package:arseli/Models/matches/PlayerInf.dart';
 import 'package:arseli/Models/matches/ResponseModel.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
+import '../localSorageRepo.dart';
 import 'AppException.dart';
 
 class RequestHandler {
@@ -27,19 +29,22 @@ class RequestHandler {
   static const mainUrl2 = "http://mobile.eplworld.com:5678/webhook/subs?fbclid=IwAR0e62KHeSh-uaZKhpkO2MjGYBCEPDpo_nB-e2wn6DWn-EZ5VoA5AhrH_R8";
   static String error;
   MainResponse mainResponse = MainResponse();
+  LocalStorageRepo localStorageRepo = LocalStorageRepo();
 
   //Search
   Future<MainResponse> search({
     endPoint,
     String parma = '',
+    String boxName
   }) async {
     Response response = await http.get(Uri.parse(mainUrl + endPoint + parma),
         headers: {"Content-Type": "application/json; charset=UTF-8"});
 
+    Box box = await localStorageRepo.openBox(boxName);
+
     switch (response.statusCode) {
       case 200:
-        mainResponse.data = SearchResponseModel.ListFromJson(
-            json.decode(response.body.toString()));
+        mainResponse.data = SearchResponseModel.ListFromJson(json.decode(response.body.toString()),localStorageRepo.getFavouriteList(box));
         mainResponse.msg = 'Success';
         return mainResponse;
       case 400:

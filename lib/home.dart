@@ -2,6 +2,7 @@ import 'package:arseli/News/latest.dart';
 import 'package:arseli/Provider/LeaguesViewModel.dart';
 import 'package:arseli/Provider/MatchesViewModel.dart';
 import 'package:arseli/Provider/NewsViewModel.dart';
+import 'package:arseli/Provider/SearchViewModel.dart';
 import 'package:arseli/Provider/VideosViewModel.dart';
 import 'package:arseli/news.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'Reels.dart';
 import 'Videos.dart';
-import 'favourites.dart';
+import 'favourite/favouriteHome.dart';
 import 'leagues.dart';
 import 'matches.dart';
 import 'dart:ui' as ui;
@@ -60,13 +61,16 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
   void initState() {
 
     _widgetOptions = <Widget>[
-    Matches(
-    dateTime: widget.dateTime,
+    ChangeNotifierProvider<SearchViewModel>(
+      create: (_)=>SearchViewModel(),
+      child: Matches(
+      dateTime: widget.dateTime,
+      ),
     ),
     news(),
     // Reels(),
     Videos(),
-    Favourites(tag: 'الفرق'),
+    FavouriteHome(tag: 'الفرق'),
     Leagues(tag: 'البطولات',),
     ];
 

@@ -37,7 +37,7 @@ class Styles {
           secondaryVariant: Colors.grey,
           surface: isDarkTheme ? Color(0xFF111111) : Colors.grey[200],
           background: isDarkTheme?Colors.grey[400] : Colors.grey[300],
-          error: Colors.red,
+          error: isDarkTheme?Colors.white : Color(0xFF77109B),
           onPrimary: isDarkTheme ?Color(0xFF292525): Colors.grey[100],
           onBackground: isDarkTheme?Color(0xFF141313) : Colors.grey[100],
           onError: Colors.grey,

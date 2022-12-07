@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:arseli/Provider/NewsViewModel.dart';
+import 'package:arseli/Provider/favouriteViewModel.dart';
 import 'package:arseli/SubOfNews.dart';
 import 'package:arseli/SubOfVideos.dart';
 import 'package:flutter/material.dart';

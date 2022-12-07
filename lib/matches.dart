@@ -7,6 +7,7 @@ import 'package:arseli/More.dart';
 import 'package:arseli/Provider/EachPlayerViewModel.dart';
 import 'package:arseli/Provider/EachTeamViewModel.dart';
 import 'package:arseli/Provider/SearchViewModel.dart';
+import 'package:arseli/Provider/favouriteViewModel.dart';
 import 'package:arseli/webView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -83,7 +84,7 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       searchViewModel = Provider.of(context, listen: false);
       matchesViewModel = Provider.of(context, listen: false);
-      searchViewModel.getDataSearch('1');
+      searchViewModel.getDataSearch('1',"");
 
       initDate();
       tabController = new TabController(length: 10, vsync: this);
@@ -305,204 +306,203 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
     });
   }
 
-searchIcon() {
-  //List<SearchResponseModel> searchItems=[];
-  TextEditingController search = TextEditingController();
-  return showDialog(
-      context: context,
-      builder: (context) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return Dialog(
-              backgroundColor: Theme.of(context).colorScheme.surface,
-              insetPadding:
-              EdgeInsets.only(top: 30, right: 10, left: 10, bottom: 100),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-              child: Consumer<SearchViewModel>(
-                builder: (context, provider, child) {
-                  return Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 5, right: 10, left: 10),
-                        child: Row(
-                          children: <Widget>[
-                            IconButton(
-                              icon: Icon(
-                                Icons.arrow_forward,
-                                color: Theme.of(context).colorScheme.primaryVariant
-                              ),
-                              onPressed: () {
-                                provider.getDataSearch('1');
-                                Navigator.pop(context);
-                              },
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child: TextField(
-                                onChanged: (value) {
-                                  provider.searchItems
-                                      .where((element) => element.text
-                                      .toLowerCase()
-                                      .contains(value))
-                                      .toList();
-                                  provider.getDataSearch(value);
-                                },
-                                controller: search,
-                                textCapitalization:
-                                TextCapitalization.sentences,
-                                decoration: InputDecoration.collapsed(
-                                  hintText:
-                                  "البحث عن الفرق،المقابلات،اللاعبين،الاخبار"
-                                      .tr,
-                                  hintStyle: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 17)
+  searchIcon() {
+    //List<SearchResponseModel> searchItems=[];
+    TextEditingController search = TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(
+            builder: (context, setState) {
+              return Dialog(
+                backgroundColor: Theme.of(context).colorScheme.surface,
+                insetPadding:
+                EdgeInsets.only(top: 30, right: 10, left: 10, bottom: 100),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: Consumer<SearchViewModel>(
+                  builder: (context, provider, child) {
+                    var data = provider.searchItems;
+                    return Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 5, right: 10, left: 10),
+                          child: Row(
+                            children: <Widget>[
+                              IconButton(
+                                icon: Icon(
+                                    Icons.arrow_forward,
+                                    color: Theme.of(context).colorScheme.primaryVariant
                                 ),
+                                onPressed: () {
+                                  provider.getDataSearch('1',"");
+                                  Navigator.pop(context);
+                                },
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: ListView.builder(
-                            itemCount: search.text.isNotEmpty
-                                ? provider.searchItems.length
-                                : 15,
-                            itemBuilder: (BuildContext context, index) {
-                              print(provider.searchItems.length);
-                              return Container(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10, right: 10, bottom: 10,top: 10),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      selectedCategory(provider, index,
-                                          search, provider.searchItems);
-                                    },
-                                    child: Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Container(
-                                          child: Row(
-                                            children: <Widget>[
-                                              Container(
-                                                  height: 30,
-                                                  width: 30,
-                                                  child: search.text.isNotEmpty
-                                                      ? (provider.searchItems[index].image.endsWith('svg')
-                                                      ? SvgPicture.network(
-                                                      "https://www.eplworld.com${provider.searchItems[index].image}",
-                                                      semanticsLabel:
-                                                      'Acme Logo')
-                                                      : Image.network(provider.searchItems[index].image.endsWith('small')
-                                                      ? "${provider.searchItems[index].image.split('?').first}.jpg"
-                                                      : "https://www.eplworld.com${provider.searchItems[index].image}"))
-                                                      : (provider.searchItems[index].image
-                                                      .endsWith('svg')
-                                                      ? SvgPicture.network(
-                                                      "https://www.eplworld.com${provider.searchItems[index].image}",
-                                                      semanticsLabel:
-                                                      'Acme Logo')
-                                                      : Image.network(provider.searchItems[index].image.endsWith('small')
-                                                      ? "${provider.searchItems[index].image.split('?').first}.jpg"
-                                                      : "https://www.eplworld.com${provider.searchItems[index].image}"))),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Container(
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                    0.8,
-                                                child: Text(
-                                                  search.text.isNotEmpty
-                                                      ? provider
-                                                      .searchItems[index]
-                                                      .text
-                                                      : provider
-                                                      .searchItems[index]
-                                                      .text,
-                                                  style: Theme.of(context).textTheme.bodyText1,
-                                                  overflow:
-                                                  TextOverflow.ellipsis,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                child: TextField(
+                                  onChanged: (value) {
+                                    data.where((element) => element.text.toLowerCase().contains(value)).toList();
+                                    provider.getDataSearch(value,"");
+                                  },
+                                  controller: search,
+                                  textCapitalization:
+                                  TextCapitalization.sentences,
+                                  decoration: InputDecoration.collapsed(
+                                      hintText:
+                                      "إبحث"
+                                          .tr,
+                                      hintStyle: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 17)
                                   ),
                                 ),
-                              );
-                            }),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            );
-          },
-        );
-      }).then((value) {
-    searchViewModel.getDataSearch('1');
-  });
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                              itemCount: search.text.isNotEmpty
+                                  ? provider.searchItems.length
+                                  : 15,
+                              itemBuilder: (BuildContext context, index) {
+                                var itemData = data[index];
+                                return Container(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10, bottom: 10,top: 10),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        selectedCategory(provider, index, search, provider.searchItems);
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Container(
+                                            child: Row(
+                                              children: <Widget>[
+                                                Container(
+                                                    height: 30,
+                                                    width: 30,
+                                                    child: search.text.isNotEmpty
+                                                        ? (itemData.image.endsWith('svg')
+                                                        ? SvgPicture.network(
+                                                        "https://www.eplworld.com${itemData.image}",
+                                                        semanticsLabel:
+                                                        'Acme Logo')
+                                                        : Image.network(itemData.image.endsWith('small')
+                                                        ? "${itemData.image.split('?').first}.jpg"
+                                                        : "https://www.eplworld.com${itemData.image}"))
+                                                        : (itemData.image
+                                                        .endsWith('svg')
+                                                        ? SvgPicture.network(
+                                                        "https://www.eplworld.com${itemData.image}",
+                                                        semanticsLabel:
+                                                        'Acme Logo')
+                                                        : ClipRRect(
+                                                      borderRadius: BorderRadius.circular(50),
+                                                      child: Image.network(itemData.image.endsWith('small')
+                                                          ? "${itemData.image.split('?').first}.jpg"
+                                                          : "https://www.eplworld.com${itemData.image}"),
+                                                    ))),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Container(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                      0.65,
+                                                  child: Text(
+                                                    search.text.isNotEmpty
+                                                        ? itemData
+                                                        .text
+                                                        : itemData
+                                                        .text,
+                                                    style: Theme.of(context).textTheme.bodyText1,
+                                                    overflow:
+                                                    TextOverflow.ellipsis,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              );
+            },
+          );
+        }).then((value) {
+      searchViewModel.getDataSearch('1',"");
+    });
+  }
+
+  selectedCategory(SearchViewModel provider, index, search, searchItems) {
+    var data = provider.searchItems[index];
+    if (data.category == 'البطولات') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ChangeNotifierProvider<EachLeagueViewModel>(
+                  create: (_) => EachLeagueViewModel(),
+                  child: search.text.isNotEmpty
+                      ? EachLeague(
+                    url: searchItems[index].url,
+                  )
+                      : EachLeague(
+                    url: data.url,
+                  ))));
+    }
+    if (data.category == 'الفرق') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ChangeNotifierProvider<EachTeamViewModel>(
+                  create: (_) => EachTeamViewModel(),
+                  child: search.text.isNotEmpty
+                      ? EachTeam(
+                    url: searchItems[index].url,
+                  )
+                      : EachTeam(
+                    url: data.url,
+                  ))));
+    }
+    if (data.category == 'اللاعبين') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ChangeNotifierProvider<EachplayerViewModel>(
+                  create: (_) => EachplayerViewModel(),
+                  child: search.text.isNotEmpty
+                      ? EachPlayer(
+                    url: searchItems[index].url,
+                  )
+                      : EachPlayer(
+                    url: data.url,
+                  ))));
+    }
+    if (data.category == 'الأخبار') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => webView(
+                url:
+                "https://www.eplworld.com${data.url}",
+              )));
+    }
+  }
 }
 
-selectedCategory(SearchViewModel provider, index, search, searchItems) {
-  if (provider.searchItems[index].category == 'البطولات') {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ChangeNotifierProvider<EachLeagueViewModel>(
-                create: (_) => EachLeagueViewModel(),
-                child: search.text.isNotEmpty
-                    ? EachLeague(
-                  url: searchItems[index].url,
-                )
-                    : EachLeague(
-                  url: provider.searchItems[index].url,
-                ))));
-  }
-  if (provider.searchItems[index].category == 'الفرق') {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ChangeNotifierProvider<EachTeamViewModel>(
-                create: (_) => EachTeamViewModel(),
-                child: search.text.isNotEmpty
-                    ? EachTeam(
-                  url: searchItems[index].url,
-                )
-                    : EachTeam(
-                  url: provider.searchItems[index].url,
-                ))));
-  }
-  if (provider.searchItems[index].category == 'اللاعبين') {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ChangeNotifierProvider<EachplayerViewModel>(
-                create: (_) => EachplayerViewModel(),
-                child: search.text.isNotEmpty
-                    ? EachPlayer(
-                  url: searchItems[index].url,
-                )
-                    : EachPlayer(
-                  url: provider.searchItems[index].url,
-                ))));
-  }
-  if (provider.searchItems[index].category == 'الأخبار') {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => webView(
-              url:
-              "https://www.eplworld.com${provider.searchItems[index].url}",
-            )));
-  }
-}
-}
+
