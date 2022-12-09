@@ -15,11 +15,24 @@ class SearchViewModel with ChangeNotifier{
   RequestHandler requestHandler = RequestHandler();
   FavouriteViewModel favouriteViewModel;
   List<SearchResponseModel> searchItems =[];
+  List<SearchResponseModel> searchItemsHome =[];
   List<SearchResponseModel> filterSearchItems =[];
   bool _searchLoading = false;
   bool get getSearchLoading => _searchLoading;
 
 
+
+
+  Future<void> getHomeDataSearch(searchText)async{
+    MainResponse response = await requestHandler.homeSearch(
+        endPoint: '/fetch',
+        parma: '?term=$searchText',
+
+    );
+    searchItemsHome =  response.data;
+
+    notifyListeners();
+  }
 
   Future<void> getDataSearch(searchText,boxName)async{
      MainResponse response = await requestHandler.search(
@@ -28,10 +41,12 @@ class SearchViewModel with ChangeNotifier{
          boxName: boxName
 
     );
-    searchItems =  response.data;
+     searchItems =  response.data;
 
     notifyListeners();
   }
+
+
 
 
 
@@ -41,7 +56,7 @@ class SearchViewModel with ChangeNotifier{
         parma: '?term=$searchText',
       boxName: boxName
     );
-    searchItems.clear();
+
     filterSearchItems =  response.data;
     searchItems = filterSearchItems.toList().where((element) => element.category.toString() == filter).toList();
 
@@ -54,11 +69,18 @@ class SearchViewModel with ChangeNotifier{
         parma: '?term=$searchText',
         boxName: boxName
     );
-    searchItems.clear();
+
     filterSearchItems =  response.data;
     searchItems = filterSearchItems.toList().where((element) => element.category.toString() != "الأخبار").toList();
 
     notifyListeners();
+  }
+
+  Future<void> clearLists()async{
+     //searchItems=[];
+    // filterSearchItems=[];
+
+     notifyListeners();
   }
 
 }

@@ -17,6 +17,7 @@ import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'EachLeague/eachLeague.dart';
+import 'Models/SearchModel.dart';
 import 'Playrers/players.dart';
 import 'Provider/MatchesViewModel.dart';
 import 'Provider/EachLeagueViewModel.dart';
@@ -84,7 +85,7 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       searchViewModel = Provider.of(context, listen: false);
       matchesViewModel = Provider.of(context, listen: false);
-      searchViewModel.getDataSearch('1',"");
+      searchViewModel.getHomeDataSearch('1');
 
       initDate();
       tabController = new TabController(length: 10, vsync: this);
@@ -307,7 +308,6 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
   }
 
   searchIcon() {
-    //List<SearchResponseModel> searchItems=[];
     TextEditingController search = TextEditingController();
     return showDialog(
         context: context,
@@ -322,7 +322,7 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
                     borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: Consumer<SearchViewModel>(
                   builder: (context, provider, child) {
-                    var data = provider.searchItems;
+                    var data = provider.searchItemsHome;
                     return Column(
                       children: <Widget>[
                         Padding(
@@ -336,7 +336,7 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
                                     color: Theme.of(context).colorScheme.primaryVariant
                                 ),
                                 onPressed: () {
-                                  provider.getDataSearch('1',"");
+                                  provider.getHomeDataSearch('1');
                                   Navigator.pop(context);
                                 },
                               ),
@@ -347,7 +347,7 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
                                 child: TextField(
                                   onChanged: (value) {
                                     data.where((element) => element.text.toLowerCase().contains(value)).toList();
-                                    provider.getDataSearch(value,"");
+                                    provider.getHomeDataSearch(value);
                                   },
                                   controller: search,
                                   textCapitalization:
@@ -366,8 +366,8 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
                         Expanded(
                           child: ListView.builder(
                               itemCount: search.text.isNotEmpty
-                                  ? provider.searchItems.length
-                                  : 15,
+                                  ? provider.searchItemsHome.length
+                                  : provider.searchItemsHome.length,
                               itemBuilder: (BuildContext context, index) {
                                 var itemData = data[index];
                                 return Container(
@@ -376,7 +376,7 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
                                         left: 10, right: 10, bottom: 10,top: 10),
                                     child: GestureDetector(
                                       onTap: () {
-                                        selectedCategory(provider, index, search, provider.searchItems);
+                                        selectedCategory(provider, index, search, provider.searchItemsHome);
                                       },
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -445,12 +445,12 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
             },
           );
         }).then((value) {
-      searchViewModel.getDataSearch('1',"");
+      searchViewModel.getHomeDataSearch('1');
     });
   }
 
   selectedCategory(SearchViewModel provider, index, search, searchItems) {
-    var data = provider.searchItems[index];
+    var data = provider.searchItemsHome[index];
     if (data.category == 'البطولات') {
       Navigator.push(
           context,

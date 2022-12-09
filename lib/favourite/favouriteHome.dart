@@ -66,19 +66,33 @@ class _FavouriteHomeState extends State<FavouriteHome>
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.white),
           backgroundColor: Theme.of(context).primaryColor,
-          title: Row(
-            children: <Widget>[
-              Text(
-                "المفضلة".tr,
-                style: TextStyle(color: Colors.white, fontFamily: 'Vazirmatn',fontSize: 20),
-              )
-            ],
+          title: Padding(
+            padding: const EdgeInsets.only(right: 0),
+            child: Row(
+              children: <Widget>[
+                Text(
+                  "المفضلة".tr,
+                  style: TextStyle(fontFamily: 'Vazirmatn', color: Colors.white,fontSize: 20),
+                )
+              ],
+            ),
           ),
-          bottom: TabBar(
-            controller: tabController,
-              indicatorColor: Colors.white,
-              tabs:tabs
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(60),
+            child: DefaultTabController(
+              length: 2,
+              child: Container(
+                color: Theme.of(context).backgroundColor,
+                height: 60,
+                child: TabBar(
+                  controller: tabController,
+                    indicatorColor: Colors.white,
+                    tabs:tabs
+                ),
+              ),
+            ),
           ),
         ),
         body: TabBarView(

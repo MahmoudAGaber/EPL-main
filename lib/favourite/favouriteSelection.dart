@@ -45,372 +45,377 @@ class _FavouriteSelectionState extends State<FavouriteSelection> {
       padding: const EdgeInsets.all(12),
       child: Consumer<FavouriteViewModel>(
         builder: (context,provider,child){
-          return  Column(
-            children: [
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.star,color: Colors.orange,size: 16,),
-                      SizedBox(width: 10,),
-                      Text("المفضلة",style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 14))
-                    ],
-                  ),
-                  SizedBox(height: 5,),
-                  Card(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 12,bottom: 12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 65,
-                            width: MediaQuery.of(context).size.width*0.91,
-                            child: ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                itemCount: provider.favouriteModelList == null ?1 :provider.favouriteModelList.length +1,
-                                itemBuilder:(context,index){
-                                  return index ==0
-                                      ?Padding(
-                                    padding: const EdgeInsets.only(right: 18,left: 18),
-                                        child: Column(
-                                    children: [
-                                        Container(
-                                          height: 38,width: 38,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(50),
-                                            border: Border.all(
-                                                color: Theme.of(context).primaryColor,
-                                                width: 2
-                                            ),
-                                          ),
-                                          child: Selector<SearchViewModel,bool>(
-                                            selector: (contex,provider) =>
-                                            provider.getSearchLoading,
-                                            builder: (context,bool,child){
-                                              return FittedBox(
-                                                child: IconButton(
-                                                    onPressed: (){
-                                                      searchViewModel.filterNewsSearch("1","favouritesList");
-                                                      searchIcon("",true,"favouritesList");
-                                                    },
-                                                    icon: Icon(Icons.add,color:Theme.of(context).colorScheme.error,)),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                        SizedBox(height: 5,),
-                                        Text("أضف لاختيارك",style: Theme.of(context).textTheme.bodyText1)
-                                    ],
-                                  ),
-                                      )
-                                      :Padding(
-                                    padding: const EdgeInsets.only(right: 18,left: 18),
-                                    child:Column(
-                                      children: [
-                                        Container(
-                                            height: 35,width: 35,
-                                            child: provider.favouriteModelList[index - 1].image.endsWith('svg')
-                                                ? SvgPicture.network(
-                                                "https://www.eplworld.com${provider.favouriteModelList[index - 1].image}",
-                                                semanticsLabel:
-                                                'Acme Logo')
-                                                : ClipRRect(
-                                                  borderRadius: BorderRadius.circular(50),
-                                                  child: Image.network(provider.favouriteModelList[index - 1].image.endsWith('small')
-                                                  ? "${provider.favouriteModelList[index - 1].image.split('?').first}.jpg"
-                                                  : "https://www.eplworld.com${provider.favouriteModelList[index - 1].image}"),
-                                                )
-                                        ),
-                                        Text(provider.favouriteModelList[index - 1].text,style: Theme.of(context).textTheme.bodyText1)
-                                      ],
-                                    ),
-                                  );
-                                }),
-                          )
-
-                        ],
-                      ),
+          return  SingleChildScrollView(
+            child: Column(
+              children: [
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.star,color: Colors.orange,size: 16,),
+                        SizedBox(width: 10,),
+                        Text("المفضلة",style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 14))
+                      ],
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 12,),
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      Text("الفرق التي تتابعها",style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 14)),
-                    ],
-                  ),
-                  SizedBox(height: 5,),
-                  Card(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 12,bottom: 12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 65,
-                            width: MediaQuery.of(context).size.width*0.91,
-                            child: ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                itemCount: provider.teamsModelList == null ?1 :provider.teamsModelList.length +1,
-                                itemBuilder:(context,index){
-                                  return index ==0
-                                      ?Padding(
-                                    padding: const EdgeInsets.only(right: 18,left: 18),
-                                    child: Column(
+                    SizedBox(height: 5,),
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 12,bottom: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 65,
+                              width: MediaQuery.of(context).size.width*0.91,
+                              child: ListView.builder(
+                                  physics: BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: provider.favouriteModelList == null ?1 :provider.favouriteModelList.length +1,
+                                  itemBuilder:(context,index){
+                                    return index ==0
+                                        ?Padding(
+                                      padding: const EdgeInsets.only(right: 18,left: 18),
+                                          child: Column(
                                       children: [
-                                        Container(
-                                          height: 38,width: 38,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(50),
-                                            border: Border.all(
-                                                color: Theme.of(context).primaryColor,
-                                                width: 2
-                                            ),
-                                          ),
-                                          child: Selector<SearchViewModel,bool>(
-                                            selector: (contex,provider) =>
-                                            provider.getSearchLoading,
-                                            builder: (context,bool,child){
-                                              return FittedBox(
-                                                child: IconButton(
-                                                    onPressed: (){
-                                                      searchViewModel.filterSearch("1","الفرق","teamsList");
-                                                      searchIcon("الفرق",false,"teamsList");
-                                                    },
-                                                    icon: Icon(Icons.add,color:Theme.of(context).colorScheme.error)),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                        SizedBox(height: 5,),
-                                        Text("أضف لاختيارك",style: Theme.of(context).textTheme.bodyText1)
-                                      ],
-                                    ),
-                                  )
-                                      :Padding(
-                                    padding: const EdgeInsets.only(right: 18,left: 18),
-                                    child:Column(
-                                      children: [
-                                        Container(
-                                            height: 35,width: 35,
-                                            child: provider.teamsModelList[index - 1].image.endsWith('svg')
-                                                ? SvgPicture.network(
-                                                "https://www.eplworld.com${provider.teamsModelList[index - 1].image}",
-                                                semanticsLabel:
-                                                'Acme Logo')
-                                                : ClipRRect(
+                                          Container(
+                                            height: 38,width: 38,
+                                            decoration: BoxDecoration(
                                               borderRadius: BorderRadius.circular(50),
-                                              child: Image.network(provider.teamsModelList[index - 1].image.endsWith('small')
-                                                  ? "${provider.teamsModelList[index - 1].image.split('?').first}.jpg"
-                                                  : "https://www.eplworld.com${provider.teamsModelList[index - 1].image}"),
-                                            )
-                                        ),
-                                        Text(provider.teamsModelList[index - 1].text,style: Theme.of(context).textTheme.bodyText1)
-                                      ],
-                                    ),
-                                  );
-                                }),
-                          )
+                                              border: Border.all(
+                                                  color: Theme.of(context).primaryColor,
+                                                  width: 2
+                                              ),
+                                            ),
+                                            child: Selector<SearchViewModel,bool>(
+                                              selector: (contex,provider) =>
+                                              provider.getSearchLoading,
+                                              builder: (context,bool,child){
+                                                return FittedBox(
+                                                  child: IconButton(
+                                                      onPressed: (){
+                                                        searchViewModel.filterNewsSearch("1","favouritesList");
+                                                          searchIcon("",true,"favouritesList");
 
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 12,),
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      Text("البطولات التي تتابعها",style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 14))
-                    ],
-                  ),
-                  SizedBox(height: 5,),
-                  Card(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 12,bottom: 12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-
-
-                          Container(
-                            height: 65,
-                            width: MediaQuery.of(context).size.width*0.91,
-                            child: ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                itemCount: provider.leaguesiteModelList == null ?1 :provider.leaguesiteModelList.length +1,
-                                itemBuilder:(context,index){
-                                  return index ==0
-                                      ?Padding(
-                                    padding: const EdgeInsets.only(right: 18,left: 18),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          height: 38,width: 38,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(50),
-                                            border: Border.all(
-                                                color: Theme.of(context).primaryColor,
-                                                width: 2
+                                                      },
+                                                      icon: Icon(Icons.add,color:Theme.of(context).colorScheme.error,)),
+                                                );
+                                              },
                                             ),
                                           ),
-                                          child: Selector<SearchViewModel,bool>(
-                                            selector: (contex,provider) =>
-                                            provider.getSearchLoading,
-                                            builder: (context,bool,child){
-                                              return FittedBox(
-                                                child: IconButton(
-                                                    onPressed: (){
-                                                      searchViewModel.filterSearch("1","البطولات","leaguesList");
-                                                      searchIcon("البطولات",false,"leaguesList");
-                                                    },
-                                                    icon: Icon(Icons.add,color:Theme.of(context).colorScheme.error)),
-                                              );
-                                            },
+                                          SizedBox(height: 5,),
+                                          Text("أضف لاختيارك",style: Theme.of(context).textTheme.bodyText1)
+                                      ],
+                                    ),
+                                        )
+                                        :Padding(
+                                      padding: const EdgeInsets.only(right: 18,left: 18),
+                                      child:Column(
+                                        children: [
+                                          Container(
+                                              height: 35,width: 35,
+                                              child: provider.favouriteModelList[index - 1].image.endsWith('svg')
+                                                  ? SvgPicture.network(
+                                                  "https://www.eplworld.com${provider.favouriteModelList[index - 1].image}",
+                                                  semanticsLabel:
+                                                  'Acme Logo')
+                                                  : ClipRRect(
+                                                    borderRadius: BorderRadius.circular(50),
+                                                    child: Image.network(provider.favouriteModelList[index - 1].image.endsWith('small')
+                                                    ? "${provider.favouriteModelList[index - 1].image.split('?').first}.jpg"
+                                                    : "https://www.eplworld.com${provider.favouriteModelList[index - 1].image}"),
+                                                  )
                                           ),
-                                        ),
-                                        SizedBox(height: 5,),
-                                        Text("أضف لاختيارك",style: Theme.of(context).textTheme.bodyText1)
-                                      ],
-                                    ),
-                                  )
-                                      :Padding(
-                                    padding: const EdgeInsets.only(right: 18,left: 18),
-                                    child:Column(
-                                      children: [
-                                        Container(
-                                            height: 35,width: 35,
-                                            child: provider.leaguesiteModelList[index - 1].image.endsWith('svg')
-                                                ? SvgPicture.network(
-                                                "https://www.eplworld.com${provider.leaguesiteModelList[index - 1].image}",
-                                                semanticsLabel:
-                                                'Acme Logo')
-                                                : ClipRRect(
-                                              borderRadius: BorderRadius.circular(50),
-                                              child: Image.network(provider.leaguesiteModelList[index - 1].image.endsWith('small')
-                                                  ? "${provider.leaguesiteModelList[index - 1].image.split('?').first}.jpg"
-                                                  : "https://www.eplworld.com${provider.leaguesiteModelList[index - 1].image}"),
-                                            )
-                                        ),
-                                        Text(provider.leaguesiteModelList[index - 1].text,style: Theme.of(context).textTheme.bodyText1)
-                                      ],
-                                    ),
-                                  );
-                                }),
-                          )
+                                          Text(provider.favouriteModelList[index - 1].text,style: Theme.of(context).textTheme.bodyText1)
+                                        ],
+                                      ),
+                                    );
+                                  }),
+                            )
 
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 12,),
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      Text("لاعبون تتابعهم",style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 14))
-                    ],
-                  ),
-                  SizedBox(height: 5,),
-                  Card(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 12,bottom: 12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 65,
-                            width: MediaQuery.of(context).size.width*0.91,
-                            child: ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                itemCount: provider.playerModelList == null ?1 :provider.playerModelList.length +1,
-                                itemBuilder:(context,index){
-                                  return index ==0
-                                      ?Padding(
-                                    padding: const EdgeInsets.only(right: 18,left: 18),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          height: 38,width: 40,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(50),
-                                            border: Border.all(
-                                                color: Theme.of(context).primaryColor,
-                                                width: 2
+                  ],
+                ),
+                SizedBox(height: 12,),
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text("الفرق التي تتابعها",style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 14)),
+                      ],
+                    ),
+                    SizedBox(height: 5,),
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 12,bottom: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 65,
+                              width: MediaQuery.of(context).size.width*0.91,
+                              child: ListView.builder(
+                                  physics: BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: provider.teamsModelList == null ?1 :provider.teamsModelList.length +1,
+                                  itemBuilder:(context,index){
+                                    return index ==0
+                                        ?Padding(
+                                      padding: const EdgeInsets.only(right: 18,left: 18),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            height: 38,width: 38,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(50),
+                                              border: Border.all(
+                                                  color: Theme.of(context).primaryColor,
+                                                  width: 2
+                                              ),
+                                            ),
+                                            child: Selector<SearchViewModel,bool>(
+                                              selector: (contex,provider) =>
+                                              provider.getSearchLoading,
+                                              builder: (context,bool,child){
+                                                return FittedBox(
+                                                  child: IconButton(
+                                                      onPressed: (){
+                                                        searchViewModel.filterSearch("1","الفرق","teamsList");
+                                                          searchIcon("الفرق",false,"teamsList");
+                                                       //
+                                                      },
+                                                      icon: Icon(Icons.add,color:Theme.of(context).colorScheme.error)),
+                                                );
+                                              },
                                             ),
                                           ),
-                                          child: Selector<SearchViewModel,bool>(
-                                            selector: (contex,provider) =>
-                                            provider.getSearchLoading,
-                                            builder: (context,bool,child){
-                                              return FittedBox(
-                                                child: IconButton(
-                                                    onPressed: (){
-                                                      searchViewModel.filterSearch("1","اللاعبين","playersList");
-                                                      searchIcon("اللاعبين",false,"playersList");
-                                                    },
-                                                    icon: Icon(Icons.add,color:Theme.of(context).colorScheme.error)),
-                                              );
-                                            },
+                                          SizedBox(height: 5,),
+                                          Text("أضف لاختيارك",style: Theme.of(context).textTheme.bodyText1)
+                                        ],
+                                      ),
+                                    )
+                                        :Padding(
+                                      padding: const EdgeInsets.only(right: 18,left: 18),
+                                      child:Column(
+                                        children: [
+                                          Container(
+                                              height: 35,width: 35,
+                                              child: provider.teamsModelList[index - 1].image.endsWith('svg')
+                                                  ? SvgPicture.network(
+                                                  "https://www.eplworld.com${provider.teamsModelList[index - 1].image}",
+                                                  semanticsLabel:
+                                                  'Acme Logo')
+                                                  : ClipRRect(
+                                                borderRadius: BorderRadius.circular(50),
+                                                child: Image.network(provider.teamsModelList[index - 1].image.endsWith('small')
+                                                    ? "${provider.teamsModelList[index - 1].image.split('?').first}.jpg"
+                                                    : "https://www.eplworld.com${provider.teamsModelList[index - 1].image}"),
+                                              )
                                           ),
-                                        ),
-                                        SizedBox(height: 5,),
-                                        Text("أضف لاختيارك",style: Theme.of(context).textTheme.bodyText1)
-                                      ],
-                                    ),
-                                  )
-                                      :Padding(
-                                    padding: const EdgeInsets.only(right: 18,left: 18),
-                                    child:Column(
-                                      children: [
-                                        Container(
-                                            height: 35,width: 35,
-                                            child: provider.playerModelList[index - 1].image.endsWith('svg')
-                                                ? SvgPicture.network(
-                                                "https://www.eplworld.com${provider.playerModelList[index - 1].image}",
-                                                semanticsLabel:
-                                                'Acme Logo')
-                                                : ClipRRect(
-                                              borderRadius: BorderRadius.circular(50),
-                                              child: Image.network(provider.playerModelList[index - 1].image.endsWith('small')
-                                                  ? "${provider.playerModelList[index - 1].image.split('?').first}.jpg"
-                                                  : "https://www.eplworld.com${provider.playerModelList[index - 1].image}"),
-                                            )
-                                        ),
-                                        Text(provider.playerModelList[index - 1].text,style: Theme.of(context).textTheme.bodyText1)
-                                      ],
-                                    ),
-                                  );
-                                }),
-                          )
+                                          Text(provider.teamsModelList[index - 1].text,style: Theme.of(context).textTheme.bodyText1)
+                                        ],
+                                      ),
+                                    );
+                                  }),
+                            )
 
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              )
-            ],
+                  ],
+                ),
+                SizedBox(height: 12,),
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text("البطولات التي تتابعها",style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 14))
+                      ],
+                    ),
+                    SizedBox(height: 5,),
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 12,bottom: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 65,
+                              width: MediaQuery.of(context).size.width*0.91,
+                              child: ListView.builder(
+                                  physics: BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: provider.leaguesiteModelList == null ?1 :provider.leaguesiteModelList.length +1,
+                                  itemBuilder:(context,index){
+                                    return index ==0
+                                        ?Padding(
+                                      padding: const EdgeInsets.only(right: 18,left: 18),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            height: 38,width: 38,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(50),
+                                              border: Border.all(
+                                                  color: Theme.of(context).primaryColor,
+                                                  width: 2
+                                              ),
+                                            ),
+                                            child: Selector<SearchViewModel,bool>(
+                                              selector: (contex,provider) =>
+                                              provider.getSearchLoading,
+                                              builder: (context,bool,child){
+                                                return FittedBox(
+                                                  child: IconButton(
+                                                      onPressed: (){
+                                                        searchViewModel.filterSearch("1","البطولات","leaguesList");
+                                                          searchIcon("البطولات",false,"leaguesList");
+
+                                                       //
+                                                      },
+                                                      icon: Icon(Icons.add,color:Theme.of(context).colorScheme.error)),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(height: 5,),
+                                          Text("أضف لاختيارك",style: Theme.of(context).textTheme.bodyText1)
+                                        ],
+                                      ),
+                                    )
+                                        :Padding(
+                                      padding: const EdgeInsets.only(right: 18,left: 18),
+                                      child:Column(
+                                        children: [
+                                          Container(
+                                              height: 35,width: 35,
+                                              child: provider.leaguesiteModelList[index - 1].image.endsWith('svg')
+                                                  ? SvgPicture.network(
+                                                  "https://www.eplworld.com${provider.leaguesiteModelList[index - 1].image}",
+                                                  semanticsLabel:
+                                                  'Acme Logo')
+                                                  : ClipRRect(
+                                                borderRadius: BorderRadius.circular(50),
+                                                child: Image.network(provider.leaguesiteModelList[index - 1].image.endsWith('small')
+                                                    ? "${provider.leaguesiteModelList[index - 1].image.split('?').first}.jpg"
+                                                    : "https://www.eplworld.com${provider.leaguesiteModelList[index - 1].image}"),
+                                              )
+                                          ),
+                                          Text(provider.leaguesiteModelList[index - 1].text,style: Theme.of(context).textTheme.bodyText1)
+                                        ],
+                                      ),
+                                    );
+                                  }),
+                            )
+
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 12,),
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text("لاعبون تتابعهم",style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 14))
+                      ],
+                    ),
+                    SizedBox(height: 5,),
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 12,bottom: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 65,
+                              width: MediaQuery.of(context).size.width*0.91,
+                              child: ListView.builder(
+                                  physics: BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: provider.playerModelList == null ?1 :provider.playerModelList.length +1,
+                                  itemBuilder:(context,index){
+                                    return index ==0
+                                        ?Padding(
+                                      padding: const EdgeInsets.only(right: 18,left: 18),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            height: 38,width: 40,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(50),
+                                              border: Border.all(
+                                                  color: Theme.of(context).primaryColor,
+                                                  width: 2
+                                              ),
+                                            ),
+                                            child: Selector<SearchViewModel,bool>(
+                                              selector: (contex,provider) =>
+                                              provider.getSearchLoading,
+                                              builder: (context,bool,child){
+                                                return FittedBox(
+                                                  child: IconButton(
+                                                      onPressed: (){
+                                                          searchViewModel.filterSearch("1","اللاعبين","playersList");
+                                                          searchIcon("اللاعبين",false,"playersList");
+                                                        //
+                                                      },
+                                                      icon: Icon(Icons.add,color:Theme.of(context).colorScheme.error)),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(height: 5,),
+                                          Text("أضف لاختيارك",style: Theme.of(context).textTheme.bodyText1)
+                                        ],
+                                      ),
+                                    )
+                                        :Padding(
+                                      padding: const EdgeInsets.only(right: 18,left: 18),
+                                      child:Column(
+                                        children: [
+                                          Container(
+                                              height: 35,width: 35,
+                                              child: provider.playerModelList[index - 1].image.endsWith('svg')
+                                                  ? SvgPicture.network(
+                                                  "https://www.eplworld.com${provider.playerModelList[index - 1].image}",
+                                                  semanticsLabel:
+                                                  'Acme Logo')
+                                                  : ClipRRect(
+                                                borderRadius: BorderRadius.circular(50),
+                                                child: Image.network(provider.playerModelList[index - 1].image.endsWith('small')
+                                                    ? "${provider.playerModelList[index - 1].image.split('?').first}.jpg"
+                                                    : "https://www.eplworld.com${provider.playerModelList[index - 1].image}"),
+                                              )
+                                          ),
+                                          Text(provider.playerModelList[index - 1].text,style: Theme.of(context).textTheme.bodyText1)
+                                        ],
+                                      ),
+                                    );
+                                  }),
+                            )
+
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
           );
         },
       ),
@@ -420,7 +425,6 @@ class _FavouriteSelectionState extends State<FavouriteSelection> {
 
 
   searchIcon(String filter,bool favourite,String boxName) {
-    //List<SearchResponseModel> searchItems=[];
     TextEditingController search = TextEditingController();
     return showDialog(
         context: context,
@@ -453,11 +457,7 @@ class _FavouriteSelectionState extends State<FavouriteSelection> {
                                 onPressed: () {
                                   provider.filterSearch('1',filter,boxName);
                                   Navigator.pop(context);
-                                  setState(() {
-                                    searchViewModel.searchItems.clear();
-                                    searchViewModel.searchItems = searchItemsClear;
-                                    data.clear();
-                                  });
+
                                 },
                               ),
                               SizedBox(
@@ -591,10 +591,6 @@ class _FavouriteSelectionState extends State<FavouriteSelection> {
           );
         }).then((value) {
       searchViewModel.filterSearch('1',filter,boxName);
-      setState(() {
-        searchViewModel.searchItems.clear();
-        searchViewModel.searchItems = searchItemsClear;
-      });
 
     });
   }

@@ -32,6 +32,35 @@ class RequestHandler {
   LocalStorageRepo localStorageRepo = LocalStorageRepo();
 
   //Search
+
+  Future<MainResponse> homeSearch({
+    endPoint,
+    String parma = '',
+  }) async {
+    Response response = await http.get(Uri.parse(mainUrl + endPoint + parma),
+        headers: {"Content-Type": "application/json; charset=UTF-8"});
+
+
+    switch (response.statusCode) {
+      case 200:
+        mainResponse.data = SearchResponseModel.ListFromJson(json.decode(response.body.toString()),[]);
+        mainResponse.msg = 'Success';
+        return mainResponse;
+      case 400:
+        throw BadRequestException(response.body.toString());
+      case 401:
+      case 403:
+        throw UnauthorisedException(response.body.toString());
+      case 500:
+        mainResponse.msg = 'failed';
+        return mainResponse;
+      default:
+        throw FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+    }
+  }
+
+
   Future<MainResponse> search({
     endPoint,
     String parma = '',
