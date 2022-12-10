@@ -152,6 +152,7 @@ class _LeaguesState extends State<Leagues> with SingleTickerProviderStateMixin {
                         )
                       : ListView(
                           children: [
+                            /*
                             Padding(
                               padding: const EdgeInsets.only(top: 10),
                               child: Card(
@@ -513,6 +514,8 @@ class _LeaguesState extends State<Leagues> with SingleTickerProviderStateMixin {
                                 ],
                               ),
                             ),
+
+                             */
                             Padding(
                               padding: const EdgeInsets.only(top: 10, bottom: 8),
                               child: ListView.builder(

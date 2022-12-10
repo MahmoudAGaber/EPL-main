@@ -35,10 +35,7 @@ class _PostionsState extends State<Postions> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       oneLeagueViewModel = Provider.of(context, listen: false);
-      oneLeagueViewModel.getTables(
-        widget.url,
-        'tables',
-      );
+      oneLeagueViewModel.getTables(widget.url, 'tables',);
       dropList = oneLeagueViewModel.dropsTableRows;
       selectedItem = dropList[0];
     });

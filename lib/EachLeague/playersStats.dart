@@ -60,6 +60,7 @@ class _playersStatsState extends State<playersStats> {
                 )
               : Padding(
                 padding: const EdgeInsets.all(12),
+
                 child: ListView.builder(
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,

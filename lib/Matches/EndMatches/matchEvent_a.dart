@@ -1022,11 +1022,11 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                   Container(
                     child: Text(
                       provider.eventsModel[index].details.time.toString(),
-                      style: Theme.of(context).textTheme.headline2
+                      style: Theme.of(context).textTheme.headline2.copyWith(fontSize: 14,fontWeight: FontWeight.bold)
                     ),
                   ),
                   SizedBox(
-                    width: 20,
+                    width: 10,
                   ),
                   Icon(
                     MdiIcons.soccer,
@@ -1083,11 +1083,11 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                   Container(
                     child: Text(
                       provider.eventsModel[index].details.time.toString(),
-                        style: Theme.of(context).textTheme.headline2
+                        style: Theme.of(context).textTheme.headline2.copyWith(fontSize: 14,fontWeight: FontWeight.bold)
                     ),
                   ),
                   SizedBox(
-                    width: 20,
+                    width: 10,
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -1166,11 +1166,11 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                   Container(
                     child: Text(
                       provider.eventsModel[index].details.time.toString(),
-                        style: Theme.of(context).textTheme.headline2
+                        style: Theme.of(context).textTheme.headline2.copyWith(fontSize: 14,fontWeight: FontWeight.bold)
                     ),
                   ),
                   SizedBox(
-                    width: 20,
+                    width: 10,
                   ),
                   Icon(
                     MdiIcons.television,
@@ -1207,17 +1207,18 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
             child: Container(
               child: Row(
                 children: <Widget>[
+                  Text("${provider.eventsModel[index].details.status}".tr,
+                      style: Theme.of(context).textTheme.headline2.copyWith(fontSize: 14,fontWeight: FontWeight.bold)),
+                  SizedBox(
+                    width: 5,
+                  ),
                   Icon(
                     MdiIcons.timer,
                     size: 22,
                     color: Theme.of(context).colorScheme.primaryVariant,
                   ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text("${provider.eventsModel[index].details.status}".tr,
-                      style:Theme.of(context).textTheme.headline2),
                 ],
+
               ),
             ),
           );
@@ -1239,11 +1240,11 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                     Container(
                       child: Text(
                         provider.eventsModel[index].details.time.toString(),
-                          style: Theme.of(context).textTheme.headline2
+                          style: Theme.of(context).textTheme.headline2.copyWith(fontSize: 14,fontWeight: FontWeight.bold)
                       ),
                     ),
                     SizedBox(
-                      width: 20,
+                      width: 10,
                     ),
                     Container(
                       height: 23,
@@ -1280,11 +1281,11 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                     Container(
                       child: Text(
                         provider.eventsModel[index].details.time.toString(),
-                          style: Theme.of(context).textTheme.headline2
+                          style: Theme.of(context).textTheme.headline2.copyWith(fontSize: 14,fontWeight: FontWeight.bold)
                       ),
                     ),
                     SizedBox(
-                      width: 20,
+                      width: 10,
                     ),
                     Container(
                       height: 23,
@@ -1306,6 +1307,55 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
         ));
   }
 
+  Widget _penaltyShot(String name, index) {
+    return Padding(
+        padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+        child: Consumer<EachMatchViewModel>(
+          builder: (context, provider, child) {
+            return Directionality(
+              textDirection: provider.eventsModel[index].linkedTo == 'home'
+                  ? TextDirection.rtl
+                  : TextDirection.ltr,
+              child: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                          provider.eventsModel[index].details.time.toString(),
+                          style: Theme.of(context).textTheme.headline2.copyWith(fontSize: 14,fontWeight: FontWeight.bold)
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Stack(
+                      children: [
+                        Container(
+                          height: 25,width: 25,
+                          child: Image.asset("assets/penalty1.png",color:provider.eventsModel[index].details.type == "scored" ? Colors.green:Colors.red ,),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(provider.eventsModel[index].details.belongsToName.tr,
+                        style:Theme.of(context).textTheme.headline2.copyWith(fontSize: 13)),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text("( ${provider.eventsModel[index].details.homeScore} - ${provider.eventsModel[index].details.awayScore} )",
+                        style:Theme.of(context).textTheme.headline2.copyWith(fontSize: 13))
+                  ],
+                ),
+              ),
+            );
+          },
+        ));
+  }
+
   Widget Event(index, name) {
     return Padding(
       padding: const EdgeInsets.only(top: 8, bottom: 8),
@@ -1318,24 +1368,20 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                          child: provider.eventsModel[index].details.name ==
-                                  "goal"
+                          child: provider.eventsModel[index].details.name == "goal"
                               ? _goal(name, index)
-                              : provider.eventsModel[index].details.name ==
-                                      "yellowCard"
+                              : provider.eventsModel[index].details.name == "yellowCard"
                                   ? _yellow(name, index)
-                                  : provider.eventsModel[index].details.name ==
-                                          "redCard"
+                                  : provider.eventsModel[index].details.name == "redCard"
                                       ? _redCard(name, index)
-                                      : provider.eventsModel[index].details
-                                                  .name ==
-                                              "substitute"
+                                      : provider.eventsModel[index].details.name == "substitute"
                                           ? _switch(name, index)
-                                          : provider.eventsModel[index].details
-                                                      .name ==
-                                                  "VAR"
+                                          : provider.eventsModel[index].details.name == "VAR"
                                               ? _var(name, index)
-                                              : Container()),
+                                              :  provider.eventsModel[index].details.name == "penaltyShot"
+                              ? _penaltyShot(name, index)
+                              :Container()
+                      ),
                     ],
                   )
                 : provider.eventsModel[index].linkedTo == "away"
@@ -1353,7 +1399,9 @@ class _MatchEvent_aState extends State<MatchEvent_a> {
                                                 .name ==
                                             "substitute"
                                         ? _switch(name, index)
-                                        : Container(),
+                                :  provider.eventsModel[index].details.name == "penaltyShot"
+                                ? _penaltyShot(name, index)
+                                :Container()
                           ),
                         ],
                       )

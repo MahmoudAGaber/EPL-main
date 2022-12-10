@@ -30,6 +30,7 @@ class SearchViewModel with ChangeNotifier{
 
     );
     searchItemsHome =  response.data;
+    //print("Helllllo${searchItemsHome[1].category}");
 
     notifyListeners();
   }

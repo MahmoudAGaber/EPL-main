@@ -82,7 +82,7 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp)async{
       searchViewModel = Provider.of(context, listen: false);
       matchesViewModel = Provider.of(context, listen: false);
       searchViewModel.getHomeDataSearch('1');
@@ -137,14 +137,20 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
                     ),
 
                     SizedBox(width: 20,),
-                    GestureDetector(
-                      onTap: (){
-                        searchIcon();
+                    Selector<SearchViewModel,bool>(
+                      selector: (context,provider) => provider.getSearchLoading,
+                      builder: (context,bool,child){
+                        return GestureDetector(
+                          onTap: (){
+                            searchViewModel.getHomeDataSearch("1");
+                            searchIcon();
+                          },
+                          child: Container(
+                            height: 25,width: 25,
+                            child: Image.asset('assets/searchIcon.png'),
+                          ),
+                        );
                       },
-                      child: Container(
-                        height: 25,width: 25,
-                        child: Image.asset('assets/searchIcon.png'),
-                      ),
                     ),
                     SizedBox(width: 25,),
                     GestureDetector(
@@ -323,6 +329,7 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
                 child: Consumer<SearchViewModel>(
                   builder: (context, provider, child) {
                     var data = provider.searchItemsHome;
+                    //print("Hellllo${data[1].category}");
                     return Column(
                       children: <Widget>[
                         Padding(
