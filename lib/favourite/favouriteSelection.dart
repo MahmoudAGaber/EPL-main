@@ -87,20 +87,14 @@ class _FavouriteSelectionState extends State<FavouriteSelection> {
                                                 width: 2
                                             ),
                                           ),
-                                          child: Selector<SearchViewModel,bool>(
-                                            selector: (contex,provider) =>
-                                            provider.getSearchLoading,
-                                            builder: (context,bool,child){
-                                              return FittedBox(
+                                          child:FittedBox(
                                                 child: IconButton(
                                                     onPressed: (){
-                                                      searchViewModel.filterNewsSearch("1","favouritesList");
+                                                     // searchViewModel.filterNewsSearch("1","favouritesList");
                                                       searchIcon("",true,"favouritesList");
                                                     },
                                                     icon: Icon(Icons.add,color:Theme.of(context).colorScheme.error,)),
-                                              );
-                                            },
-                                          ),
+                                              )
                                         ),
                                         SizedBox(height: 5,),
                                         Text("أضف لاختيارك",style: Theme.of(context).textTheme.bodyText1)
@@ -177,19 +171,14 @@ class _FavouriteSelectionState extends State<FavouriteSelection> {
                                                 width: 2
                                             ),
                                           ),
-                                          child: Selector<SearchViewModel,bool>(
-                                            selector: (contex,provider) =>
-                                            provider.getSearchLoading,
-                                            builder: (context,bool,child){
-                                              return FittedBox(
+                                          child:FittedBox(
                                                 child: IconButton(
                                                     onPressed: (){
-                                                      searchViewModel.filterSearch("1","الفرق","teamsList");
+                                                      //searchViewModel.filterSearch("1","الفرق","teamsList");
                                                       searchIcon("الفرق",false,"teamsList");
                                                     },
                                                     icon: Icon(Icons.add,color:Theme.of(context).colorScheme.error)),
-                                              );
-                                            },
+
                                           ),
                                         ),
                                         SizedBox(height: 5,),
@@ -269,20 +258,15 @@ class _FavouriteSelectionState extends State<FavouriteSelection> {
                                                 width: 2
                                             ),
                                           ),
-                                          child: Selector<SearchViewModel,bool>(
-                                            selector: (contex,provider) =>
-                                            provider.getSearchLoading,
-                                            builder: (context,bool,child){
-                                              return FittedBox(
+                                          child:FittedBox(
                                                 child: IconButton(
                                                     onPressed: (){
-                                                      searchViewModel.filterSearch("1","البطولات","leaguesList");
+                                                      //searchViewModel.filterSearch("1","البطولات","leaguesList");
                                                       searchIcon("البطولات",false,"leaguesList");
                                                     },
-                                                    icon: Icon(Icons.add,color:Theme.of(context).colorScheme.error)),
-                                              );
-                                            },
-                                          ),
+                                                    icon: Icon(Icons.add,color:Theme.of(context).colorScheme.error)
+                                                )
+                                          )
                                         ),
                                         SizedBox(height: 5,),
                                         Text("أضف لاختيارك",style: Theme.of(context).textTheme.bodyText1)
@@ -359,19 +343,14 @@ class _FavouriteSelectionState extends State<FavouriteSelection> {
                                                 width: 2
                                             ),
                                           ),
-                                          child: Selector<SearchViewModel,bool>(
-                                            selector: (contex,provider) =>
-                                            provider.getSearchLoading,
-                                            builder: (context,bool,child){
-                                              return FittedBox(
+                                          child:  FittedBox(
                                                 child: IconButton(
                                                     onPressed: (){
-                                                      searchViewModel.filterSearch("1","اللاعبين","playersList");
+                                                     // searchViewModel.filterSearch("1","اللاعبين","playersList");
                                                       searchIcon("اللاعبين",false,"playersList");
                                                     },
-                                                    icon: Icon(Icons.add,color:Theme.of(context).colorScheme.error)),
-                                              );
-                                            },
+                                                    icon: Icon(Icons.add,color:Theme.of(context).colorScheme.error)
+                                                )
                                           ),
                                         ),
                                         SizedBox(height: 5,),

@@ -169,7 +169,7 @@ Future<void> main() async {
       providers: [
        // ChangeNotifierProvider(create: (_) => EachLeagueViewModel()),
         ChangeNotifierProvider(create: (_) => MatchesViewModel()),
-        //ChangeNotifierProvider(create: (_) => SearchViewModel()),
+        ChangeNotifierProvider(create: (_) => SearchViewModel()),
         ChangeNotifierProvider(create: (_) => EachMatchViewModel()),
         ChangeNotifierProvider(create: (_) => LeaguesViewModel()),
         ChangeNotifierProvider(create: (_) => NewsViewModel()),

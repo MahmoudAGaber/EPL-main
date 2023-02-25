@@ -262,7 +262,7 @@ class _MatchEventsState extends State<MatchEvents> {
                                           'ملعب المباراة',
                                             style: Theme.of(context).textTheme.bodyText1
                                         ),
-                                        Text(
+                                        provider.matchDetailsModel.groundName==null?Container(): Text(
                                           provider.matchDetailsModel.groundName.tr,
                                           style: Theme.of(context).textTheme.bodyText2,
                                           maxLines: 2,
@@ -464,7 +464,7 @@ class _MatchEventsState extends State<MatchEvents> {
                   SizedBox(height: 5,),
                     Container(
                     width: MediaQuery.of(context).size.width,
-                    child: provider.tablesModelList[0].list.isEmpty || provider.tablesModelList[0].list.length > 1
+                    child: provider.tablesModelList == null || provider.tablesModelList[0].list.length > 1
                         ?Container()
                         :Container(
                       width: MediaQuery.of(context).size.width,
