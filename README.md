@@ -14,7 +14,8 @@ Do not miss anything through the application, as you will receive the latest new
 
 ## Screenshots
 
-![Screenshot 1](/screenshots/screenShot1.png)
-![Screenshot 2](/screenshots/screenShot2.png)
-![Screenshot 3](/screenshots/screenshot3.png)
-
+<div style="display: flex;">
+<img src="/screenshots/screenShot1.png" width="250" height="450" alt="Screenshot 1">
+<img src="/screenshots/screenShot2.png" width="250" height="450" alt="Screenshot 2">
+<img src="/screenshots/screenShot3.png" width="250" height="450" alt="Screenshot 3">
+</div>
