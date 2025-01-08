@@ -2,7 +2,7 @@ class MainResponse{
   String msg;
   dynamic data;
 
-  MainResponse({this.msg, this.data});
+  MainResponse({required this.msg, this.data});
 
   factory MainResponse.json(Map json){
     return MainResponse(
