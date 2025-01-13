@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 
 import '../../../shared/Views/custom/custom_loader.dart';
-import '../../playrers/screens/players.dart';
+import '../../playrers/screens/playerHome.dart';
 
 
 class TeamSquad extends ConsumerStatefulWidget {
@@ -30,7 +30,7 @@ class _TeamSquadState extends ConsumerState<TeamSquad> {
 
   @override
   Widget build(BuildContext context) {
-    var squad = ref.watch(SquadProvider);
+    var squad = ref.watch(teamSquadProvider);
     return squad.handelState(
         onLoading: (state)=> CustomLoader(),
         onSuccess: (state)=> Padding(
@@ -62,7 +62,7 @@ class _TeamSquadState extends ConsumerState<TeamSquad> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Players(playerId: ref.read(SquadProvider.notifier).getCoach().first.personId,)));
+                                  builder: (context) => Players(playerId: ref.read(teamSquadProvider.notifier).getCoach().first.personId,)));
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(top: 8,bottom: 8,left: 16,right: 16),
@@ -96,7 +96,7 @@ class _TeamSquadState extends ConsumerState<TeamSquad> {
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            Text(ref.read(SquadProvider.notifier).getCoach().first.name,
+                                            Text(ref.read(teamSquadProvider.notifier).getCoach().first.name,
                                               style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 13),
                                               overflow: TextOverflow.visible,
                                             ),
@@ -114,7 +114,7 @@ class _TeamSquadState extends ConsumerState<TeamSquad> {
                                                 SizedBox(
                                                   width: 8,
                                                 ),
-                                                Text(ref.read(SquadProvider.notifier).getCoach().first.nationality,
+                                                Text(ref.read(teamSquadProvider.notifier).getCoach().first.nationality,
                                                     style: Theme.of(context).textTheme.bodySmall
                                                 )
                                               ],
@@ -158,8 +158,8 @@ class _TeamSquadState extends ConsumerState<TeamSquad> {
                             children: <Widget>[
                               Expanded(
                                 child: Column(
-                                  children: List.generate(ref.read(SquadProvider.notifier).getGoalKeepers().length, (index){
-                                    var goalKeeper = ref.read(SquadProvider.notifier).getGoalKeepers()[index];
+                                  children: List.generate(ref.read(teamSquadProvider.notifier).getGoalKeepers().length, (index){
+                                    var goalKeeper = ref.read(teamSquadProvider.notifier).getGoalKeepers()[index];
                                           return Padding(
                                             padding: const EdgeInsets.only(top: 8,bottom: 8),
                                             child: Row(
@@ -260,8 +260,8 @@ class _TeamSquadState extends ConsumerState<TeamSquad> {
                             children: <Widget>[
                               Expanded(
                                 child: Column(
-                                  children: List.generate(ref.read(SquadProvider.notifier).getDefenders().length, (index){
-                                    var defender = ref.read(SquadProvider.notifier).getDefenders()[index];
+                                  children: List.generate(ref.read(teamSquadProvider.notifier).getDefenders().length, (index){
+                                    var defender = ref.read(teamSquadProvider.notifier).getDefenders()[index];
                                     return Padding(
                                       padding: const EdgeInsets.only(top: 8,bottom: 8),
                                       child: Row(
@@ -362,8 +362,8 @@ class _TeamSquadState extends ConsumerState<TeamSquad> {
                             children: <Widget>[
                               Expanded(
                                 child: Column(
-                                  children: List.generate(ref.read(SquadProvider.notifier).getMidfielders().length, (index){
-                                    var midfielder = ref.read(SquadProvider.notifier).getMidfielders()[index];
+                                  children: List.generate(ref.read(teamSquadProvider.notifier).getMidfielders().length, (index){
+                                    var midfielder = ref.read(teamSquadProvider.notifier).getMidfielders()[index];
                                     return Padding(
                                       padding: const EdgeInsets.only(top: 8,bottom: 8),
                                       child: Row(
@@ -464,8 +464,8 @@ class _TeamSquadState extends ConsumerState<TeamSquad> {
                             children: <Widget>[
                               Expanded(
                                 child: Column(
-                                  children: List.generate(ref.read(SquadProvider.notifier).getAttackers().length, (index){
-                                    var attacker = ref.read(SquadProvider.notifier).getAttackers()[index];
+                                  children: List.generate(ref.read(teamSquadProvider.notifier).getAttackers().length, (index){
+                                    var attacker = ref.read(teamSquadProvider.notifier).getAttackers()[index];
                                     return Padding(
                                       padding: const EdgeInsets.only(top: 8,bottom: 8),
                                       child: Row(

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../shared/Utils/date_converter.dart';
 import '../../../shared/Views/custom/custom_loader.dart';
+import '../../../webView.dart';
 
 
 class VideoTeam extends ConsumerStatefulWidget {
@@ -27,7 +28,7 @@ class _VideoTeamState extends ConsumerState<VideoTeam> {
 
   @override
   Widget build(BuildContext context) {
-    var videos = ref.watch(TeamVideosProvider);
+    var videos = ref.watch(teamVideosProvider);
 
     return videos.handelState(
         onLoading: (state) => CustomLoader(),
@@ -50,13 +51,8 @@ class _VideoTeamState extends ConsumerState<VideoTeam> {
                     width: MediaQuery.of(context).size.width,
                     child: GestureDetector(
                       onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => webView(
-                        //           url:
-                        //           "https://www.eplworld.com${provider.videoModelList[index].url}",
-                        //         )));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> WebView(url: "https://www.youtube.com/watch?v=${item.videoId}")));
+
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,

@@ -9,6 +9,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 import '../../../shared/Utils/date_converter.dart';
 import '../../../shared/Views/custom/custom_loader.dart';
+import '../../../webView.dart';
 
 
 class Videos extends ConsumerStatefulWidget {
@@ -97,7 +98,7 @@ class _VideosState extends ConsumerState<Videos> with SingleTickerProviderStateM
                 children: <Widget>[
                   GestureDetector(
                     onTap: () {
-                      // Navigate to video details page
+                     Navigator.push(context, MaterialPageRoute(builder: (context)=> WebView(url: "https://www.youtube.com/watch?v=${video.videoId}")));
                     },
                     child: Card(
                       shape: RoundedRectangleBorder(
@@ -170,7 +171,7 @@ class _VideosState extends ConsumerState<Videos> with SingleTickerProviderStateM
                     right: MediaQuery.of(context).size.width * 0.42,
                     child: GestureDetector(
                       onTap: () {
-                        // Navigate to video details
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> WebView(url: "https://www.youtube.com/watch?v=${video.videoId}")));
                       },
                       child: Icon(
                         Icons.play_arrow_rounded,

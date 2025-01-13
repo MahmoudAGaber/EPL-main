@@ -1,4 +1,5 @@
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:epl/presentation/fixture/screens/EndMatches/matchEvent_a.dart';
 import 'package:epl/presentation/fixture/screens/EndMatches/matchInfo_a.dart';
 import 'package:epl/presentation/fixture/screens/matchInfo.dart';
@@ -17,7 +18,7 @@ import 'presentation/home/screens/widgets/More.dart';
 import 'presentation/home/screens/SplashScreen.dart';
 import 'presentation/home/screens/widgets/clanderbar.dart';
 import 'lang/LocalizationService.dart';
-import 'presentation/playrers/screens/players.dart';
+import 'presentation/playrers/screens/playerHome.dart';
 import 'presentation/team/screens/teamHome.dart';
 import 'presentation/team/screens/teamNews.dart';
 import 'presentation/team/screens/teamSquad.dart';
@@ -133,6 +134,13 @@ Widget NoMatches() {
 
 
 Future<void> main() async {
+  FlutterError.onError = (FlutterErrorDetails details) {
+    if (details.exceptionAsString().contains('_ClientSocketException')) {
+      // Suppress _ClientSocketException logs
+      return;
+    }
+    FlutterError.dumpErrorToConsole(details);
+  };
   WidgetsFlutterBinding.ensureInitialized();
   final directory = await getApplicationDocumentsDirectory();
   Hive.init(directory.path);
@@ -177,14 +185,14 @@ class _MyAppState extends ConsumerState<MyApp> {
               home: SplashScreen(),
               routes: <String, WidgetBuilder>{
                 "/matchInfo": (BuildContext context) =>  MatchInfo(),
-                "/matchInfo_a": (BuildContext context) =>  matchInfo_a(),
+               // "/matchInfo_a": (BuildContext context) =>  matchInfo_a(),
                 "/eachLeague": (BuildContext context) =>  LeagueHome(),
                 "/eachTeam": (BuildContext context) =>  HomeTeam(),
                 "/players": (BuildContext context) =>  Players(),
                 "/transferCenter": (BuildContext context) => transferCenter(),
                 "/clanderbar": (BuildContext context) =>  clanderbar(),
                 "/tv": (BuildContext context) =>  tv(),
-                "/matchEvent_a": (BuildContext context) =>  MatchEvent_a(),
+               // "/matchEvent_a": (BuildContext context) =>  MatchEvent_a(),
                 "/setting": (BuildContext context) =>  setting(),
                 "/teamNews": (BuildContext context) =>  TeamNews(),
                 "/VideoTeam": (BuildContext context) =>  VideoTeam(),

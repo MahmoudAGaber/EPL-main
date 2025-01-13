@@ -1,5 +1,6 @@
 
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -63,4 +64,31 @@ class _CustomChatImageViewState extends State<CustomChatImageView> {
 }
 
 
+
+class CustomImage extends StatelessWidget {
+  String imgUrl;
+  CustomImage({super.key,required this.imgUrl});
+
+  @override
+  Widget build(BuildContext context) {
+     try {
+      return CachedNetworkImage(
+        imageUrl: imgUrl,
+        placeholder: (context, url) => SizedBox(),
+        errorWidget: (context, url, error) => CircleAvatar(
+          backgroundColor: Colors.grey,
+          child: Icon(Icons.image_not_supported, color: Colors.white),
+        ),
+        httpHeaders: {'username':'eplworld','password':'ew1o.d1ewpeepooe1o.l'},
+      );
+    } catch (_) {
+      return CircleAvatar(
+        backgroundColor: Colors.grey,
+        child: Icon(Icons.image_not_supported, color: Colors.white),
+      );
+    }
+    return CircleAvatar();
+
+  }
+}
 

@@ -1,4 +1,5 @@
 import 'package:epl/Data/StateModel.dart';
+import 'package:epl/shared/Views/custom/custom_imageView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -228,12 +229,7 @@ class _profileState extends ConsumerState<PlayerProfile> {
                                           Container(
                                             width: 18,
                                             height: 18,
-                                            child:Image.network(
-                                              "${Constants.countryImage}${CountryShortName.country["${player.data!.person.nationalityId}"]}.png",
-                                              errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                return CircleAvatar(backgroundColor: Colors.grey,);
-                                              },
-                                            ),
+                                            child:CustomImage(imgUrl:"${Constants.countryImage}${CountryShortName.country["${player.data!.person.nationalityId}"]}.png" ,)
                                           ),
                                           SizedBox(
                                             width: 5,

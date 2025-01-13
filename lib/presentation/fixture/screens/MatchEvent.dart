@@ -1,6 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:epl/Data/StateModel.dart';
 import 'package:epl/domain/Models/Event.dart';
 import 'package:epl/domain/Models/Standing.dart';
+import 'package:epl/shared/Views/custom/custom_imageView.dart';
+import '../../../domain/Models/GroupStandings.dart';
 import '../../../shared/Utils/Constants.dart';
 import '../../../shared/Utils/date_converter.dart';
 import 'package:flutter/material.dart';
@@ -91,12 +94,7 @@ class _MatchEventsState extends ConsumerState<MatchEvents> {
                                           child: SizedBox(
                                             width: 35,
                                             height: 35,
-                                            child: Image.network(
-                                              "${Constants.teamImage}${widget.homeId}.png",
-                                              errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                return CircleAvatar(backgroundColor: Colors.grey,);
-                                              },
-                                            ),
+                                            child:CustomImage(imgUrl: "${Constants.teamImage}${widget.homeId}.png",)
                                           ),
                                         ),
                                         Container(
@@ -116,12 +114,7 @@ class _MatchEventsState extends ConsumerState<MatchEvents> {
                                           child: SizedBox(
                                             width: 35,
                                             height: 35,
-                                            child: Image.network(
-                                              "${Constants.teamImage}${widget.awayId}.png",
-                                              errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                return CircleAvatar(backgroundColor: Colors.grey,);
-                                              },
-                                            ),
+                                              child:CustomImage(imgUrl: "${Constants.teamImage}${widget.homeId}.png",)
                                           ),
                                         ),
                                       ],
@@ -373,12 +366,7 @@ class _MatchEventsState extends ConsumerState<MatchEvents> {
                                                       SizedBox(
                                                         width: 25,
                                                         height: 25,
-                                                        child: Image.network(
-                                                          "${Constants.teamImage}${widget.homeId}.png",
-                                                          errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                            return CircleAvatar(backgroundColor: Colors.grey,);
-                                                          },
-                                                        ),
+                                                        child:CustomImage(imgUrl:"${Constants.teamImage}${widget.homeId}.png",)
                                                       ),
                                                       SizedBox(
                                                         width: 10,
@@ -420,12 +408,7 @@ class _MatchEventsState extends ConsumerState<MatchEvents> {
                                                        SizedBox(
                                                         width: 25,
                                                         height: 25,
-                                                        child: Image.network(
-                                                          "${Constants.teamImage}${widget.awayId}.png",
-                                                          errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                            return CircleAvatar(backgroundColor: Colors.grey,);
-                                                          },
-                                                        ),
+                                                        child:CustomImage(imgUrl:"${Constants.teamImage}${widget.awayId}.png" ,)
                                                       ),
                                                     ],
                                                   ),
@@ -458,12 +441,7 @@ class _MatchEventsState extends ConsumerState<MatchEvents> {
                                                       SizedBox(
                                                         width: 25,
                                                         height: 25,
-                                                        child: Image.network(
-                                                          "${Constants.teamImage}${widget.awayId}.png",
-                                                          errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                            return CircleAvatar(backgroundColor: Colors.grey,);
-                                                          },
-                                                        ),
+                                                        child:CustomImage(imgUrl: "${Constants.teamImage}${widget.awayId}.png",)
                                                       ),
                                                       SizedBox(
                                                         width: 10,
@@ -505,12 +483,7 @@ class _MatchEventsState extends ConsumerState<MatchEvents> {
                                                       SizedBox(
                                                         width: 25,
                                                         height: 25,
-                                                        child: Image.network(
-                                                          "${Constants.teamImage}${widget.homeId}.png",
-                                                          errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                            return CircleAvatar(backgroundColor: Colors.grey,);
-                                                          },
-                                                        ),
+                                                        child:CustomImage(imgUrl: "${Constants.teamImage}${widget.homeId}.png",)
                                                       ),
                                                     ],
                                                   ),
@@ -556,6 +529,7 @@ class _MatchEventsState extends ConsumerState<MatchEvents> {
                                     StandingLabels(),
                                   ],
                                 ),
+                                table.data!.format == "default" ?
                                 ListView.builder(
                                     shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
@@ -569,7 +543,7 @@ class _MatchEventsState extends ConsumerState<MatchEvents> {
                                       }else{
                                         return SizedBox();
                                       }
-                                    }),
+                                    }):SizedBox()
                               ],
                             ),
                           ),
@@ -579,267 +553,6 @@ class _MatchEventsState extends ConsumerState<MatchEvents> {
                 ),
             onFailure: (state) => SizedBox()),
 
-
-
-        /*
-                  SizedBox(height: 5,),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(10.0))),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(right: 16,left: 16,top: 12,bottom: 8),
-                            child: Text(
-                              'افضل الهدافين',
-                              style: Theme.of(context).textTheme.titleMedium
-                            ),
-                          ),
-                          Divider(),
-                          Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.all(10.0),
-                                    child: Container(
-                                      height: 68,
-                                      width: 110,
-                                      child: Stack(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 60,
-                                            height: 60,
-                                            decoration:
-                                            BoxDecoration(
-                                              color: Colors.grey[100],
-                                              borderRadius: BorderRadius.all(Radius.circular(50)),
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(6.0),
-                                              child: ClipRRect(
-                                                borderRadius: BorderRadius.all(Radius.circular(50),
-                                                ),
-                                                child: Image.asset("assets/Marcelo.jpg"),
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            bottom: 0,
-                                              right: 0,
-                                              child: Container(
-                                            height: 25,
-                                            width: 26,
-                                            child: Image.network(
-                                                "https://www.eplworld.com${provider.msnModel.homeTeamLogo}"),
-                                          )),
-                                          Positioned(
-                                              top: 0,
-                                              left: 35,
-                                              child: Container(
-                                                height: 13,
-                                                width: 25,
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(8),
-                                                  color: Colors.green,
-                                                ),
-
-                                              )),
-                                          Positioned(
-                                            left: 2,bottom: 0,
-                                              child:  Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text("مارسيلو",style: Theme.of(context).textTheme.bodyMedium,),
-                                              Text('مهاجم',style: Theme.of(context).textTheme.bodySmall,)
-                                            ],
-                                          ))
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.all(10.0),
-                                    child: Container(
-                                      height: 68,
-                                      width: 120,
-                                      child: Stack(
-                                        textDirection: TextDirection.ltr,
-                                        children: <Widget>[
-                                          Positioned(
-                                            left: 15,
-                                            child: Container(
-                                              width: 60,
-                                              height: 60,
-                                              decoration:
-                                              BoxDecoration(
-                                                color: Colors.grey[100],
-                                                borderRadius: BorderRadius.all(Radius.circular(50)),
-                                              ),
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(6.0),
-                                                child: ClipRRect(
-                                                  borderRadius: BorderRadius.all(Radius.circular(50),
-                                                  ),
-                                                  child: Image.asset("assets/Marcelo.jpg"),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                              bottom: 0,
-                                              left:5 ,
-                                              child: Container(
-                                                height: 25,
-                                                width: 26,
-                                                child: Image.network(
-                                                    "https://www.eplworld.com${provider.msnModel.awayTeamLogo}"),
-                                              )),
-                                          Positioned(
-                                              top: 0,
-                                              left: 0,
-                                              child: Container(
-                                                height: 13,
-                                                width: 25,
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(8),
-                                                  color: Colors.green,
-                                                ),
-
-                                              )),
-                                          Positioned(
-                                              right: 0,
-                                              bottom: 0,
-                                              child:  Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text("مارسيلو",style: Theme.of(context).textTheme.bodyMedium,),
-                                                  Text('مهاجم',style: Theme.of(context).textTheme.bodySmall,)
-                                                ],
-                                              ))
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-
-                                ],
-                              )
-                          ),
-                          Divider(),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CircleAvatar(
-                                  radius: 10,
-                                ),
-                                SizedBox(width: 5,),
-                                Text(
-                                  provider.matchDetailsModel.leagueName,
-                                  style: Theme.of(context).textTheme.bodyMedium.copyWith(fontSize: 14))
-                              ],
-                            ),
-                          ),
-                          Divider(),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: ListView.builder(
-                                physics:
-                                NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                scrollDirection: Axis.vertical,
-                                itemCount: 8,
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                    height: 50,
-                                    width: MediaQuery.of(context)
-                                        .size
-                                        .width,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment
-                                          .spaceBetween,
-                                      children: <Widget>[
-                                        Container(
-                                          width: 60,
-                                          child: Padding(
-                                            padding:
-                                            const EdgeInsets.only(
-                                                left: 7,
-                                                right: 7,
-                                                top: 5,
-                                                bottom: 2),
-                                            child: Center(
-                                              child: Padding(
-                                                padding:
-                                                const EdgeInsets
-                                                    .only(
-                                                    right: 6,
-                                                    left: 6,
-                                                    top: 3,
-                                                    bottom: 3),
-                                                child: Text(
-                                                  "8",
-                                                    style:Theme.of(context).textTheme.bodyMedium.copyWith(fontSize: 16)
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          child: Text(
-                                            "اهداف",
-                                              style:Theme.of(context).textTheme.bodySmall.copyWith(fontSize: 15)
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 60,
-                                          child: Padding(
-                                            padding:
-                                            const EdgeInsets.only(
-                                                left: 7,
-                                                right: 7,
-                                                top: 5,
-                                                bottom: 2),
-                                            child: Center(
-                                              child: Padding(
-                                                padding:
-                                                const EdgeInsets
-                                                    .only(
-                                                    right: 6,
-                                                    left: 6,
-                                                    top: 3,
-                                                    bottom: 3),
-                                                child: Text(
-                                                  "6",
-                                                    style:Theme.of(context).textTheme.bodyMedium.copyWith(fontSize: 16)
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                   */
       ]),
     );
   }

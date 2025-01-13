@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:epl/Data/StateModel.dart';
 import 'package:epl/presentation/team/screens/teamStanding.dart';
 import 'package:epl/shared/Utils/Constants.dart';
@@ -11,8 +12,8 @@ import 'package:intl/intl.dart';
 import 'dart:ui'as ui;
 import '../../../../../main.dart';
 import '../../../../../shared/Utils/date_converter.dart';
+import '../../../../../shared/Views/custom/custom_imageView.dart';
 import '../../../../../shared/Views/custom/custom_loader.dart';
-import '../../../../fixture/screens/InfoMain.dart';
 import '../../../../fixture/screens/matchInfo.dart';
 import '../../../../league/screens/homeLeague.dart';
 import '../../../provider/homeMatchesProvider.dart';
@@ -191,11 +192,8 @@ class _TodayMatchesState extends ConsumerState<TodayMatches> with AutomaticKeepA
                                                                    Container(
                                                                        width: 28,
                                                                        height: 28,
-                                                                       child: Image.network(
-                                                                           "${Constants.leagueImage}${matches.data![index].league.id}.png",
-                                                                     errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                                       return CircleAvatar(backgroundColor: Colors.grey,);
-                                                                       },),
+                                                                       child: CustomImage(imgUrl:"${Constants.leagueImage}${matches.data![index].league.id}.png" ,)
+
                                                                    ),
                                                                    SizedBox(
                                                                      width: 10,
@@ -318,12 +316,8 @@ class _TodayMatchesState extends ConsumerState<TodayMatches> with AutomaticKeepA
                                                                                    Container(
                                                                                      width: 35,
                                                                                      height: 30,
-                                                                                     child: Image.network(
-                                                                                       "${Constants.teamImage}${match.teams.home.id}.png",
-                                                                                       errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                                                         return CircleAvatar(backgroundColor: Colors.grey,);
-                                                                                       },
-                                                                                     ),
+                                                                                     child: CustomImage(imgUrl:"${Constants.teamImage}${match.teams.home.id}.png",)
+
                                                                                    ),
                                                                                  ),
                                                                                  match.fixture.status.long == "Not Started"
@@ -345,12 +339,7 @@ class _TodayMatchesState extends ConsumerState<TodayMatches> with AutomaticKeepA
                                                                                    child: Container(
                                                                                      width: 30,
                                                                                      height: 30,
-                                                                                     child: Image.network(
-                                                                                       "${Constants.teamImage}${match.teams.away.id}.png",
-                                                                                       errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                                                         return CircleAvatar(backgroundColor: Colors.grey,);
-                                                                                       },
-                                                                                     ),
+                                                                                     child:CustomImage(imgUrl: "${Constants.teamImage}${match.teams.away.id}.png",)
                                                                                      ),
                                                                                  ),
                                                                                ],

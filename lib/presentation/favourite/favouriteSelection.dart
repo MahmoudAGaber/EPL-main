@@ -4,7 +4,7 @@ import 'package:epl/presentation/team/screens/teamHome.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import '../playrers/screens/players.dart';
+import '../playrers/screens/playerHome.dart';
 
 
 class FavouriteSelection extends StatefulWidget {

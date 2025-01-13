@@ -1,7 +1,8 @@
 
 import 'package:epl/Data/StateModel.dart';
-import 'package:epl/presentation/playrers/screens/playerStatistics.dart';
+import 'package:epl/presentation/playrers/screens/playerCareer.dart';
 import 'package:epl/presentation/playrers/screens/profile.dart';
+import 'package:epl/shared/Views/custom/custom_imageView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 
+import '../../../shared/Utils/Constants.dart';
 import '../provider/PlayerViewModel.dart';
 
 
@@ -135,7 +137,7 @@ class _PlayerState extends ConsumerState<Players> with TickerProviderStateMixin 
                               SizedBox(
                                 height: 25,
                                 width: 25,
-                                child: CircleAvatar(),
+                                child: CustomImage(imgUrl: "${Constants.teamImage}${player.data!.teamCareer.club.first.teamId}.png",),
                               ),
                               SizedBox(width: 10,),
                               Text("",
@@ -163,7 +165,7 @@ class _PlayerState extends ConsumerState<Players> with TickerProviderStateMixin 
                             children: <Widget>[
                               Flexible(
                                 child: Text("${player.data!.person.firstName } ${player.data!.person.lastName }",
-                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 18,color: Colors.white),overflow: TextOverflow.clip,
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 16,color: Colors.white),overflow: TextOverflow.clip,
                                 ),
                               )
                             ],

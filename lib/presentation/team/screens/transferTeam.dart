@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../playrers/screens/players.dart';
+import '../../playrers/screens/playerHome.dart';
 import 'teamHome.dart';
 
 class tranferTeam extends StatefulWidget {

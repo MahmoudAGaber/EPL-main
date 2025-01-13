@@ -1,5 +1,4 @@
 
-import 'package:epl/presentation/news/screens/leagues.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../Data/RequestHandler.dart';
@@ -7,15 +6,14 @@ import '../../../Data/StateModel.dart';
 
 import '../../../domain/Models/Event.dart';
 import '../../../domain/Models/Formation.dart';
-import '../../../domain/Models/GroupStandings.dart';
 import '../../../domain/Models/H2H.dart';
 import '../../../domain/Models/MatchInfo.dart';
 import '../../../domain/Models/MatchStatistics.dart';
-import '../../../domain/Models/Matches.dart';
 import '../../../domain/Models/Standing.dart';
 import '../../../domain/Models/TeamForm.dart';
-import '../FixtureUseCases.dart';
-import '../MatchRepositry.dart';
+import '../../../domain/repository/MatchRepositry.dart';
+import '../../../domain/usecases/FixtureUseCases.dart';
+
 
 
 enum FixtureStandingType {All, Home, Away }
@@ -24,15 +22,6 @@ final FixtureStandingTypeProvider = StateProvider<FixtureStandingType>((ref) => 
 
 final MatchInfoProvider = StateNotifierProvider<MatchInfoNotifier,StateModel<MatchInfoModel>>((ref) => MatchInfoNotifier(ref));
 
-final MatchEventsProvider = StateNotifierProvider<MatchEventsNotifier,StateModel<List<EventModel>>>((ref) => MatchEventsNotifier(ref));
-
-final TeamFormProvider = StateNotifierProvider<TeamFormNotifier,StateModel<TeamFormModel>>((ref) => TeamFormNotifier(ref));
-
-final MatchStatisticsProvider = StateNotifierProvider<MatchStatisticsNotifier,StateModel<List<MatchStatisticsModel>>>((ref) => MatchStatisticsNotifier(ref));
-
-final H2HProvider = StateNotifierProvider<H2HNotifier,StateModel<H2HModel>>((ref) => H2HNotifier(ref));
-
-final LineUpsProvider = StateNotifierProvider<LineUpsNotifier,StateModel<FormationsModel>>((ref) => LineUpsNotifier(ref));
 
 final TableProvider = StateNotifierProvider<TableNotifier,StateModel<TableModel>>((ref) => TableNotifier(ref));
 
@@ -75,181 +64,8 @@ class MatchInfoNotifier extends StateNotifier<StateModel<MatchInfoModel>>{
   }
 }
 
-class MatchEventsNotifier extends StateNotifier<StateModel<List<EventModel>>>{
-  Ref ref;
-  MatchEventsNotifier(this.ref):super(StateModel.loading());
-
-  Future<List<EventModel>?> getMatchEvents(String fixture_id) async{
-    RequestHandler requestHandler = RequestHandler();
-    List<EventModel> eventModel;
-    Map<String, dynamic> body;
-    try {
-
-      body = {
-        "fixture_id": fixture_id,
-        "lang": "ar"
-      };
-
-      state = StateModel.loading();
-      eventModel = await requestHandler.postData(
-        endPoint: "soccer/fixture/info/events",
-        auth: true,
-        requestBody: body,
-        fromJson: (json)=> EventModel.listFromJson(json),
-      );
-
-      if(eventModel !=null || eventModel.isNotEmpty){
-        state = StateModel.success(eventModel);
-
-      }else{
-        state = StateModel.empty();
-
-      }
-
-      return eventModel;
-    }catch(e){
-      state = StateModel.fail("Faild to get data $e");
-      return null;
-    }
-  }
-}
-
-class TeamFormNotifier extends StateNotifier<StateModel<TeamFormModel>>{
-  Ref ref;
-  TeamFormNotifier(this.ref):super(StateModel.loading());
-
-  Future<void> getTeamForm(String fixture_id) async{
-    RequestHandler requestHandler = RequestHandler();
-    TeamFormModel teamFormModel;
-    Map<String, dynamic> body;
-    try {
-
-      body = {
-        "fixture_id": fixture_id,
-        "lang": "ar"
-      };
-
-      state = StateModel.loading();
-      teamFormModel = await requestHandler.postData(
-        endPoint: "soccer/fixture/info/team-form",
-        auth: true,
-        requestBody: body,
-        fromJson: (json)=> TeamFormModel.fromJson(json),
-      );
-
-      if(teamFormModel.teamForm1.isNotEmpty && teamFormModel.teamForm2.isNotEmpty){
-        state = StateModel.success(teamFormModel);
-
-      }else{
-        state = StateModel.empty();
-      }
-
-    }catch(e){
-      state = StateModel.fail("Faild to get data $e");
-    }
-  }
-}
-
-class MatchStatisticsNotifier extends StateNotifier<StateModel<List<MatchStatisticsModel>>>{
-  Ref ref;
-  MatchStatisticsNotifier(this.ref):super(StateModel.loading());
-
-  Future<void> getMatchStatistics(String fixture_id) async{
-    RequestHandler requestHandler = RequestHandler();
-    List<MatchStatisticsModel> matchStatisticsModel;
-    Map<String, dynamic> body;
-    try {
-
-      body = {
-        "fixture_id": fixture_id,
-        "lang": "ar"
-      };
-
-      state = StateModel.loading();
-      matchStatisticsModel = await requestHandler.postData(
-        endPoint: "soccer/fixture/info/statistics",
-        auth: true,
-        requestBody: body,
-        fromJson: (json)=> MatchStatisticsModel.listFromJson(json),
-      );
-
-      state = StateModel.success(matchStatisticsModel);
-
-    }catch(e){
-      state = StateModel.fail("Faild to get data $e");
-    }
-  }
-}
-
-class H2HNotifier extends StateNotifier<StateModel<H2HModel>>{
-  Ref ref;
-  H2HNotifier(this.ref):super(StateModel.loading());
-
-  Future<void> getH2HModel(String fixture_id) async{
-    RequestHandler requestHandler = RequestHandler();
-    H2HModel h2hModel;
-    Map<String, dynamic> body;
-
-      body = {
-        "fixture_id": fixture_id,
-        "lang": "ar"
-      };
-
-      try {
-        state = StateModel.loading();
-        h2hModel = await requestHandler.postData(
-          endPoint: "soccer/fixture/info/head2head",
-          auth: true,
-          requestBody: body,
-          fromJson: (json) => H2HModel.fromJson(json),
-        );
-
-        state = StateModel.success(h2hModel);
-      }catch(e){
-        state = StateModel.fail("Faild to get data $e");
-
-      }
-
-  }
-}
 
 
-class LineUpsNotifier extends StateNotifier<StateModel<FormationsModel>>{
-  Ref ref;
-  LineUpsNotifier(this.ref):super(StateModel.loading());
-
-  Future<void> getLinUps(String fixture_id) async{
-    RequestHandler requestHandler = RequestHandler();
-    FormationsModel formationsModel;
-    Map<String, dynamic> body;
-
-    body = {
-      "fixture_id": fixture_id,
-      "lang": "ar"
-    };
-
-    try{
-      state = StateModel.loading();
-      formationsModel = await requestHandler.postData(
-        endPoint: "soccer/fixture/info/formations",
-        auth: true,
-        requestBody: body,
-        fromJson: (json) => FormationsModel.fromJson(json),
-      );
-
-
-      if(formationsModel.bench.first.isNotEmpty){
-        state = StateModel.success(formationsModel);
-
-      }else{
-        state = StateModel.empty();
-      }
-
-   }catch(e){
-      state = StateModel.fail("Faild to get data $e");
-   }
-  }
-}
 
 class TableNotifier extends StateNotifier<StateModel<TableModel>>{
   Ref ref;
@@ -413,7 +229,7 @@ class MatchLineUps1Notifier extends StateNotifier<StateModel<FormationsModel>> {
   }
 }
 
-class MatchTable1Notifier extends StateNotifier<StateModel<TableModel>> {
+class MatchTable1Notifier extends StateNotifier<StateModel<dynamic>> {
   final GetTableUseCase useCase;
 
   MatchTable1Notifier(this.useCase) : super(StateModel.loading());
@@ -422,6 +238,7 @@ class MatchTable1Notifier extends StateNotifier<StateModel<TableModel>> {
     try {
       state = StateModel.loading();
       final table = await useCase.execute(seasonId,type);
+      print("${table}");
       state = table.standings.isNotEmpty
           ? StateModel.success(table)
           : StateModel.empty();
@@ -490,7 +307,7 @@ final matchLineupsProvider = StateNotifierProvider<MatchLineUps1Notifier, StateM
   },
 );
 
-final matchTableProvider = StateNotifierProvider<MatchTable1Notifier, StateModel<TableModel>>(
+final matchTableProvider = StateNotifierProvider<MatchTable1Notifier, StateModel<dynamic>>(
       (ref) {
     final getMatchTableUseCase = ref.read(getMatchTableUseCaseProvider);
     return MatchTable1Notifier(getMatchTableUseCase);

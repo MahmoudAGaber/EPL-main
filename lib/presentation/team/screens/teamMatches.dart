@@ -9,11 +9,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../shared/Utils/Constants.dart';
 import '../../../shared/Utils/date_converter.dart';
+import '../../../shared/Views/custom/custom_imageView.dart';
 import '../../../shared/Views/custom/custom_loader.dart';
-import '../../fixture/screens/EndMatches/matchInfo_a.dart';
-import '../../fixture/screens/InfoMain.dart';
 import '../../fixture/screens/matchInfo.dart';
-import '../../home/screens/Oops.dart';
 import 'dart:ui'as ui;
 
 
@@ -38,7 +36,7 @@ class _MatchesForTeamState extends ConsumerState<MatchesForTeam> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async{
-      var teamSeasons = ref.watch(TeamSeasonsProvider);
+      var teamSeasons = ref.watch(teamSeasonsProvider);
       if(teamSeasons.data !=null){
         seasonId = teamSeasons.data!.first.seasonId;
       }
@@ -64,9 +62,9 @@ class _MatchesForTeamState extends ConsumerState<MatchesForTeam> {
 
   @override
   Widget build(BuildContext context) {
-    var teamSeaons = ref.watch(TeamSeasonsProvider);
-    var matches = ref.watch(TeamMatchesProvider);
-    var table = ref.watch(TeamTableProvider);
+    var teamSeaons = ref.watch(teamSeasonsProvider);
+    var matches = ref.watch(teamMatchesProvider);
+    var table = ref.watch(teamStandingProvider);
 
     if(table.data !=null){
       seasonId = table.data!.seasonId;
@@ -92,7 +90,7 @@ class _MatchesForTeamState extends ConsumerState<MatchesForTeam> {
                   onTap: () {
                     final season = teamSeaons.data!.firstWhere((e) => e.name == name);
                     seasonId = season.seasonId;
-                    ref.read(TeamMatchesProvider.notifier).getMatches(widget.teamId!,season.seasonId,);
+                    ref.read(teamMatchesProvider.notifier).fetchTeamMatches(widget.teamId!,season.seasonId,);
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(right: 8, left: 8),
@@ -232,12 +230,7 @@ class _MatchesForTeamState extends ConsumerState<MatchesForTeam> {
                                                       child:  SizedBox(
                                                         width: 28,
                                                         height: 28,
-                                                        child: Image.network(
-                                                          "${Constants.teamImage}${match.teams.home.id}.png",
-                                                          errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                            return CircleAvatar(backgroundColor: Colors.grey,);
-                                                            },
-                                                        ),
+                                                        child:CustomImage(imgUrl: "${Constants.teamImage}${match.teams.home.id}.png",)
                                                       ),
                                                     ),
                                                     match.fixture.status.long == "Not Started"
@@ -260,12 +253,8 @@ class _MatchesForTeamState extends ConsumerState<MatchesForTeam> {
                                                       child:  SizedBox(
                                                         width: 28,
                                                         height: 28,
-                                                        child: Image.network(
-                                                          "${Constants.teamImage}${match.teams.away.id}.png",
-                                                          errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                            return CircleAvatar(backgroundColor: Colors.grey,);
-                                                            },
-                                                        ),
+                                                        child: CustomImage(imgUrl: "${Constants.teamImage}${match.teams.away.id}.png",
+                                                        )
                                                       ),
                                                     ),
                                                   ],

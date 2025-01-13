@@ -1,5 +1,7 @@
 
+import 'package:epl/presentation/fixture/provider/fixtureViewModel.dart';
 import 'package:epl/presentation/team/provider/TeamViewModel.dart';
+import 'package:epl/shared/Views/custom/custom_imageView.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -7,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 
 import '../../../shared/Utils/Constants.dart';
+import '../../../shared/Views/custom/custom_loader.dart';
 import 'teamNews.dart';
 import 'teamSquad.dart';
 import 'teamStanding.dart';
@@ -46,6 +49,9 @@ class _EachTeamState extends ConsumerState<HomeTeam> with TickerProviderStateMix
   int newsPages = 1;
   int videosPages = 1;
   int transfersPages = 1;
+  bool isLoading = true;
+  List<Widget> tabsName = [];
+  List<Widget> tabsView = [];
 
   AnimationController? animationController;
   Animation<double>? _animation;
@@ -53,50 +59,126 @@ class _EachTeamState extends ConsumerState<HomeTeam> with TickerProviderStateMix
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await fetchAllData().then((value) => setUpTabsAndViews());
 
-
-      ref.read(TeamSeasonsProvider.notifier).getTeamSeasons(widget.teamId!).then((seasonId)async{
-        print("SeasonID${seasonId}");
-        ref.read(TeamOverviewProvider.notifier).getTeamOverview(widget.teamId!, seasonId!);
-        ref.read(TeamNewsProvider.notifier).getNews(widget.teamName!);
-        ref.read(TeamVideosProvider.notifier).getVideos(widget.teamName!);
-        ref.read(TeamMatchesProvider.notifier).getMatches(widget.teamId!, seasonId);
-        print("TeamId${widget.teamId}");
-        ref.read(TeamTableProvider.notifier).getTable(seasonId,"total");
-        ref.read(SquadProvider.notifier).getSquad(widget.teamId!);
-        ref.read(TrophyProvider.notifier).getTrophy(widget.teamId!);
-      });
-
-
-
-
-      _controller.addListener(() {
-        if (_controller.position.pixels ==
-            _controller.position.maxScrollExtent) {
-          if (tabController!.index == 1) {
-            newsPages++;
-            //eachTeamViewModel!.getNews("${widget.url}/news", newsPages);
-            print("hi");
-          } else if (tabController!.index == 2) {
-            videosPages++;
-           // eachTeamViewModel!.getVideos("${widget.url}/videos", videosPages);
-          }
-          else if (tabController!.index == 6) {
-            transfersPages++;
-          //  eachTeamViewModel!.getTransfers("${widget.url}/transfers", transfersPages);
-          }
-        }
-      });
+      //   _controller.addListener(() {
+      //     if (_controller.position.pixels ==
+      //         _controller.position.maxScrollExtent) {
+      //       if (tabController!.index == 1) {
+      //         newsPages++;
+      //         //eachTeamViewModel!.getNews("${widget.url}/news", newsPages);
+      //         print("hi");
+      //       } else if (tabController!.index == 2) {
+      //         videosPages++;
+      //        // eachTeamViewModel!.getVideos("${widget.url}/videos", videosPages);
+      //       }
+      //       else if (tabController!.index == 6) {
+      //         transfersPages++;
+      //       //  eachTeamViewModel!.getTransfers("${widget.url}/transfers", transfersPages);
+      //       }
+      //     }
+      //   });
+      // });
+      //
+      // animationController = AnimationController(duration: const Duration(seconds: 1), vsync: this);
+      //
+      // _animation = CurvedAnimation(parent: animationController!, curve: Curves.easeIn);
+      //
+      // animationController!.forward();
     });
-
-    animationController =
-        AnimationController(duration: const Duration(seconds: 1), vsync: this);
-
-    _animation =
-        CurvedAnimation(parent: animationController!, curve: Curves.easeIn);
-
-    animationController!.forward();
     super.initState();
+
+        }
+
+  Future<void> fetchAllData() async {
+    try {
+      final seasonId = await ref.read(teamSeasonsProvider.notifier).fetchTeamSeasons(widget.teamId!);
+
+      await Future.wait([
+        ref.read(teamSeasonsProvider.notifier).fetchTeamSeasons(widget.teamId!),
+        ref.read(teamOverviewProvider.notifier).fetchTeamOverview(widget.teamId!, seasonId!),
+        ref.read(teamNewsProvider.notifier).fetchTeamNews(widget.teamName!),
+        ref.read(teamVideosProvider.notifier).fetchTeamVideos(widget.teamName!),
+        ref.read(teamMatchesProvider.notifier).fetchTeamMatches(widget.teamId!, seasonId),
+        ref.read(teamStandingProvider.notifier).fetchTeamStanding(seasonId,"total"),
+        ref.read(teamSquadProvider.notifier).fetchTeamSquad(widget.teamId!),
+        ref.read(teamTrophyProvider.notifier).fetchTeamTrophy(widget.teamId!),
+      ]);
+    } catch (e) {
+      print("Error fetching data: $e");
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  void setUpTabsAndViews() {
+    setState(() {
+      tabsName = getTabs()['tabsName']!;
+      tabsView = getTabs()['tabsView']!;
+      // Update the TabController if the tab count changes
+      tabController = TabController(length: tabsName.length, vsync: this);
+    });
+  }
+
+  Map<String,List<Widget>> getTabs() {
+    final teamOverviewState = ref.watch(teamOverviewProvider);
+    final teamNewsState = ref.watch(teamNewsProvider);
+    final teamVideosState = ref.watch(teamVideosProvider);
+    final teamSeasonsState = ref.watch(teamSeasonsProvider);
+    final teamMatchesState = ref.watch(teamMatchesProvider);
+    final teamStandingState = ref.watch(teamStandingProvider);
+    final teamSquadState = ref.watch(teamSquadProvider);
+    final teamTrophyState = ref.watch(teamTrophyProvider);
+
+
+    final tabsName = <Widget>[];
+    final tabsView = <Widget>[];
+
+    Map<String,List<Widget>> tabs= {
+      'tabsName':tabsName,
+      'tabsView': tabsView
+    };
+
+
+
+      if (teamOverviewState.data != null) {
+        tabsName.add(overViewN());
+        tabsView.add(overView());
+      }
+      if (teamNewsState.data != null) {
+        tabsName.add(teamNewsN());
+        tabsView.add(teamNews());
+      }
+      if (teamVideosState.data != null) {
+        tabsName.add(videoTeamN());
+        tabsView.add(videoTeam());
+      }
+      if (teamMatchesState.data != null ) {
+        tabsName.add(matchesForTeamN());
+        tabsView.add(matchesForTeam());
+      }
+      if (teamStandingState.data != null ) {
+        if (teamStandingState.data!.format == "default") {
+          tabsName.add(teamPositionN());
+          tabsView.add(teamPosition());
+        } else if (teamStandingState.data!.format == "groups") {
+          tabsName.add(teamPositionN());
+          tabsView.add(teamPosition());
+        }
+      }
+      if (teamSquadState.data != null) {
+        tabsName.add(teamSquadN());
+        tabsView.add(teamSquad());
+      }
+
+      if (teamTrophyState.data != null) {
+        tabsName.add(cupsN());
+        tabsView.add(cups());
+      }
+
+    return tabs;
   }
 
   @override
@@ -145,12 +227,7 @@ class _EachTeamState extends ConsumerState<HomeTeam> with TickerProviderStateMix
                                  SizedBox(
                                   width: 55,
                                   height: 55,
-                                  child: Image.network(
-                                    "${Constants.teamImage}${widget.teamId}.png",
-                                    errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                      return CircleAvatar(backgroundColor: Colors.grey,);
-                                    },
-                                  ),
+                                  child:CustomImage(imgUrl:"${Constants.teamImage}${widget.teamId}.png" ,)
                                 ),
                               ],
                             ),
@@ -203,23 +280,25 @@ class _EachTeamState extends ConsumerState<HomeTeam> with TickerProviderStateMix
                     child: Container(
                           height: 55,
                           color: Theme.of(context).primaryColor,
-                          child: tabController == null
-                              ? Container()
-                              : TabBar(
-                                  indicatorColor: Colors.white,
-                                  isScrollable: true,
-                                  onTap: (index) {
-                                    _selectedIndex = index;
-                                    tabController!.animateTo(_selectedIndex);
+                          child: !isLoading? DefaultTabController(
+                          length: isLoading?tabsName.length:0,
+                              child: TabBar(
+                                tabs: tabsName,
+                                controller: tabController,
+                                indicatorColor: Colors.white,
+                                labelColor: Colors.white,
+                                isScrollable: true,
+                                onTap: (index) {
+                                  _selectedIndex = index;
+                                  tabController!.animateTo(_selectedIndex);
                                   },
-                                  controller: tabController,
-                                  tabs: List.generate(8, (index) => tabName("")[index]).toList()),
-                        )
+                              )):SizedBox()),
+
                       ))),
       ];
     }
 
-    return new Directionality(
+    return  Directionality(
       textDirection: TextDirection.rtl,
       child:  Scaffold(
             body: SafeArea(
@@ -227,14 +306,20 @@ class _EachTeamState extends ConsumerState<HomeTeam> with TickerProviderStateMix
                 controller: _controller,
                 physics: ClampingScrollPhysics(),
                 headerSliverBuilder: _sliverBuilder,
-                body: TabBarView(
-                  physics: ClampingScrollPhysics(),
-                  controller: tabController = new TabController(
-                      length: tabView("").length,
-                      vsync: this,
-                      initialIndex: _selectedIndex),
-                  children: List.generate(tabView("").length,
-                      (index) => tabView("")[index]),
+                body: DefaultTabController(
+                  length: !isLoading?tabsView.length:0,
+                  child: TabBarView(
+                    controller: tabController,
+                    children: !isLoading? tabsView: [Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: CustomLoader(),
+                        ),
+                      ],
+                    )],
+                  ),
                 ),
               ),
             ),
@@ -335,28 +420,6 @@ class _EachTeamState extends ConsumerState<HomeTeam> with TickerProviderStateMix
     test.add(teamSquadN());
     test.add(transferTeamN());
     test.add(cupsN());
-
-
-
-
-    // if (provider.statsModel != null) {
-    // }
-    // if (provider.newsModelList != null) {
-    // }
-    // if (provider.videoModelList != null) {
-    // }
-    //
-    // if (provider.recentMatcheBox != null) {
-    // }
-    // if (provider.tablesModelList != null) {
-    // }
-    // if (provider.squadsModel != null) {
-    // }
-    //
-    // if (provider.transferBoxesModelList != null) {
-    // }
-    // if (provider.trophiesBoxesModelList != null) {
-    // }
 
     return test;
   }
@@ -484,29 +547,3 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   }
 }
 
-class _SliverAppBarDelegate1 extends SliverPersistentHeaderDelegate {
-  _SliverAppBarDelegate1({
-    required this.minHeight,
-    required this.maxHeight,
-    required this.child,
-  });
-  final double minHeight;
-  final double maxHeight;
-  final Widget child;
-  @override
-  double get minExtent => minHeight;
-  @override
-  double get maxExtent => maxHeight;
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return new SizedBox.expand(child: child);
-  }
-
-  @override
-  bool shouldRebuild(_SliverAppBarDelegate1 oldDelegate) {
-    return maxHeight != oldDelegate.maxHeight ||
-        minHeight != oldDelegate.minHeight ||
-        child != oldDelegate.child;
-  }
-}

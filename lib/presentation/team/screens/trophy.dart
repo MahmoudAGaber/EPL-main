@@ -27,7 +27,7 @@ class _TrophyState extends ConsumerState<Trophy> {
 
   @override
   Widget build(BuildContext context) {
-    var trophy = ref.watch(TrophyProvider);
+    var trophy = ref.watch(teamTrophyProvider);
 
    return trophy.handelState(
         onLoading: (state) => CustomLoader(),

@@ -45,8 +45,8 @@ class _TeamPositionState extends ConsumerState<TeamPosition> {
 
   @override
   Widget build(BuildContext context) {
-    var teamSeaons = ref.watch(TeamSeasonsProvider);
-    var table = ref.watch(TeamTableProvider);
+    var teamSeaons = ref.watch(teamSeasonsProvider);
+    var table = ref.watch(teamStandingProvider);
     var standingType = ref.watch(StandingTypeProvider);
 
     if(table.data !=null){
@@ -77,7 +77,7 @@ class _TeamPositionState extends ConsumerState<TeamPosition> {
             onTap: () {
               final season = teamSeaons.data!.firstWhere((e) => e.name == name);
               seasonId = season.seasonId;
-              ref.read(TeamTableProvider.notifier).getTable(season.seasonId,'total');
+              ref.read(teamStandingProvider.notifier).fetchTeamStanding(season.seasonId,'total');
             },
             child: Padding(
               padding: const EdgeInsets.only(right: 8, left: 8),
@@ -108,7 +108,7 @@ class _TeamPositionState extends ConsumerState<TeamPosition> {
                       children: [
                       InkWell(
                         onTap:(){
-                          ref.read(TeamTableProvider.notifier).getTable(seasonId!,'total');
+                          ref.read(teamStandingProvider.notifier).fetchTeamStanding(seasonId!,'total');
                           ref.read(StandingTypeProvider.notifier).state = StandingType.All;
                         },
                         child: Container(
@@ -124,7 +124,7 @@ class _TeamPositionState extends ConsumerState<TeamPosition> {
                       SizedBox(width: 20,),
                       InkWell(
                         onTap: (){
-                          ref.read(TeamTableProvider.notifier).getTable(seasonId!,'home');
+                          ref.read(teamStandingProvider.notifier).fetchTeamStanding(seasonId!,'home');
                           ref.read(StandingTypeProvider.notifier).state = StandingType.Home;
                         },
                         child: Container(
@@ -139,7 +139,7 @@ class _TeamPositionState extends ConsumerState<TeamPosition> {
                       ),
                       InkWell(
                         onTap: (){
-                          ref.read(TeamTableProvider.notifier).getTable(seasonId!,'away');
+                          ref.read(teamStandingProvider.notifier).fetchTeamStanding(seasonId!,'away');
                           ref.read(StandingTypeProvider.notifier).state = StandingType.Away;
                         },
                         child: Container(

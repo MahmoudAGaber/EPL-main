@@ -1,9 +1,12 @@
 import 'package:epl/Data/StateModel.dart';
+import 'package:epl/presentation/fixture/provider/fixtureViewModel.dart';
+import 'package:epl/shared/Views/custom/standingLabels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 
 import '../../../shared/Views/custom/custom_loader.dart';
+import '../../../shared/Views/custom/teamInStanding.dart';
 import '../provider/LeagueViewModel.dart';
 import '../../team/screens/teamHome.dart';
 
@@ -19,18 +22,7 @@ class MatchGPosition extends ConsumerStatefulWidget {
 }
 
 class _MatchGPositionState extends ConsumerState<MatchGPosition> {
-  TextStyle tapbar = TextStyle(
-    fontFamily: 'Vazirmatn',
-    fontSize: 13,
-  );
-  TextStyle headline = TextStyle(
-      fontFamily: 'Vazirmatn', fontSize: 11, fontWeight: FontWeight.w600);
-  TextStyle titleMedium =
-      TextStyle(fontFamily: 'Vazirmatn', fontSize: 13.5, color: Colors.grey);
-  TextStyle content = TextStyle(
-    fontFamily: 'Vazirmatn',
-    fontSize: 13.5,
-  );
+
   @override
   List? dropList;
   String? selectedItem;
@@ -44,7 +36,8 @@ class _MatchGPositionState extends ConsumerState<MatchGPosition> {
 
   @override
   Widget build(BuildContext context) {
-    var groupStandings = ref.watch(LeagueGroupStandingProvider);
+    var groupStandings = ref.watch(matchTableProvider);
+    var matchInfo = ref.watch(MatchInfoProvider);
 
     return groupStandings.handelState(
       onLoading: (state)=> CustomLoader(),
@@ -117,99 +110,7 @@ class _MatchGPositionState extends ConsumerState<MatchGPosition> {
                         Divider(),
 
                          */
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 20.0, bottom: 16.0),
-                  child: Container(
-                    width:
-                    MediaQuery.of(context).size.width,
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.41,
-                          child: Row(
-                            children: <Widget>[
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text("المركز", style: TextStyle(
-                                    fontFamily:
-                                    'Vazirmatn',
-                                    color: Colors.grey),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.3,
-                          child: Padding(
-                            padding:
-                            const EdgeInsets.only(
-                                left: 3, right: 15),
-                            child: Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: Text(
-                                    "ل".tr,
-                                    style: titleMedium,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 25,
-                                ),
-                                Expanded(
-                                    child: Text(
-                                      "ف".tr,
-                                      style: titleMedium,
-                                    )),
-                                SizedBox(
-                                  width: 30,
-                                ),
-                                Expanded(
-                                    child: Text(
-                                      "ت".tr,
-                                      style: titleMedium,
-                                    )),
-                                SizedBox(
-                                  width: 30,
-                                ),
-                                Expanded(
-                                    child: Text(
-                                      "خ".tr,
-                                      style: titleMedium,
-                                    )),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context)
-                              .size
-                              .width *
-                              0.22,
-                          child: Row(
-                            children: <Widget>[
-                              SizedBox(
-                                width: 25,
-                              ),
-                              Text(
-                                "-/+",
-                                style: titleMedium,
-                              ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Text(
-                                "ن".tr,
-                                style: titleMedium,
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+                StandingLabels()
               ],
             ),
             ListView.builder(
@@ -248,175 +149,15 @@ class _MatchGPositionState extends ConsumerState<MatchGPosition> {
                             itemCount: groups.teams.length,
                             itemBuilder: (BuildContext context, innerIndex) {
                               var teams = groups.teams[innerIndex];
-
-                              return Container(
-                                height: 60,
-                                child: Stack(
-                                  children: [
-                                    Positioned(
-                                      top: 6,
-                                      right: 1,
-                                      left: 1,
-                                      child: Container(
-                                        height: 60,
-                                        child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              GestureDetector(
-                                                onTap: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) => HomeTeam(
-                                                            teamName: "",
-                                                            teamId: "",
-                                                          )
-                                                      )
-                                                  );
-                                                },
-                                                child:  Padding(
-                                                  padding: const EdgeInsets.only(right: 12,left: 12),
-                                                  child: Container(
-                                                    width:
-                                                    MediaQuery.of(context).size.width*0.87,
-                                                    height: 35,
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: <Widget>[
-                                                        Row(
-                                                          mainAxisAlignment: MainAxisAlignment.center,
-                                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                                          children: [
-                                                            Column(
-                                                              mainAxisAlignment: MainAxisAlignment.center,
-                                                              children: [
-                                                                Text(teams.rank,
-                                                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 14),),
-                                                              ],
-                                                            ),
-                                                            SizedBox(width: 3,),
-                                                            Column(
-                                                              mainAxisAlignment: MainAxisAlignment.center,
-                                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                                              children: [
-                                                                Container(
-                                                                  child: Container(
-                                                                      width: 35,
-                                                                      height: 28,
-                                                                      child: CircleAvatar()),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            SizedBox(
-                                                              width: 5,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Flexible(
-                                                            flex: 4,
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                              MainAxisAlignment.start,
-                                                              children: [
-                                                                Flexible(
-                                                                  child: FittedBox(
-                                                                    child: Padding(
-                                                                      padding: const EdgeInsets.only(left: 5,right: 5),
-                                                                      child: Text(teams.team.name,
-                                                                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 13),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                )
-                                                              ],
-                                                            )),
-                                                        Flexible(
-                                                          flex: 6,
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                            MainAxisAlignment.spaceBetween,
-                                                            children: [
-                                                              Column(
-                                                                mainAxisAlignment:
-                                                                MainAxisAlignment.center,
-                                                                children: [
-                                                                  Text(teams.all.played,
-                                                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 13),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              Column(
-                                                                mainAxisAlignment:
-                                                                MainAxisAlignment.center,
-                                                                children: [
-                                                                  Text(teams.all.win,
-                                                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 13),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              Column(
-                                                                mainAxisAlignment:
-                                                                MainAxisAlignment.center,
-                                                                children: [
-                                                                  Text(teams.all.draw,
-                                                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 13),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              Column(
-                                                                mainAxisAlignment:
-                                                                MainAxisAlignment.center,
-                                                                children: [
-                                                                  Text(teams.all.lose,
-                                                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 13),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              Column(
-                                                                mainAxisAlignment:
-                                                                MainAxisAlignment.center,
-                                                                children: [
-                                                                  Text("${int.parse(teams.all.goals.forGoals) - int.parse(teams.all.goals.againstGoals)}",
-                                                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 13),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              Column(
-                                                                mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                                children: [
-                                                                  Text(teams.all.points,
-                                                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 13),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ]),
-                                      ),
-                                    ),
-                                    Positioned(
-                                        child: Divider(
-                                          height: 7,
-                                        )),
-                                    Positioned(
-                                      top: 8,
-                                      bottom: 2,
-                                      child: Container(
-                                          width: 2,
-                                          height: 40,
-                                          color: Colors.green),
-                                    ),
-                                  ],
-                                ),
-                              );
+                              String homeId = matchInfo.data!.teams.home.id;
+                              String awayId = matchInfo.data!.teams.away.id;
+                              return TeamInStanding(
+                                groupTeam:teams,
+                                isMatchFixture:true,
+                                isGroups: true,
+                                awayId: awayId,
+                                homeId: homeId,
+                                  );
                             }),
                         SizedBox(
                           height: 10,
@@ -427,32 +168,32 @@ class _MatchGPositionState extends ConsumerState<MatchGPosition> {
                 );
               },
             ),
-            ListView.builder(
-                physics: BouncingScrollPhysics(),
-                shrinkWrap: true,
-                itemCount:5,
-                itemBuilder: (context, indexx) {
-                  return Padding(
-                    padding: const EdgeInsets.only(
-                        right: 10, bottom: 5, left: 10, top: 5),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 12,
-                          height: 12,
-                          decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.circular(4),
-                              color: Colors.green),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text("text")
-                      ],
-                    ),
-                  );
-                })
+            // ListView.builder(
+            //     physics: BouncingScrollPhysics(),
+            //     shrinkWrap: true,
+            //     itemCount:5,
+            //     itemBuilder: (context, indexx) {
+            //       return Padding(
+            //         padding: const EdgeInsets.only(
+            //             right: 10, bottom: 5, left: 10, top: 5),
+            //         child: Row(
+            //           children: [
+            //             Container(
+            //               width: 12,
+            //               height: 12,
+            //               decoration: BoxDecoration(
+            //                   borderRadius:
+            //                   BorderRadius.circular(4),
+            //                   color: Colors.green),
+            //             ),
+            //             SizedBox(
+            //               width: 10,
+            //             ),
+            //             Text("text")
+            //           ],
+            //         ),
+            //       );
+            //     })
           ],
 
         ),

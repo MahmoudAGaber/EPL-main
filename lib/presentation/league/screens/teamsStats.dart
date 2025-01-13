@@ -1,10 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:epl/Data/StateModel.dart';
 import 'package:epl/presentation/league/provider/LeagueViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../shared/Utils/Constants.dart';
+import '../../../shared/Views/custom/custom_imageView.dart';
 import '../../../shared/Views/custom/custom_loader.dart';
-import '../../playrers/screens/players.dart';
+import '../../playrers/screens/playerHome.dart';
 
 
 class TeamState extends ConsumerStatefulWidget {
@@ -27,7 +30,7 @@ class _playersStatsState extends ConsumerState<TeamState> {
 
   @override
   Widget build(BuildContext context) {
-    var playerStats = ref.watch(PlayerStatsProvider);
+    var playerStats = ref.watch(leaguePlayerStatsProvider);
 
     return playerStats.handelState(
         onLoading: (state)=> CustomLoader(),
@@ -69,7 +72,7 @@ class _playersStatsState extends ConsumerState<TeamState> {
                                     border: Border(bottom: BorderSide(color: innerIndex == item.statsModel.length-1
                                         ? Colors.transparent : Colors.grey))
                                 ),
-                                height: 100,
+
                                 child: innerIndex == 0
                                     ? Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -120,11 +123,9 @@ class _playersStatsState extends ConsumerState<TeamState> {
                                                 ),
                                                 Row(
                                                   children: [
-                                                    Container(
-                                                        height: 20,
+                                                    SizedBox(height: 20,
                                                         width: 20,
-                                                        child: CircleAvatar()
-                                                      //Image.network("https://www.eplworld.com"),
+                                                        child:CustomImage(imgUrl:"${Constants.teamImage}${item.statsModel[innerIndex].teamId}.png",)
                                                     ),
                                                     SizedBox(
                                                       width: 5,
@@ -153,7 +154,7 @@ class _playersStatsState extends ConsumerState<TeamState> {
                                         ),
                                       ]),
                                 )
-                                    : Padding(padding: const EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 8),
+                                    : Padding(padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 16),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
@@ -194,9 +195,12 @@ class _playersStatsState extends ConsumerState<TeamState> {
                                                   height: 8,
                                                 ),
                                                 Row(
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
                                                   children: [
-                                                    SizedBox(height: 16, width: 16, child: CircleAvatar()
-                                                      //Image.network("https://www.eplworld.com"),
+                                                    SizedBox(
+                                                        height: 20,
+                                                        width: 20,
+                                                        child:CustomImage(imgUrl: "${Constants.teamImage}${item.statsModel[innerIndex].teamId}.png")
                                                     ),
                                                     SizedBox(
                                                       width: 5,
@@ -214,15 +218,15 @@ class _playersStatsState extends ConsumerState<TeamState> {
                                           ]),
                                       SizedBox(width: 25,),
                                       Container(
+                                        width: 24,
+                                        height: 24,
                                         decoration: BoxDecoration(
-                                            color: Theme.of(context).colorScheme.onPrimary,
+                                            color: Theme.of(context).primaryColor,
                                             borderRadius: BorderRadius.circular(4)
                                         ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(3.0),
-
+                                        child: Center(
                                           child: Text(item.statsModel[innerIndex].statistic.value,
-                                              style: Theme.of(context).textTheme.bodyMedium
+                                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white)
                                           ),
                                         ),
                                       ),

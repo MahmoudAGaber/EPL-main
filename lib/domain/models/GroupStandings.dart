@@ -84,6 +84,7 @@ class Group {
 
 class TeamStanding {
   final MatchStats all;
+  final MatchStats home;
   final MatchStats away;
   final String points;
   final String rank;
@@ -92,6 +93,7 @@ class TeamStanding {
   TeamStanding({
     required this.all,
     required this.away,
+    required this.home,
     required this.points,
     required this.rank,
     required this.team,
@@ -101,6 +103,7 @@ class TeamStanding {
     return TeamStanding(
       all: MatchStats.fromJson(json['all']),
       away: MatchStats.fromJson(json['away']),
+      home: MatchStats.fromJson(json['home']),
       points: json['points']??"",
       rank: json['rank']??"",
       team: Team.fromJson(json['team']),
@@ -124,7 +127,11 @@ class MatchStats {
   final String draw;
   final String lose;
   final String points;
+  final String rank;
   final Goals goals;
+  final String zoneStart;
+  final String zoneColor;
+
 
   MatchStats({
     required this.played,
@@ -132,7 +139,10 @@ class MatchStats {
     required this.draw,
     required this.lose,
     required this.points,
+    required this.rank,
     required this.goals,
+    required this.zoneStart,
+    required this.zoneColor,
   });
 
   factory MatchStats.fromJson(Map<String, dynamic> json) {
@@ -142,7 +152,11 @@ class MatchStats {
       draw: json['draw'] ?? '',
       lose: json['lose'] ?? '',
       points: json['points'] ?? '',
+      rank: json['rank'] ?? '',
       goals: Goals.fromJson(json['goals'] ?? {}),
+      zoneStart: json['zone_start'] ?? '',
+      zoneColor: json['zone_color'] ?? '',
+
     );
   }
 

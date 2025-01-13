@@ -1,5 +1,8 @@
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:epl/presentation/league/screens/groupStandings.dart';
+import 'package:epl/shared/Views/custom/custom_imageView.dart';
+import 'package:epl/shared/Views/custom/custom_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -43,9 +46,9 @@ class _LeagueHomeState extends ConsumerState<LeagueHome> with TickerProviderStat
 
   AnimationController? animationController;
   Animation<double>? _animation;
-
-  List<Widget> tabNamee = [];
-  List<Widget> tabVieww = [];
+  bool isLoading = true;
+  List<Widget> tabsName = [];
+  List<Widget> tabsView = [];
 
 
 
@@ -53,17 +56,10 @@ class _LeagueHomeState extends ConsumerState<LeagueHome> with TickerProviderStat
   void initState() {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await fetchAllData();
+      setUpTabsAndViews();
 
-      ref.read(LeagueSeasonsProvider.notifier).getLeagueSeasons(widget.leagueId.toString()).then((seasonId){
-        this.seasonId = seasonId!;
-        ref.read(LeagueStandingProvider.notifier).getTable(seasonId, "total");
-        ref.read(LeagueGroupStandingProvider.notifier).getTable(seasonId, "total");
-        ref.read(PlayerStatsProvider.notifier).getPlayerStats(seasonId);
-        ref.read(TeamStatsProvider.notifier).getTeamStats(seasonId);
-
-        print("SEASONID${this.seasonId}");
-      });
-      ref.read(LeagueNewsProvider.notifier).getNews(widget.leagueName!);
+      print("LeagueId${widget.leagueId}");
 
       _controller.addListener(() {
         if (_controller.position.pixels ==
@@ -73,27 +69,104 @@ class _LeagueHomeState extends ConsumerState<LeagueHome> with TickerProviderStat
       });
     });
 
-    animationController =
-        AnimationController(duration: const Duration(seconds: 1), vsync: this);
+    animationController = AnimationController(duration: const Duration(seconds: 1), vsync: this);
 
-    _animation =
-        CurvedAnimation(parent: animationController!, curve: Curves.easeIn);
+    _animation = CurvedAnimation(parent: animationController!, curve: Curves.easeIn);
 
     animationController!.forward();
     super.initState();
   }
 
 
+  Future<void> fetchAllData() async {
+    try {
+      final seasonId = await ref.read(leagueSeasonsProvider.notifier).getLeagueSeasons(widget.leagueId!);
+      print("SeasonId ${seasonId}");
+      await Future.wait([
+        ref.read(leagueSeasonsProvider.notifier).getLeagueSeasons(widget.leagueId!),
+        ref.read(leagueStandingProvider.notifier).getTable(seasonId!,"total"),
+        ref.read(leagueMatchesProvider.notifier).getMatches(seasonId),
+        ref.read(leagueNewsProvider.notifier).getNews(widget.leagueName!),
+        ref.read(leaguePlayerStatsProvider.notifier).getPlayerStats(seasonId),
+        ref.read(leagueTeamStatsProvider.notifier).getTeamStats(seasonId),
+      ]);
+    } catch (e) {
+      print("Error fetching data: $e");
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  void setUpTabsAndViews() {
+    setState(() {
+      tabsName = getTabs()['tabsName']!;
+      tabsView = getTabs()['tabsView']!;
+
+      tabController = TabController(length: tabsName.length, vsync: this);
+    });
+  }
+
+  Map<String,List<Widget>> getTabs() {
+    final leagueSeasonsState = ref.watch(leagueSeasonsProvider);
+    final leagueStandingState = ref.watch(leagueStandingProvider);
+    final leagueMatchesState = ref.watch(leagueMatchesProvider);
+    final leagueNewsState = ref.watch(leagueNewsProvider);
+    final leaguePlayerStState = ref.watch(leaguePlayerStatsProvider);
+    final leagueTeamStState = ref.watch(leagueTeamStatsProvider);
+
+
+    final tabsName = <Widget>[];
+    final tabsView = <Widget>[];
+
+    Map<String,List<Widget>> tabs= {
+      'tabsName':tabsName,
+      'tabsView': tabsView
+    };
+
+    try {
+      if (leagueStandingState.data != null) {
+        if (leagueStandingState.data!.format == "default") {
+          tabsName.add(PositionN());
+          tabsView.add(position());
+        } else if (leagueStandingState.data!.format == "groups") {
+          tabsName.add(PositionN());
+          tabsView.add(positionGTable());
+        }
+      }
+      if (leagueMatchesState.data != null ) {
+        print("HELLLO${leagueMatchesState.data}");
+        tabsName.add(matchesN());
+        tabsView.add(matches());
+      }
+      if (leagueNewsState.data != null) {
+        tabsName.add(NewsN());
+        tabsView.add(News());
+      }
+      if (leaguePlayerStState.data != null) {
+        tabsName.add(playersStatsN());
+        tabsView.add(playerStats());
+      }
+
+      if (leagueTeamStState.data != null) {
+        tabsName.add(teamsStatsN());
+        tabsView.add(teamStats());
+      }
+    }catch(e){
+      print(e);
+    }
+    return tabs;
+  }
   @override
   void dispose() {
-    //tabController.dispose();
-    //G.socketUtils!.closeConnection();
+    tabController!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    var standings = ref.watch(LeagueStandingProvider);
+    var standings = ref.watch(leagueSeasonsProvider);
 
     List<Widget> _sliverBuilder(BuildContext context, bool innerBoxIsScrolled) {
       return <Widget>[
@@ -123,10 +196,6 @@ class _LeagueHomeState extends ConsumerState<LeagueHome> with TickerProviderStat
             floating: true,
             snap: true,
             flexibleSpace:
-                // tabNamee = tabName(provider);
-                //tabVieww = tabView(provider);
-                //tabController = new TabController(length: tabVieww.length, vsync: this, initialIndex: _selectedIndex);
-                //provider.toggleLoading(false);
                  FlexibleSpaceBar(
                         background: Container(
                           child: Stack(
@@ -140,14 +209,9 @@ class _LeagueHomeState extends ConsumerState<LeagueHome> with TickerProviderStat
                                     Container(
                                         height: 60,
                                         width: 55,
-                                        child: Image.network(
-                                          "${Constants.leagueImage}${widget.leagueId}.png",
-                                          errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                            return CircleAvatar(backgroundColor: Colors.grey,);
-                                          },
-                                        ),)
-                                  ],
-                                ),
+                                        child: CustomImage(imgUrl: "${Constants.leagueImage}${widget.leagueId}.png",)
+                                    )]
+                                )
                               ),
                               // Positioned(
                               //     top: 105,
@@ -199,25 +263,22 @@ class _LeagueHomeState extends ConsumerState<LeagueHome> with TickerProviderStat
                 delegate: _SliverAppBarDelegate(
                     maxHeight: 55,
                     minHeight: 45,
-                    child: Container(
-                                height: 55,
-                                color: Theme.of(context).primaryColor,
-                                child: DefaultTabController(
-                                  length: tabName("").length,
-                                  child: TabBar(
-                                      indicatorColor: Colors.white,
-                                      isScrollable: true,
-                                      onTap: (index) {
-                                        _selectedIndex = index;
-                                        tabController!.animateTo(_selectedIndex);
-                                      },
-                                      controller: tabController,
-                                      tabs: List.generate(
-                                          5,
-                                          (index) => tabName("")[
-                                                  index]).toList()),
-                                ),
-                    )
+                    child:Container(
+                        height: 55,
+                        color: Theme.of(context).primaryColor,
+                        child: !isLoading? DefaultTabController(
+                            length: isLoading?tabsName.length:0,
+                            child: TabBar(
+                              tabs: tabsName,
+                              controller: tabController,
+                              indicatorColor: Colors.white,
+                              labelColor: Colors.white,
+                              isScrollable: true,
+                              onTap: (index) {
+                                _selectedIndex = index;
+                                tabController!.animateTo(_selectedIndex);
+                              },
+                            )):SizedBox()),
                 )
             )
         ),
@@ -232,12 +293,21 @@ class _LeagueHomeState extends ConsumerState<LeagueHome> with TickerProviderStat
             controller: _controller,
             physics: ClampingScrollPhysics(),
             headerSliverBuilder: _sliverBuilder,
-            body: TabBarView(
-                          controller: tabController = new TabController(
-                              length: tabView(standings).length,
-                              vsync: this,
-                              initialIndex: _selectedIndex),
-                          children: List.generate(tabView(standings).length, (index) => tabView(standings)[index]).toList())
+            body: DefaultTabController(
+              length: !isLoading?tabsView.length:0,
+              child: TabBarView(
+                controller: tabController,
+                children: !isLoading? tabsView: [Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: CustomLoader(),
+                    ),
+                  ],
+                )],
+              ),
+            ),
     )
           ),
 
@@ -308,63 +378,6 @@ class _LeagueHomeState extends ConsumerState<LeagueHome> with TickerProviderStat
     );
   }
 
-  List<Widget> tabName(provider) {
-    List<Widget> test = [];
-    test.add(PositionN());
-    test.add(matchesN());
-    test.add(NewsN());
-    test.add(playersStatsN());
-    test.add(teamsStatsN());
-    test.add(transferN());
-    test.add(cupsN());
-
-
-    // if (provider.tablesModelList != null) {
-    //   test.add(PositionN());
-    // }
-    //
-    // if (provider.recentMatcheBox != null) {
-    //   test.add(matchesN());
-    // }
-    //
-    // if (provider.newsModelList != null) {
-    //   test.add(NewsN());
-    // }
-    //
-    // if (provider.playersModel != null) {
-    //   test.add(playersStatsN());
-    // }
-    //
-    // if (provider.teamsModel != null) {
-    //   test.add(teamsStatsN());
-    // }
-    //
-    // if (provider.transferBoxesModelList != null) {
-    //   test.add(transferN());
-    // }
-    //
-    // if (provider.trophiesBoxesModelList != null) {
-    //   test.add(cupsN());
-    // }
-
-    return test;
-  }
-
-  /*
-  List<Widget> tabName(OneLeagueViewModel provider) {
-    List<Widget> test = [];
-      test.add(PositionN());
-      test.add(matchesN());
-      test.add(NewsN());
-      test.add(playersStatsN());
-      test.add(teamsStatsN());
-      test.add(transferN());
-      test.add(cupsN());
-
-    return test;
-  }
-
-   */
 
   Widget position() {
     return ListView(children: <Widget>[
@@ -415,68 +428,6 @@ class _LeagueHomeState extends ConsumerState<LeagueHome> with TickerProviderStat
     ]);
   }
 
-  List<Widget> tabView(StateModel<TableModel> standings) {
-    List<Widget> test = [];
-
-    if(standings.data !=null) {
-      test.add(position());
-
-    }else{
-      test.add(positionGTable());
-    }
-
-    test.add(matches());
-    test.add(News());
-    test.add(playerStats());
-    test.add(teamStats());
-    test.add(transfers());
-    test.add(cups());
-
-
-    // if (provider.tablesModelList != null &&
-    //     provider.tablesModelList[0].list.length == 1) {
-    // }
-    //
-    // if (provider.tablesModelList != null &&
-    //     provider.tablesModelList[0].list.length > 1) {
-    // }
-    //
-    // if (provider.recentMatcheBox != null) {
-    // }
-    //
-    // if (provider.newsModelList != null) {
-    // }
-    //
-    // if (provider.playersModel != null) {
-    // }
-    //
-    // if (provider.teamsModel != null) {
-    // }
-    //
-    // if (provider.transferBoxesModelList != null) {
-    // }
-    //
-    // if (provider.trophiesBoxesModelList != null) {
-    // }
-
-    return test;
-  }
-
-/*
-  List<Widget> tabView(url) {
-    List<Widget> test = [];
-      test.add(Position(url));
-      test.add(fixture(url));
-      test.add(news(url));
-      test.add(playerStats(url));
-      test.add(teamStats(url));
-      test.add(transfers(url));
-      test.add(cups(url));
-
-    return test;
-  }
-
- */
 
 }
 

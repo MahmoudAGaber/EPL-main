@@ -1,6 +1,9 @@
+import 'package:epl/shared/Views/custom/custom_imageView.dart';
+import 'package:epl/shared/helper/date_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../shared/Utils/Constants.dart';
 import '../provider/PlayerViewModel.dart';
 
 
@@ -11,11 +14,6 @@ class playerCareer extends ConsumerStatefulWidget {
   _playerStatisticsState createState() => _playerStatisticsState();
 }
 
-const TextStyle _textStyle = TextStyle(
-    fontFamily: 'Vazirmatn',
-    color: Colors.grey,
-    fontSize: 15,
-    fontWeight: FontWeight.w500);
 
 class _playerStatisticsState extends ConsumerState<playerCareer> {
 
@@ -62,37 +60,41 @@ class _playerStatisticsState extends ConsumerState<playerCareer> {
                                  physics: NeverScrollableScrollPhysics(),
                                  itemCount: 1,
                                  itemBuilder: (context, index) {
-                                   return Column(
-                                     children: [
-                                       Padding(
-                                         padding: const EdgeInsets.all(12),
-                                         child: Row(
-                                           children: [
-                                             Container(
-                                               width: 40,
-                                               height: 40,
-                                               child: ClipRRect(
-                                                 borderRadius: BorderRadius.all(
-                                                   Radius.circular(50),
+                                   var team = player.data!.teamCareer.club[index];
+                                   if(team.active == 'yes')
+                                     return Column(
+                                       children: [
+                                         Padding(
+                                           padding: const EdgeInsets.all(12),
+                                           child: Row(
+                                             children: [
+                                               Container(
+                                                 width: 40,
+                                                 height: 40,
+                                                 child: ClipRRect(
+                                                     borderRadius: BorderRadius.all(
+                                                       Radius.circular(50),
+                                                     ),
+                                                     child: Padding(
+                                                       padding: const EdgeInsets.all(4.0),
+                                                       child: CustomImage(imgUrl: "${Constants.teamImage}${team.teamId}.png",),
+                                                     )
                                                  ),
-                                                 child: Image.network(
-                                                   "https://www.eplworld.com",fit: BoxFit.contain,),
                                                ),
-                                             ),
-                                             SizedBox(width: 12,),
-                                             Column(
-                                               crossAxisAlignment: CrossAxisAlignment.start,
-                                               children: [
-                                                 Text("ssss",style: Theme.of(context).textTheme.bodyMedium),
-                                                 Text("ssss",style: Theme.of(context).textTheme.bodySmall),
-                                               ],
-                                             )
-                                           ],
+                                               SizedBox(width: 12,),
+                                               Column(
+                                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                                 children: [
+                                                   Text(team.clubName,style: Theme.of(context).textTheme.bodyMedium),
+                                                   Text(DateConverter.isoStringToYM(team.startDate),style: Theme.of(context).textTheme.bodySmall),
+                                                 ],
+                                               )
+                                             ],
+                                           ),
                                          ),
-                                       ),
-                                     ],
+                                       ],
 
-                                   );
+                                     );
                                  })
                            ],
                          )
@@ -116,7 +118,7 @@ class _playerStatisticsState extends ConsumerState<playerCareer> {
                        children: <Widget>[
                          Padding(
                            padding: const EdgeInsets.all(12.0),
-                           child: Text("dds",
+                           child: Text("المهنة",
                                style: Theme.of(context).textTheme.bodyMedium
                            ),
                          ),
@@ -127,38 +129,39 @@ class _playerStatisticsState extends ConsumerState<playerCareer> {
                              ListView.builder(
                                  shrinkWrap: true,
                                  physics: NeverScrollableScrollPhysics(),
-                                 itemCount: 5,
+                                 itemCount: player.data!.teamCareer.club.length,
                                  itemBuilder: (context, index) {
+                                   var club = player.data!.teamCareer.club[index];
                                    return Column(
                                      children: [
                                        Padding(
-                                         padding: const EdgeInsets.all(16),
+                                         padding: const EdgeInsets.all(12),
                                          child: Row(
                                            children: [
                                              Container(
                                                width: 40,
                                                height: 40,
                                                child: ClipRRect(
-                                                 borderRadius: BorderRadius.all(
-                                                   Radius.circular(50),
-                                                 ),
-                                                 child: Image.network(
-                                                   "https://www.eplworld.com",fit: BoxFit.contain,),
+                                                   borderRadius: BorderRadius.all(
+                                                     Radius.circular(50),
+                                                   ),
+                                                   child: Padding(
+                                                     padding: const EdgeInsets.all(4.0),
+                                                     child: CustomImage(imgUrl: "${Constants.teamImage}${club.teamId}.png",),
+                                                   )
                                                ),
                                              ),
                                              SizedBox(width: 12,),
                                              Column(
                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                children: [
-                                                 Text("s",style: Theme.of(context).textTheme.bodyMedium),
-                                                 Text("ss",style: Theme.of(context).textTheme.bodySmall),
+                                                 Text(club.clubName,style: Theme.of(context).textTheme.bodyMedium),
+                                                 Text(DateConverter.isoStringToYM(club.startDate),style: Theme.of(context).textTheme.bodySmall),
                                                ],
                                              )
                                            ],
                                          ),
                                        ),
-
-                                       Divider()
                                      ],
 
                                    );

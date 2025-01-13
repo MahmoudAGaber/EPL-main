@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:epl/Data/StateModel.dart';
+import 'package:epl/shared/Views/custom/custom_imageView.dart';
 import 'package:epl/shared/Views/custom/custom_loader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import '../../../shared/Utils/Constants.dart';
 import '../../home/screens/widgets/More.dart';
+import '../../league/screens/groupStandings.dart';
 import '../../team/screens/teamHome.dart';
 import '../provider/fixtureViewModel.dart';
 import '../../../shared/Utils/date_converter.dart';
@@ -29,9 +31,7 @@ class MatchInfo extends ConsumerStatefulWidget {
   String? matchId;
   String? fixtureId;
   String? seasonId;
-  List<Widget>? tabs;
-  List<Widget>? tabsView;
-  bool? isLoading;
+
 
   MatchInfo(
       {this.fixtureId,
@@ -40,10 +40,7 @@ class MatchInfo extends ConsumerStatefulWidget {
       this.awayId,
       this.comName,
       this.matchId,
-      this.seasonId,
-         this.tabs,
-         this.tabsView,
-        this.isLoading});
+      this.seasonId,});
 
   @override
   _MatchInfoState createState() => _MatchInfoState();
@@ -65,9 +62,6 @@ class _MatchInfoState extends ConsumerState<MatchInfo> with TickerProviderStateM
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await fetchAllData();
       setUpTabsAndViews();
-       // tabsName = widget.tabs!;
-       // tabsView = widget.tabsView!;
-
 
       // ref.read(MatchInfoProvider.notifier).getMatchInfo(widget.fixture_id!).then((value) {
         // print("FixtureID${widget.fixture_id!}");
@@ -102,6 +96,7 @@ class _MatchInfoState extends ConsumerState<MatchInfo> with TickerProviderStateM
     try {
       final matchInfo = await ref.read(MatchInfoProvider.notifier).getMatchInfo(widget.fixtureId!);
 
+      print("leagueseason!${matchInfo!.league.season!}");
       await Future.wait([
        ref.read(matchEventsProvider.notifier).fetchMatchEvents(widget.fixtureId!),
      ref.read(matchTeamFormProvider.notifier).fetchMatchTeamForm(widget.fixtureId!),
@@ -118,6 +113,7 @@ class _MatchInfoState extends ConsumerState<MatchInfo> with TickerProviderStateM
       });
     }
   }
+
   void setUpTabsAndViews() {
     setState(() {
       tabsName = getTabs()['tabsName']!;
@@ -160,8 +156,15 @@ class _MatchInfoState extends ConsumerState<MatchInfo> with TickerProviderStateM
 
     }
     if (matchTableState.data != null) {
-      tabsName.add(matchTableName());
-      tabsView.add(matchTable());
+      if(matchTableState.data!.format == "default"){
+        tabsName.add(matchTableName());
+        tabsView.add(matchTable());
+      }else if(matchTableState.data!.format == "groups"){
+        print(matchTableState.data!);
+        tabsName.add(matchTableName());
+        tabsView.add(matchGTable());
+      }
+
 
     }
     if (matchH2HState.data != null) {
@@ -220,50 +223,6 @@ class _MatchInfoState extends ConsumerState<MatchInfo> with TickerProviderStateM
   @override
   Widget build(BuildContext context) {
     var matchInfo = ref.watch(MatchInfoProvider);
-    var events = ref.watch(MatchEventsProvider);
-    var lineups = ref.watch(LineUpsProvider);
-    var table = ref.watch(TableProvider);
-    var statistics = ref.watch(MatchStatisticsProvider);
-    var headToHead = ref.watch(H2HProvider);
-    var loading = ref.watch(fixtureLoadingTabsProvider);
-
-    final matchEventsState = ref.watch(matchEventsProvider);
-    final matchTeamFormState = ref.watch(matchTeamFormProvider);
-    final matchLineupsState = ref.watch(matchLineupsProvider);
-    final matchTableState = ref.watch(matchTableProvider);
-    final matchStatsState = ref.watch(matchStatsProvider);
-    final matchH2HState = ref.watch(matchH2HProvider);
-
-    // List<Widget> tabsName = [];
-    // List<Widget> tabsView = [];
-    //
-    // if (matchEventsState.data!=null || matchTeamFormState.data!=null) {
-    //   tabsName.add(matchEventName());
-    //   tabsView.add(matchEvent());
-    // }
-    //
-    // if (matchLineupsState.data != null) {
-    //   tabsName.add(lineUpName());
-    //   tabsView.add(lineUp());
-    // }
-    //
-    // if (matchStatsState.data != null) {
-    //   tabsName.add(statsName());
-    //   tabsView.add(stats());
-    // }
-    //
-    // if (matchTableState.data != null) {
-    //   tabsName.add(matchTableName());
-    //   tabsView.add(matchTable());
-    // }
-    //
-    // if (matchH2HState.data != null) {
-    //   tabsName.add(matchHTHName());
-    //   tabsView.add(matchHTH());
-    // }
-    //
-    // tabController = TabController(length: tabsName.length, vsync: this);
-
 
     List<Widget> sliverBuilder(BuildContext context, bool innerBoxIsScrolled) {
       return <Widget>[
@@ -314,6 +273,7 @@ class _MatchInfoState extends ConsumerState<MatchInfo> with TickerProviderStateM
                                   children: <Widget>[
                                     InkWell(
                                         onTap: () {
+                                          print('TEAMID${matchInfo.data!.teams.home.id}');
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -326,12 +286,7 @@ class _MatchInfoState extends ConsumerState<MatchInfo> with TickerProviderStateM
                                         child: SizedBox(
                                             width: 40,
                                             height: 30,
-                                              child: Image.network(
-                                                "${Constants.teamImage}${widget.homeId}.png",
-                                                errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                  return CircleAvatar(backgroundColor: Colors.grey,);
-                                                },
-                                              ),
+                                            child: CustomImage(imgUrl:  "${Constants.teamImage}${widget.homeId}.png",)
                                         ),
                                     ),
                                   ],
@@ -367,12 +322,7 @@ class _MatchInfoState extends ConsumerState<MatchInfo> with TickerProviderStateM
                                       child: SizedBox(
                                         width: 40,
                                         height: 30,
-                                        child: Image.network(
-                                          "${Constants.teamImage}${widget.awayId}.png",
-                                          errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                            return CircleAvatar(backgroundColor: Colors.grey,);
-                                          },
-                                        ),
+                                        child: CustomImage(imgUrl:"${Constants.teamImage}${widget.awayId}.png",)
                                       ),
                                     ),
                                   ],
@@ -645,6 +595,8 @@ class _MatchInfoState extends ConsumerState<MatchInfo> with TickerProviderStateM
   Widget lineUp() => LineUps();
 
   Widget matchTable() => ListView(children: [MatchStanding()]);
+
+  Widget matchGTable() => ListView(children: [MatchGPosition()]);
 
   Widget stats() => MatchStats();
 

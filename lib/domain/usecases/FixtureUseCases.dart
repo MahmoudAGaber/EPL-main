@@ -3,9 +3,8 @@ import '../../domain/Models/Event.dart';
 import '../../domain/Models/Formation.dart';
 import '../../domain/Models/H2H.dart';
 import '../../domain/Models/MatchStatistics.dart';
-import '../../domain/Models/Standing.dart';
 import '../../domain/Models/TeamForm.dart';
-import 'MatchRepositry.dart';
+import '../repository/MatchRepositry.dart';
 
 class GetMatchEventsUseCase {
   final MatchRepositoryImpl repository;
@@ -42,7 +41,7 @@ class GetTableUseCase {
 
   GetTableUseCase(this.repository);
 
-  Future<TableModel> execute(String seasonId,String type) {
+  Future<dynamic> execute(String seasonId,String type) {
     return repository.getTable(seasonId,type);
   }
 }

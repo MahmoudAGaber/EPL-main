@@ -74,6 +74,11 @@ class DateConverter {
     return  'HH:mm' ;
   }
 
+  static String isoStringToYM(String dateTime) {
+    DateTime parsedDate = DateTime.parse(dateTime);
+    return DateFormat("MMMM yyyy").format(parsedDate);
+  }
+
   static String timeAgoSinceDate(DateTime dateTime, {bool numericDates = true}) {
     final date2 = DateTime.now();
     final difference = date2.difference(dateTime);

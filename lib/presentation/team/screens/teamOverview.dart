@@ -1,5 +1,6 @@
 import 'package:epl/Data/StateModel.dart';
 import 'package:epl/domain/models/Teams/teamOverview.dart';
+import 'package:epl/presentation/fixture/screens/matchInfo.dart';
 import 'package:epl/shared/Views/custom/standingLabels.dart';
 import 'package:epl/shared/Views/custom/teamInStanding.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,9 +13,11 @@ import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 import '../../../shared/Utils/Constants.dart';
 import '../../../shared/Utils/date_converter.dart';
+import '../../../shared/Views/custom/custom_imageView.dart';
 import '../../../shared/Views/custom/custom_loader.dart';
+import '../../../webView.dart';
 import '../../fixture/screens/EndMatches/matchInfo_a.dart';
-import '../../playrers/screens/players.dart';
+import '../../playrers/screens/playerHome.dart';
 import '../provider/TeamViewModel.dart';
 import 'teamHome.dart';
 
@@ -57,7 +60,7 @@ class _OverViewState extends ConsumerState<OverView> {
 
   @override
   Widget build(BuildContext context) {
-    var teamOverview = ref.watch(TeamOverviewProvider);
+    var teamOverview = ref.watch(teamOverviewProvider);
     return SafeArea(
       bottom: true,
       minimum: EdgeInsets.only(bottom: 10.0),
@@ -109,7 +112,7 @@ class _OverViewState extends ConsumerState<OverView> {
                                         Navigator.push(
                                             context, MaterialPageRoute(
                                                 builder: (context) =>
-                                                    matchInfo_a(
+                                                    MatchInfo(
                                                       url: "",
                                                     )));
                                       },
@@ -174,12 +177,7 @@ class _OverViewState extends ConsumerState<OverView> {
                                                               child: Container(
                                                                 width: 37,
                                                                 height: 30,
-                                                                child: Image.network(
-                                                                  "${Constants.teamImage}${matches.teams.home.id}.png",
-                                                                  errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                                    return CircleAvatar(backgroundColor: Colors.grey,);
-                                                                  },
-                                                                ),
+                                                                child: CustomImage(imgUrl: "${Constants.teamImage}${matches.teams.home.id}.png")
                                                               ),
                                                             ),
                                                             Text("${matches.score.fulltime.home} - ${matches.score.fulltime.away}",
@@ -190,12 +188,7 @@ class _OverViewState extends ConsumerState<OverView> {
                                                               child: Container(
                                                                   width: 37,
                                                                   height: 30,
-                                                                  child: Image.network(
-                                                                    "${Constants.teamImage}${matches.teams.away.id}.png",
-                                                                    errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                                      return CircleAvatar(backgroundColor: Colors.grey,);
-                                                                    },
-                                                                  ),),
+                                                                  child: CustomImage(imgUrl: "${Constants.teamImage}${matches.teams.away.id}.png",)),
                                                             ),
                                                           ],
                                                         ),
@@ -256,14 +249,8 @@ class _OverViewState extends ConsumerState<OverView> {
                                 width: 230,
                                 child: GestureDetector(
                                   onTap: () {
-                                    // Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //         builder: (context) =>
-                                    //             webView(
-                                    //               url:
-                                    //                   "https://www.eplworld.com${provider.newsModelList[index].url}",
-                                    //             )));
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=> WebView(url:news.url)));
+
                                   },
                                   child: Card(
                                     elevation: 2,
@@ -464,12 +451,9 @@ class _OverViewState extends ConsumerState<OverView> {
                                                                 width: 50,
                                                                 child: ClipRRect(
                                                                     borderRadius: BorderRadius.circular(50),
-                                                                    child: Image.network(
-                                                                      "${Constants.teamImage}${person.personId}.png",
-                                                                      errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                                        return CircleAvatar(backgroundColor: Colors.grey,);
-                                                                      },
-                                                                    ),)),
+                                                                    child: CustomImage(imgUrl: "${Constants.teamImage}${person.personId}.png",),
+                                                                )
+                                                            ),
                                                           )
                                                         ],
                                                       ),
@@ -493,12 +477,7 @@ class _OverViewState extends ConsumerState<OverView> {
                                                               Container(
                                                                 height: 20,
                                                                 width: 20,
-                                                                child: Image.network(
-                                                                  "${Constants.teamImage}${person.teamId}.png",
-                                                                  errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                                    return CircleAvatar(backgroundColor: Colors.grey,);
-                                                                  },
-                                                                )
+                                                                child: CustomImage(imgUrl: "${Constants.teamImage}${person.teamId}.png",)
                                                               ),
                                                               SizedBox(
                                                                 width: 5,
@@ -552,12 +531,9 @@ class _OverViewState extends ConsumerState<OverView> {
                                                             width: 30,
                                                             child: ClipRRect(
                                                                 borderRadius: BorderRadius.all(Radius.circular(100)),
-                                                                child: Image.network(
-                                                                  "${Constants.teamImage}${person.personId}.png",
-                                                                  errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                                    return CircleAvatar(backgroundColor: Colors.grey,);
-                                                                  },
-                                                                ))),
+                                                                child:CustomImage(imgUrl: "${Constants.teamImage}${person.personId}.png",)
+                                                            )
+                                                        ),
                                                       ),
                                                       SizedBox(
                                                         width: 8,
@@ -581,12 +557,7 @@ class _OverViewState extends ConsumerState<OverView> {
                                                               Container(
                                                                 height: 14,
                                                                 width: 14,
-                                                                child: Image.network(
-                                                                  "${Constants.teamImage}${person.teamId}.png",
-                                                                  errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                                    return CircleAvatar(backgroundColor: Colors.grey,);
-                                                                  },
-                                                                ),
+                                                                child: CustomImage(imgUrl:"${Constants.teamImage}${person.teamId}.png",)
                                                               ),
                                                               SizedBox(
                                                                 width: 5,

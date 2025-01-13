@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../shared/Utils/date_converter.dart';
 import '../../../shared/Views/custom/custom_loader.dart';
+import '../../../webView.dart';
 
 
 class leagueNews extends ConsumerStatefulWidget {
@@ -33,7 +34,7 @@ class _leagueNewsState extends ConsumerState<leagueNews> {
 
   @override
   Widget build(BuildContext context) {
-    var news =ref.watch(LeagueNewsProvider);
+    var news =ref.watch(leagueNewsProvider);
 
     return news.handelState(
         onLoading: (state)=> CustomLoader(),
@@ -64,14 +65,8 @@ class _leagueNewsState extends ConsumerState<leagueNews> {
                       width: MediaQuery.of(context).size.width,
                       child: GestureDetector(
                         onTap: () {
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) =>
-                          //             webView(
-                          //               url:
-                          //               "https://www.eplworld.com${provider.newsModelList[index].url}",
-                          //             )));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> WebView(url:item.url)));
+
                         },
                         child: Card(
                           shape: RoundedRectangleBorder(

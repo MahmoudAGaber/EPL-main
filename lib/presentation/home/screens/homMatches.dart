@@ -10,7 +10,7 @@ import 'matches/MatchesDate/TodayMatch.dart';
 import 'widgets/More.dart';
 import 'package:get/get.dart';
 import 'widgets/clanderbar.dart';
-import '../../playrers/screens/players.dart';
+import '../../playrers/screens/playerHome.dart';
 import '../../team/screens/teamHome.dart';
 
 class Matches extends StatefulWidget {

@@ -13,6 +13,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 import '../../../shared/Utils/date_converter.dart';
 import '../../../shared/Views/custom/custom_loader.dart';
+import '../../../webView.dart';
 
 
 class News extends ConsumerStatefulWidget {
@@ -100,12 +101,12 @@ class _NewsState extends ConsumerState<News> with SingleTickerProviderStateMixin
                       ));
 
                 }
-                var video = news.data![index];
+                var newsItem = news.data![index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 0),
                   child: GestureDetector(
                     onTap: () {
-                      // Navigate to video details page
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> WebView(url: newsItem.url)));
                     },
                     child: Card(
                       shape: RoundedRectangleBorder(
@@ -122,7 +123,7 @@ class _NewsState extends ConsumerState<News> with SingleTickerProviderStateMixin
                                     height: 200,
                                     child: ClipRRect(
                                       child: Image.network(
-                                        video.urlToImage,
+                                        newsItem.urlToImage,
                                         fit: BoxFit.cover,
                                       ),
                                       borderRadius: BorderRadius.only(
@@ -142,7 +143,7 @@ class _NewsState extends ConsumerState<News> with SingleTickerProviderStateMixin
                                   Container(
                                     width: MediaQuery.of(context).size.width * 0.85,
                                     child: Text(
-                                      video.title,
+                                      newsItem.title,
                                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 14),
                                     ),
                                   ),
@@ -159,11 +160,11 @@ class _NewsState extends ConsumerState<News> with SingleTickerProviderStateMixin
                                   ),
                                   SizedBox(width: 5),
                                   Text(
-                                    video.author,
+                                    newsItem.author,
                                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 13),
                                   ),
                                   SizedBox(width: 5),
-                                  Text(DateConverter.timeAgoSinceDate(video.publishedAt),
+                                  Text(DateConverter.timeAgoSinceDate(newsItem.publishedAt),
                                       style: Theme.of(context).textTheme.bodySmall),
                                 ],
                               ),

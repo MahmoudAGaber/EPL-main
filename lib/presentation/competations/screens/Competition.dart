@@ -1,7 +1,7 @@
 
 import 'package:epl/Data/StateModel.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:epl/presentation/news/screens/leagues.dart';
+import 'package:epl/shared/Views/custom/custom_imageView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -92,7 +92,12 @@ class _CompetitionState extends ConsumerState<Competition> with SingleTickerProv
                             return GestureDetector(
                               onTap: () {
                                 Navigator.push(
-                                    context, MaterialPageRoute(builder: (context) => LeagueHome(leagueName: topLeague.league.name, leagueId: topLeague.league.id, logo: topLeague.league.logo,)));
+                                    context, MaterialPageRoute(builder: (context) =>
+                                    LeagueHome(
+                                      leagueName: topLeague.league.name,
+                                      leagueId: topLeague.league.id,
+                                      logo: topLeague.league.logo,)
+                                ));
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(10.0),
@@ -101,7 +106,7 @@ class _CompetitionState extends ConsumerState<Competition> with SingleTickerProv
                                     SizedBox(
                                         width: 30,
                                         height: 30,
-                                        child: CachedNetworkImage(imageUrl: topLeague.league.logo,)),
+                                        child: CustomImage(imgUrl: topLeague.league.logo,)),
                                     SizedBox(width: 10,),
                                     Text(topLeague.league.name, style: Theme.of(context).textTheme.bodyMedium!
                                     ),
@@ -451,11 +456,8 @@ class _CompetitionState extends ConsumerState<Competition> with SingleTickerProv
                                             SizedBox(
                                                 width: 30,
                                                 height: 30,
-                                                child: Image.network(
-                                                  "${Constants.countryImage}${CountryShortName.country["${competitionItem.country.id}"]}.png",
-                                                  errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                    return CircleAvatar(backgroundColor: Colors.grey,);
-                                                  },),),
+                                                child: CustomImage(imgUrl: "${Constants.countryImage}${CountryShortName.country["${competitionItem.country.id}"]}.png",)
+                                          ),
                                             SizedBox(
                                               width: 15,
                                             ),
@@ -476,7 +478,11 @@ class _CompetitionState extends ConsumerState<Competition> with SingleTickerProv
                                             return GestureDetector(
                                               onTap: () {
                                                 Navigator.push(
-                                                    context, MaterialPageRoute(builder: (context) => LeagueHome(leagueName: countryCompetition.league.name, leagueId: countryCompetition.league.id, logo: countryCompetition.league.logo,)));
+                                                    context, MaterialPageRoute(builder: (context) =>
+                                                    LeagueHome(
+                                                      leagueName: countryCompetition.league.name,
+                                                      leagueId: countryCompetition.league.id,
+                                                      logo: countryCompetition.league.logo,)));
                                               },
                                               child: Padding(
                                                 padding: const EdgeInsets.all(10.0),
@@ -485,11 +491,7 @@ class _CompetitionState extends ConsumerState<Competition> with SingleTickerProv
                                                     SizedBox(
                                                       width: 30,
                                                       height: 30,
-                                                      child: Image.network(
-                                                        "${Constants.leagueImage}${countryCompetition.league.id}.png",
-                                                        errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                          return CircleAvatar(backgroundColor: Colors.grey,);
-                                                        },),),
+                                                      child: CustomImage(imgUrl:"${Constants.leagueImage}${countryCompetition.league.id}.png" ,)),
                                                     SizedBox(width: 10,),
                                                     Text(countryCompetition.league.name,
                                                         style: Theme.of(context).textTheme.bodyMedium

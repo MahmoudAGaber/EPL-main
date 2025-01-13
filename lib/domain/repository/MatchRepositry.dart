@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import '../../Data/RequestHandler.dart';
-import '../../domain/Models/Event.dart';
-import '../../domain/Models/Formation.dart';
-import '../../domain/Models/H2H.dart';
-import '../../domain/Models/MatchStatistics.dart';
-import '../../domain/Models/Standing.dart';
-import '../../domain/Models/TeamForm.dart';
+import '../Models/Event.dart';
+import '../Models/Formation.dart';
+import '../Models/GroupStandings.dart';
+import '../Models/H2H.dart';
+import '../Models/MatchStatistics.dart';
+import '../Models/Standing.dart';
+import '../Models/TeamForm.dart';
 import 'MatchRepositeryInterface.dart';
 
 
@@ -82,22 +83,34 @@ class MatchRepositoryImpl implements MatchRepositoryInterface {
   }
 
   @override
-  Future<TableModel> getTable(String seasonId,String type) async{
-    TableModel tableModel;
+  Future<dynamic> getTable(String seasonId,String type) async{
+    dynamic tableModel;
     Map<String, dynamic> body;
 
-    body = {
-      "type": type,
-      "season_id": seasonId,
-      "lang": "ar"
-    };
 
-      tableModel = await requestHandler.postData(
+      body = {
+        "season_id": seasonId,
+        "lang": "ar",
+        "type": type
+      };
+
+      final jsonResponse = await requestHandler.postData(
         endPoint: "soccer/team/table",
         auth: true,
         requestBody: body,
-        fromJson: (json) => TableModel.fromJson(json),
+        fromJson: (json) => json,
       );
+
+      if(jsonResponse['format'] == 'default'){
+        print("defualt from repo");
+
+        tableModel = TableModel.fromJson(jsonResponse);
+      }
+      else if(jsonResponse['format'] == 'groups'){
+        print("Groups from repo");
+        tableModel = GroupTableModel.fromJson(jsonResponse);
+
+      }
 
         return tableModel;
   }

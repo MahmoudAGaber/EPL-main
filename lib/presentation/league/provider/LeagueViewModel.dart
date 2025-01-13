@@ -1,323 +1,286 @@
 
+import 'package:epl/Data/RequestHandler.dart';
+import 'package:epl/domain/Models/GroupStandings.dart';
+import 'package:epl/domain/Models/Leagues/PlayerStats.dart';
+import 'package:epl/domain/Models/Standing.dart';
+import 'package:epl/domain/Models/Teams/TeamTrophy.dart';
+import 'package:epl/domain/models/Leagues/teamStats.dart';
+import 'package:epl/domain/repository/LeagueRepositry.dart';
+import 'package:epl/domain/usecases/LeagueUseCases.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../Data/RequestHandler.dart';
 
 import '../../../Data/StateModel.dart';
-import '../../../domain/Models/GroupStandings.dart';
-import '../../../domain/Models/Leagues/PlayerStats.dart';
 import '../../../domain/Models/Leagues/Seasons.dart';
-import '../../../domain/Models/Standing.dart';
 import '../../../domain/Models/TeamForm.dart';
-import '../../../domain/Models/Teams/TeamTrophy.dart';
-import '../../../domain/models/Leagues/teamStats.dart';
 import '../../../domain/models/News.dart';
+import '../../../domain/models/Teams/teamOverview.dart';
 
 
 enum LeagueStandingType {All, Home, Away }
 
-final LeagueNewsProvider = StateNotifierProvider<LeagueNewsNotifier,StateModel<List<NewsModel>>>((ref) => LeagueNewsNotifier(ref));
-
-final TeamMatchesProvider = StateNotifierProvider<TeamMatchesNotifier,StateModel<List<FixtureDetail>>>((ref) => TeamMatchesNotifier(ref));
-
-final LeagueSeasonsProvider = StateNotifierProvider<LeagueSeasonsNotifier,StateModel<LeagueSeasonsModel>>((ref) => LeagueSeasonsNotifier(ref));
-
-final LeagueStandingProvider = StateNotifierProvider<LeagueStandingNotifier,StateModel<TableModel>>((ref) => LeagueStandingNotifier(ref));
-
-final LeagueGroupStandingProvider = StateNotifierProvider<LeagueGroupStandingNotifier,StateModel<GroupTableModel>>((ref) => LeagueGroupStandingNotifier(ref));
 
 final LeagueStandingTypeProvider = StateProvider<LeagueStandingType>((ref) => LeagueStandingType.All);
 
-final PlayerStatsProvider = StateNotifierProvider<PlayerStatsNotifier,StateModel<List<PlayerStatsModel>>>((ref) => PlayerStatsNotifier(ref));
+final requestHandlerProvider = Provider<RequestHandler>((ref) {
+  return RequestHandler();
+});
 
-final TeamStatsProvider = StateNotifierProvider<TeamStatsNotifier,StateModel<TeamsStatisticsModel>>((ref) => TeamStatsNotifier(ref));
+final leagueRepositoryProvider = Provider<LeagueRepositoryImpl>((ref) {
+  final RequestHandler = ref.read(requestHandlerProvider);
+  return LeagueRepositoryImpl(RequestHandler);
+});
 
-final TrophyProvider = StateNotifierProvider<TrophyNotifier,StateModel<List<TrophyModel>>>((ref) => TrophyNotifier(ref));
+
+final getNewsUseCaseProvider = Provider<LeagueNewsUseCase>((ref) {
+  final repository = ref.read(leagueRepositoryProvider);
+  return LeagueNewsUseCase(repository);
+});
+
+// League Seasons UseCase Provider
+final getLeagueSeasonsUseCaseProvider = Provider<LeagueSeasonsUseCase>((ref) {
+  final repository = ref.read(leagueRepositoryProvider);
+  return LeagueSeasonsUseCase(repository);
+});
+
+// Team Matches UseCase Provider
+final getLeagueMatchesUseCaseProvider = Provider<LeagueMatchesUseCase>((ref) {
+  final repository = ref.read(leagueRepositoryProvider);
+  return LeagueMatchesUseCase(repository);
+});
+
+// League Standings UseCase Provider
+final getLeagueStandingsUseCaseProvider = Provider<LeagueStandingsUseCase>((ref) {
+  final repository = ref.read(leagueRepositoryProvider);
+  return LeagueStandingsUseCase(repository);
+});
+
+// League Group Standings UseCase Provider
+final getLeagueGroupStandingsUseCaseProvider = Provider<LeagueGroupStandingsUseCase>((ref) {
+  final repository = ref.read(leagueRepositoryProvider);
+  return LeagueGroupStandingsUseCase(repository);
+});
+
+// Player Stats UseCase Provider
+final getPlayerStatsUseCaseProvider = Provider<LeaguePlayerStatsUseCase>((ref) {
+  final repository = ref.read(leagueRepositoryProvider);
+  return LeaguePlayerStatsUseCase(repository);
+});
+
+// Team Stats UseCase Provider
+final getTeamStatsUseCaseProvider = Provider<LeagueTeamStatsUseCase>((ref) {
+  final repository = ref.read(leagueRepositoryProvider);
+  return LeagueTeamStatsUseCase(repository);
+});
+
+// Trophy UseCase Provider
+final getTrophyUseCaseProvider = Provider<LeagueTrophiesUseCase>((ref) {
+  final repository = ref.read(leagueRepositoryProvider);
+  return LeagueTrophiesUseCase(repository);
+});
+
+
+final leagueNewsProvider = StateNotifierProvider<LeagueNewsNotifier, StateModel<List<NewsModel>>>((ref) {
+  final leagueNewsUseCase = ref.watch(getNewsUseCaseProvider);
+  return LeagueNewsNotifier(ref, leagueNewsUseCase);
+});
+
+// League Seasons Notifier Provider
+final leagueSeasonsProvider = StateNotifierProvider<LeagueSeasonsNotifier, StateModel<LeagueSeasonsModel>>((ref) {
+  final leagueSeasonsUseCase = ref.watch(getLeagueSeasonsUseCaseProvider);
+  return LeagueSeasonsNotifier(ref, leagueSeasonsUseCase);
+});
+
+// Team Matches Notifier Provider
+final leagueMatchesProvider = StateNotifierProvider<LeagueMatchesNotifier, StateModel<List<FixtureOverview>>>((ref) {
+  final leagueMatchesUseCase = ref.watch(getLeagueMatchesUseCaseProvider);
+  return LeagueMatchesNotifier(ref, leagueMatchesUseCase);
+});
+
+// League Standing Notifier Provider
+final leagueStandingProvider = StateNotifierProvider<LeagueStandingNotifier, StateModel<TableModel>>((ref) {
+  final leagueStandingsUseCase = ref.watch(getLeagueStandingsUseCaseProvider);
+  return LeagueStandingNotifier(ref, leagueStandingsUseCase);
+});
+
+// League Group Standing Notifier Provider
+final leagueGroupStandingProvider = StateNotifierProvider<LeagueGroupStandingNotifier, StateModel<GroupTableModel>>((ref) {
+  final leagueGroupStandingsUseCase = ref.watch(getLeagueGroupStandingsUseCaseProvider);
+  return LeagueGroupStandingNotifier(ref, leagueGroupStandingsUseCase);
+});
+
+// Player Stats Notifier Provider
+final leaguePlayerStatsProvider = StateNotifierProvider<PlayerStatsNotifier, StateModel<List<PlayerStatsModel>>>((ref) {
+  final leaguePlayerStatsUseCase = ref.watch(getPlayerStatsUseCaseProvider);
+  return PlayerStatsNotifier(ref, leaguePlayerStatsUseCase);
+});
+
+// Team Stats Notifier Provider
+final leagueTeamStatsProvider = StateNotifierProvider<TeamStatsNotifier, StateModel<TeamsStatisticsModel>>((ref) {
+  final leagueTeamStatsUseCase = ref.watch(getTeamStatsUseCaseProvider);
+  return TeamStatsNotifier(ref, leagueTeamStatsUseCase);
+});
+
+// Trophy Notifier Provider
+final leagueTrophyProvider = StateNotifierProvider<TrophyNotifier, StateModel<List<TrophyModel>>>((ref) {
+  final leagueTrophyUseCase = ref.watch(getTrophyUseCaseProvider);
+  return TrophyNotifier(ref, leagueTrophyUseCase);
+});
 
 
 
-class LeagueNewsNotifier extends StateNotifier<StateModel<List<NewsModel>>>{
+class LeagueStandingNotifier extends StateNotifier<StateModel<TableModel>> {
   Ref ref;
-  LeagueNewsNotifier(this.ref):super(StateModel.loading());
+  final LeagueStandingsUseCase useCase;
 
-  Future<void> getNews(String teamName) async{
-    RequestHandler requestHandler = RequestHandler();
-    NewsResponse newsResponse;
-    List<NewsModel> news = [];
-    Map<String, dynamic> body;
+  LeagueStandingNotifier(this.ref, this.useCase) : super(StateModel.loading());
+
+  Future<void> getTable(String seasonId, String type) async {
     try {
-      body = {
-        "search_string": teamName,
-      };
-
       state = StateModel.loading();
-
-      newsResponse = await requestHandler.postData(
-        endPoint: "soccer/competition/news",
-        auth: true,
-        requestBody: body,
-        fromJson: (json)=> NewsResponse.fromJson(json),
-      );
-
-      news = newsResponse.news;
-
-      List<NewsModel> filteredNews = news.where((element) => element.type == "article" || element.type == "tweet").toList();
-
-      state = StateModel.success(filteredNews);
-
-    }catch(e){
-      state = StateModel.fail("Faild to get data $e");
+      final tableModel = await useCase.execute(seasonId, type);
+      if (tableModel.standings.isNotEmpty) {
+        state = StateModel.success(tableModel);
+      } else {
+        state = StateModel.empty();
+      }
+    } catch (e) {
+      state = StateModel.fail("Failed to get data: $e");
     }
   }
-
 }
 
-class LeagueSeasonsNotifier extends StateNotifier<StateModel<LeagueSeasonsModel>>{
+class LeagueGroupStandingNotifier extends StateNotifier<StateModel<GroupTableModel>> {
   Ref ref;
-  LeagueSeasonsNotifier(this.ref):super(StateModel.loading());
+  final LeagueGroupStandingsUseCase useCase;
 
+  LeagueGroupStandingNotifier(this.ref, this.useCase) : super(StateModel.loading());
 
-  Future<String?> getLeagueSeasons(String leagueId) async{
-    RequestHandler requestHandler = RequestHandler();
-    LeagueSeasonsModel leagueSeasonsModel ;
-    Map<String, dynamic> body;
+  Future<void> getTable(String seasonId, String type) async {
     try {
-      body = {
-        "lang": "en",
-        "league_id": leagueId
-      };
-
       state = StateModel.loading();
+      final tableModel = await useCase.execute(seasonId, type);
+      if (tableModel.standings.isNotEmpty) {
+        state = StateModel.success(tableModel);
+      } else {
+        state = StateModel.empty();
+      }
+    } catch (e) {
+      state = StateModel.fail("Failed to get data: $e");
+    }
+  }
+}
 
-      leagueSeasonsModel = await requestHandler.postData(
-        endPoint: "soccer/competition/all-seasons",
-        auth: true,
-        requestBody: body,
-        fromJson: (json)=> LeagueSeasonsModel.fromJson(json),
-      );
+class LeagueNewsNotifier extends StateNotifier<StateModel<List<NewsModel>>> {
+  Ref ref;
+  final LeagueNewsUseCase useCase;
 
+  LeagueNewsNotifier(this.ref, this.useCase) : super(StateModel.loading());
+
+  Future<void> getNews(String teamName) async {
+    try {
+      state = StateModel.loading();
+      final news = await useCase.execute(teamName);
+      final filteredNews = news.where((element) => element.type == "article" || element.type == "tweet").toList();
+      state = StateModel.success(filteredNews);
+    } catch (e) {
+      state = StateModel.fail("Failed to get data: $e");
+    }
+  }
+}
+
+class LeagueSeasonsNotifier extends StateNotifier<StateModel<LeagueSeasonsModel>> {
+  Ref ref;
+  final LeagueSeasonsUseCase useCase;
+
+  LeagueSeasonsNotifier(this.ref, this.useCase) : super(StateModel.loading());
+
+  Future<String?> getLeagueSeasons(String leagueId) async {
+    try {
+      state = StateModel.loading();
+      final leagueSeasonsModel = await useCase.execute(leagueId);
       leagueSeasonsModel.competition.season.sort((a, b) => b.startDate.compareTo(a.startDate));
-
       state = StateModel.success(leagueSeasonsModel);
-
+      print(leagueSeasonsModel);
       return leagueSeasonsModel.competition.season.first.seasonId;
-    }catch(e){
-      state = StateModel.fail("Faild to get data $e");
+    } catch (e) {
+      state = StateModel.fail("Failed to get data: $e");
       return null;
     }
   }
 }
 
-class TeamMatchesNotifier extends StateNotifier<StateModel<List<FixtureDetail>>>{
+class LeagueMatchesNotifier extends StateNotifier<StateModel<List<FixtureOverview>>> {
   Ref ref;
-  TeamMatchesNotifier(this.ref):super(StateModel.loading());
+  final LeagueMatchesUseCase useCase;
 
+  LeagueMatchesNotifier(this.ref, this.useCase) : super(StateModel.loading());
 
-  Future<void> getMatches() async{
-    RequestHandler requestHandler = RequestHandler();
-    List<FixtureDetail> matches = [];
-    Map<String, dynamic> body;
+  Future<void> getMatches(String seasonId) async {
     try {
-      body = {
-        "lang": "en",
-        "season_id": "23593",
-        "team_id": "2020"
-      };
-
       state = StateModel.loading();
-
-      matches = await requestHandler.postData(
-        endPoint: "soccer/team/fixture",
-        auth: true,
-        requestBody: body,
-        fromJson: (json)=> FixtureDetail.listFromJson(json),
-      );
-
-
+      final matches = await useCase.execute(seasonId);
       state = StateModel.success(matches);
-
-    }catch(e){
-      state = StateModel.fail("Faild to get data $e");
+    } catch (e) {
+      state = StateModel.fail("Failed to get data: $e");
     }
   }
 }
-
-class LeagueStandingNotifier extends StateNotifier<StateModel<TableModel>>{
-  Ref ref;
-  LeagueStandingNotifier(this.ref):super(StateModel.loading());
-
-  Future<void> getTable(String season_id,String type) async{
-    RequestHandler requestHandler = RequestHandler();
-    TableModel tableModel;
-    Map<String, dynamic> body;
-
-    body = {
-      "season_id": season_id,
-      "lang": "ar",
-      "type": type
-    };
-
-    try {
-
-      state = StateModel.loading();
-
-      tableModel = await requestHandler.postData(
-        endPoint: "soccer/competition/season-standings",
-        auth: true,
-        requestBody: body,
-        fromJson: (json) => TableModel.fromJson(json),
-      );
-
-      if (tableModel.standings[0].isNotEmpty) {
-        state = StateModel.success(tableModel);
-      } else {
-        state = StateModel.empty();
-      }
-    }catch(e){
-      state = StateModel.fail(e.toString());
-    }
-
-  }
-
-}
-
-class LeagueGroupStandingNotifier extends StateNotifier<StateModel<GroupTableModel>>{
-  Ref ref;
-  LeagueGroupStandingNotifier(this.ref):super(StateModel.loading());
-
-  Future<void> getTable(String season_id,String type) async{
-    RequestHandler requestHandler = RequestHandler();
-    GroupTableModel tableModel;
-    Map<String, dynamic> body;
-
-    body = {
-      "season_id": season_id,
-      "lang": "ar",
-      "type": type
-    };
-
-
-    state = StateModel.loading();
-
-
-
-    tableModel = await requestHandler.postData(
-      endPoint: "soccer/competition/season-standings",
-      auth: true,
-      requestBody: body,
-      fromJson: (json) => GroupTableModel.fromJson(json),
-    );
-
-    if(tableModel.standings[0].isNotEmpty){
-      state = StateModel.success(tableModel);
-
-    }else{
-      state = StateModel.empty();
-    }
-
-
-  }
-
-}
-
 
 class PlayerStatsNotifier extends StateNotifier<StateModel<List<PlayerStatsModel>>> {
   Ref ref;
-  PlayerStatsNotifier(this.ref) : super(StateModel.loading());
+  final LeaguePlayerStatsUseCase useCase;
 
+  PlayerStatsNotifier(this.ref, this.useCase) : super(StateModel.loading());
 
   Future<void> getPlayerStats(String seasonId) async {
-    RequestHandler requestHandler = RequestHandler();
-    List<PlayerStatsModel> playerStats = [];
-    Map<String, dynamic> body;
-
-    body = {
-      "season_id": seasonId,
-      "lang": "en",
-    };
-
     try {
       state = StateModel.loading();
-      playerStats = await requestHandler.postData(
-        endPoint: "soccer/competition/players-stats",
-        auth: true,
-        requestBody: body,
-        fromJson: (json) => PlayerStatsModel.fromJson(json),
-      );
-
-
+      final playerStats = await useCase.execute(seasonId);
       state = StateModel.success(playerStats);
     } catch (e) {
-      state = StateModel.fail("Failed to get data $e");
+      state = StateModel.fail("Failed to get data: $e");
     }
   }
-
-
 }
 
 class TeamStatsNotifier extends StateNotifier<StateModel<TeamsStatisticsModel>> {
   Ref ref;
-  TeamStatsNotifier(this.ref) : super(StateModel.loading());
+  final LeagueTeamStatsUseCase useCase;
 
+  TeamStatsNotifier(this.ref, this.useCase) : super(StateModel.loading());
 
   Future<void> getTeamStats(String seasonId) async {
-    RequestHandler requestHandler = RequestHandler();
-    TeamsStatisticsModel teamStats;
-    Map<String, dynamic> body;
-
-    body = {
-      "season_id": seasonId,
-      "lang": "en",
-    };
-
     try {
       state = StateModel.loading();
-      teamStats = await requestHandler.postData(
-        endPoint: "soccer/competition/team-statistics",
-        auth: true,
-        requestBody: body,
-        fromJson: (json) => TeamsStatisticsModel.fromJson(json),
-      );
-
-
+      final teamStats = await useCase.execute(seasonId);
       state = StateModel.success(teamStats);
     } catch (e) {
-      state = StateModel.fail("Failed to get data $e");
+      state = StateModel.fail("Failed to get data: $e");
     }
   }
-
-
 }
 
-class TrophyNotifier extends StateNotifier<StateModel<List<TrophyModel>>>{
+class TrophyNotifier extends StateNotifier<StateModel<List<TrophyModel>>> {
   Ref ref;
-  TrophyNotifier(this.ref):super(StateModel.loading());
+  final LeagueTrophiesUseCase useCase;
 
-  Future<void> getTrophy(String teamId) async{
-    RequestHandler requestHandler = RequestHandler();
-    List<TrophyModel> trophyModel = [];
-    Map<String, dynamic> body;
+  TrophyNotifier(this.ref, this.useCase) : super(StateModel.loading());
 
-    body = {
-      "team_id": teamId,
-      "lang": "ar",
-
-    };
-
-
-    state = StateModel.loading();
-    trophyModel = await requestHandler.postData(
-      endPoint: "soccer/team/trophy",
-      auth: true,
-      requestBody: body,
-      fromJson: (json) => TrophyModel.listFromJson(json),
-    );
-    state = StateModel.success(trophyModel);
-
-
-
+  Future<void> getTrophy(String teamId) async {
+    try {
+      state = StateModel.loading();
+      final trophyModel = await useCase.execute(teamId);
+      state = StateModel.success(trophyModel);
+    } catch (e) {
+      state = StateModel.fail("Failed to get data: $e");
+    }
   }
-
 }
+
+
+
+
+
 
 

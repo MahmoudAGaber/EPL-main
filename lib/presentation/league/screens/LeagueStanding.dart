@@ -50,8 +50,8 @@ class _LeagueStandingState extends ConsumerState<LeagueStanding> {
 
   @override
   Widget build(BuildContext context) {
-    var leagueSeason = ref.watch(LeagueSeasonsProvider);
-    var table = ref.watch(LeagueStandingProvider);
+    var leagueSeason = ref.watch(leagueSeasonsProvider);
+    var table = ref.watch(leagueStandingProvider);
     var standingType = ref.watch(LeagueStandingTypeProvider);
 
     if(table.data !=null){
@@ -80,7 +80,7 @@ class _LeagueStandingState extends ConsumerState<LeagueStanding> {
                     onTap: () {
                       final season = leagueSeason.data!.competition.season.firstWhere((e) => e.name == name);
                       seasonId = season.seasonId;
-                      ref.read(LeagueStandingProvider.notifier).getTable(season.seasonId,'total');
+                      ref.read(leagueStandingProvider.notifier).getTable(season.seasonId,'total');
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(right: 8, left: 8),
@@ -110,7 +110,7 @@ class _LeagueStandingState extends ConsumerState<LeagueStanding> {
                         children: [
                           InkWell(
                             onTap:(){
-                              ref.read(LeagueStandingProvider.notifier).getTable(seasonId!,'total');
+                              ref.read(leagueStandingProvider.notifier).getTable(seasonId!,'total');
                               ref.read(LeagueStandingTypeProvider.notifier).state = LeagueStandingType.All;
                             },
                             child: Container(
@@ -126,7 +126,7 @@ class _LeagueStandingState extends ConsumerState<LeagueStanding> {
                           SizedBox(width: 20,),
                           InkWell(
                             onTap: (){
-                              ref.read(LeagueStandingProvider.notifier).getTable(seasonId!,'home');
+                              ref.read(leagueStandingProvider.notifier).getTable(seasonId!,'home');
                               ref.read(LeagueStandingTypeProvider.notifier).state = LeagueStandingType.Home;
                             },
                             child: Container(
@@ -141,7 +141,7 @@ class _LeagueStandingState extends ConsumerState<LeagueStanding> {
                           ),
                           InkWell(
                             onTap: (){
-                              ref.read(LeagueStandingProvider.notifier).getTable(seasonId!,'away');
+                              ref.read(leagueStandingProvider.notifier).getTable(seasonId!,'away');
                               ref.read(LeagueStandingTypeProvider.notifier).state = LeagueStandingType.Away;
                             },
                             child: Container(
@@ -200,45 +200,45 @@ class _LeagueStandingState extends ConsumerState<LeagueStanding> {
                       SizedBox(
                         height: 10,
                       ),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8)),
-                        child: ListView.builder(
-                            physics: BouncingScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: 5,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(
-                                    right: 10,
-                                    bottom: 10,
-                                    left: 10,
-                                    top: 10),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 12,
-                                      height: 12,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                          BorderRadius.circular(4),
-                                          color: Colors.yellow),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      "texet",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium
-                                      !.copyWith(fontSize: 13.5),
-                                    )
-                                  ],
-                                ),
-                              );
-                            }),
-                      )
+                      // Card(
+                      //   shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(8)),
+                      //   child: ListView.builder(
+                      //       physics: BouncingScrollPhysics(),
+                      //       shrinkWrap: true,
+                      //       itemCount: 5,
+                      //       itemBuilder: (context, index) {
+                      //         return Padding(
+                      //           padding: const EdgeInsets.only(
+                      //               right: 10,
+                      //               bottom: 10,
+                      //               left: 10,
+                      //               top: 10),
+                      //           child: Row(
+                      //             children: [
+                      //               Container(
+                      //                 width: 12,
+                      //                 height: 12,
+                      //                 decoration: BoxDecoration(
+                      //                     borderRadius:
+                      //                     BorderRadius.circular(4),
+                      //                     color: Colors.yellow),
+                      //               ),
+                      //               SizedBox(
+                      //                 width: 10,
+                      //               ),
+                      //               Text(
+                      //                 "texet",
+                      //                 style: Theme.of(context)
+                      //                     .textTheme
+                      //                     .bodyMedium
+                      //                 !.copyWith(fontSize: 13.5),
+                      //               )
+                      //             ],
+                      //           ),
+                      //         );
+                      //       }),
+                      // )
                     ],
                   ),
                   onFailure: (state)=> Text("Shit")

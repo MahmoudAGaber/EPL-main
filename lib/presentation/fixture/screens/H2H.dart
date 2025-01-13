@@ -1,5 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:epl/Data/StateModel.dart';
-import 'package:epl/presentation/fixture/screens/InfoMain.dart';
+import 'package:epl/shared/Views/custom/custom_imageView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -13,6 +14,7 @@ import '../../../shared/Utils/Constants.dart';
 import '../../../shared/Utils/date_converter.dart';
 import '../../../shared/Views/custom/custom_loader.dart';
 import '../provider/fixtureViewModel.dart';
+import '../widgets/progressBar.dart';
 import 'matchInfo.dart';
 
 class H2H extends ConsumerStatefulWidget {
@@ -44,9 +46,11 @@ class _H2HState extends ConsumerState<H2H> {
         int awayWin = h2h.data.summary.secondTeam.wins;
         int drawer = h2h.data.summary.draws;
         total = homeWin + awayWin + drawer;
-        winPerH = homeWin / total!.toDouble();
-        winPerA = awayWin / total!.toDouble();
-        drawerPer = drawer / total!.toDouble();
+        winPerH =  homeWin / total!.toDouble();
+        winPerA =  awayWin / total!.toDouble();
+        drawerPer =  drawer / total!.toDouble();
+
+        print("Total:${total}-----winPerH:${winPerH}----winPerA:${winPerA}-----drawerPer:${drawerPer}");
       }
     }catch(e){
       print(e);
@@ -89,12 +93,14 @@ class _H2HState extends ConsumerState<H2H> {
                                      SizedBox(
                                       width: 40,
                                       height: 40,
-                                      child: Image.network(
-                                        "${Constants.teamImage}${h2h.data!.statisticsH2h.team1Id}.png",
-                                        errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                          return CircleAvatar(backgroundColor: Colors.grey,);
-                                        },
-                                      ),
+                                      child:CachedNetworkImage(
+                                        imageUrl: "${Constants.teamImage}${h2h.data!.statisticsH2h.team1Id}.png",
+                                        placeholder: (context, url) => CircularProgressIndicator(),
+                                        errorWidget: (context, url, error) => CircleAvatar(
+                                          backgroundColor: Colors.grey,
+                                          child: Icon(Icons.image_not_supported, color: Colors.white),
+                                        ),
+                                      )
                                     ),
                                     Text("المباريات السابقة",
                                       style: Theme.of(context).textTheme.bodyMedium
@@ -102,12 +108,14 @@ class _H2HState extends ConsumerState<H2H> {
                                     SizedBox(
                                       width: 40,
                                       height: 40,
-                                      child: Image.network(
-                                        "${Constants.teamImage}${h2h.data!.statisticsH2h.team2Id}.png",
-                                        errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                          return CircleAvatar(backgroundColor: Colors.grey,);
-                                        },
-                                      ),
+                                      child: CachedNetworkImage(
+                                        imageUrl: "${Constants.teamImage}${h2h.data!.statisticsH2h.team2Id}.png",
+                                        placeholder: (context, url) => CircularProgressIndicator(),
+                                        errorWidget: (context, url, error) => CircleAvatar(
+                                          backgroundColor: Colors.grey,
+                                          child: Icon(Icons.image_not_supported, color: Colors.white),
+                                        ),
+                                      )
                                     ),
                                   ],
                                 ),
@@ -116,48 +124,19 @@ class _H2HState extends ConsumerState<H2H> {
                               Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: SizedBox(
-                                  height: 40,
                                   width: MediaQuery.of(context).size.width*.9,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: <Widget>[
-                                      Container(
-                                        height: 35,
-                                        width: MediaQuery.of(context).size.width*winPerH-19,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.only(topRight: Radius.circular(8),bottomRight: Radius.circular(8)),
-                                          color: h2h.data!.summary.firstTeam.wins > h2h.data!.summary.secondTeam.wins
-                                              ? Theme.of(context).primaryColor:Colors.red,
-                                        ),
-                                        child: Center(child: Text("${(winPerH*100).toStringAsFixed(1)}%",style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),)),
-
-                                      ),
-                                      Container(
-                                        height: 35,
-                                        width: MediaQuery.of(context).size.width*drawerPer-19,
-                                        color: Colors.grey,
-                                        child: Center(child: Text("${(drawerPer*100).toStringAsFixed(1)}%",style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),)),
-                                      ),
-                                      Container(
-                                        height: 35,
-                                        width: MediaQuery.of(context).size.width*winPerA-19,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.only(topLeft: Radius.circular(8),bottomLeft: Radius.circular(8)),
-                                          color: h2h.data!.summary.secondTeam.wins > h2h.data!.summary.firstTeam.wins
-                                              ? Theme.of(context).primaryColor:Colors.red,
-                                        ),
-
-                                        child: Center(child: Text("${(winPerA*100).toStringAsFixed(1)}%",style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),)),
-
-                                      ),
-                                    ],
+                                  child: ProgressBar(
+                                    winPerH: h2h.data!.summary.firstTeam.wins.toDouble(),
+                                    drawerPer: h2h.data!.summary.draws.toDouble(),
+                                    winPerA: h2h.data!.summary.secondTeam.wins.toDouble(),
                                   ),
+
                                 ),
                               ),
 
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(top: 25, right: 15,left: 15,bottom: 25),
+                                    const EdgeInsets.only(top: 8, right: 15,left: 15,bottom: 8),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
@@ -379,12 +358,7 @@ class _H2HState extends ConsumerState<H2H> {
                                                           child:  SizedBox(
                                                             width: 30,
                                                             height: 28,
-                                                            child: Image.network(
-                                                              "${Constants.teamImage}${h2dItem.teams.home.id}.png",
-                                                              errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                                return CircleAvatar(backgroundColor: Colors.grey,);
-                                                              },
-                                                            ),
+                                                            child: CustomImage(imgUrl:"${Constants.teamImage}${h2dItem.teams.home.id}.png",)
                                                           ),
                                                         ),
                                                         Text(
@@ -397,12 +371,7 @@ class _H2HState extends ConsumerState<H2H> {
                                                           child:  SizedBox(
                                                             width: 28,
                                                             height: 28,
-                                                            child: Image.network(
-                                                              "${Constants.teamImage}${h2dItem.teams.away.id}.png",
-                                                              errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                                return CircleAvatar(backgroundColor: Colors.grey,);
-                                                              },
-                                                            ),
+                                                            child: CustomImage(imgUrl:"${Constants.teamImage}${h2dItem.teams.away.id}.png",)
                                                           ),
                                                         ),
                                                       ],
