@@ -6,6 +6,7 @@ import 'package:epl/domain/models/News.dart';
 import 'package:epl/domain/models/Teams/teamOverview.dart';
 
 import '../Models/Teams/TeamSeasons.dart';
+import '../models/Teams/transfers.dart';
 import '../repository/TeamRepositry.dart';
 
 class GetTeamOverviewUseCase {
@@ -100,6 +101,28 @@ class NormalizePositionUseCase {
         return "unknown";
     }
   }
+
+  String shortPosition(String? position) {
+    if (position == null) return "unknown";
+
+    switch (position.toLowerCase()) {
+      case "goalkeeper":
+      case "حارس مرمى":
+        return "GK";
+      case "defender":
+      case "مدافع":
+        return "DF";
+      case "midfielder":
+      case "لاعب وسط":
+        return "MF";
+      case "attacker":
+      case "forward":
+      case "مهاجم":
+        return "FW";
+      default:
+        return "unknown";
+    }
+  }
 }
 
 class FilterPlayersByRoleUseCase {
@@ -116,6 +139,15 @@ class FilterPlayersByRoleUseCase {
 }
 
 
+class GetTeamTransferUseCase {
+  final TeamRepositoryImpl repository;
+
+  GetTeamTransferUseCase(this.repository);
+
+  Future<List<PlayerTransfer>> execute(String teamId) {
+    return repository.getTransfers(teamId);
+  }
+}
 
 class GetTeamTrophyUseCase {
   final TeamRepositoryImpl repository;

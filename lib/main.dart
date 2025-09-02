@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+import 'domain/models/Favorite.dart';
 import 'presentation/home/screens/widgets/More.dart';
 import 'presentation/home/screens/SplashScreen.dart';
 import 'presentation/home/screens/widgets/clanderbar.dart';
@@ -134,17 +135,19 @@ Widget NoMatches() {
 
 
 Future<void> main() async {
-  FlutterError.onError = (FlutterErrorDetails details) {
-    if (details.exceptionAsString().contains('_ClientSocketException')) {
-      // Suppress _ClientSocketException logs
-      return;
-    }
-    FlutterError.dumpErrorToConsole(details);
-  };
+  // FlutterError.onError = (FlutterErrorDetails details) {
+  //   if (details.exceptionAsString().contains('_ClientSocketException')) {
+  //     // Suppress _ClientSocketException logs
+  //     return;
+  //   }
+  //   FlutterError.dumpErrorToConsole(details);
+  // };
   WidgetsFlutterBinding.ensureInitialized();
+
   final directory = await getApplicationDocumentsDirectory();
   Hive.init(directory.path);
-
+  Hive.registerAdapter(FavoriteModelAdapter());
+  await Hive.openBox<FavoriteModel>('favorites');
 
   runApp(
     ProviderScope(

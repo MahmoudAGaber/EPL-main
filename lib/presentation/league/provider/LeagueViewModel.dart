@@ -13,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../Data/StateModel.dart';
 import '../../../domain/Models/Leagues/Seasons.dart';
 import '../../../domain/Models/TeamForm.dart';
+import '../../../domain/models/Leagues/trophies.dart';
 import '../../../domain/models/News.dart';
 import '../../../domain/models/Teams/teamOverview.dart';
 
@@ -116,13 +117,13 @@ final leaguePlayerStatsProvider = StateNotifierProvider<PlayerStatsNotifier, Sta
 });
 
 // Team Stats Notifier Provider
-final leagueTeamStatsProvider = StateNotifierProvider<TeamStatsNotifier, StateModel<TeamsStatisticsModel>>((ref) {
+final leagueTeamStatsProvider = StateNotifierProvider<TeamStatsNotifier, StateModel<List<TeamStatsModel>>>((ref) {
   final leagueTeamStatsUseCase = ref.watch(getTeamStatsUseCaseProvider);
   return TeamStatsNotifier(ref, leagueTeamStatsUseCase);
 });
 
 // Trophy Notifier Provider
-final leagueTrophyProvider = StateNotifierProvider<TrophyNotifier, StateModel<List<TrophyModel>>>((ref) {
+final leagueTrophyProvider = StateNotifierProvider<TrophyNotifier, StateModel<LeagueTrophies>>((ref) {
   final leagueTrophyUseCase = ref.watch(getTrophyUseCaseProvider);
   return TrophyNotifier(ref, leagueTrophyUseCase);
 });
@@ -244,7 +245,7 @@ class PlayerStatsNotifier extends StateNotifier<StateModel<List<PlayerStatsModel
   }
 }
 
-class TeamStatsNotifier extends StateNotifier<StateModel<TeamsStatisticsModel>> {
+class TeamStatsNotifier extends StateNotifier<StateModel<List<TeamStatsModel>>> {
   Ref ref;
   final LeagueTeamStatsUseCase useCase;
 
@@ -261,16 +262,18 @@ class TeamStatsNotifier extends StateNotifier<StateModel<TeamsStatisticsModel>> 
   }
 }
 
-class TrophyNotifier extends StateNotifier<StateModel<List<TrophyModel>>> {
+class TrophyNotifier extends StateNotifier<StateModel<LeagueTrophies>> {
   Ref ref;
   final LeagueTrophiesUseCase useCase;
 
   TrophyNotifier(this.ref, this.useCase) : super(StateModel.loading());
 
-  Future<void> getTrophy(String teamId) async {
+  Future<void> getTrophy(String competitionId) async {
     try {
       state = StateModel.loading();
-      final trophyModel = await useCase.execute(teamId);
+      final trophyModel = await useCase.execute(competitionId);
+
+      trophyModel.seasons.sort((a, b)=> b.startDate.compareTo(a.startDate));
       state = StateModel.success(trophyModel);
     } catch (e) {
       state = StateModel.fail("Failed to get data: $e");

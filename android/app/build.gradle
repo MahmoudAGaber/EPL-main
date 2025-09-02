@@ -1,18 +1,11 @@
 
-// buildscript {
-//     repositories {
-//         // ...
-//         maven { url 'https://plugins.gradle.org/m2/' } // Gradle Plugin Portal
-//     }
-//     dependencies {
-//         // ...
-//         // OneSignal-Gradle-Plugin
-//         classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.6, 0.99.99]'
-//     }
-// }
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "com.google.gms.google-services"
+    id "dev.flutter.flutter-gradle-plugin"
+}
 
-// apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
-//هاد السطر تم اضافاته 
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -35,13 +28,11 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'kotlin-android'
-apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 31
+    namespace = "com.epl.football"
+
+    compileSdkVersion 34
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -54,7 +45,7 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.epl.football"
-        minSdkVersion 19
+        minSdkVersion flutter.minSdkVersion
         targetSdkVersion 31
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
@@ -79,4 +70,5 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation platform('com.google.firebase:firebase-bom:30.2.0')
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.android.tools.build:gradle:7.3.1'
 }

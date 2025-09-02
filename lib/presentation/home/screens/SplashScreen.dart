@@ -39,7 +39,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     });
     Timer(Duration(seconds: 3), () {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => home(index: 0,dateTime: DateTime.now(),)));
+          context, MaterialPageRoute(builder: (context) => Home(index: 0,dateTime: DateTime.now(),)));
     });
     super.initState();
   }

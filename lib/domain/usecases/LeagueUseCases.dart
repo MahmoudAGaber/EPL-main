@@ -10,6 +10,7 @@ import '../../../domain/Models/Teams/TeamTrophy.dart';
 import '../../../domain/models/Leagues/teamStats.dart';
 import '../../../domain/models/News.dart';
 import '../../../domain/Models/Leagues/PlayerStats.dart';
+import '../models/Leagues/trophies.dart';
 import '../models/Teams/teamOverview.dart';
 
 
@@ -71,7 +72,7 @@ class LeagueTeamStatsUseCase {
   final LeagueRepositoryImpl repository;
   LeagueTeamStatsUseCase(this.repository);
 
-  Future<TeamsStatisticsModel> execute(String seasonId) {
+  Future<List<TeamStatsModel>> execute(String seasonId) {
     return repository.fetchTeamStats(seasonId);
   }
 }
@@ -80,7 +81,7 @@ class LeagueTrophiesUseCase {
   final LeagueRepositoryImpl repository;
   LeagueTrophiesUseCase(this.repository);
 
-  Future<List<TrophyModel>> execute(String teamId) {
-    return repository.fetchTrophies(teamId);
+  Future<LeagueTrophies> execute(String competitionId) {
+    return repository.fetchTrophies(competitionId);
   }
 }

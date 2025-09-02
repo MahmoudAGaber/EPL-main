@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 
 class ForYou extends StatefulWidget {
   @override
@@ -60,9 +59,7 @@ class _ForYouState extends State<ForYou> {
       ),
 
        */
-      body: Consumer(
-        builder: (context, provider, child) {
-          return Padding(
+      body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListView(
               controller: _controller,
@@ -475,9 +472,8 @@ class _ForYouState extends State<ForYou> {
                 ),
               ],
             ),
-          );
-        },
-      ),
+          )
+
     );
   }
 }

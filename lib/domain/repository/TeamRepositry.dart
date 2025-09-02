@@ -8,6 +8,7 @@ import 'package:epl/domain/Models/Teams/TeamTrophy.dart';
 import 'package:epl/domain/models/News.dart';
 import 'package:epl/domain/models/Teams/teamOverview.dart';
 import '../../Data/RequestHandler.dart';
+import '../models/Teams/transfers.dart';
 import 'TeamRepositeryInterface.dart';
 
 
@@ -165,7 +166,7 @@ class TeamRepositoryImpl implements TeamRepositoryInterface {
         requestBody: body,
         fromJson: (json) => SquadModel.fromJson(json),
       );
-      print("Helloooooo${squadModel}");
+    //  print("Helloooooo${squadModel}");
 
       return squadModel;
   }
@@ -193,11 +194,23 @@ class TeamRepositoryImpl implements TeamRepositoryInterface {
 
 
   @override
-  Future<H2HModel> getTransfers(String fixtureId) {
-    // TODO: implement getTrasnfers
-    throw UnimplementedError();
-  }
+  Future<List<PlayerTransfer>> getTransfers(String team_id) async{
+    List<PlayerTransfer> playerTransfer;
+    Map<String, dynamic> body;
 
+    body = {
+      "team_id": team_id,
+      "lang": "ar",
+    };
+
+    playerTransfer = await requestHandler.postData(
+      endPoint: "soccer/team/transfers",
+      auth: true,
+      requestBody: body,
+      fromJson: (json) => PlayerTransfer.listFromJson(json),
+    );
+    return playerTransfer;
+  }
 
   @override
   Future<List<TrophyModel>> getTrophy(String teamId) async{

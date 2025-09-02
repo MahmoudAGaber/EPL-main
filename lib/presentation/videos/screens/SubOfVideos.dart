@@ -1,15 +1,10 @@
 import 'dart:async';
-import 'dart:developer';
 
-import 'package:epl/presentation/news/provider/NewsViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
-import '../../home/screens/widgets/More.dart';
-import '../../../webView.dart';
-import '../provider/VideosViewModel.dart';
+
 
 class SubOfVideos extends StatefulWidget {
   String? ocId;
@@ -53,9 +48,7 @@ class _SubOfVideosState extends State<SubOfVideos> with AutomaticKeepAliveClient
     return Scaffold(
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-        child: Consumer(
-          builder: (context,provider,child){
-           return Padding(
+        child: Padding(
                  padding: const EdgeInsets.all(8.0),
                  child: ListView.builder(
                    controller: _controller,
@@ -203,9 +196,8 @@ class _SubOfVideosState extends State<SubOfVideos> with AutomaticKeepAliveClient
                   );
               },
             ),
-               );
-          },
-        ),
+               )
+
       ),
     );
   }

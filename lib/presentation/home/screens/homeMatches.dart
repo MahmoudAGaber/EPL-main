@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import '../../league/screens/homeLeague.dart';
 import 'matches/MatchesDate/TodayMatch.dart';
 import 'widgets/More.dart';
@@ -28,7 +27,8 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
       fontWeight: FontWeight.w500,
       color: Colors.white);
 
-  final GlobalKey<ScaffoldState> _key = GlobalKey(); // Creat
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
 
   bool isSwitched = false;
   bool liveMatches = false;
@@ -83,6 +83,7 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.white),
           elevation: 0.0,
@@ -101,31 +102,28 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
           leading: SizedBox(
             width: 200,
             height: 200,
-            child: Consumer(
-              builder: (context, provider, child) {
-                return Row(
+            child:  Row(
                   children: <Widget>[
                     SizedBox(width: 10,),
                     GestureDetector(
                       onTap: (){
-                        Scaffold.of(context).openDrawer();
-                      },
+                        _scaffoldKey.currentState?.openDrawer();                      },
                       child: Container(
                         height: 25,width: 25,
                         child: Image.asset('assets/menueIcon.png'),
                       ),
                     ),
-
-                    SizedBox(width: 20,),
-                    GestureDetector(
-                      onTap: (){
-                        searchIcon();
-                      },
-                      child: Container(
-                        height: 25,width: 25,
-                        child: Image.asset('assets/searchIcon.png'),
-                      ),
-                    ),
+                    //
+                    // SizedBox(width: 20,),
+                    // GestureDetector(
+                    //   onTap: (){
+                    //     searchIcon();
+                    //   },
+                    //   child: Container(
+                    //     height: 25,width: 25,
+                    //     child: Image.asset('assets/searchIcon.png'),
+                    //   ),
+                    // ),
                     SizedBox(width: 25,),
                     GestureDetector(
                       onTap: (){
@@ -141,9 +139,8 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
                     )
 
                   ],
-                );
-              },
-            ),
+                )
+
           ),
           backgroundColor: Theme.of(context).primaryColor,
           bottom: tabController == null
@@ -280,9 +277,7 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
                 EdgeInsets.only(top: 30, right: 10, left: 10, bottom: 100),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: Consumer(
-                  builder: (context, provider, child) {
-                    return Column(
+                child:  Column(
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.only(
@@ -330,7 +325,7 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
                                         left: 10, right: 10, bottom: 10,top: 10),
                                     child: GestureDetector(
                                       onTap: () {
-                                        selectedCategory(provider, index, search, "hi");
+                                       // selectedCategory(provider, index, search, "hi");
                                       },
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -368,9 +363,8 @@ class _MatchesState extends State<Matches> with SingleTickerProviderStateMixin {
                               }),
                         ),
                       ],
-                    );
-                  },
-                ),
+                    )
+
               );
             },
           );

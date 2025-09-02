@@ -1,111 +1,54 @@
-class TeamsStatisticsModel {
-  final List<TeamStatistics> teamsStatistics;
 
-  TeamsStatisticsModel({required this.teamsStatistics});
 
-  factory TeamsStatisticsModel.fromJson(Map<String, dynamic> json) {
-    return TeamsStatisticsModel(
-      teamsStatistics: (json['teams_statistics'] as List)
-          .map((team) => TeamStatistics.fromJson(team))
-          .toList(),
-    );
+class TeamStatsModel {
+  String statsName;
+  List<StatsModel> statsModel;
+
+  TeamStatsModel({required this.statsModel, required this.statsName});
+
+  static List<TeamStatsModel> fromJson(Map<String, dynamic> jsonData) {
+    return jsonData.entries.map((entry){
+      String dynamicKey = entry.key;
+      List<dynamic> statsItems = entry.value;
+
+      return TeamStatsModel(
+          statsName: dynamicKey,
+          statsModel: statsItems.map((item) => StatsModel.fromJson(item)).toList());
+    }).toList();
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'teams_statistics': teamsStatistics.map((team) => team.toJson()).toList(),
-    };
-  }
+
 }
 
-class TeamStatistics {
+class StatsModel {
   final String teamId;
-  final String clubName;
-  final int squadSize;
-  final Statistics statistics;
+  final String teamName;
+  final int count;
 
-  TeamStatistics({
+
+  StatsModel({
     required this.teamId,
-    required this.clubName,
-    required this.squadSize,
-    required this.statistics,
+    required this.teamName,
+    required this.count,
+
   });
 
-  factory TeamStatistics.fromJson(Map<String, dynamic> json) {
-    return TeamStatistics(
+  factory StatsModel.fromJson(Map<String, dynamic> json) {
+    return StatsModel(
       teamId: json['team_id'],
-      clubName: json['club_name'],
-      squadSize: json['squad_size'],
-      statistics: Statistics.fromJson(json['statistics']),
+      teamName: json['team_name'],
+      count: json['count'],
+
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'team_id': teamId,
-      'club_name': clubName,
-      'squad_size': squadSize,
-      'statistics': statistics.toJson(),
+      'team_name': teamName,
+      'count': count,
+
     };
   }
 }
 
-class Statistics {
-  final int goals;
-  final int assists;
-  final int penaltyGoals;
-  final int appearances;
-  final int yellowCards;
-  final int secondYellowCards;
-  final int redCards;
-  final int substituteIn;
-  final int substituteOut;
-  final int subsOnBench;
-  final int minutesPlayed;
-
-  Statistics({
-    required this.goals,
-    required this.assists,
-    required this.penaltyGoals,
-    required this.appearances,
-    required this.yellowCards,
-    required this.secondYellowCards,
-    required this.redCards,
-    required this.substituteIn,
-    required this.substituteOut,
-    required this.subsOnBench,
-    required this.minutesPlayed,
-  });
-
-  factory Statistics.fromJson(Map<String, dynamic> json) {
-    return Statistics(
-      goals: json['goals'],
-      assists: json['assists'],
-      penaltyGoals: json['penalty_goals'],
-      appearances: json['appearances'],
-      yellowCards: json['yellow_cards'],
-      secondYellowCards: json['second_yellow_cards'],
-      redCards: json['red_cards'],
-      substituteIn: json['substitute_in'],
-      substituteOut: json['substitute_out'],
-      subsOnBench: json['subs_on_bench'],
-      minutesPlayed: json['minutes_played'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'goals': goals,
-      'assists': assists,
-      'penalty_goals': penaltyGoals,
-      'appearances': appearances,
-      'yellow_cards': yellowCards,
-      'second_yellow_cards': secondYellowCards,
-      'red_cards': redCards,
-      'substitute_in': substituteIn,
-      'substitute_out': substituteOut,
-      'subs_on_bench': subsOnBench,
-      'minutes_played': minutesPlayed,
-    };
-  }
-}

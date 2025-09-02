@@ -2,6 +2,7 @@ import 'dart:math';
 
 
 import 'package:epl/Data/StateModel.dart';
+import 'package:epl/shared/Views/custom/custom_imageView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../../../domain/Models/Formation.dart';
+import '../../playrers/screens/playerHome.dart';
 import '../provider/fixtureViewModel.dart';
 
 
@@ -101,15 +103,15 @@ class _LineUpsState extends ConsumerState<LineUps> {
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: List.generate(
-                                      GoalKeeper(lineUps.data!, "", 'home').length, (index) => GoalKeeper(
-                                          lineUps.data!, "", 'home')[index])),
+                                      GoalKeeper(lineUps.data!, "", 'home',context).length, (index) => GoalKeeper(
+                                          lineUps.data!, "", 'home',context)[index])),
                               SingleChildScrollView(
                                 child: Row(
                                     mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                     children: List.generate(
-                                        Defender("", lineUps.data!, 'home').length, (index) => Flexible(
-                                          child: Defender("", lineUps.data!, 'home')[index],
+                                        Defender("", lineUps.data!, 'home',context).length, (index) => Flexible(
+                                          child: Defender("", lineUps.data!, 'home',context)[index],
                                         ))),
                               ),
                               SingleChildScrollView(
@@ -117,18 +119,18 @@ class _LineUpsState extends ConsumerState<LineUps> {
                                     mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                     children: List.generate(
-                                        CenterPlayer("", lineUps.data!, 'home')
+                                        CenterPlayer("", lineUps.data!, 'home',context)
                                             .length,
                                             (index) => Flexible(
                                             child: CenterPlayer("", lineUps.data!,
-                                                'home')[index]))),
+                                                'home',context)[index]))),
                               ),
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: List.generate(
-                                      Attack("", lineUps.data!, 'home').length,
+                                      Attack("", lineUps.data!, 'home',context).length,
                                           (index) => Attack(
-                                          "", lineUps.data!, 'home')[index])),
+                                          "", lineUps.data!, 'home',context,)[index])),
                               lineUps
                                   .data!.formations.first.formation
                                   .split('-')
@@ -139,10 +141,10 @@ class _LineUpsState extends ConsumerState<LineUps> {
                                   mainAxisAlignment: MainAxisAlignment
                                       .spaceEvenly,
                                   children: List.generate(
-                                      AttackStricker("", lineUps.data!, 'home')
+                                      AttackStricker("", lineUps.data!, 'home',context)
                                           .length,
                                           (index) => AttackStricker(
-                                          "", lineUps.data!, 'home')[index])),
+                                          "", lineUps.data!, 'home',context)[index])),
                             ],
                           )
                         /*
@@ -247,8 +249,8 @@ class _LineUpsState extends ConsumerState<LineUps> {
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: List.generate(
-                                      Attack("", lineUps.data!, 'away').length, (index) => Attack(
-                                      "", lineUps.data!, 'away')[index])),
+                                      Attack("", lineUps.data!, 'away',context).length, (index) => Attack(
+                                      "", lineUps.data!, 'away',context)[index])),
                               lineUps.data!.formations.last.formation
                                   .split('-')
                                   .length ==
@@ -258,33 +260,33 @@ class _LineUpsState extends ConsumerState<LineUps> {
                                   mainAxisAlignment:
                                   MainAxisAlignment.spaceEvenly,
                                   children: List.generate(
-                                      AttackStricker("", lineUps.data!, 'away')
+                                      AttackStricker("", lineUps.data!, 'away',context)
                                           .length,
                                           (index) => AttackStricker(
-                                          "", lineUps.data!, 'away')[index])),
+                                          "", lineUps.data!, 'away',context)[index])),
                               SingleChildScrollView(
                                 child: Row(
                                     mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                     children: List.generate(
-                                        CenterPlayer("", lineUps.data!, 'away').length, (index) => Flexible(
+                                        CenterPlayer("", lineUps.data!, 'away',context).length, (index) => Flexible(
                                             child: CenterPlayer("", lineUps.data!,
-                                                'away')[index]))),
+                                                'away',context)[index]))),
                               ),
                               SingleChildScrollView(
                                 child: Row(
                                     mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                     children: List.generate(
-                                        Defender("", lineUps.data!, 'away').length, (index) => Flexible(
-                                          child: Defender("", lineUps.data!, 'away')[index],
+                                        Defender("", lineUps.data!, 'away',context).length, (index) => Flexible(
+                                          child: Defender("", lineUps.data!, 'away',context)[index],
                                         ))),
                               ),
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: List.generate(
-                                      GoalKeeper(lineUps.data!, "", 'away').length, (index) => GoalKeeper(
-                                          lineUps.data!, "", 'away')[index])),
+                                      GoalKeeper(lineUps.data!, "", 'away',context).length, (index) => GoalKeeper(
+                                          lineUps.data!, "", 'away',context)[index])),
                             ],
                           )
                         /*
@@ -406,6 +408,8 @@ class _LineUpsState extends ConsumerState<LineUps> {
                     ),
                   ),
                 ),
+
+                //coach
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Row(
@@ -426,75 +430,91 @@ class _LineUpsState extends ConsumerState<LineUps> {
                         children: <Widget>[
                           Flexible(
                             flex: 1,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Container(
-                                  width: 45,
-                                  height: 45,
-                                  decoration: BoxDecoration(
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(100)),
-                                      border: Border.all(width: 1, color: Colors.grey)),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(100),
-                                    ),
-                                    child: CircleAvatar(backgroundColor: Colors.grey,),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                    child: Center(
-                                      child: Text(lineUps.data!.formations.first.coach.name??"Coach name",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(fontSize: 13),
-                                        overflow: TextOverflow.visible,
+                            child: InkWell(
+                              onTap: () => {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Players(playerId:lineUps.data!.formations.first.coach.id)))
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Container(
+                                    width: 45,
+                                    height: 45,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(100)),
+                                        border: Border.all(width: 1, color: Colors.grey)),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(100),
                                       ),
-                                    ))
-                              ],
+                                      child: CustomImage(imgUrl: 'test.png'),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                      child: Center(
+                                        child: Text(lineUps.data!.formations.first.coach.name??"Coach name",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(fontSize: 13),
+                                          overflow: TextOverflow.visible,
+                                        ),
+                                      ))
+                                ],
+                              ),
                             ),
                           ),
                           Flexible(
                             flex: 1,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Container(
-                                  width: 45,
-                                  height: 45,
-                                  decoration: BoxDecoration(
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(100)),
-                                      border:
-                                      Border.all(width: 1, color: Colors.grey)),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(100),
-                                    ),
-                                    child: CircleAvatar(backgroundColor: Colors.grey,),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                    child: Center(
-                                      child: Text(lineUps.data!.formations.last.coach.name??"Coach name",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(fontSize: 13),
-                                        overflow: TextOverflow.visible,
+                            child: InkWell(
+                              onTap: () => {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Players(playerId:lineUps.data!.formations.last.coach.id)))
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Container(
+                                    width: 45,
+                                    height: 45,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(100)),
+                                        border:
+                                        Border.all(width: 1, color: Colors.grey)),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(100),
                                       ),
-                                    ))
-                              ],
+                                      child: CustomImage(imgUrl: 'test.png'),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                      child: Center(
+                                        child: Text(lineUps.data!.formations.last.coach.name??"Coach name",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(fontSize: 13),
+                                          overflow: TextOverflow.visible,
+                                        ),
+                                      ))
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -503,6 +523,8 @@ class _LineUpsState extends ConsumerState<LineUps> {
                   ),
                 ),
                 SizedBox(height: 12,),
+
+                //bench
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Row(
@@ -527,7 +549,12 @@ class _LineUpsState extends ConsumerState<LineUps> {
                             children: List.generate(lineUps.data!.bench.first.length, (index){
                               var bench = lineUps.data!.bench.first[index];
                               return InkWell(
-                                onTap: () => {},
+                                onTap: () => {
+                                Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                builder: (context) => Players(playerId:bench.personId.toString())))
+                                },
                                 child: Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child: Container(
@@ -605,8 +632,14 @@ class _LineUpsState extends ConsumerState<LineUps> {
                             children: List.generate(lineUps.data!.bench.last.length, (index){
                               var bench = lineUps.data!.bench.last[index];
                               return InkWell(
-                                onTap: () => {},
+                                onTap: () => {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Players(playerId:bench.personId.toString())))
+                                },
                                 child: Padding(
+
                                   padding: const EdgeInsets.all(10.0),
                                   child: Container(
                                     height: 110,
@@ -684,6 +717,9 @@ class _LineUpsState extends ConsumerState<LineUps> {
                     ),
                   ),
                 ),
+
+
+                //info
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: 260,
@@ -711,7 +747,6 @@ class _LineUpsState extends ConsumerState<LineUps> {
                                   height: 22,
                                   width: 15,
                                   decoration: BoxDecoration(
-                                      color: Colors.yellow,
                                       borderRadius:
                                       BorderRadius.all(Radius.circular(4))),
                                 ),
@@ -866,79 +901,90 @@ class _LineUpsState extends ConsumerState<LineUps> {
   }
 }
 
-Widget PlayerHome(homeLineUp,index) {
-  return Container(
-    height: homeLineUp.formation.split('-').length == 3 ? 110 : 90,
-    width: 85,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.all(Radius.circular(30)),
-    ),
+Widget PlayerHome(homeLineUp,index,context) {
+  return GestureDetector(
+    onTap: () => {
+      Navigator.push(context,
+          MaterialPageRoute(
+              builder: (context) => Players(playerId:homeLineUp.team.id)))
+    },
+    child: Container(
+      height: homeLineUp.formation.split('-').length == 3 ? 110 : 90,
+      width: 85,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(30)),
+      ),
 
-    child: Stack(
-      children: <Widget>[
-        Stack(
-            children: List.of(playerInfield(homeLineUp.startXI[index].player.events,false))
-        ),
-        Positioned(
-          top: 62,
-          left: 0,
-          right: 5,
-          child: Container(
-              height: 40,
-              width: 115,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    child: Container(
+      child: Stack(
+        children: <Widget>[
+          Stack(
+              children: List.of(playerInfield(homeLineUp.startXI[index].player.events,false))
+          ),
+          Positioned(
+            top: 62,
+            left: 0,
+            right: 5,
+            child: Container(
+                height: 40,
+                width: 115,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      child: Container(
+                        height: 40,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            FittedBox(
+                              child: Text("${homeLineUp.startXI[index].player.number} ",
+                                style: TextStyle(
+                                    fontFamily: 'Vazirmatn',
+                                    color: Colors.white60,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
                       height: 40,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           FittedBox(
-                            child: Text("${homeLineUp.startXI[index].player.number} ",
+                            child: Text(homeLineUp.startXI[index].player.name.split(" ").last,
                               style: TextStyle(
                                   fontFamily: 'Vazirmatn',
-                                  color: Colors.white60,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12),
-                            ),
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  height: 1.1),
+                              overflow: TextOverflow.visible,textAlign: TextAlign.center,),
                           ),
                         ],
                       ),
                     ),
-                  ),
-                  Container(
-                    height: 40,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        FittedBox(
-                          child: Text(homeLineUp.startXI[index].player.name.split(" ").last,
-                            style: TextStyle(
-                                fontFamily: 'Vazirmatn',
-                                color: Colors.white,
-                                fontSize: 13,
-                                height: 1.1),
-                            overflow: TextOverflow.visible,textAlign: TextAlign.center,),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              )),
-        )
-      ],
+                  ],
+                )),
+          )
+        ],
+      ),
     ),
   );
 }
 
-Widget PlayerAway(awayLineUp,index) {
-  return InkWell(
-    onTap: () => {},
+Widget PlayerAway(awayLineUp,index, context) {
+  return GestureDetector(
+    onTap: () => {
+      Navigator.push(context,
+          MaterialPageRoute(
+              builder: (context) => Players(playerId:awayLineUp.team.id)))
+    },
     child: Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(30)),
@@ -1011,18 +1057,18 @@ Widget PlayerAway(awayLineUp,index) {
 
 
 
-List<Widget> GoalKeeper(FormationsModel lineUps, String matchId, type) {
+List<Widget> GoalKeeper(FormationsModel lineUps, String matchId, type, context) {
   List<Widget> goalKeeper = [];
   var homeLineUp = lineUps.formations.first;
   var awayLineUp = lineUps.formations.last;
 
   type == 'away'
-      ? goalKeeper.add(PlayerAway(awayLineUp,0))
-      : goalKeeper.add(PlayerHome(homeLineUp,0));
+      ? goalKeeper.add(PlayerAway(awayLineUp,0,context))
+      : goalKeeper.add(PlayerHome(homeLineUp,0,context));
   return goalKeeper;
 }
 
-List<Widget> Defender(String matchId, FormationsModel lineUps, type) {
+List<Widget> Defender(String matchId, FormationsModel lineUps, type, context) {
   List<Widget> defenders = [];
   var homeLineUp = lineUps.formations.first;
   var awayLineUp = lineUps.formations.last;
@@ -1030,19 +1076,19 @@ List<Widget> Defender(String matchId, FormationsModel lineUps, type) {
   if (type == "away") {
     int no = int.parse(awayLineUp.formation.split('-').first);
     for (int i = 1; i <= no; i++) {
-      defenders.add(PlayerAway(awayLineUp,i));
+      defenders.add(PlayerAway(awayLineUp,i,context));
     }
   } else {
     int no = int.parse(homeLineUp.formation.split('-').first);
     for (int i = 1; i <= no; i++) {
-      defenders.add(PlayerHome(homeLineUp,i));
+      defenders.add(PlayerHome(homeLineUp,i,context));
     }
   }
 
   return defenders;
 }
 
-List<Widget> CenterPlayer(String matchId, FormationsModel lineUps, type) {
+List<Widget> CenterPlayer(String matchId, FormationsModel lineUps, type, context) {
   List<Widget> centerPlayers = [];
   var homeLineUp = lineUps.formations.first;
   var awayLineUp = lineUps.formations.last;
@@ -1051,19 +1097,19 @@ List<Widget> CenterPlayer(String matchId, FormationsModel lineUps, type) {
     int start = int.parse(awayLineUp.formation.split('-').first);
     int no = int.parse(awayLineUp.formation.split('-')[1]);
     for (int i = start + 1; i <= no + start; i++) {
-      centerPlayers.add(PlayerAway(awayLineUp,i));
+      centerPlayers.add(PlayerAway(awayLineUp,i,context));
     }
   } else {
     int start = int.parse(homeLineUp.formation.split('-').first);
     int no = int.parse(homeLineUp.formation.split('-')[1]);
     for (int i = start + 1; i <= no + start; i++) {
-      centerPlayers.add(PlayerHome(homeLineUp,i));
+      centerPlayers.add(PlayerHome(homeLineUp,i,context));
     }
   }
   return centerPlayers;
 }
 
-List<Widget> Attack(String matchId, FormationsModel lineUps, type) {
+List<Widget> Attack(String matchId, FormationsModel lineUps, type, context) {
   List<Widget> attackers = [];
   var homeLineUp = lineUps.formations.first;
   var awayLineUp = lineUps.formations.last;
@@ -1073,21 +1119,21 @@ List<Widget> Attack(String matchId, FormationsModel lineUps, type) {
     int middle = int.parse(awayLineUp.formation.split('-')[1]);
     int no = int.parse(awayLineUp.formation.split('-')[2]);
     for (int i = start + middle + 1; i <= no + middle + start; i++) {
-      attackers.add(PlayerAway(awayLineUp,i));
+      attackers.add(PlayerAway(awayLineUp,i,context));
     }
   } else {
     int start = int.parse(homeLineUp.formation.split('-').first);
     int middle = int.parse(homeLineUp.formation.split('-')[1]);
     int no = int.parse(homeLineUp.formation.split('-')[2]);
     for (int i = start + middle + 1; i <= no + middle + start; i++) {
-      attackers.add(PlayerHome(homeLineUp,i));
+      attackers.add(PlayerHome(homeLineUp,i,context));
     }
   }
 
   return attackers;
 }
 
-List<Widget> AttackStricker(String matchId, FormationsModel lineUps, type) {
+List<Widget> AttackStricker(String matchId, FormationsModel lineUps, type,context) {
   List<Widget> test = [];
   var homeLineUp = lineUps.formations.first;
   var awayLineUp = lineUps.formations.last;
@@ -1098,7 +1144,7 @@ List<Widget> AttackStricker(String matchId, FormationsModel lineUps, type) {
     int middle2 = int.parse(awayLineUp.formation.split('-')[2]);
     int no = int.parse(awayLineUp.formation.split('-')[3]);
     for (int i = start + middle + middle2 + 1; i <= no + middle + middle2 + start; i++) {
-      test.add(PlayerAway(awayLineUp,i));
+      test.add(PlayerAway(awayLineUp,i,context));
     }
   } else {
     int start = int.parse(homeLineUp.formation.split('-').first);
@@ -1108,7 +1154,7 @@ List<Widget> AttackStricker(String matchId, FormationsModel lineUps, type) {
     for (int i = start + middle + middle2 + 1;
         i <= no + middle + middle2 + start;
         i++) {
-      test.add(PlayerHome(homeLineUp,i));
+      test.add(PlayerHome(homeLineUp,i,context));
     }
   }
 
@@ -1128,7 +1174,7 @@ Widget playerAvatar(bool bench){
       padding: const EdgeInsets.only(
           left: 12, right: 12, top: 25, bottom: 25),
       child: Container(
-        child: CircleAvatar(
+        child: !bench? CircleAvatar(
           backgroundColor: bench? Colors.grey :Colors.white,
           child: ClipRRect(
             borderRadius: BorderRadius.all(
@@ -1136,7 +1182,7 @@ Widget playerAvatar(bool bench){
             ),
             //child: Image.network("https://www.eplworld.com"),
           ),
-        ),
+        ):CustomImage(imgUrl: 'test.png'),
       ),
     ),
   );
@@ -1258,7 +1304,7 @@ Widget redCard(){
               width: 13,
               height: 18,
               decoration: BoxDecoration(
-                  color: Colors.yellow,
+                  color: Colors.red,
                   borderRadius:
                   BorderRadius.circular(2)),
             ),

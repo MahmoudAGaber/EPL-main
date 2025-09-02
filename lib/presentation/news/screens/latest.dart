@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import 'package:provider/provider.dart';
 
 
 class latest extends StatefulWidget {
@@ -61,9 +60,7 @@ class _latestState extends State<latest> {
       ),
 
        */
-      body: Consumer(
-        builder: (context, provider, child) {
-          return Padding(
+      body:  Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListView(
                     controller: _controller,
@@ -258,9 +255,8 @@ class _latestState extends State<latest> {
                       ),
                     ],
                   ),
-                );
-        },
-      ),
+                )
+
     );
   }
 }

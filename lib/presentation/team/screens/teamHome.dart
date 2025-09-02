@@ -8,8 +8,10 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 
+import '../../../domain/models/Favorite.dart';
 import '../../../shared/Utils/Constants.dart';
 import '../../../shared/Views/custom/custom_loader.dart';
+import '../../favourite/provider/favouriteViewModel.dart';
 import 'teamNews.dart';
 import 'teamSquad.dart';
 import 'teamStanding.dart';
@@ -102,6 +104,7 @@ class _EachTeamState extends ConsumerState<HomeTeam> with TickerProviderStateMix
         ref.read(teamMatchesProvider.notifier).fetchTeamMatches(widget.teamId!, seasonId),
         ref.read(teamStandingProvider.notifier).fetchTeamStanding(seasonId,"total"),
         ref.read(teamSquadProvider.notifier).fetchTeamSquad(widget.teamId!),
+        ref.read(teamTransferProvider.notifier).fetchTeamTransfer(widget.teamId!),
         ref.read(teamTrophyProvider.notifier).fetchTeamTrophy(widget.teamId!),
       ]);
     } catch (e) {
@@ -130,6 +133,7 @@ class _EachTeamState extends ConsumerState<HomeTeam> with TickerProviderStateMix
     final teamMatchesState = ref.watch(teamMatchesProvider);
     final teamStandingState = ref.watch(teamStandingProvider);
     final teamSquadState = ref.watch(teamSquadProvider);
+    final teamTransferState = ref.watch(teamTransferProvider);
     final teamTrophyState = ref.watch(teamTrophyProvider);
 
 
@@ -173,6 +177,11 @@ class _EachTeamState extends ConsumerState<HomeTeam> with TickerProviderStateMix
         tabsView.add(teamSquad());
       }
 
+    if (teamTransferState.data != null) {
+      tabsName.add(transferTeamN());
+      tabsView.add(transferTeam());
+    }
+
       if (teamTrophyState.data != null) {
         tabsName.add(cupsN());
         tabsView.add(cups());
@@ -197,18 +206,27 @@ class _EachTeamState extends ConsumerState<HomeTeam> with TickerProviderStateMix
             backgroundColor: Theme.of(context).primaryColor,
             elevation: 0.0,
             actions: <Widget>[
-              Row(
-                children: <Widget>[
-                  IconButton(
-                      icon: Icon(
-                        Icons.notifications_none,
-                        color: Colors.white,
-                      ),
-                      onPressed: null),
-                  IconButton(
-                      icon: Icon(Icons.star, color: Colors.white),
-                      onPressed: null),
-                ],
+              Consumer(
+                builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                  var fav = ref.watch(favoriteProvider);
+                  final isFav = fav.data?.any((fav) => fav.id == widget.teamId) ?? false;
+                  return  Row(
+                    children: <Widget>[
+                      IconButton(
+                          icon: Icon(
+                            Icons.notifications_none,
+                            color: Colors.white,
+                          ),
+                          onPressed: null),
+                      IconButton(
+                          icon: Icon(isFav ? Icons.star : Icons.star_border_outlined, color: Colors.white),
+                          onPressed: (){
+                            FavoriteModel fav = FavoriteModel(id: widget.teamId!, name: widget.teamName!, type: 'team');
+                            ref.read(favoriteProvider.notifier).toggleFavorite(fav);
+                          }),
+                    ],
+                  );
+                },
               )
             ],
             expandedHeight: 130.0,
@@ -409,20 +427,6 @@ class _EachTeamState extends ConsumerState<HomeTeam> with TickerProviderStateMix
     );
   }
 
-  List<Widget> tabName( provider) {
-    List<Widget> test = [];
-
-    test.add(overViewN());
-    test.add(teamNewsN());
-    test.add(videoTeamN());
-    test.add(matchesForTeamN());
-    test.add(teamPositionN());
-    test.add(teamSquadN());
-    test.add(transferTeamN());
-    test.add(cupsN());
-
-    return test;
-  }
 
   Widget overView() {
     return ListView(children: <Widget>[
@@ -476,47 +480,6 @@ class _EachTeamState extends ConsumerState<HomeTeam> with TickerProviderStateMix
     return ListView(children: <Widget>[
       Trophy()
     ]);
-  }
-
-  List<Widget> tabView( provider) {
-    List<Widget> test = [];
-
-    test.add(overView());
-
-    test.add(teamNews());
-
-    test.add(videoTeam());
-
-    test.add(matchesForTeam());
-
-    test.add(teamPosition());
-
-    test.add(teamSquad());
-
-    test.add(transferTeam());
-
-    test.add(cups());
-
-    // if (provider.statsModel != null) {
-    // }
-    // if (provider.newsModelList != null) {
-    // }
-    // if (provider.videoModelList != null) {
-    // }
-    //
-    // if (provider.recentMatcheBox != null) {
-    // }
-    // if (provider.tablesModelList != null) {
-    // }
-    // if (provider.squadsModel != null) {
-    // }
-    //
-    // if (provider.transferBoxesModelList != null) {
-    // }
-    // if (provider.trophiesBoxesModelList != null) {
-    // }
-
-    return test;
   }
 }
 

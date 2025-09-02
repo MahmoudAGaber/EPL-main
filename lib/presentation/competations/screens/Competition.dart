@@ -95,7 +95,7 @@ class _CompetitionState extends ConsumerState<Competition> with SingleTickerProv
                                     context, MaterialPageRoute(builder: (context) =>
                                     LeagueHome(
                                       leagueName: topLeague.league.name,
-                                      leagueId: topLeague.league.id,
+                                      leagueId: topLeague.league.id.toString(),
                                       logo: topLeague.league.logo,)
                                 ));
                               },

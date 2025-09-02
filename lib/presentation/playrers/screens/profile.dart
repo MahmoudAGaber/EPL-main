@@ -4,9 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 
 import '../../../shared/Utils/Constants.dart';
 import '../../../shared/Views/custom/custom_loader.dart';
@@ -47,137 +45,137 @@ class _profileState extends ConsumerState<PlayerProfile> {
         onFailure: (state)=> Text("Shit"),
         onSuccess: (state)=> Column(
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 4),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          //CircleAvatar(radius: 10,),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text("dasdsa",style: Theme.of(context).textTheme.bodyMedium)
-                        ],
-                      ),
-                    ),
-                    Divider(),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          top: 15,
-                          right: 25,
-                          left: 25,
-                          bottom: 10),
-                      child: Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Column(
-                            children: <Widget>[
-                              Container(
-                                  height: 25,
-                                  width: 65,
-                                  decoration: BoxDecoration(
-                                      color: Theme.of(context).colorScheme.onPrimary,
-                                      borderRadius:
-                                      BorderRadius.circular(
-                                          4)),
-                                  child: Center(
-                                      child: Text(
-                                          "ddd", style:Theme.of(context).textTheme.bodyMedium))),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Text(
-                                  "المباريات".tr,
-                                  style:Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14)
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: <Widget>[
-                              Container(
-                                  height: 25,
-                                  width: 65,
-                                  decoration: BoxDecoration(
-                                      color: Theme.of(context).colorScheme.onPrimary,
-                                      borderRadius:
-                                      BorderRadius.circular(
-                                          4)),
-                                  child: Center(
-                                      child: Text(
-                                          "", style:Theme.of(context).textTheme.bodyMedium))),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Text(
-                                  "اهداف".tr,
-                                  style:Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14)
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: <Widget>[
-                              Container(
-                                  height: 25,
-                                  width: 65,
-                                  decoration: BoxDecoration(
-                                      color: Theme.of(context).colorScheme.onPrimary,
-                                      borderRadius:
-                                      BorderRadius.circular(
-                                          4)),
-                                  child: Center(
-                                      child: Text(
-                                          "", style:Theme.of(context).textTheme.bodyMedium))),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Text(
-                                  "صناعه الاهداف".tr,
-                                  style:Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14)
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: <Widget>[
-                              Container(
-                                height: 21,
-                                width: 65,
-                                decoration: BoxDecoration(
-                                    color: Colors.green[400],
-                                    borderRadius:
-                                    BorderRadius.all(
-                                        Radius.circular(4))),
-                                child: Center(
-                                    child: Text(
-                                        "",
-                                        style:Theme.of(context).textTheme.bodyMedium
-                                    )),
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Text(
-                                  "تقييم".tr,
-                                  style:Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14)
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(height: 8,),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 4),
+            //   child: Card(
+            //     shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(8)),
+            //     child: Column(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         Padding(
+            //           padding: const EdgeInsets.all(8.0),
+            //           child: Row(
+            //             mainAxisAlignment: MainAxisAlignment.start,
+            //             children: <Widget>[
+            //               //CircleAvatar(radius: 10,),
+            //               SizedBox(
+            //                 width: 8,
+            //               ),
+            //               Text("dasdsa",style: Theme.of(context).textTheme.bodyMedium)
+            //             ],
+            //           ),
+            //         ),
+            //         Divider(),
+            //         Padding(
+            //           padding: const EdgeInsets.only(
+            //               top: 15,
+            //               right: 25,
+            //               left: 25,
+            //               bottom: 10),
+            //           child: Row(
+            //             mainAxisAlignment:
+            //             MainAxisAlignment.spaceBetween,
+            //             children: <Widget>[
+            //               Column(
+            //                 children: <Widget>[
+            //                   Container(
+            //                       height: 25,
+            //                       width: 65,
+            //                       decoration: BoxDecoration(
+            //                           color: Theme.of(context).colorScheme.onPrimary,
+            //                           borderRadius:
+            //                           BorderRadius.circular(
+            //                               4)),
+            //                       child: Center(
+            //                           child: Text(
+            //                               "ddd", style:Theme.of(context).textTheme.bodyMedium))),
+            //                   SizedBox(
+            //                     height: 15,
+            //                   ),
+            //                   Text(
+            //                       "المباريات".tr,
+            //                       style:Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14)
+            //                   ),
+            //                 ],
+            //               ),
+            //               Column(
+            //                 children: <Widget>[
+            //                   Container(
+            //                       height: 25,
+            //                       width: 65,
+            //                       decoration: BoxDecoration(
+            //                           color: Theme.of(context).colorScheme.onPrimary,
+            //                           borderRadius:
+            //                           BorderRadius.circular(
+            //                               4)),
+            //                       child: Center(
+            //                           child: Text(
+            //                               "", style:Theme.of(context).textTheme.bodyMedium))),
+            //                   SizedBox(
+            //                     height: 15,
+            //                   ),
+            //                   Text(
+            //                       "اهداف".tr,
+            //                       style:Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14)
+            //                   ),
+            //                 ],
+            //               ),
+            //               Column(
+            //                 children: <Widget>[
+            //                   Container(
+            //                       height: 25,
+            //                       width: 65,
+            //                       decoration: BoxDecoration(
+            //                           color: Theme.of(context).colorScheme.onPrimary,
+            //                           borderRadius:
+            //                           BorderRadius.circular(
+            //                               4)),
+            //                       child: Center(
+            //                           child: Text(
+            //                               "", style:Theme.of(context).textTheme.bodyMedium))),
+            //                   SizedBox(
+            //                     height: 15,
+            //                   ),
+            //                   Text(
+            //                       "صناعه الاهداف".tr,
+            //                       style:Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14)
+            //                   ),
+            //                 ],
+            //               ),
+            //               Column(
+            //                 children: <Widget>[
+            //                   Container(
+            //                     height: 21,
+            //                     width: 65,
+            //                     decoration: BoxDecoration(
+            //                         color: Colors.green[400],
+            //                         borderRadius:
+            //                         BorderRadius.all(
+            //                             Radius.circular(4))),
+            //                     child: Center(
+            //                         child: Text(
+            //                             "",
+            //                             style:Theme.of(context).textTheme.bodyMedium
+            //                         )),
+            //                   ),
+            //                   SizedBox(
+            //                     height: 15,
+            //                   ),
+            //                   Text(
+            //                       "تقييم".tr,
+            //                       style:Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14)
+            //                   ),
+            //                 ],
+            //               ),
+            //             ],
+            //           ),
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(height: 8,),
             Container(
               width: MediaQuery.of(context).size.width,
               child: Card(

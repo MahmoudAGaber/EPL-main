@@ -54,7 +54,9 @@ class RequestHandler {
           Uri.parse(url),
           headers: {
             "Authorization": "Bearer ${prefs.get('token')}",
-            "Content-Type": "application/json; charset=UTF-8"
+            "Content-Type": "application/json; charset=UTF-8",
+            "username": "eplworld",
+            "password": "ew1o.d1ewpeepooe1o.l"
           },
         );
       } else {

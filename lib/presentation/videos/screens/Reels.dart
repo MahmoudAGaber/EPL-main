@@ -6,7 +6,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 class Reels extends StatefulWidget {
@@ -132,7 +131,7 @@ class _ReelsState extends State<Reels> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      videosProvider = Provider.of(context, listen: false);
+    //  videosProvider = Provider.of(context, listen: false);
       _scrollController = ScrollController();
     });
 

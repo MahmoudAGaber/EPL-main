@@ -193,8 +193,8 @@ class _MoreState extends State<More> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => home(
-                                  index: 0,
+                            builder: (context) => Home(
+                                  index: 0,dateTime: DateTime.now(),
                                 )));
                   },
                   child: Row(
@@ -237,8 +237,8 @@ class _MoreState extends State<More> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => home(
-                                  index: 1,
+                            builder: (context) => Home(
+                                  index: 1, dateTime: DateTime.now(),
                                 )));
                   },
                   child: Row(
@@ -281,8 +281,8 @@ class _MoreState extends State<More> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => home(
-                                  index: 2,
+                            builder: (context) => Home(
+                                  index: 2,dateTime: DateTime.now(),
                                 )));
                   },
                   child: Row(
@@ -325,8 +325,8 @@ class _MoreState extends State<More> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => home(
-                                  index: 3,
+                            builder: (context) => Home(
+                                  index: 3, dateTime: DateTime.now(),
                                 )));
                   },
                   child: Row(
@@ -369,8 +369,8 @@ class _MoreState extends State<More> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => home(
-                                  index: 4,
+                            builder: (context) => Home(
+                                  index: 4, dateTime: DateTime.now(),
                                 )));
                   },
                   child: Row(

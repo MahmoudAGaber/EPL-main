@@ -1,4 +1,3 @@
-import 'package:epl/presentation/home/screens/homMatches.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel;
@@ -37,7 +36,7 @@ class _clanderbarState extends State<clanderbar> {
         this.setState(() => _currentDate2 = date);
         events.forEach((event) => print(event.title));
         Navigator.of(context, rootNavigator: false).push(MaterialPageRoute(
-            builder: (context) => home(
+            builder: (context) => Home(
                   dateTime: date,
                   index: 0,
                 )));

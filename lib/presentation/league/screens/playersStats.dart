@@ -4,10 +4,12 @@ import 'package:epl/presentation/league/provider/LeagueViewModel.dart';
 import 'package:epl/shared/Views/custom/custom_imageView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../../../shared/Utils/Constants.dart';
 import '../../../shared/Views/custom/custom_loader.dart';
 import '../../playrers/screens/playerHome.dart';
+
 
 
 class playersStats extends ConsumerStatefulWidget {
@@ -72,7 +74,7 @@ class _playersStatsState extends ConsumerState<playersStats> {
                               children: <Widget>[
                                 Container(
                                     height: 18,width: 18,
-                                    child: Icon(getIconForType(item.statsName))
+                                    child: getIconForType(item.statsName)
                                 ),
                                 SizedBox(width: 10,),
                                 Text(item.statsName, style: Theme.of(context).textTheme.titleMedium
@@ -112,7 +114,7 @@ class _playersStatsState extends ConsumerState<playersStats> {
                                                       width: 60,
                                                       child: ClipRRect(
                                                           borderRadius: BorderRadius.circular(50),
-                                                          child: CircleAvatar()
+                                                          child:CustomImage(imgUrl: "test.png")
                                                           //Image.network("https://www.eplworld.com")
                                                          )
                                                   ),
@@ -188,7 +190,7 @@ class _playersStatsState extends ConsumerState<playersStats> {
                                                 height: 40, width: 40,
                                                 child: ClipRRect(
                                                     borderRadius: BorderRadius.all(Radius.circular(100)),
-                                                    child:CircleAvatar()
+                                                    child:CustomImage(imgUrl: "test.png")
                                                     //Image.network("https://www.eplworld.com",)
                                                 )
                                             ),
@@ -263,26 +265,67 @@ class _playersStatsState extends ConsumerState<playersStats> {
     );
 
   }
-  IconData getIconForType(String type) {
+
+  Widget yellowCard(int cards){
+    return Container(
+      child: SizedBox(width: 25,height: 30,
+        child: Stack(
+            children: List.generate(cards, (index) => Positioned(
+              right: index*8+2,
+              top: index*4+2,
+              child: Container(
+                width: 13,
+                height: 18,
+                decoration: BoxDecoration(
+                    color: Colors.yellow,
+                    borderRadius:
+                    BorderRadius.circular(2)),
+              ),
+            ),)
+        ),
+      ),
+    );
+  }
+
+  Widget redCard(){
+    return Container(
+      width: 16,
+      height: 23,
+      child: Column(
+        children: [
+          Container(
+            width: 13,
+            height: 18,
+            decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius:
+                BorderRadius.circular(2)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget getIconForType(String type) {
     switch (type) {
       case 'appearances':
-        return Icons.visibility;
+        return Icon(Icons.visibility);
       case 'assists':
-        return Icons.handshake;
+        return Icon(MdiIcons.soccer);
       case 'goals':
-        return Icons.sports_soccer;
+        return Icon(Icons.sports_soccer);
       case 'minutes_played':
-        return Icons.timer;
+        return Icon(Icons.timer);
       case 'penalty_goals':
-        return Icons.gavel;
+        return Icon(Icons.sports_soccer);
       case 'red_cards':
-        return Icons.warning;
+        return redCard();
       case 'second_yellow_cards':
-        return Icons.repeat;
+        return yellowCard(2);
       case 'yellow_cards':
-        return Icons.warning_amber;
+        return yellowCard(1);
       default:
-        return Icons.help;
+        return Icon(Icons.subdirectory_arrow_left_outlined);
     }
   }
 }

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 
 
 class FavouriteNotification extends StatefulWidget {
@@ -24,9 +22,7 @@ class _FavouriteNotificationState extends State<FavouriteNotification> {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: Consumer(
-          builder: (context,provider,child){
-            return Column(
+        child: Column(
               children: [
                 Card(
                   shape: RoundedRectangleBorder(
@@ -237,9 +233,8 @@ class _FavouriteNotificationState extends State<FavouriteNotification> {
                   ),
                 )
               ],
-            );
-          },
-        ),
+            )
+
       ),
     );
   }

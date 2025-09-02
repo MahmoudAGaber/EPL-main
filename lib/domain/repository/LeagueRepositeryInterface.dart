@@ -6,6 +6,7 @@ import '../../../domain/Models/Leagues/Seasons.dart';
 import '../../../domain/Models/Standing.dart';
 import '../../../domain/models/Leagues/teamStats.dart';
 import '../../../domain/models/News.dart';
+import '../models/Leagues/trophies.dart';
 import '../models/Teams/teamOverview.dart';
 
 
@@ -17,7 +18,7 @@ abstract class LeagueRepositoryInterface {
   Future<TableModel> fetchLeagueStandings(String seasonId, String type, {String lang});
   Future<GroupTableModel> fetchGroupStandings(String seasonId, String type, {String lang});
   Future<List<PlayerStatsModel>> fetchPlayerStats(String seasonId);
-  Future<TeamsStatisticsModel> fetchTeamStats(String seasonId);
-  Future<List<TrophyModel>> fetchTrophies(String teamId);
+  Future<List<TeamStatsModel>> fetchTeamStats(String seasonId);
+  Future<LeagueTrophies> fetchTrophies(String teamId);
 
 }

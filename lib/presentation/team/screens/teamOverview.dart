@@ -1,22 +1,19 @@
 import 'package:epl/Data/StateModel.dart';
 import 'package:epl/domain/models/Teams/teamOverview.dart';
 import 'package:epl/presentation/fixture/screens/matchInfo.dart';
-import 'package:epl/shared/Views/custom/standingLabels.dart';
-import 'package:epl/shared/Views/custom/teamInStanding.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 import '../../../shared/Utils/Constants.dart';
 import '../../../shared/Utils/date_converter.dart';
 import '../../../shared/Views/custom/custom_imageView.dart';
 import '../../../shared/Views/custom/custom_loader.dart';
 import '../../../webView.dart';
-import '../../fixture/screens/EndMatches/matchInfo_a.dart';
 import '../../playrers/screens/playerHome.dart';
 import '../provider/TeamViewModel.dart';
 import 'teamHome.dart';

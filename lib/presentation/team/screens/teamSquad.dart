@@ -5,7 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:get/get.dart';
 
+import '../../../shared/Utils/Constants.dart';
+import '../../../shared/Views/custom/custom_imageView.dart';
 import '../../../shared/Views/custom/custom_loader.dart';
+import '../../../shared/helper/countryShortName.dart';
 import '../../playrers/screens/playerHome.dart';
 
 
@@ -62,7 +65,8 @@ class _TeamSquadState extends ConsumerState<TeamSquad> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Players(playerId: ref.read(teamSquadProvider.notifier).getCoach().first.personId,)));
+                                  builder: (context) => Players(playerId: ref.read(teamSquadProvider.notifier)
+                                      .getCoach().first.personId,)));
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(top: 8,bottom: 8,left: 16,right: 16),
@@ -80,11 +84,9 @@ class _TeamSquadState extends ConsumerState<TeamSquad> {
                                             Radius.circular(100)),
                                         border: Border.all(
                                             width: 1, color: Colors.grey)),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(100),
-                                      ),
-                                      child: CircleAvatar()
+                                    child:   ClipRRect(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: CustomImage(imgUrl:"${Constants.countryImage}${CountryShortName.country["${ref.read(teamSquadProvider.notifier).getCoach().first.personId}"]}.png",)
                                     ),
                                   ),
                                   SizedBox(
@@ -109,7 +111,7 @@ class _TeamSquadState extends ConsumerState<TeamSquad> {
                                               children: [
                                                 CircleAvatar(
                                                   maxRadius: 8,
-                                                  child: CircleAvatar()
+                                                  child: CustomImage(imgUrl:"${Constants.countryImage}${CountryShortName.country["${ref.read(teamSquadProvider.notifier).getCoach().first.nationalityId}"]}.png" ,)
                                                 ),
                                                 SizedBox(
                                                   width: 8,
@@ -177,9 +179,8 @@ class _TeamSquadState extends ConsumerState<TeamSquad> {
                                                     decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(100)),
                                                         border: Border.all(width: 1, color: Colors.grey)),
                                                     child: ClipRRect(
-                                                      borderRadius: BorderRadius.all(
-                                                        Radius.circular(100),),
-                                                      child: CircleAvatar()
+                                                        borderRadius: BorderRadius.circular(50),
+                                                        child: CustomImage(imgUrl:"${Constants.countryImage}${CountryShortName.country["${goalKeeper.personId}"]}.png",)
                                                     ),
                                                   ),
                                                 ),
@@ -205,9 +206,9 @@ class _TeamSquadState extends ConsumerState<TeamSquad> {
                                                             mainAxisAlignment:
                                                             MainAxisAlignment.start,
                                                             children: [
-                                                              CircleAvatar(
-                                                                maxRadius: 8,
-                                                                child: CircleAvatar()
+                                                              ClipRRect(
+                                                                borderRadius: BorderRadius.circular(50),
+                                                                  child: CustomImage(imgUrl:"${Constants.countryImage}${CountryShortName.country["${goalKeeper.nationalityId}"]}.png",height: 18,width: 18,)
                                                               ),
                                                               SizedBox(
                                                                 width: 8,
@@ -278,10 +279,9 @@ class _TeamSquadState extends ConsumerState<TeamSquad> {
                                               height: 45,
                                               decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(100)),
                                                   border: Border.all(width: 1, color: Colors.grey)),
-                                              child: ClipRRect(
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(100),),
-                                                child: CircleAvatar(),
+                                              child:  ClipRRect(
+                                                  borderRadius: BorderRadius.circular(50),
+                                                  child: CustomImage(imgUrl:"${Constants.countryImage}${CountryShortName.country["${defender.personId}"]}.png",)
                                               ),
                                             ),
                                           ),
@@ -307,9 +307,9 @@ class _TeamSquadState extends ConsumerState<TeamSquad> {
                                                       mainAxisAlignment:
                                                       MainAxisAlignment.start,
                                                       children: [
-                                                        CircleAvatar(
-                                                          maxRadius: 8,
-                                                          child: CircleAvatar()
+                                                        ClipRRect(
+                                                            borderRadius: BorderRadius.circular(50),
+                                                            child: CustomImage(imgUrl:"${Constants.countryImage}${CountryShortName.country["${defender.nationalityId}"]}.png",height: 18,width: 18,)
                                                         ),
                                                         SizedBox(
                                                           width: 8,
@@ -380,10 +380,9 @@ class _TeamSquadState extends ConsumerState<TeamSquad> {
                                               height: 45,
                                               decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(100)),
                                                   border: Border.all(width: 1, color: Colors.grey)),
-                                              child: ClipRRect(
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(100),),
-                                                child: CircleAvatar(),
+                                              child:   ClipRRect(
+                                                  borderRadius: BorderRadius.circular(50),
+                                                  child: CustomImage(imgUrl:"${Constants.countryImage}${CountryShortName.country["${midfielder.personId}"]}.png",)
                                               ),
                                             ),
                                           ),
@@ -409,9 +408,9 @@ class _TeamSquadState extends ConsumerState<TeamSquad> {
                                                       mainAxisAlignment:
                                                       MainAxisAlignment.start,
                                                       children: [
-                                                        CircleAvatar(
-                                                          maxRadius: 8,
-                                                          child: CircleAvatar()
+                                                        ClipRRect(
+                                                            borderRadius: BorderRadius.circular(50),
+                                                            child: CustomImage(imgUrl:"${Constants.countryImage}${CountryShortName.country["${midfielder.nationalityId}"]}.png",height: 18,width: 18,)
                                                         ),
                                                         SizedBox(
                                                           width: 8,
@@ -485,7 +484,10 @@ class _TeamSquadState extends ConsumerState<TeamSquad> {
                                               child: ClipRRect(
                                                 borderRadius: BorderRadius.all(
                                                   Radius.circular(100),),
-                                                child: CircleAvatar(),
+                                                child:  ClipRRect(
+                                                    borderRadius: BorderRadius.circular(50),
+                                                    child: CustomImage(imgUrl:"${Constants.countryImage}${CountryShortName.country["${attacker.personId}"]}.png",)
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -509,9 +511,9 @@ class _TeamSquadState extends ConsumerState<TeamSquad> {
                                                       mainAxisAlignment:
                                                       MainAxisAlignment.start,
                                                       children: [
-                                                        CircleAvatar(
-                                                          maxRadius: 8,
-                                                          child: CircleAvatar()
+                                                        ClipRRect(
+                                                            borderRadius: BorderRadius.circular(50),
+                                                            child: CustomImage(imgUrl:"${Constants.countryImage}${CountryShortName.country["${attacker.nationalityId}"]}.png",height: 18,width: 18,)
                                                         ),
                                                         SizedBox(
                                                           width: 8,

@@ -114,7 +114,7 @@ class _MatchEventsState extends ConsumerState<MatchEvents> {
                                           child: SizedBox(
                                             width: 35,
                                             height: 35,
-                                              child:CustomImage(imgUrl: "${Constants.teamImage}${widget.homeId}.png",)
+                                              child:CustomImage(imgUrl: "${Constants.teamImage}${widget.awayId}.png",)
                                           ),
                                         ),
                                       ],

@@ -10,10 +10,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'dart:ui'as ui;
+import '../../../../../domain/models/Favorite.dart';
 import '../../../../../main.dart';
 import '../../../../../shared/Utils/date_converter.dart';
 import '../../../../../shared/Views/custom/custom_imageView.dart';
 import '../../../../../shared/Views/custom/custom_loader.dart';
+import '../../../../favourite/provider/favouriteViewModel.dart';
 import '../../../../fixture/screens/matchInfo.dart';
 import '../../../../league/screens/homeLeague.dart';
 import '../../../provider/homeMatchesProvider.dart';
@@ -60,6 +62,10 @@ class _TodayMatchesState extends ConsumerState<TodayMatches> with AutomaticKeepA
     var matches = ref.watch(MatchesProvider);
     var isLive = ref.watch(MatchesProvider.notifier).liveMatch;
     var withTime = ref.watch(MatchesProvider.notifier).withTime;
+    var isFav = ref.watch(MatchesProvider.notifier).isFav;
+
+    final favoriteState = ref.watch(favoriteProvider);
+
 
     return Scaffold(
       body: GestureDetector(
@@ -80,6 +86,7 @@ class _TodayMatchesState extends ConsumerState<TodayMatches> with AutomaticKeepA
                                       GestureDetector(
                                         onTap: (){
                                           var isLive = ref.read(MatchesProvider.notifier).liveMatch = !ref.read(MatchesProvider.notifier).liveMatch;
+                                           ref.read(MatchesProvider.notifier).isFav = false;
 
                                           ref.read(MatchesProvider.notifier).getMatches(widget.date,liveMatch: isLive);
                                         },
@@ -101,22 +108,35 @@ class _TodayMatchesState extends ConsumerState<TodayMatches> with AutomaticKeepA
                                           ),
                                         ),
                                       ),
-                                      Card(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(20)
-                                        ),
-                                        child: Container(
-                                          width: 108,
-                                          height: 35,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(20),
+                                      GestureDetector(
+                                        onTap: (){
+                                          var isFav = ref.read(MatchesProvider.notifier).isFav = !ref.read(MatchesProvider.notifier).isFav;
+
+                                          ref.read(MatchesProvider.notifier).getMatches(widget.date,isFav: isFav);
+                                        },
+                                        child: Card(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(20)
                                           ),
-                                          child: Center(child: Text('مباريتي',style: Theme.of(context).textTheme.titleSmall,)),
+                                          child: Container(
+                                            width: 108,
+                                            height: 35,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(20),
+                                                color: isFav? Theme.of(context).primaryColor : null
+
+                                            ),
+                                            child: Center(child: Text('مباريتي',
+                                                style:Theme.of(context).textTheme.titleSmall!.copyWith(color:isFav ? Colors.white : null)
+                                            )
+                                            )
+                                          ),
                                         ),
                                       ),
                                       GestureDetector(
                                         onTap: (){
                                           var withTime = ref.read(MatchesProvider.notifier).withTime = !ref.read(MatchesProvider.notifier).withTime;
+                                           ref.read(MatchesProvider.notifier).isFav = false;
 
                                           ref.read(MatchesProvider.notifier).getMatches(widget.date,withTime: withTime);
 
@@ -154,8 +174,9 @@ class _TodayMatchesState extends ConsumerState<TodayMatches> with AutomaticKeepA
                                              itemCount: matches.data!.length,
                                              itemBuilder: (widget, index) {
                                                var match = matches.data![index];
+                                               final isFav = favoriteState.data?.any((fav) => fav.id == match.league.id) ?? false;
                                                return Padding(
-                                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                                  child: Card(
                                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
                                                    elevation: 2,
@@ -176,9 +197,16 @@ class _TodayMatchesState extends ConsumerState<TodayMatches> with AutomaticKeepA
                                                                left: -15,
                                                                bottom: -11,
                                                                child: IconButton(
-                                                                   onPressed: () {},
+                                                                   onPressed: () {
+                                                                     setState(() {
+                                                                       FavoriteModel fav = FavoriteModel(id: match.league.id, name: match.league.name, type: 'competition');
+                                                                       ref.read(favoriteProvider.notifier).toggleFavorite(fav);
+                                                                     });
+
+
+                                                                   },
                                                                    icon: Icon(
-                                                                     Icons.star,
+                                                                     isFav ? Icons.star : Icons.star_border_outlined,
                                                                      color: Color(0xFF862aa6),
                                                                      size: 18,
                                                                    )),

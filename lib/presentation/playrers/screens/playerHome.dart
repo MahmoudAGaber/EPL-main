@@ -125,7 +125,7 @@ class _PlayerState extends ConsumerState<Players> with TickerProviderStateMixin 
                                 width: 55,
                                 child: ClipRRect(
                                     borderRadius: BorderRadius.all(Radius.circular(100)),
-                                    child: CircleAvatar())),
+                                    child:CustomImage(imgUrl: 'test.png'))),
                           ],
                         ),
                       ),

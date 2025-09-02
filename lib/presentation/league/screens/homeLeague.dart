@@ -8,11 +8,13 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import '../../../Data/StateModel.dart';
+import '../../../domain/models/Favorite.dart';
 import '../../../shared/Utils/Constants.dart';
+import '../../favourite/provider/favouriteViewModel.dart';
 import '../provider/LeagueViewModel.dart';
 import '../../../domain/Models/Standing.dart';
 import 'LeagueStanding.dart';
-import 'cups.dart';
+import 'trophies.dart';
 import 'playersStats.dart';
 import 'leagueNews.dart';
 import 'matchsForLeague.dart';
@@ -89,6 +91,7 @@ class _LeagueHomeState extends ConsumerState<LeagueHome> with TickerProviderStat
         ref.read(leagueNewsProvider.notifier).getNews(widget.leagueName!),
         ref.read(leaguePlayerStatsProvider.notifier).getPlayerStats(seasonId),
         ref.read(leagueTeamStatsProvider.notifier).getTeamStats(seasonId),
+        ref.read(leagueTrophyProvider.notifier).getTrophy(widget.leagueId!),
       ]);
     } catch (e) {
       print("Error fetching data: $e");
@@ -115,6 +118,8 @@ class _LeagueHomeState extends ConsumerState<LeagueHome> with TickerProviderStat
     final leagueNewsState = ref.watch(leagueNewsProvider);
     final leaguePlayerStState = ref.watch(leaguePlayerStatsProvider);
     final leagueTeamStState = ref.watch(leagueTeamStatsProvider);
+    final leagueTrophyState = ref.watch(leagueTrophyProvider);
+
 
 
     final tabsName = <Widget>[];
@@ -136,7 +141,7 @@ class _LeagueHomeState extends ConsumerState<LeagueHome> with TickerProviderStat
         }
       }
       if (leagueMatchesState.data != null ) {
-        print("HELLLO${leagueMatchesState.data}");
+       // print("HELLLO${leagueMatchesState.data}");
         tabsName.add(matchesN());
         tabsView.add(matches());
       }
@@ -152,6 +157,11 @@ class _LeagueHomeState extends ConsumerState<LeagueHome> with TickerProviderStat
       if (leagueTeamStState.data != null) {
         tabsName.add(teamsStatsN());
         tabsView.add(teamStats());
+      }
+
+      if (leagueTrophyState.data != null) {
+        tabsName.add(cupsN());
+        tabsView.add(cups());
       }
     }catch(e){
       print(e);
@@ -177,18 +187,28 @@ class _LeagueHomeState extends ConsumerState<LeagueHome> with TickerProviderStat
             backgroundColor: Theme.of(context).primaryColor,
             elevation: 0.0,
             actions: <Widget>[
-              Row(
-                children: <Widget>[
-                  IconButton(
-                      icon: Icon(
-                        Icons.notifications_none,
-                        color: Colors.white,
-                      ),
-                      onPressed: null),
-                  IconButton(
-                      icon: Icon(Icons.star, color: Colors.white),
-                      onPressed: null),
-                ],
+              Consumer(
+                builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                  var fav = ref.watch(favoriteProvider);
+                  final isFav = fav.data?.any((fav) => fav.id == widget.leagueId) ?? false;
+                  return Row(
+                    children: <Widget>[
+                      IconButton(
+                          icon: Icon(
+                            Icons.notifications_none,
+                            color: Colors.white,
+                          ),
+                          onPressed: null),
+                      IconButton(
+                          icon: Icon(isFav ? Icons.star : Icons.star_border_outlined, color: Colors.white),
+                          onPressed: (){
+                            FavoriteModel fav = FavoriteModel(id: widget.leagueId!, name: widget.leagueName!, type: 'competition');
+                            ref.read(favoriteProvider.notifier).toggleFavorite(fav);
+                          }),
+                    ],
+                  );
+                },
+
               )
             ],
             expandedHeight: 130.0,
@@ -424,7 +444,7 @@ class _LeagueHomeState extends ConsumerState<LeagueHome> with TickerProviderStat
 
   Widget cups() {
     return ListView(children: <Widget>[
-      Cups()
+      Trophies()
     ]);
   }
 

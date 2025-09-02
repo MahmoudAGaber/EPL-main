@@ -6,6 +6,7 @@ import 'package:epl/domain/models/News.dart';
 import 'package:epl/domain/models/Teams/teamOverview.dart';
 import '../Models/H2H.dart';
 import '../Models/Standing.dart';
+import '../models/Teams/transfers.dart';
 
 
 abstract class TeamRepositoryInterface {
@@ -16,7 +17,7 @@ abstract class TeamRepositoryInterface {
   Future<List<FixtureOverview>> getMatches(String teamId, String seasonId);
   Future<TableModel> getStanding(String seasonId,String type);
   Future<SquadModel> getSquad(String teamId);
-  Future<H2HModel> getTransfers(String fixtureId);
+  Future<List<PlayerTransfer>> getTransfers(String team_id);
   Future<List<TrophyModel>> getTrophy(String teamId);
 
 }

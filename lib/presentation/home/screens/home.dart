@@ -7,27 +7,25 @@ import 'package:intl/date_symbol_data_local.dart';
 import '../../videos/screens/Videos.dart';
 import '../../videos/screens/Videos2.dart';
 import '../../competations/screens/Competition.dart';
-import 'homMatches.dart';
+import 'homeMatches.dart';
 import 'dart:ui' as ui;
 
 import '../../news/screens/news.dart';
 
-class home extends StatefulWidget {
+class Home extends StatefulWidget {
   DateTime? dateTime;
   int index;
-  home({this.dateTime,required this.index});
+  Home({this.dateTime,required this.index});
   @override
-  _homeState createState() => _homeState();
+  _HomeState createState() => _HomeState();
 }
 
-class _homeState extends State<home> with SingleTickerProviderStateMixin {
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
 
 
   int _selectedIndex = 0;
 
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
     static List<Widget> _widgetOptions=[];
 
   void _onItemTapped(int index) {
@@ -62,9 +60,8 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
         initializeDateFormatting("EN_SA", null).then((_) {
           var now = new DateTime.now();
           DateFormat.MMMEd('EN_SA').format(now);
-          _selectedIndex = widget.index;
-          today = DateFormat("dd-MM-yyyy", 'EN_SA')
-              .format(now.subtract(new Duration(days: 0)));
+          _onItemTapped(widget.index);
+          today = DateFormat("dd-MM-yyyy", 'EN_SA').format(now.subtract(new Duration(days: 0)));
         });
       });
 

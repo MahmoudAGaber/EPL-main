@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../playrers/screens/playerHome.dart';
 import '../../team/screens/teamHome.dart';
 
@@ -29,9 +28,7 @@ class _TransferCenterState extends State<TransferCenter> {
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: Consumer(
-        builder: (context, provider, child) {
-          return  Padding(
+      child:  Padding(
             padding: const EdgeInsets.all(12.0),
             child: ListView(
               shrinkWrap: true,
@@ -261,9 +258,8 @@ class _TransferCenterState extends State<TransferCenter> {
                     })
               ],
             ),
-          );
-        },
-      ),
+          )
+
     );
   }
 }

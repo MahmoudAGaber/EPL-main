@@ -10,6 +10,7 @@ import '../../../domain/Models/Teams/TeamTrophy.dart';
 import '../../../domain/models/Leagues/teamStats.dart';
 import '../../../domain/models/News.dart';
 import '../../../domain/Models/Leagues/PlayerStats.dart';
+import '../models/Leagues/trophies.dart';
 import '../models/Teams/teamOverview.dart';
 
 
@@ -54,7 +55,7 @@ class LeagueRepositoryImpl implements LeagueRepositoryInterface {
       requestBody: body,
       fromJson: (json) => FixtureOverview.listFromJson(json),
     );
-    print("Helloooo${tets.first.fixture}");
+   // print("Helloooo${tets.first.fixture}");
     return tets;
   }
 
@@ -92,24 +93,24 @@ class LeagueRepositoryImpl implements LeagueRepositoryInterface {
   }
 
   @override
-  Future<TeamsStatisticsModel> fetchTeamStats(String seasonId) async {
+  Future<List<TeamStatsModel>> fetchTeamStats(String seasonId) async {
     final body = {"season_id": seasonId, "lang": "en"};
     return await requestHandler.postData(
       endPoint: "soccer/competition/team-statistics",
       auth: true,
       requestBody: body,
-      fromJson: (json) => TeamsStatisticsModel.fromJson(json),
+      fromJson: (json) => TeamStatsModel.fromJson(json),
     );
   }
 
   @override
-  Future<List<TrophyModel>> fetchTrophies(String teamId) async {
-    final body = {"team_id": teamId, "lang": "ar"};
+  Future<LeagueTrophies> fetchTrophies(String competitionId) async {
+    final body = {"competition_id": competitionId, "lang": "ar"};
     return await requestHandler.postData(
-      endPoint: "soccer/team/trophy",
+      endPoint: "footballV2/league/trophies",
       auth: true,
       requestBody: body,
-      fromJson: (json) => TrophyModel.listFromJson(json),
+      fromJson: (json) => LeagueTrophies.fromJson(json),
     );
   }
 }
